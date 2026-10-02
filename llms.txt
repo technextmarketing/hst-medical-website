@@ -1,0 +1,79 @@
+# HST Medical
+
+> HST Medical Pte Ltd (Singapore, est. 1994; a Kowa subsidiary since 2024) formulates and supplies health supplements and pain-relief remedies under the HST Medical®, Heritage®, Rheuma-Salve® and Zoo-Vite® brands. Products are GMP-manufactured, many Halal-certified, sold at Guardian, Watsons and NHGP pharmacies and shipped from this store in SGD.
+
+## Ranges
+- [Premium Pain Relief](https://technextmarketing.github.io/hst-medical-website/shop/pain-relief/): Rheuma-Salve® balms, creams, liniments and patches for joint pain, muscle aches, sprains and strains.
+- [Cough, Cold & Flu](https://technextmarketing.github.io/hst-medical-website/shop/cough-cold-flu/): Herbal lozenges, syrups, remedies and inhalers for cough, sore throat, flu and blocked noses.
+- [Traditional Pain Relief](https://technextmarketing.github.io/hst-medical-website/shop/traditional-pain-relief/): Time-tested Heritage® medicated oils for rheumatic pain, bruises and muscle strain.
+- [Bones & Joints](https://technextmarketing.github.io/hst-medical-website/shop/bones-joints/): Joint, cartilage, calcium and vitamin D3+K2 support.
+- [Immunity & Allergy](https://technextmarketing.github.io/hst-medical-website/shop/immunity-allergy/): Vitamin C, multivitamins and probiotics for daily defence.
+- [Immunity & Energy](https://technextmarketing.github.io/hst-medical-website/shop/immunity-energy/): Heritage® ginseng, cordyceps, deer antler and lingzhi tonics in vegicaps.
+- [Beauty & Wellness](https://technextmarketing.github.io/hst-medical-website/shop/beauty-wellness/): Squalene, pearl powder, crocodile oil, NMN and hair support from Heritage® and HST Medical®.
+- [Kids Supplements](https://technextmarketing.github.io/hst-medical-website/shop/kids/): Zoo-Vite® gummies and jelly sticks for immunity, eyes, brain and daily vitamins.
+- [Alertness, Memory & Vision](https://technextmarketing.github.io/hst-medical-website/shop/alertness-memory-vision/): Omega-3, DHA, eye health and ginkgo formulas.
+- [Stress, Anxiety & Sleep](https://technextmarketing.github.io/hst-medical-website/shop/stress-sleep/): Magnesium glycinate and pharmaceutical-grade melatonin.
+- [Heart, Liver, Urinary & Vitality](https://technextmarketing.github.io/hst-medical-website/shop/heart-liver-vitality/): Men's vitality, liver, urinary and women's health formulas.
+
+## Featured products (Premium Pain Relief; Cough, Cold & Flu)
+- [Rheuma-Salve® Pain Relief Balm](https://technextmarketing.github.io/hst-medical-website/products/rheuma-salve-balm/): Extra-Strength Pain Relief Balm. 50g (also 20g, value & travel packs). S$10.10
+- [Rheuma-Salve® Crème](https://technextmarketing.github.io/hst-medical-website/products/rheuma-salve-creme/): Rapid & Deep Penetrating Pain Relief. 50g. S$10.10
+- [Rheuma-Salve® Liniment](https://technextmarketing.github.io/hst-medical-website/products/rheuma-salve-liniment/): Roll-on Pain Relief. 10ml. S$6.05
+- [Rheuma-Salve® Pain Relief Patch (Cool)](https://technextmarketing.github.io/hst-medical-website/products/rheuma-salve-pain-relief-patch-cool/): Experience rapid, cooling on-the-spot relief. 8 patches, 10 × 7 cm. S$10.10
+- [Rheuma-Salve® On-the-Go Medi-Stick](https://technextmarketing.github.io/hst-medical-website/products/rheuma-salve-medi-stick/): On-the-Go Relief. 15g. S$13.00
+- [Alievaid Herbal Drops](https://technextmarketing.github.io/hst-medical-website/products/alievaid-herbal-drops/): Cough & Sore Throat Relief. 12 lozenges. S$4.95
+- [Cough Alievaid Herbal Lintus](https://technextmarketing.github.io/hst-medical-website/products/cough-alievaid-herbal-lintus/): Cough Relief. 120ml. S$10.10
+- [Flu Gard Herbal Remedy](https://technextmarketing.github.io/hst-medical-website/products/flu-gard/): Cold and Flu Relief. 30 vegicaps. S$22.30
+- [Ivy Leaf Cough Syrup](https://technextmarketing.github.io/hst-medical-website/products/ivy-leaf-cough-syrup/): with Immunity Support. 12 sachets × 10ml. S$11.90
+- [Ivy Leaf Drops](https://technextmarketing.github.io/hst-medical-website/products/ivy-leaf-drops/): Cough & Sore Throat Relief. 12 lozenges. S$4.95
+- [Sinus Clear 2-in-1 Nasal Inhaler](https://technextmarketing.github.io/hst-medical-website/products/sinus-clear-2-in-1/): Relief from blocked nose and headaches. 2ml. S$3.50
+
+## All products
+- [American Ginseng](https://technextmarketing.github.io/hst-medical-website/products/american-ginseng/): Heritage®, 60 vegicaps
+- [Cordyceps CS-4](https://technextmarketing.github.io/hst-medical-website/products/cordyceps-cs-4/): Heritage®, 60 vegicaps
+- [Deer Antler](https://technextmarketing.github.io/hst-medical-website/products/deer-antler/): Heritage®, 60 vegicaps
+- [Korean Red Ginseng](https://technextmarketing.github.io/hst-medical-website/products/korean-red-ginseng/): Heritage®, 60 vegicaps
+- [Lingzhi Cracked Spores Plus](https://technextmarketing.github.io/hst-medical-website/products/lingzhi-cracked-spores/): Heritage®, 60 vegicaps
+- [Deep Sea Squalene](https://technextmarketing.github.io/hst-medical-website/products/deep-sea-squalene/): Heritage®, 200 softgels
+- [Pure Medicinal Pearl Powder](https://technextmarketing.github.io/hst-medical-website/products/pearl-powder/): Heritage®, 60 vegicaps
+- [Shou Wu Hair Plus](https://technextmarketing.github.io/hst-medical-website/products/shou-wu-hair-plus/): HST Medical®, 80 vegicaps
+- [Crocodile Pure Skin Oil](https://technextmarketing.github.io/hst-medical-website/products/crocodile-pure-skin-oil/): Heritage®, 50ml
+- [Age-Defying NMN Pearl & Collagen](https://technextmarketing.github.io/hst-medical-website/products/age-defying-nmn/): Heritage®, 30 sachets
+- [Gold Lion Rheumatic Oil](https://technextmarketing.github.io/hst-medical-website/products/gold-lion-rheumatic-oil/): Heritage®, 60ml
+- [Safflower Red Flower Oil (Hung Far Oil)](https://technextmarketing.github.io/hst-medical-website/products/safflower-red-flower-oil/): Heritage®, 60ml
+- [Qian Li Zhui Feng Oil](https://technextmarketing.github.io/hst-medical-website/products/qian-li-zhui-feng-oil/): Heritage®, 60ml
+- [Zoo-Vite® “Perky Penguin” Elderberry Gummies](https://technextmarketing.github.io/hst-medical-website/products/zoo-vite-elderberry-gummies/): Zoo-Vite®, 60 gummies
+- [Zoo-Vite® “Inspector Charley” Lutein Jelly](https://technextmarketing.github.io/hst-medical-website/products/zoo-vite-lutein-jelly/): Zoo-Vite®, 30 sticks
+- [Zoo-Vite® “Safari Buddies” Multivitamin Gummies](https://technextmarketing.github.io/hst-medical-website/products/zoo-vite-multivitamin-gummies/): Zoo-Vite®, 60 gummies
+- [Zoo-Vite® “Super Panda” Immune Jelly](https://technextmarketing.github.io/hst-medical-website/products/zoo-vite-immune-jelly/): Zoo-Vite®, 30 sticks
+- [Zoo-Vite® “Professor Skippy” DHA Jelly](https://technextmarketing.github.io/hst-medical-website/products/zoo-vite-dha-jelly/): Zoo-Vite®, 30 sticks
+- [Arthro Gard Advanced Formula](https://technextmarketing.github.io/hst-medical-website/products/arthro-gard/): HST Medical®, 90 capsules
+- [CurQmax Turmeric-Boswellia Complex](https://technextmarketing.github.io/hst-medical-website/products/curqmax/): HST Medical®, 60 vegicaps
+- [Maxi-Cal](https://technextmarketing.github.io/hst-medical-website/products/maxi-cal/): HST Medical®, 180 vegi softgels
+- [Vitamin D3 + K2](https://technextmarketing.github.io/hst-medical-website/products/vitamin-d3-k2/): HST Medical®, 100 capsules
+- [AlgaOmega](https://technextmarketing.github.io/hst-medical-website/products/algaomega/): HST Medical®, 60 mini softgels
+- [Clear Eyes Plus](https://technextmarketing.github.io/hst-medical-website/products/clear-eyes-plus/): HST Medical®, 60 vegicaps
+- [DHA 600](https://technextmarketing.github.io/hst-medical-website/products/dha-600/): HST Medical®, 90 mini softgels
+- [Fish Oil Minigels High Strength Omega-3](https://technextmarketing.github.io/hst-medical-website/products/fish-oil-minigels/): HST Medical®, 320 mini softgels
+- [Max-Omega High Potency Omega-3 with D3](https://technextmarketing.github.io/hst-medical-website/products/max-omega/): HST Medical®, 120 mini softgels
+- [Neuro Gard Ginkgo Biloba + B Vitamins](https://technextmarketing.github.io/hst-medical-website/products/neuro-gard/): HST Medical®, 60 vegicaps
+- [Magnesium Glycinate](https://technextmarketing.github.io/hst-medical-website/products/magnesium-glycinate/): HST Medical®, 60 vegicaps
+- [Melatonin 5mg](https://technextmarketing.github.io/hst-medical-website/products/melatonin-5mg/): HST Medical®, 30 vegicaps
+- [Sleep Aid Melatonin 10mg](https://technextmarketing.github.io/hst-medical-website/products/sleep-aid-melatonin-10mg/): HST Medical®, 30 vegicaps
+- [Sleep Fast Melatonin Gummies 5mg](https://technextmarketing.github.io/hst-medical-website/products/sleep-fast-melatonin-gummies/): HST Medical®, 60 gummies
+- [Boost Immune C1000mg + Bs + D3 + Zinc](https://technextmarketing.github.io/hst-medical-website/products/boost-immune/): HST Medical®, 48 effervescent tablets
+- [C+ Rosehips Time Release](https://technextmarketing.github.io/hst-medical-website/products/c-rosehips/): HST Medical®, 90 time-released tablets
+- [Therra-M Multi-Vitamin with Minerals](https://technextmarketing.github.io/hst-medical-website/products/therra-m/): HST Medical®, 90 tablets
+- [Synbioten Probiotics + Prebiotics + Enzyme](https://technextmarketing.github.io/hst-medical-website/products/synbioten/): HST Medical®, 30 vegicaps
+- [Libi-Max](https://technextmarketing.github.io/hst-medical-website/products/libi-max/): HST Medical®, 90 tablets
+- [Liver Gard Forte](https://technextmarketing.github.io/hst-medical-website/products/liver-gard-forte/): HST Medical®, 60 vegicaps
+- [Uri Gard Herbal Formula](https://technextmarketing.github.io/hst-medical-website/products/uri-gard/): HST Medical®, 80 vegicaps
+- [Women’s Choice](https://technextmarketing.github.io/hst-medical-website/products/womens-choice/): HST Medical®, 60 vegicaps
+
+## Company
+- [About](https://technextmarketing.github.io/hst-medical-website/about/)
+- [Brands](https://technextmarketing.github.io/hst-medical-website/brands/)
+- [Where to buy](https://technextmarketing.github.io/hst-medical-website/where-to-buy/)
+- [Become a reseller](https://technextmarketing.github.io/hst-medical-website/resellers/): trade accounts for pharmacies, clinics, TCM halls and distributors; resellercontact@hstmedical.com
+- [Health notes](https://technextmarketing.github.io/hst-medical-website/blog/)
+- [Contact](https://technextmarketing.github.io/hst-medical-website/contact/)

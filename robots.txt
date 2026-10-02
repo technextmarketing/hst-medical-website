@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /
+
+# Prototype build: crawling disabled until client sign-off.
+Sitemap: https://technextmarketing.github.io/hst-medical-website/sitemap.xml
