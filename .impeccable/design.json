@@ -1,13 +1,14 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-02T09:07:59Z",
+  "generatedAt": "__GENERATED_AT__",
   "title": "Design System: HST Medical",
   "source": {
     "tokens": "assets/css/style.css (:root)",
     "behaviour": "assets/js/site.js",
     "templates": "_src/build.py, _src/parts/head.html, _src/parts/footer.html",
-    "direction": ".impeccable/surfaces/index-html.md (amendment of 2026-10-02 supersedes OWN-WORLD)",
-    "product": "PRODUCT.md (Brand Commitments)",
+    "direction": ".impeccable/surfaces/index-html.md (round-3 amendment of 2026-10-02: online-pharmacy template in the logo's colours)",
+    "product": "PRODUCT.md (Brand Commitments, standing visual preference)",
+    "review": ".impeccable/review/desktop.png, mobile.png, desktop-shop.png, desktop-pdp.png",
     "mode": "scan"
   },
   "extensions": {
@@ -16,531 +17,333 @@
         "role": "neutral",
         "displayName": "Counter White",
         "canonical": "#ffffff",
-        "oklch": "oklch(100.0% 0.000 90)",
-        "tonalRamp": [
-          "oklch(15% 0 0)",
-          "oklch(25% 0 0)",
-          "oklch(37% 0 0)",
-          "oklch(50% 0 0)",
-          "oklch(62% 0 0)",
-          "oklch(74% 0 0)",
-          "oklch(85% 0 0)",
-          "oklch(95% 0 0)"
-        ]
+        "oklch": "oklch(100% 0 0)",
+        "tonalRamp": ["oklch(15% 0 0)", "oklch(25% 0 0)", "oklch(37% 0 0)", "oklch(50% 0 0)", "oklch(62% 0 0)", "oklch(74% 0 0)", "oklch(85% 0 0)", "oklch(95% 0 0)"]
       },
       "surface": {
         "role": "neutral",
-        "displayName": "Soft Paper",
-        "canonical": "#f6f8f7",
-        "oklch": "oklch(97.7% 0.002 165)",
-        "tonalRamp": [
-          "oklch(15% 0 0)",
-          "oklch(25% 0 0)",
-          "oklch(37% 0 0)",
-          "oklch(50% 0 0)",
-          "oklch(62% 0 0)",
-          "oklch(74% 0 0)",
-          "oklch(85% 0 0)",
-          "oklch(95% 0 0)"
-        ]
+        "displayName": "Well Grey",
+        "canonical": "#f4f6f8",
+        "oklch": "oklch(97.3% 0.004 240)",
+        "tonalRamp": ["oklch(15% 0.004 240)", "oklch(25% 0.004 240)", "oklch(37% 0.004 240)", "oklch(50% 0.004 240)", "oklch(62% 0.004 240)", "oklch(74% 0.004 240)", "oklch(85% 0.004 240)", "oklch(95% 0.004 240)"],
+        "contrast": { "muted on surface": "4.9:1" }
       },
       "surface-2": {
         "role": "neutral",
-        "displayName": "Paper Deep",
-        "canonical": "#eef3f0",
-        "oklch": "oklch(96.0% 0.007 160)",
-        "tonalRamp": [
-          "oklch(15% 0 0)",
-          "oklch(25% 0 0)",
-          "oklch(37% 0 0)",
-          "oklch(50% 0 0)",
-          "oklch(62% 0 0)",
-          "oklch(74% 0 0)",
-          "oklch(85% 0 0)",
-          "oklch(95% 0 0)"
-        ]
-      },
-      "mint": {
-        "role": "tint",
-        "displayName": "Pack Mint",
-        "canonical": "#e6f4ec",
-        "oklch": "oklch(95.5% 0.018 161)",
-        "tonalRamp": [
-          "oklch(15% 0.018 161)",
-          "oklch(25% 0.018 161)",
-          "oklch(37% 0.018 161)",
-          "oklch(50% 0.018 161)",
-          "oklch(62% 0.018 161)",
-          "oklch(74% 0.018 161)",
-          "oklch(85% 0.018 161)",
-          "oklch(95% 0.018 161)"
-        ]
-      },
-      "mint-2": {
-        "role": "tint",
-        "displayName": "Pack Mint Deep",
-        "canonical": "#cfe9db",
-        "oklch": "oklch(91.1% 0.033 162)",
-        "tonalRamp": [
-          "oklch(15% 0.033 162)",
-          "oklch(25% 0.033 162)",
-          "oklch(37% 0.033 162)",
-          "oklch(50% 0.033 162)",
-          "oklch(62% 0.033 162)",
-          "oklch(74% 0.033 162)",
-          "oklch(85% 0.033 162)",
-          "oklch(95% 0.033 162)"
-        ]
+        "displayName": "Well Grey Deep",
+        "canonical": "#e9edf1",
+        "oklch": "oklch(94.3% 0.007 240)",
+        "tonalRamp": ["oklch(15% 0.007 240)", "oklch(25% 0.007 240)", "oklch(37% 0.007 240)", "oklch(50% 0.007 240)", "oklch(62% 0.007 240)", "oklch(74% 0.007 240)", "oklch(85% 0.007 240)", "oklch(95% 0.007 240)"]
       },
       "line": {
         "role": "neutral",
         "displayName": "Light Rule",
-        "canonical": "#e6eae8",
-        "oklch": "oklch(93.3% 0.005 165)",
-        "tonalRamp": [
-          "oklch(15% 0 0)",
-          "oklch(25% 0 0)",
-          "oklch(37% 0 0)",
-          "oklch(50% 0 0)",
-          "oklch(62% 0 0)",
-          "oklch(74% 0 0)",
-          "oklch(85% 0 0)",
-          "oklch(95% 0 0)"
-        ]
+        "canonical": "#e5e9ee",
+        "oklch": "oklch(93.0% 0.007 245)",
+        "tonalRamp": ["oklch(15% 0.007 245)", "oklch(25% 0.007 245)", "oklch(37% 0.007 245)", "oklch(50% 0.007 245)", "oklch(62% 0.007 245)", "oklch(74% 0.007 245)", "oklch(85% 0.007 245)", "oklch(95% 0.007 245)"]
       },
       "line-2": {
         "role": "neutral",
         "displayName": "Control Rule",
-        "canonical": "#d5dcd8",
-        "oklch": "oklch(88.8% 0.009 161)",
-        "tonalRamp": [
-          "oklch(15% 0 0)",
-          "oklch(25% 0 0)",
-          "oklch(37% 0 0)",
-          "oklch(50% 0 0)",
-          "oklch(62% 0 0)",
-          "oklch(74% 0 0)",
-          "oklch(85% 0 0)",
-          "oklch(95% 0 0)"
-        ]
+        "canonical": "#d3dae2",
+        "oklch": "oklch(88.3% 0.011 245)",
+        "tonalRamp": ["oklch(15% 0.011 245)", "oklch(25% 0.011 245)", "oklch(37% 0.011 245)", "oklch(50% 0.011 245)", "oklch(62% 0.011 245)", "oklch(74% 0.011 245)", "oklch(85% 0.011 245)", "oklch(95% 0.011 245)"]
       },
       "ink": {
         "role": "neutral",
         "displayName": "Label Ink",
         "canonical": "#1f2933",
         "oklch": "oklch(27.6% 0.023 249)",
-        "tonalRamp": [
-          "oklch(15% 0.023 249)",
-          "oklch(25% 0.023 249)",
-          "oklch(37% 0.023 249)",
-          "oklch(50% 0.023 249)",
-          "oklch(62% 0.023 249)",
-          "oklch(74% 0.023 249)",
-          "oklch(85% 0.023 249)",
-          "oklch(95% 0.023 249)"
-        ]
+        "tonalRamp": ["oklch(15% 0.023 249)", "oklch(25% 0.023 249)", "oklch(37% 0.023 249)", "oklch(50% 0.023 249)", "oklch(62% 0.023 249)", "oklch(74% 0.023 249)", "oklch(85% 0.023 249)", "oklch(95% 0.023 249)"]
+      },
+      "slate": {
+        "role": "secondary",
+        "displayName": "Wordmark Slate",
+        "canonical": "#3d4a57",
+        "oklch": "oklch(39.5% 0.025 245)",
+        "tonalRamp": ["oklch(15% 0.025 245)", "oklch(25% 0.025 245)", "oklch(37% 0.025 245)", "oklch(50% 0.025 245)", "oklch(62% 0.025 245)", "oklch(74% 0.025 245)", "oklch(85% 0.025 245)", "oklch(95% 0.025 245)"],
+        "contrast": { "white on slate": "9.1:1" },
+        "note": "The 'MEDICAL' grey of the logo wordmark; dark controls that are not the one primary action."
+      },
+      "slate-deep": {
+        "role": "secondary",
+        "displayName": "Slate Deep",
+        "canonical": "#2b3640",
+        "oklch": "oklch(31.3% 0.022 245)",
+        "tonalRamp": ["oklch(15% 0.022 245)", "oklch(25% 0.022 245)", "oklch(37% 0.022 245)", "oklch(50% 0.022 245)", "oklch(62% 0.022 245)", "oklch(74% 0.022 245)", "oklch(85% 0.022 245)", "oklch(95% 0.022 245)"],
+        "contrast": { "white on slate-deep": "12.3:1", "#cbd3dc on slate-deep": "about 8:1", "#9aa6b2 on slate-deep": "about 5:1" },
+        "note": "Dark surfaces: strip, prototype notice, toast, footer; hover fill of slate buttons."
       },
       "ink-2": {
         "role": "neutral",
         "displayName": "Soft Ink",
         "canonical": "#4b5563",
         "oklch": "oklch(44.6% 0.026 257)",
-        "tonalRamp": [
-          "oklch(15% 0.026 257)",
-          "oklch(25% 0.026 257)",
-          "oklch(37% 0.026 257)",
-          "oklch(50% 0.026 257)",
-          "oklch(62% 0.026 257)",
-          "oklch(74% 0.026 257)",
-          "oklch(85% 0.026 257)",
-          "oklch(95% 0.026 257)"
-        ],
-        "contrast": {
-          "on mint": "passes AA; the grey for mint panels"
-        }
+        "tonalRamp": ["oklch(15% 0.026 257)", "oklch(25% 0.026 257)", "oklch(37% 0.026 257)", "oklch(50% 0.026 257)", "oklch(62% 0.026 257)", "oklch(74% 0.026 257)", "oklch(85% 0.026 257)", "oklch(95% 0.026 257)"],
+        "contrast": { "on magenta": "not allowed; use on-brand-2" }
       },
       "muted": {
         "role": "neutral",
         "displayName": "Muted Grey",
         "canonical": "#6b7280",
         "oklch": "oklch(55.1% 0.023 264)",
-        "tonalRamp": [
-          "oklch(15% 0.023 264)",
-          "oklch(25% 0.023 264)",
-          "oklch(37% 0.023 264)",
-          "oklch(50% 0.023 264)",
-          "oklch(62% 0.023 264)",
-          "oklch(74% 0.023 264)",
-          "oklch(85% 0.023 264)",
-          "oklch(95% 0.023 264)"
-        ],
-        "contrast": {
-          "on bg": "4.8:1",
-          "on surface": "4.5:1",
-          "on mint": "not allowed; use ink-2"
-        }
+        "tonalRamp": ["oklch(15% 0.023 264)", "oklch(25% 0.023 264)", "oklch(37% 0.023 264)", "oklch(50% 0.023 264)", "oklch(62% 0.023 264)", "oklch(74% 0.023 264)", "oklch(85% 0.023 264)", "oklch(95% 0.023 264)"],
+        "contrast": { "on bg": "5.3:1", "on surface": "4.9:1", "on magenta or slate": "not allowed; use on-brand-2 or white" }
       },
       "brand": {
         "role": "primary",
         "displayName": "HST Magenta",
         "canonical": "#dd1860",
         "oklch": "oklch(58.2% 0.223 8)",
-        "tonalRamp": [
-          "oklch(15% 0.080 8)",
-          "oklch(25% 0.080 8)",
-          "oklch(37% 0.223 8)",
-          "oklch(50% 0.223 8)",
-          "oklch(62% 0.223 8)",
-          "oklch(74% 0.223 8)",
-          "oklch(85% 0.223 8)",
-          "oklch(95% 0.080 8)"
-        ],
-        "contrast": {
-          "white on brand": "4.8:1"
-        }
+        "tonalRamp": ["oklch(15% 0.080 8)", "oklch(25% 0.080 8)", "oklch(37% 0.223 8)", "oklch(50% 0.223 8)", "oklch(62% 0.223 8)", "oklch(74% 0.223 8)", "oklch(85% 0.223 8)", "oklch(95% 0.080 8)"],
+        "contrast": { "white on brand": "4.8:1" },
+        "note": "Logo roundel colour sampled from the live site. Action fills (Bag, .btn-stamp) and thin marks (meter, step bar, pack ring, caret)."
       },
       "brand-deep": {
         "role": "primary",
-        "displayName": "Magenta Ink",
+        "displayName": "Hero Magenta",
         "canonical": "#b3124c",
         "oklch": "oklch(49.7% 0.190 9)",
-        "tonalRamp": [
-          "oklch(15% 0.080 9)",
-          "oklch(25% 0.080 9)",
-          "oklch(37% 0.190 9)",
-          "oklch(50% 0.190 9)",
-          "oklch(62% 0.190 9)",
-          "oklch(74% 0.190 9)",
-          "oklch(85% 0.190 9)",
-          "oklch(95% 0.080 9)"
-        ],
-        "contrast": {
-          "on bg": "6.8:1"
-        }
+        "tonalRamp": ["oklch(15% 0.080 9)", "oklch(25% 0.080 9)", "oklch(37% 0.190 9)", "oklch(50% 0.190 9)", "oklch(62% 0.190 9)", "oklch(74% 0.190 9)", "oklch(85% 0.190 9)", "oklch(95% 0.080 9)"],
+        "contrast": { "white on brand-deep": "6.7:1", "on-brand-2 on brand-deep": "9.9:1" },
+        "note": "The field: header band, hero block, brand band, theme-color; hover of primary button and Bag."
+      },
+      "brand-ink": {
+        "role": "primary",
+        "displayName": "Magenta Ink",
+        "canonical": "#a8114a",
+        "oklch": "oklch(47.5% 0.190 8)",
+        "tonalRamp": ["oklch(15% 0.080 8)", "oklch(25% 0.080 8)", "oklch(37% 0.190 8)", "oklch(50% 0.190 8)", "oklch(62% 0.190 8)", "oklch(74% 0.190 8)", "oklch(85% 0.190 8)", "oklch(95% 0.080 8)"],
+        "contrast": { "on bg": "7.2:1", "on brand-tint": "6.5:1" },
+        "note": "Magenta as text: links, active nav label, stamps, fact figures, ticks, asterisk, bag count digits, .btn-light label."
       },
       "brand-tint": {
         "role": "primary",
         "displayName": "Magenta Tint",
         "canonical": "#fdeef3",
         "oklch": "oklch(96.2% 0.017 355)",
-        "tonalRamp": [
-          "oklch(15% 0.017 355)",
-          "oklch(25% 0.017 355)",
-          "oklch(37% 0.017 355)",
-          "oklch(50% 0.017 355)",
-          "oklch(62% 0.017 355)",
-          "oklch(74% 0.017 355)",
-          "oklch(85% 0.017 355)",
-          "oklch(95% 0.017 355)"
-        ]
+        "tonalRamp": ["oklch(15% 0.017 355)", "oklch(25% 0.017 355)", "oklch(37% 0.017 355)", "oklch(50% 0.017 355)", "oklch(62% 0.017 355)", "oklch(74% 0.017 355)", "oklch(85% 0.017 355)", "oklch(95% 0.017 355)"]
+      },
+      "brand-tint-2": {
+        "role": "primary",
+        "displayName": "Magenta Tint Deep",
+        "canonical": "#fbdce6",
+        "oklch": "oklch(91.5% 0.035 355)",
+        "tonalRamp": ["oklch(15% 0.035 355)", "oklch(25% 0.035 355)", "oklch(37% 0.035 355)", "oklch(50% 0.035 355)", "oklch(62% 0.035 355)", "oklch(74% 0.035 355)", "oklch(85% 0.035 355)", "oklch(95% 0.035 355)"],
+        "note": "Selection highlight; hover of stamped chips and the pain-relief shelf tile."
+      },
+      "on-brand": {
+        "role": "on-primary",
+        "displayName": "On Magenta",
+        "canonical": "#ffffff",
+        "oklch": "oklch(100% 0 0)",
+        "tonalRamp": ["oklch(15% 0 0)", "oklch(25% 0 0)", "oklch(37% 0 0)", "oklch(50% 0 0)", "oklch(62% 0 0)", "oklch(74% 0 0)", "oklch(85% 0 0)", "oklch(95% 0 0)"],
+        "note": "Headings, check text and button labels on a magenta field."
+      },
+      "on-brand-2": {
+        "role": "on-primary",
+        "displayName": "On Magenta Soft",
+        "canonical": "#ffd6e3",
+        "oklch": "oklch(89.5% 0.050 358)",
+        "tonalRamp": ["oklch(15% 0.050 358)", "oklch(25% 0.050 358)", "oklch(37% 0.050 358)", "oklch(50% 0.050 358)", "oklch(62% 0.050 358)", "oklch(74% 0.050 358)", "oklch(85% 0.050 358)", "oklch(95% 0.050 358)"],
+        "contrast": { "on brand-deep": "9.9:1" },
+        "note": "The only secondary text colour on magenta: hero dose, band intros, .small on the brand band, strip ticks, prototype notice text."
+      },
+      "mint": {
+        "role": "tint",
+        "displayName": "Pack Mint",
+        "canonical": "#e6f4ec",
+        "oklch": "oklch(95.5% 0.018 161)",
+        "tonalRamp": ["oklch(15% 0.018 161)", "oklch(25% 0.018 161)", "oklch(37% 0.018 161)", "oklch(50% 0.018 161)", "oklch(62% 0.018 161)", "oklch(74% 0.018 161)", "oklch(85% 0.018 161)", "oklch(95% 0.018 161)"],
+        "note": "Reserved. Defined on :root but no rule in style.css uses var(--mint); .band.mint resolves to surface."
       },
       "gold-ink": {
         "role": "brand-mark",
         "displayName": "Heritage Gold Ink",
         "canonical": "#7f6133",
         "oklch": "oklch(51.3% 0.074 77)",
-        "tonalRamp": [
-          "oklch(15% 0.074 77)",
-          "oklch(25% 0.074 77)",
-          "oklch(37% 0.074 77)",
-          "oklch(50% 0.074 77)",
-          "oklch(62% 0.074 77)",
-          "oklch(74% 0.074 77)",
-          "oklch(85% 0.074 77)",
-          "oklch(95% 0.074 77)"
-        ]
+        "tonalRamp": ["oklch(15% 0.074 77)", "oklch(25% 0.074 77)", "oklch(37% 0.074 77)", "oklch(50% 0.074 77)", "oklch(62% 0.074 77)", "oklch(74% 0.074 77)", "oklch(85% 0.074 77)", "oklch(95% 0.074 77)"]
       },
       "green-ink": {
         "role": "brand-mark",
         "displayName": "Zoo-Vite Green Ink",
         "canonical": "#226826",
         "oklch": "oklch(45.8% 0.122 144)",
-        "tonalRamp": [
-          "oklch(15% 0.080 144)",
-          "oklch(25% 0.080 144)",
-          "oklch(37% 0.122 144)",
-          "oklch(50% 0.122 144)",
-          "oklch(62% 0.122 144)",
-          "oklch(74% 0.122 144)",
-          "oklch(85% 0.122 144)",
-          "oklch(95% 0.080 144)"
-        ]
+        "tonalRamp": ["oklch(15% 0.080 144)", "oklch(25% 0.080 144)", "oklch(37% 0.122 144)", "oklch(50% 0.122 144)", "oklch(62% 0.122 144)", "oklch(74% 0.122 144)", "oklch(85% 0.122 144)", "oklch(95% 0.080 144)"]
       },
       "error": {
         "role": "semantic",
         "displayName": "Error Red",
         "canonical": "#b42318",
         "oklch": "oklch(50.0% 0.182 30)",
-        "tonalRamp": [
-          "oklch(15% 0.080 30)",
-          "oklch(25% 0.080 30)",
-          "oklch(37% 0.182 30)",
-          "oklch(50% 0.182 30)",
-          "oklch(62% 0.182 30)",
-          "oklch(74% 0.182 30)",
-          "oklch(85% 0.182 30)",
-          "oklch(95% 0.080 30)"
-        ]
+        "tonalRamp": ["oklch(15% 0.080 30)", "oklch(25% 0.080 30)", "oklch(37% 0.182 30)", "oklch(50% 0.182 30)", "oklch(62% 0.182 30)", "oklch(74% 0.182 30)", "oklch(85% 0.182 30)", "oklch(95% 0.080 30)"]
       }
     },
     "typographyMeta": {
-      "display": {
-        "displayName": "Display (h1)",
-        "purpose": "Page and hero headline. One per page. Never preceded by an eyebrow."
-      },
-      "headline": {
-        "displayName": "Headline (h2)",
-        "purpose": "Band and section headings, checkout step questions."
-      },
-      "title": {
-        "displayName": "Title (h3)",
-        "purpose": "Product names on cards, panel titles."
-      },
-      "subtitle": {
-        "displayName": "Subtitle (h4)",
-        "purpose": "Minor headings inside panels; semibold, no negative tracking."
-      },
-      "lead": {
-        "displayName": "Lead",
-        "purpose": "Page-head intro and the hero dose line (the hero variant is 1.15rem/1.55)."
-      },
-      "body": {
-        "displayName": "Body",
-        "purpose": "Everything else; 17px floor for 45+ readers, tabular numerals site-wide."
-      },
-      "small": {
-        "displayName": "Small",
-        "purpose": "Captions, item codes, incl. GST, legal; muted grey only on white or surface."
-      },
-      "label": {
-        "displayName": "Table / filter label",
-        "purpose": "Compare-table column heads, filter group names, pack-tile sublines."
-      },
-      "price": {
-        "displayName": "Price",
-        "purpose": "The large price on the product page; reprinted on pack change."
-      }
+      "display": { "displayName": "Display (h1)", "purpose": "Hero headline in white on magenta (14ch) and inner-page h1s at smaller clamps. One per page. Never preceded by an eyebrow." },
+      "headline": { "displayName": "Headline (h2)", "purpose": "Band and section headings; white on the brand band." },
+      "title": { "displayName": "Title (h3)", "purpose": "Panel titles and brand-band h3s; product-card names use 1.08rem/1.3 at the same weight." },
+      "subtitle": { "displayName": "Subtitle (h4)", "purpose": "Minor headings inside panels, tile names, the hero float card title; semibold, no negative tracking." },
+      "lead": { "displayName": "Lead", "purpose": "Page-head intro in soft ink; the hero dose is the same role at 1.15rem/1.55 in on-brand-2." },
+      "body": { "displayName": "Body", "purpose": "Everything else; 17px floor for 45+ readers, tabular numerals site-wide." },
+      "small": { "displayName": "Small", "purpose": "Captions, item codes, incl. GST, sublines, strip items, legal; muted grey only on white or grey wells." },
+      "label": { "displayName": "Table / filter label", "purpose": "Compare-table column heads, filter group names; nav links are 0.93rem/500." },
+      "price": { "displayName": "Price", "purpose": "The large product-page price, reprinted on pack change; fact figures are 1.5rem/700 in magenta ink." },
+      "watermark": { "displayName": "Watermark", "purpose": "The single word RELIEF at 9% white across the hero block's bottom edge; the only use of weight 800; aria-hidden." }
     },
     "fontSource": {
       "family": "Archivo",
-      "url": "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..900&display=swap",
-      "loaded_axes": "wdth 75..100, wght 400..900 (variable)",
-      "used_weights": [
-        400,
-        500,
-        600,
-        700
-      ],
-      "used_width": "100 (normal); the narrow axis is loaded but never used after the client's lighter rendition",
+      "url": "https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap",
+      "loaded_axes": "wght 400, 500, 600, 700, 800 (static instances; the width axis is no longer requested)",
+      "used_weights": [400, 500, 600, 700, 800],
+      "used_width": "100 (normal)",
       "fallback": "\"Helvetica Neue\", Arial, sans-serif",
       "features": "font-variant-numeric: tabular-nums on body; -webkit-font-smoothing: antialiased",
       "wp_note": "WP-MAPPING.md still names Fraunces; the built prototype uses Archivo. Reconcile when porting."
     },
     "shadows": [
-      {
-        "name": "shadow",
-        "value": "0 6px 20px -14px rgba(31,41,51,.18)",
-        "purpose": "The only shadow. Panels inside .band.paper / .band.mint bands (border becomes transparent), the open mobile nav, and the hover lift on counters, shelf tiles and product cards."
-      },
-      {
-        "name": "toast-shadow",
-        "value": "0 10px 30px -12px rgba(0,0,0,.4)",
-        "purpose": "Undo toast only; it floats over the page."
-      },
-      {
-        "name": "pack-radio-dot",
-        "value": "inset 0 0 0 3px #fff",
-        "purpose": "Inner ring of the checked pack radio; a mark, not a shadow."
-      }
+      { "name": "shadow", "value": "0 10px 30px -18px rgba(31,41,51,.25)", "purpose": "Soft float: the white header pill on the magenta band, the hero floating product card, the open mobile nav sheet." },
+      { "name": "pack-lift", "value": "0 24px 50px -20px rgba(0,0,0,.35)", "purpose": "The hero pack card only, so the jar stands on the magenta field." },
+      { "name": "toast-shadow", "value": "0 10px 30px -12px rgba(0,0,0,.4)", "purpose": "Undo toast only." },
+      { "name": "pack-radio-dot", "value": "inset 0 0 0 3px #fff", "purpose": "Inner ring of the checked pack radio; a mark, not a shadow." },
+      { "name": "none-on-cards", "value": "none", "purpose": "Panels, product cards, shop-by-need tiles, shelf tiles and fact cards never cast a shadow, at rest or on hover." }
     ],
     "motion": [
-      {
-        "name": "ease",
-        "value": "cubic-bezier(.2,.7,.2,1)",
-        "purpose": "The one easing curve."
-      },
-      {
-        "name": "t",
-        "value": ".18s",
-        "purpose": "Default state transition: background, color, border-color, transform, opacity on buttons, chips, nav, pack tiles, cards."
-      },
-      {
-        "name": "feed",
-        "value": "animation: feed .4s var(--ease); 0% opacity .25 -> 100% opacity 1",
-        "purpose": "The authored moment: choosing a pack size re-prints the label (.print elements: price, pack line, item code) when [data-pdp] gets .printing. JS skips the class under prefers-reduced-motion."
-      },
-      {
-        "name": "hover-lift",
-        "value": "transform: translateY(-2px) + box-shadow var(--shadow)",
-        "purpose": "Counters, shelf tiles, product cards."
-      },
-      {
-        "name": "card-image-zoom",
-        "value": "transform .3s var(--ease); scale(1.03) on hover",
-        "purpose": "Product card thumbnail."
-      },
-      {
-        "name": "meter-fill",
-        "value": "transform .3s var(--ease); scaleX(0..1) from the left",
-        "purpose": "Free-delivery meter in the bag summary."
-      },
-      {
-        "name": "accordion-plus",
-        "value": "transform .25s var(--ease); rotate(45deg) when open",
-        "purpose": "The plus icon on details.acc summaries."
-      },
-      {
-        "name": "button-press",
-        "value": "transform: scale(.985) on :active",
-        "purpose": "All .btn."
-      },
-      {
-        "name": "added-state",
-        "value": ".is-added for 1600ms via JS: ink background, white text, tick + 'In your bag'",
-        "purpose": "Add-to-bag confirmation on the button itself."
-      },
-      {
-        "name": "reduced-motion",
-        "value": "@media (prefers-reduced-motion: reduce) { .printing .print{animation:none} transitions -> .01ms }",
-        "purpose": "State changes still land; only the movement is removed."
-      }
+      { "name": "ease", "value": "cubic-bezier(.2,.7,.2,1)", "purpose": "The one easing curve." },
+      { "name": "t", "value": ".18s", "purpose": "Default state transition: background, color, border-color, transform, opacity on buttons, chips, nav, pack tiles, tiles, cards." },
+      { "name": "feed", "value": "animation: feed .4s var(--ease); 0% opacity .25 -> 100% opacity 1", "purpose": "The authored moment: choosing a pack size re-prints the label (.print elements: price, pack line, item code) when [data-pdp] gets .printing. JS skips the class under prefers-reduced-motion." },
+      { "name": "tile-lift", "value": "transform: translateY(-3px); well background surface -> surface-2", "purpose": "Shop-by-need tiles and product cards on hover. No shadow." },
+      { "name": "shelf-lift", "value": "transform: translateY(-2px); background surface -> surface-2", "purpose": "Shelf range tiles on hover." },
+      { "name": "card-image-zoom", "value": "transform .3s var(--ease); scale(1.04) on hover", "purpose": "Product card packshot inside its grey well." },
+      { "name": "float-go", "value": "background brand-tint -> brand, color brand-ink -> #fff", "purpose": "The arrow disc on the hero floating product card when the card is hovered." },
+      { "name": "meter-fill", "value": "transform .3s var(--ease); scaleX(0..1) from the left", "purpose": "Free-delivery meter in the bag summary." },
+      { "name": "accordion-plus", "value": "transform .25s var(--ease); rotate(45deg) when open", "purpose": "The plus icon on details.acc summaries." },
+      { "name": "button-press", "value": "transform: scale(.985) on :active", "purpose": "All .btn." },
+      { "name": "added-state", "value": ".is-added for 1600ms via JS: ink background, white text, tick + 'In your bag'", "purpose": "Add-to-bag confirmation on the button itself." },
+      { "name": "reduced-motion", "value": "@media (prefers-reduced-motion: reduce) { .printing .print{animation:none} .tab,.btn,.pack label,.plabel,.plabel .img img,.meter i,.counters a .tile,.shelf a{transition-duration:.01ms} }", "purpose": "State changes still land; only the movement is removed." }
     ],
     "focus": {
       "global": "outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 4px on :focus-visible",
       "inputs": ".search input:focus and .form controls: outline 2px solid var(--ink), outline-offset 1px",
+      "header-search": ".hsearch:focus-within: outline 2px solid var(--ink), outline-offset 1px (the inner input has outline 0)",
       "pack-tiles": ".pack input:focus-visible + label: outline 2px solid var(--ink), offset 3px",
       "step-heading": ".step h2 receives tabindex=-1 focus on step change with outline:0 (announced via aria-live instead)"
     },
     "breakpoints": [
-      {
-        "name": "nav-collapse",
-        "value": "960px",
-        "effect": "Nav hides behind the 44px pill toggle; opens as a white sheet with the soft shadow."
-      },
-      {
-        "name": "hero-stack",
-        "value": "900px",
-        "effect": "Hero becomes one column; grid12 children span full width; counters go 2-up with the fifth full-width; Start-here stamp moves inline."
-      },
-      {
-        "name": "pdp-stack",
-        "value": "860px",
-        "effect": "Product page, bag grid and footer (2 columns) stack; pack image stops being sticky, max-height 320px."
-      },
-      {
-        "name": "facts-trade",
-        "value": "760px",
-        "effect": "Facts rows regain top rules; trade block goes one column."
-      },
-      {
-        "name": "compare-stack",
-        "value": "720px",
-        "effect": "Compare table hides its head and renders each row as a 72px thumb + text block with 'For:' and 'Use:' prefixes."
-      },
-      {
-        "name": "bag-line",
-        "value": "640px",
-        "effect": "Bag line goes 64px thumb + text; qty under the name; sum left-aligned."
-      },
-      {
-        "name": "notes",
-        "value": "560px",
-        "effect": "Health-notes rows stack date over title."
-      },
-      {
-        "name": "narrow",
-        "value": "480px",
-        "effect": "Field dt/dd stack; footer one column."
-      }
+      { "name": "search-hide", "value": "1100px", "effect": "Header search field hides; the shop page keeps its own search." },
+      { "name": "nav-collapse", "value": "960px", "effect": "Nav hides behind the 44px pill toggle and opens as a white 14px sheet with the soft float shadow; logo 36px; header band padding .6rem." },
+      { "name": "hero-stack", "value": "900px", "effect": "Hero body becomes one column; pack card 300px; float card becomes a static full-width card; tiles go 3-up with .75rem gaps; watermark 22vw; grid12 children span full width." },
+      { "name": "pdp-stack", "value": "860px", "effect": "Product page, bag grid and footer (2 columns) stack; pack figure stops being sticky at 260px with top corners rounded." },
+      { "name": "facts-trade", "value": "760px", "effect": "Trade block goes one column." },
+      { "name": "compare-stack", "value": "720px", "effect": "Compare table hides its head and renders each row as a 72px thumb + text block with 'For:' and 'Use:' prefixes." },
+      { "name": "bag-line", "value": "640px", "effect": "Bag line goes 64px thumb + text; qty under the name; sum left-aligned." },
+      { "name": "notes", "value": "560px", "effect": "Health-notes rows stack date over title." },
+      { "name": "tiles-2up", "value": "520px", "effect": "Shop-by-need tiles go 2-up." },
+      { "name": "narrow", "value": "480px", "effect": "Field dt/dd stack; footer one column." }
     ],
     "layout": {
-      "container": "min(1200px, 100% - 2*gutter)",
-      "grid": "12 columns, minmax(0,1fr), gap = gutter (.grid12 on inner pages)",
+      "container": "min(1240px, 100% - 2*gutter)",
+      "grid": "12 columns, minmax(0,1fr), gap = gutter (.grid12 on inner pages and inside the brand band)",
       "gutter": "clamp(16px, 2.5vw, 32px)",
-      "band": "clamp(2.5rem, 5vw, 4.5rem) vertical padding; alternate .paper (surface) and .mint",
-      "hero": "7fr / 5fr columns, then a 5-up counters row",
-      "pdp": "5fr / 7fr, pack figure sticky at top 92px",
+      "header": "sticky magenta band (.9rem top padding) holding a 68px white pill bar 1240px wide; inner pages paint the lower half of the band white (.site-header::after), the home page does not",
+      "hero": "full-bleed magenta block, radius 0 0 20px 20px, body 6fr / 6fr centred, min-height min(560px,70vh), padding clamp(1.5rem,4vw,3.5rem) top / clamp(2rem,5vw,4rem) bottom; six tiles directly under it on white; slate strip after the tiles",
+      "band": "clamp(2.5rem, 5vw, 4.5rem) vertical padding; alternate white and .paper (surface); .mint also resolves to surface; one .brand (brand-deep) band per page",
+      "pdp": "5fr / 7fr, pack figure in a grey well sticky at top 110px",
       "bag": "7fr / 5fr",
-      "footer": "1.5fr 1fr 1fr 1fr",
-      "measure": "p, li, dd max-width 68ch; .article 70ch; hero h1 16ch; pdp h1 18ch"
+      "footer": "1.5fr 1fr 1fr 1fr on slate-deep",
+      "measure": "p, li, dd max-width 68ch; .article 70ch; hero h1 14ch; hero dose 46ch; pdp h1 18ch; page-head lead 60ch"
     },
     "iconography": {
-      "style": "one family of 1.5px stroke SVG, round caps and joins, 20px (18px inside buttons), currentColor",
-      "set": [
-        "tick",
-        "plus",
-        "arrow",
-        "bag",
-        "search",
-        "menu"
-      ],
+      "style": "one family of 1.5px stroke SVG, round caps and joins, 20px (18px inside buttons, 16px in the strip), currentColor",
+      "set": ["tick", "plus", "arrow", "bag", "search", "menu"],
       "rule": "no icon fonts, no filled icons, no icons above headings"
+    },
+    "imagery": {
+      "rule": "Product packshots only, always inside a Well Grey (#f4f6f8) rounded well with mix-blend-mode: multiply. No stock photography of people, no lifestyle imagery, no illustrations.",
+      "wells": "float thumbnail 56px / 10px; compare and bag thumbnails 72px / 10px; shop-by-need tiles square / 14px / 14% padding; product cards square / 14px / 1.25rem padding; product page up to 520px / 14px left corners",
+      "hero": "the one image outside a grey well: the Rheuma-Salve jar on a white 20px card with the pack-lift shadow, fetchpriority=high"
     }
   },
   "components": [
     {
+      "name": "Header bar on magenta band",
+      "kind": "nav",
+      "refersTo": "header-bar",
+      "description": "The sticky white pill floating on the magenta band: logo, need links (active page tinted), grey search pill, magenta Bag with a white count disc.",
+      "html": "<div class=\"ds-hband\"><div class=\"ds-hbar\"><span class=\"ds-logo\"><span class=\"ds-roundel\"></span><b>HST</b><small>MEDICAL</small></span><nav class=\"ds-nav\"><a href=\"#\" class=\"ds-nav-active\">Pain relief</a><a href=\"#\">Cough &amp; cold</a><a href=\"#\">All products</a><a href=\"#\">Where to buy</a></nav><form class=\"ds-hsearch\" role=\"search\"><input type=\"search\" placeholder=\"Search medicines, supplements\" aria-label=\"Search products\"><button type=\"submit\" aria-label=\"Search\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"m20 20-3.5-3.5\"/></svg></button></form><a class=\"ds-bag\" href=\"#\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 8h12l1 12H5z\"/><path d=\"M9 8V6a3 3 0 0 1 6 0v2\"/></svg><span>Bag</span><span class=\"ds-count\">2</span></a></div></div>",
+      "css": ".ds-hband{background:var(--brand-deep,#b3124c);padding:.9rem 1rem 1.25rem;border-radius:0 0 20px 20px;font-family:\"Archivo\",\"Helvetica Neue\",Arial,sans-serif}.ds-hbar{display:flex;align-items:center;gap:.75rem;min-height:68px;background:#fff;border-radius:999px;padding:.4rem .5rem .4rem 1.1rem;box-shadow:0 10px 30px -18px rgba(31,41,51,.25)}.ds-logo{display:inline-flex;align-items:center;gap:.4rem;color:var(--ink,#1f2933);margin-right:.25rem;line-height:1}.ds-roundel{width:30px;height:30px;border-radius:50%;background:var(--brand,#dd1860);display:inline-block}.ds-logo b{font-weight:800;font-size:1.1rem;color:var(--brand,#dd1860)}.ds-logo small{font-size:.6rem;letter-spacing:.12em;color:var(--slate,#3d4a57);font-weight:600}.ds-nav{display:flex;align-items:center;gap:.05rem;margin-right:auto}.ds-nav a{color:var(--ink-2,#4b5563);text-decoration:none;font-weight:500;font-size:.93rem;padding:.55rem .7rem;border-radius:999px;white-space:nowrap;transition:background .18s,color .18s}.ds-nav a:hover{color:var(--ink,#1f2933);background:var(--surface,#f4f6f8)}.ds-nav a:focus-visible{outline:2px solid var(--ink,#1f2933);outline-offset:3px}.ds-nav .ds-nav-active{color:var(--brand-ink,#a8114a);background:var(--brand-tint,#fdeef3)}.ds-hsearch{display:flex;align-items:center;gap:.4rem;min-width:200px;max-width:300px;flex:1 1 220px;background:var(--surface,#f4f6f8);border-radius:999px;padding:0 .5rem 0 .9rem;min-height:44px}.ds-hsearch input{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-size:.92rem;color:var(--ink,#1f2933);min-height:44px;outline:0}.ds-hsearch:focus-within{outline:2px solid var(--ink,#1f2933);outline-offset:1px}.ds-hsearch button{border:0;background:transparent;width:36px;height:36px;display:grid;place-items:center;cursor:pointer;color:var(--ink-2,#4b5563);border-radius:50%}.ds-hsearch button:hover{background:#fff}.ds-bag{display:inline-flex;align-items:center;gap:.45rem;min-height:46px;padding:.4rem 1rem;border-radius:999px;text-decoration:none;font-weight:600;font-size:.95rem;color:#fff;background:var(--brand,#dd1860);transition:background .18s}.ds-bag:hover{background:var(--brand-deep,#b3124c)}.ds-bag:focus-visible{outline:2px solid var(--ink,#1f2933);outline-offset:3px}.ds-count{min-width:1.4rem;height:1.4rem;padding:0 .35rem;display:inline-grid;place-items:center;background:#fff;color:var(--brand-ink,#a8114a);font-size:.78rem;border-radius:999px}"
+    },
+    {
+      "name": "Hero CTAs on magenta (light + ghost)",
+      "kind": "button",
+      "refersTo": "button-light",
+      "description": "The two hero actions on the magenta field: a white pill with magenta-ink text (hover magenta tint) and a translucent-outline ghost pill (hover 12% white).",
+      "html": "<div class=\"ds-on-brand\"><a class=\"ds-btn ds-btn-light\" href=\"#\">Shop pain relief <svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></a><a class=\"ds-btn ds-btn-ghost\" href=\"#\">Cough and cold</a></div>",
+      "css": ".ds-on-brand{display:inline-flex;flex-wrap:wrap;gap:.75rem;padding:1.25rem;background:var(--brand-deep,#b3124c);border-radius:20px}.ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:46px;padding:.65rem 1.3rem;border:1.5px solid var(--line-2,#d3dae2);border-radius:999px;background:#fff;color:var(--ink,#1f2933);font:600 .98rem/1.1 \"Archivo\",\"Helvetica Neue\",Arial,sans-serif;cursor:pointer;text-decoration:none;transition:background .18s,color .18s,border-color .18s,transform .18s}.ds-btn:active{transform:scale(.985)}.ds-btn:focus-visible{outline:2px solid #fff;outline-offset:3px}.ds-btn-light{background:#fff;border-color:#fff;color:var(--brand-ink,#a8114a)}.ds-btn-light:hover{background:var(--brand-tint,#fdeef3);border-color:var(--brand-tint,#fdeef3);color:var(--brand-ink,#a8114a)}.ds-btn-ghost{background:transparent;border-color:rgba(255,255,255,.55);color:#fff}.ds-btn-ghost:hover{background:rgba(255,255,255,.12);border-color:#fff;color:#fff}"
+    },
+    {
       "name": "Primary button (stamp)",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "The one magenta action per screen: Add to bag on the product page, Checkout, Place order, Send enquiry.",
+      "description": "The one magenta action per screen on white: Add to bag on the product page, Checkout, Place order, Send enquiry.",
       "html": "<button class=\"ds-btn ds-btn-stamp\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 8h12l1 12H5z\"/><path d=\"M9 8V6a3 3 0 0 1 6 0v2\"/></svg> Add to bag</button>",
-      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:46px;padding:.65rem 1.25rem;border:1.5px solid var(--line-2, #d5dcd8);border-radius:999px;background:#fff;color:var(--ink, #1f2933);font:600 .98rem/1.1 \"Archivo\",\"Helvetica Neue\",Arial,sans-serif;cursor:pointer;text-decoration:none;transition:background .18s,color .18s,border-color .18s,transform .18s}.ds-btn:hover{border-color:var(--ink, #1f2933);background:var(--surface, #f6f8f7)}.ds-btn:active{transform:scale(.985)}.ds-btn:focus-visible{outline:2px solid var(--ink, #1f2933);outline-offset:3px;border-radius:999px}.ds-btn[disabled]{opacity:.45;cursor:not-allowed;transform:none}.ds-btn-stamp{background:var(--brand, #dd1860);border-color:var(--brand, #dd1860);color:#fff}.ds-btn-stamp:hover{background:var(--brand-deep, #b3124c);border-color:var(--brand-deep, #b3124c);color:#fff}"
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:46px;padding:.65rem 1.3rem;border:1.5px solid var(--line-2,#d3dae2);border-radius:999px;background:#fff;color:var(--ink,#1f2933);font:600 .98rem/1.1 \"Archivo\",\"Helvetica Neue\",Arial,sans-serif;cursor:pointer;text-decoration:none;transition:background .18s,color .18s,border-color .18s,transform .18s}.ds-btn:hover{border-color:var(--ink,#1f2933);background:var(--surface,#f4f6f8)}.ds-btn:active{transform:scale(.985)}.ds-btn:focus-visible{outline:2px solid var(--ink,#1f2933);outline-offset:3px}.ds-btn[disabled]{opacity:.45;cursor:not-allowed;transform:none}.ds-btn-stamp{background:var(--brand,#dd1860);border-color:var(--brand,#dd1860);color:#fff}.ds-btn-stamp:hover{background:var(--brand-deep,#b3124c);border-color:var(--brand-deep,#b3124c);color:#fff}"
     },
     {
-      "name": "Default button",
+      "name": "Dark slate button",
+      "kind": "button",
+      "refersTo": "button-dark",
+      "description": "Wordmark-slate pill for dark controls that are not the primary action: product-card Add to bag (small) and Trade enquiries.",
+      "html": "<button class=\"ds-btn ds-btn-dark ds-btn-sm\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 8h12l1 12H5z\"/><path d=\"M9 8V6a3 3 0 0 1 6 0v2\"/></svg> Add to bag</button> <a class=\"ds-btn ds-btn-dark\" href=\"#\">Trade enquiries</a>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:46px;padding:.65rem 1.3rem;border:1.5px solid var(--line-2,#d3dae2);border-radius:999px;background:#fff;color:var(--ink,#1f2933);font:600 .98rem/1.1 \"Archivo\",\"Helvetica Neue\",Arial,sans-serif;cursor:pointer;text-decoration:none;transition:background .18s,color .18s,border-color .18s,transform .18s}.ds-btn:active{transform:scale(.985)}.ds-btn:focus-visible{outline:2px solid var(--ink,#1f2933);outline-offset:3px}.ds-btn[disabled]{opacity:.45;cursor:not-allowed;transform:none}.ds-btn-dark{background:var(--slate,#3d4a57);border-color:var(--slate,#3d4a57);color:#fff}.ds-btn-dark:hover{background:var(--slate-deep,#2b3640);border-color:var(--slate-deep,#2b3640);color:#fff}.ds-btn-sm{min-height:44px;padding:.5rem 1rem;font-size:.92rem}"
+    },
+    {
+      "name": "Default and quiet buttons",
       "kind": "button",
       "refersTo": "button-default",
-      "description": "White pill with a light rule; the row-level Add to bag in compare tables and cards (.btn-sm) and checkout Continue.",
-      "html": "<button class=\"ds-btn ds-btn-sm\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 8h12l1 12H5z\"/><path d=\"M9 8V6a3 3 0 0 1 6 0v2\"/></svg> Add to bag</button> <button class=\"ds-btn\">Continue to delivery <svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></button>",
-      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:46px;padding:.65rem 1.25rem;border:1.5px solid var(--line-2, #d5dcd8);border-radius:999px;background:#fff;color:var(--ink, #1f2933);font:600 .98rem/1.1 \"Archivo\",\"Helvetica Neue\",Arial,sans-serif;cursor:pointer;text-decoration:none;transition:background .18s,color .18s,border-color .18s,transform .18s}.ds-btn:hover{border-color:var(--ink, #1f2933);background:var(--surface, #f6f8f7)}.ds-btn:active{transform:scale(.985)}.ds-btn:focus-visible{outline:2px solid var(--ink, #1f2933);outline-offset:3px;border-radius:999px}.ds-btn[disabled]{opacity:.45;cursor:not-allowed;transform:none}.ds-btn-sm{min-height:44px;padding:.5rem 1rem;font-size:.92rem}"
-    },
-    {
-      "name": "Quiet button",
-      "kind": "button",
-      "refersTo": "button-quiet",
-      "description": "Soft-paper pill with no visible border; secondary links such as 'The pain relief counter', 'Keep shopping', Back, Ask in store.",
-      "html": "<a class=\"ds-btn ds-btn-quiet\" href=\"#\">The pain relief counter <svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></a>",
-      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:46px;padding:.65rem 1.25rem;border:1.5px solid var(--line-2, #d5dcd8);border-radius:999px;background:#fff;color:var(--ink, #1f2933);font:600 .98rem/1.1 \"Archivo\",\"Helvetica Neue\",Arial,sans-serif;cursor:pointer;text-decoration:none;transition:background .18s,color .18s,border-color .18s,transform .18s}.ds-btn:hover{border-color:var(--ink, #1f2933);background:var(--surface, #f6f8f7)}.ds-btn:active{transform:scale(.985)}.ds-btn:focus-visible{outline:2px solid var(--ink, #1f2933);outline-offset:3px;border-radius:999px}.ds-btn[disabled]{opacity:.45;cursor:not-allowed;transform:none}.ds-btn-quiet{border-color:transparent;background:var(--surface, #f6f8f7)}.ds-btn-quiet:hover{background:var(--surface-2, #eef3f0);border-color:transparent}"
-    },
-    {
-      "name": "Added state",
-      "kind": "button",
-      "refersTo": "button-added",
-      "description": "For 1.6 s after a click the button itself turns ink with a tick and 'In your bag'; no toast for adds.",
-      "html": "<button class=\"ds-btn ds-btn-added\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M20 6 9 17l-5-5\"/></svg> In your bag</button>",
-      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:46px;padding:.65rem 1.25rem;border:1.5px solid var(--line-2, #d5dcd8);border-radius:999px;background:#fff;color:var(--ink, #1f2933);font:600 .98rem/1.1 \"Archivo\",\"Helvetica Neue\",Arial,sans-serif;cursor:pointer;text-decoration:none;transition:background .18s,color .18s,border-color .18s,transform .18s}.ds-btn:hover{border-color:var(--ink, #1f2933);background:var(--surface, #f6f8f7)}.ds-btn:active{transform:scale(.985)}.ds-btn:focus-visible{outline:2px solid var(--ink, #1f2933);outline-offset:3px;border-radius:999px}.ds-btn[disabled]{opacity:.45;cursor:not-allowed;transform:none}.ds-btn-added{background:var(--ink, #1f2933);border-color:var(--ink, #1f2933);color:#fff}"
+      "description": "White pill with a control rule (checkout Continue, compare-table Add) and the grey quiet pill for band-head links, Back, Keep shopping, Ask in store.",
+      "html": "<button class=\"ds-btn\">Continue to delivery <svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></button> <a class=\"ds-btn ds-btn-quiet\" href=\"#\">All 51 products <svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></a> <button class=\"ds-btn ds-btn-added\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M20 6 9 17l-5-5\"/></svg> In your bag</button>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:46px;padding:.65rem 1.3rem;border:1.5px solid var(--line-2,#d3dae2);border-radius:999px;background:#fff;color:var(--ink,#1f2933);font:600 .98rem/1.1 \"Archivo\",\"Helvetica Neue\",Arial,sans-serif;cursor:pointer;text-decoration:none;transition:background .18s,color .18s,border-color .18s,transform .18s}.ds-btn:hover{border-color:var(--ink,#1f2933);background:var(--surface,#f4f6f8)}.ds-btn:active{transform:scale(.985)}.ds-btn:focus-visible{outline:2px solid var(--ink,#1f2933);outline-offset:3px}.ds-btn[disabled]{opacity:.45;cursor:not-allowed;transform:none}.ds-btn-quiet{border-color:transparent;background:var(--surface,#f4f6f8)}.ds-btn-quiet:hover{background:var(--surface-2,#e9edf1);border-color:transparent}.ds-btn-added{background:var(--ink,#1f2933);border-color:var(--ink,#1f2933);color:#fff}"
     },
     {
       "name": "Chip",
       "kind": "chip",
       "refersTo": "chip",
-      "description": "Pill chips for filters, the hero 'Best seller' tab (.stamped) and 404 shortcuts; filter chips carry aria-pressed.",
+      "description": "Grey pill chips with no border for filters and shortcuts; the stamped variant is magenta tint with magenta ink; the pressed filter chip is slate.",
       "html": "<a class=\"ds-chip\" href=\"#\">Cough, Cold &amp; Flu</a> <a class=\"ds-chip ds-chip-stamped\" href=\"#\">Rheuma-Salve&reg; Balm 50g<small>Best seller &middot; S$10.10</small></a> <button class=\"ds-chip ds-chip-pressed\" aria-pressed=\"true\">All products</button>",
-      "css": ".ds-chip{display:inline-flex;flex-direction:column;justify-content:center;gap:.1rem;min-height:44px;padding:.5rem 1rem;background:#fff;border:1px solid var(--line-2, #d5dcd8);border-radius:999px;color:var(--ink, #1f2933);text-decoration:none;font:600 .95rem/1.2 \"Archivo\",\"Helvetica Neue\",Arial,sans-serif;cursor:pointer;transition:border-color .18s,background .18s}.ds-chip small{font-weight:400;color:var(--muted, #6b7280);font-size:.8rem}.ds-chip:hover{border-color:var(--ink, #1f2933);background:var(--surface, #f6f8f7)}.ds-chip:focus-visible{outline:2px solid var(--ink, #1f2933);outline-offset:3px}.ds-chip-stamped{background:var(--brand-tint, #fdeef3);border-color:transparent;color:var(--brand-deep, #b3124c)}.ds-chip-stamped small{color:var(--brand-deep, #b3124c)}.ds-chip-stamped:hover{background:#fbdce6}.ds-chip-pressed{background:var(--ink, #1f2933);color:#fff;border-color:var(--ink, #1f2933);min-height:40px;padding:.35rem .85rem;font-size:.9rem;font-weight:500}"
+      "css": ".ds-chip{display:inline-flex;flex-direction:column;justify-content:center;gap:.1rem;min-height:44px;padding:.5rem 1rem;background:var(--surface,#f4f6f8);border:1px solid transparent;border-radius:999px;color:var(--ink,#1f2933);text-decoration:none;font:500 .95rem/1.2 \"Archivo\",\"Helvetica Neue\",Arial,sans-serif;cursor:pointer;transition:background .18s,border-color .18s}.ds-chip small{font-weight:400;color:var(--muted,#6b7280);font-size:.8rem}.ds-chip:hover{background:var(--surface-2,#e9edf1)}.ds-chip:focus-visible{outline:2px solid var(--ink,#1f2933);outline-offset:3px}.ds-chip-stamped{background:var(--brand-tint,#fdeef3);color:var(--brand-ink,#a8114a);font-weight:600}.ds-chip-stamped small{color:var(--brand-ink,#a8114a)}.ds-chip-stamped:hover{background:var(--brand-tint-2,#fbdce6)}.ds-chip-pressed{background:var(--slate,#3d4a57);color:#fff;padding:.4rem .9rem;font-size:.9rem}.ds-chip-pressed:hover{background:var(--slate,#3d4a57)}"
     },
     {
-      "name": "Navigation + bag",
-      "kind": "nav",
-      "refersTo": "nav-link",
-      "description": "Header links as soft pills; the active page is the only magenta-tinted item. The bag is a pill with a magenta count.",
-      "html": "<nav class=\"ds-nav\"><a href=\"#\" class=\"ds-nav-a ds-nav-active\">Pain relief</a><a href=\"#\" class=\"ds-nav-a\">Cough &amp; cold</a><a href=\"#\" class=\"ds-nav-a\">All products</a><a href=\"#\" class=\"ds-nav-a\">Where to buy</a><a class=\"ds-bag\" href=\"#\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 8h12l1 12H5z\"/><path d=\"M9 8V6a3 3 0 0 1 6 0v2\"/></svg><span>Bag</span><span class=\"ds-count\">2</span></a></nav>",
-      "css": ".ds-nav{display:flex;align-items:center;gap:.1rem;font-family:\"Archivo\",\"Helvetica Neue\",Arial,sans-serif}.ds-nav-a{color:var(--ink-2, #4b5563);text-decoration:none;font-weight:500;font-size:.95rem;padding:.55rem .75rem;border-radius:999px;transition:background .18s,color .18s}.ds-nav-a:hover{color:var(--ink, #1f2933);background:var(--surface, #f6f8f7)}.ds-nav-a:focus-visible{outline:2px solid var(--ink, #1f2933);outline-offset:3px}.ds-nav-active{color:var(--brand-deep, #b3124c);background:var(--brand-tint, #fdeef3)}.ds-bag{margin-left:.75rem;display:inline-flex;align-items:center;gap:.45rem;min-height:44px;padding:.4rem .95rem;border:1.5px solid var(--line-2, #d5dcd8);border-radius:999px;text-decoration:none;font-weight:600;font-size:.95rem;color:var(--ink, #1f2933)}.ds-bag:hover{border-color:var(--ink, #1f2933)}.ds-count{min-width:1.4rem;height:1.4rem;padding:0 .35rem;display:inline-grid;place-items:center;background:var(--brand, #dd1860);color:#fff;font-size:.78rem;border-radius:999px}"
-    },
-    {
-      "name": "Panel (.label)",
+      "name": "Hero floating product card (signature)",
       "kind": "card",
-      "refersTo": "panel",
-      "description": "The universal container: white, 1px light rule, 14px radius, optional head row of muted facts. Inside a tinted band the rule drops and the soft shadow appears.",
-      "html": "<div class=\"ds-panel\"><div class=\"ds-panel-head\"><b>Heritage&reg;</b> <span>Premium Pain Relief</span> <span>Item 410323</span><span class=\"ds-right\">Made in Singapore</span></div><div class=\"ds-panel-body\"><h3>Which pain relief do I need?</h3><p>Rheuma-Salve&reg; has been Singapore's pharmacy-shelf pain relief since 1994.</p></div></div>",
-      "css": ".ds-panel{background:#fff;border:1px solid var(--line, #e6eae8);border-radius:14px;font-family:\"Archivo\",\"Helvetica Neue\",Arial,sans-serif;color:var(--ink, #1f2933);max-width:560px}.ds-panel-head{display:flex;flex-wrap:wrap;gap:.25rem 1rem;align-items:baseline;padding:.75rem 1.5rem;border-bottom:1px solid var(--line, #e6eae8);font-size:.9rem;color:var(--muted, #6b7280)}.ds-panel-head b{font-weight:600;color:var(--gold-ink, #7f6133)}.ds-right{margin-left:auto}.ds-panel-body{padding:1.5rem}.ds-panel-body h3{margin:0 0 .5rem;font-size:1.35rem;font-weight:700;letter-spacing:-.015em;line-height:1.15}.ds-panel-body p{margin:0;font-size:17px;line-height:1.6}.ds-panel-tinted{border-color:transparent;box-shadow:0 6px 20px -14px rgba(31,41,51,.18)}"
+      "refersTo": "hero-float-card",
+      "description": "The small white card anchored to the hero pack card: grey-well thumbnail, product name, best-seller price, and a magenta-tint arrow disc that fills magenta on hover.",
+      "html": "<div class=\"ds-on-brand ds-float-wrap\"><a class=\"ds-float\" href=\"#\"><span class=\"ds-float-img\"></span><span><b>Rheuma-Salve&reg; Balm 50g</b><small>Best seller &middot; S$10.10</small></span><span class=\"ds-go\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></span></a></div>",
+      "css": ".ds-on-brand{display:inline-flex;padding:1.25rem;background:var(--brand-deep,#b3124c);border-radius:20px}.ds-float{background:#fff;color:var(--ink,#1f2933);border-radius:14px;padding:.75rem .9rem .75rem .75rem;display:grid;grid-template-columns:56px 1fr auto;gap:.75rem;align-items:center;text-decoration:none;box-shadow:0 10px 30px -18px rgba(31,41,51,.25);min-width:260px;font-family:\"Archivo\",\"Helvetica Neue\",Arial,sans-serif}.ds-float-img{width:56px;height:56px;background:var(--surface,#f4f6f8);border-radius:10px;display:block}.ds-float b{display:block;font-size:.95rem;line-height:1.2;font-weight:600}.ds-float small{color:var(--muted,#6b7280);font-size:.82rem}.ds-go{width:36px;height:36px;border-radius:50%;background:var(--brand-tint,#fdeef3);color:var(--brand-ink,#a8114a);display:grid;place-items:center;transition:background .18s,color .18s}.ds-float:hover .ds-go{background:var(--brand,#dd1860);color:#fff}.ds-float:focus-visible{outline:2px solid #fff;outline-offset:3px}"
+    },
+    {
+      "name": "Shop-by-need tile (signature)",
+      "kind": "card",
+      "refersTo": "counter-tile",
+      "description": "Square grey well holding a multiply-blended packshot, the need name, a muted subline and, on Pain relief only, the Start-here stamp. Lifts 3px and deepens the grey on hover; no border, no shadow.",
+      "html": "<nav class=\"ds-tiles\"><a href=\"#\" class=\"ds-tile\"><span class=\"ds-well\"></span><span>Pain relief</span><small>Balm, cr&egrave;me, patch, stick</small><span class=\"ds-stamp\">Start here</span></a><a href=\"#\" class=\"ds-tile\"><span class=\"ds-well\"></span><span>Cough and cold</span><small>Lozenges, syrups, inhaler</small></a><a href=\"#\" class=\"ds-tile\"><span class=\"ds-well\"></span><span>Kids</span><small>Gummies and jelly sticks</small></a></nav>",
+      "css": ".ds-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;max-width:520px;font-family:\"Archivo\",\"Helvetica Neue\",Arial,sans-serif}.ds-tile{display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem;text-decoration:none;color:var(--ink,#1f2933);font-weight:600;font-size:1rem}.ds-tile .ds-well{width:100%;aspect-ratio:1/1;background:var(--surface,#f4f6f8);border-radius:14px;display:block;transition:background .18s,transform .18s}.ds-tile:hover .ds-well{background:var(--surface-2,#e9edf1);transform:translateY(-3px)}.ds-tile:focus-visible{outline:2px solid var(--ink,#1f2933);outline-offset:3px}.ds-tile small{font-weight:400;color:var(--muted,#6b7280);font-size:.85rem;line-height:1.3}.ds-stamp{font-size:.72rem;font-weight:600;padding:.2rem .6rem;background:var(--brand-tint,#fdeef3);color:var(--brand-ink,#a8114a);border-radius:999px}"
     },
     {
       "name": "Product card (.plabel)",
       "kind": "card",
       "refersTo": "product-card",
-      "description": "Square soft-paper image well, brand + size line, name, 'For:' line, price with incl. GST, small Add to bag. Lifts 2px with the soft shadow on hover.",
-      "html": "<article class=\"ds-pcard\"><a class=\"ds-pcard-img\" href=\"#\" aria-hidden=\"true\" tabindex=\"-1\"><span class=\"ds-ph\"></span></a><div class=\"ds-pcard-body\"><span class=\"ds-pcard-brand\">Heritage&reg; &middot; 50g</span><h3><a href=\"#\">Rheuma-Salve&reg; Pain Relief Balm</a></h3><p class=\"ds-pcard-for\">For: Deep joint and muscle pain, stiffness, chest congestion</p></div><div class=\"ds-pcard-foot\"><span class=\"ds-pcard-price\">S$10.10<small>incl. GST</small></span><button class=\"ds-btn ds-btn-sm\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 8h12l1 12H5z\"/><path d=\"M9 8V6a3 3 0 0 1 6 0v2\"/></svg> Add to bag</button></div></article>",
-      "css": ".ds-pcard{display:grid;grid-template-rows:auto 1fr auto;width:260px;background:#fff;border:1px solid var(--line, #e6eae8);border-radius:14px;overflow:hidden;font-family:\"Archivo\",\"Helvetica Neue\",Arial,sans-serif;color:var(--ink, #1f2933);transition:box-shadow .18s,transform .18s}.ds-pcard:hover{box-shadow:0 6px 20px -14px rgba(31,41,51,.18);transform:translateY(-2px)}.ds-pcard-img{aspect-ratio:1/1;display:block;padding:1.25rem;background:var(--surface, #f6f8f7)}.ds-ph{display:block;width:100%;height:100%;background:#fff;border-radius:10px}.ds-pcard-body{padding:1rem 1.1rem .5rem}.ds-pcard-brand{font-size:.82rem;color:var(--gold-ink, #7f6133)}.ds-pcard h3{font-size:1.15rem;margin:.15rem 0 .35rem;line-height:1.25;font-weight:700;letter-spacing:-.015em}.ds-pcard h3 a{text-decoration:none;color:var(--ink, #1f2933)}.ds-pcard h3 a:hover{color:var(--brand-deep, #b3124c)}.ds-pcard-for{font-size:.92rem;color:var(--ink-2, #4b5563);margin:0}.ds-pcard-foot{display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding:.6rem 1.1rem 1rem}.ds-pcard-price{font-weight:700;font-size:1.05rem;font-variant-numeric:tabular-nums}.ds-pcard-price small{font-weight:400;color:var(--muted, #6b7280);font-size:.78rem;display:block}.ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:46px;padding:.65rem 1.25rem;border:1.5px solid var(--line-2, #d5dcd8);border-radius:999px;background:#fff;color:var(--ink, #1f2933);font:600 .98rem/1.1 \"Archivo\",\"Helvetica Neue\",Arial,sans-serif;cursor:pointer;text-decoration:none;transition:background .18s,color .18s,border-color .18s,transform .18s}.ds-btn:hover{border-color:var(--ink, #1f2933);background:var(--surface, #f6f8f7)}.ds-btn:active{transform:scale(.985)}.ds-btn:focus-visible{outline:2px solid var(--ink, #1f2933);outline-offset:3px;border-radius:999px}.ds-btn[disabled]{opacity:.45;cursor:not-allowed;transform:none}.ds-btn-sm{min-height:44px;padding:.5rem 1rem;font-size:.92rem}"
+      "description": "No border, no shadow: a square grey image well, brand + size line, name, 'For:' line, price with incl. GST, and a small slate Add to bag. Lifts 3px on hover; the packshot zooms 4%.",
+      "html": "<article class=\"ds-pcard\"><a class=\"ds-pcard-img\" href=\"#\" aria-hidden=\"true\" tabindex=\"-1\"><span class=\"ds-ph\"></span></a><div class=\"ds-pcard-body\"><span class=\"ds-pcard-brand\">Heritage&reg; &middot; 50g</span><h3><a href=\"#\">Rheuma-Salve&reg; Pain Relief Balm</a></h3><p class=\"ds-pcard-for\">For: Deep joint and muscle pain, stiffness, chest congestion</p></div><div class=\"ds-pcard-foot\"><span class=\"ds-pcard-price\">S$10.10<small>incl. GST</small></span><button class=\"ds-btn ds-btn-dark ds-btn-sm\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 8h12l1 12H5z\"/><path d=\"M9 8V6a3 3 0 0 1 6 0v2\"/></svg> Add to bag</button></div></article>",
+      "css": ".ds-pcard{display:grid;grid-template-rows:auto 1fr auto;width:260px;font-family:\"Archivo\",\"Helvetica Neue\",Arial,sans-serif;color:var(--ink,#1f2933);transition:transform .18s}.ds-pcard:hover{transform:translateY(-3px)}.ds-pcard-img{aspect-ratio:1/1;display:block;padding:1.25rem;background:var(--surface,#f4f6f8);border-radius:14px;overflow:hidden}.ds-ph{display:block;width:100%;height:100%;background:var(--surface-2,#e9edf1);border-radius:10px;transition:transform .3s cubic-bezier(.2,.7,.2,1)}.ds-pcard:hover .ds-ph{transform:scale(1.04)}.ds-pcard-body{padding:.9rem .25rem .4rem}.ds-pcard-brand{display:block;font-size:.82rem;color:var(--gold-ink,#7f6133);margin-bottom:.35rem}.ds-pcard h3{font-size:1.08rem;margin:0 0 .25rem;line-height:1.3;font-weight:700;letter-spacing:-.015em}.ds-pcard h3 a{text-decoration:none;color:var(--ink,#1f2933)}.ds-pcard h3 a:hover{color:var(--brand-ink,#a8114a)}.ds-pcard-for{font-size:.9rem;color:var(--ink-2,#4b5563);margin:0}.ds-pcard-foot{display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding:.5rem .25rem .25rem}.ds-pcard-price{font-weight:700;font-size:1.05rem;font-variant-numeric:tabular-nums}.ds-pcard-price small{font-weight:400;color:var(--muted,#6b7280);font-size:.78rem;display:block}.ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:46px;padding:.65rem 1.3rem;border:1.5px solid var(--line-2,#d3dae2);border-radius:999px;background:#fff;color:var(--ink,#1f2933);font:600 .98rem/1.1 \"Archivo\",\"Helvetica Neue\",Arial,sans-serif;cursor:pointer;text-decoration:none;transition:background .18s,color .18s,border-color .18s,transform .18s}.ds-btn:active{transform:scale(.985)}.ds-btn:focus-visible{outline:2px solid var(--ink,#1f2933);outline-offset:3px}.ds-btn-dark{background:var(--slate,#3d4a57);border-color:var(--slate,#3d4a57);color:#fff}.ds-btn-dark:hover{background:var(--slate-deep,#2b3640);border-color:var(--slate-deep,#2b3640);color:#fff}.ds-btn-sm{min-height:44px;padding:.5rem 1rem;font-size:.92rem}"
+    },
+    {
+      "name": "Fact card on the magenta band",
+      "kind": "card",
+      "refersTo": "fact-card",
+      "description": "White 14px card on the 'Dispensed by pharmacists' band: a magenta-ink figure over a soft-ink line. Flat, no shadow.",
+      "html": "<div class=\"ds-on-brand ds-facts\"><div class=\"ds-fact\"><b>1994</b><p>Founded in Singapore as a manufacturer and supplier to the major pharmacy chains.</p></div><div class=\"ds-fact\"><b>GMP</b><p>Made under Good Manufacturing Practice, with Halal-certified and vegan options.</p></div></div>",
+      "css": ".ds-on-brand{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;padding:1.25rem;background:var(--brand-deep,#b3124c);border-radius:20px;max-width:560px;font-family:\"Archivo\",\"Helvetica Neue\",Arial,sans-serif}.ds-fact{padding:1.4rem 1.5rem;background:#fff;border-radius:14px;color:var(--ink,#1f2933)}.ds-fact b{display:block;font-size:1.5rem;font-weight:700;letter-spacing:-.01em;margin-bottom:.25rem;color:var(--brand-ink,#a8114a)}.ds-fact p{margin:0;color:var(--ink-2,#4b5563);font-size:.95rem;line-height:1.6}"
     },
     {
       "name": "Pack size tiles (signature)",
@@ -548,15 +351,7 @@
       "refersTo": "pack-tile",
       "description": "Native radios drawn as 10px tiles with a radio dot; the checked tile turns magenta-tinted with a magenta ring, and the price line above re-prints with a .4s opacity feed.",
       "html": "<fieldset class=\"ds-packs\"><legend>Pack size</legend><div class=\"ds-pack\"><input type=\"radio\" name=\"dspack\" id=\"dsp1\" checked><label for=\"dsp1\">Single pack<small>S$10.10 &middot; Item 410323</small></label></div><div class=\"ds-pack\"><input type=\"radio\" name=\"dspack\" id=\"dsp2\"><label for=\"dsp2\">20g x 2 travel twin pack<small>S$10.40 &middot; Item 112487</small></label></div><div class=\"ds-pack\"><input type=\"radio\" name=\"dspack\" id=\"dsp3\"><label for=\"dsp3\">50g x 6 Value pack<small>S$54.00 &middot; Item 111961</small></label></div></fieldset>",
-      "css": ".ds-packs{border:0;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:.5rem;font-family:\"Archivo\",\"Helvetica Neue\",Arial,sans-serif;color:var(--ink, #1f2933)}.ds-packs legend{font-weight:600;font-size:.95rem;margin-bottom:.5rem;padding:0;width:100%}.ds-pack{position:relative}.ds-pack input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}.ds-pack label{display:flex;flex-direction:column;gap:.1rem;min-height:56px;min-width:9rem;padding:.55rem .9rem .55rem 2.3rem;border:1.5px solid var(--line-2, #d5dcd8);border-radius:10px;background:#fff;cursor:pointer;font-weight:600;font-size:.95rem;line-height:1.25;transition:border-color .18s,background .18s}.ds-pack label small{font-weight:400;color:var(--muted, #6b7280);font-size:.8rem;font-variant-numeric:tabular-nums}.ds-pack label::before{content:'';position:absolute;left:.85rem;top:50%;width:16px;height:16px;margin-top:-9px;border:1.5px solid var(--line-2, #d5dcd8);border-radius:50%;background:#fff;transition:border-color .18s,background .18s}.ds-pack input:checked+label{border-color:var(--brand, #dd1860);background:var(--brand-tint, #fdeef3)}.ds-pack input:checked+label::before{border-color:var(--brand, #dd1860);background:var(--brand, #dd1860);box-shadow:inset 0 0 0 3px #fff}.ds-pack input:focus-visible+label{outline:2px solid var(--ink, #1f2933);outline-offset:3px}.ds-pack input:disabled+label{color:var(--muted, #6b7280);background:var(--surface, #f6f8f7);cursor:not-allowed}"
-    },
-    {
-      "name": "Start-by-need counter (signature)",
-      "kind": "card",
-      "refersTo": "counter-card",
-      "description": "Five rounded cards under the hero. The pain-relief card sits on pack mint with the only magenta 'Start here' stamp; the rest are white with a light rule.",
-      "html": "<nav class=\"ds-counters\"><a href=\"#\" class=\"ds-counter ds-counter-pain\">Pain relief<small>Balm, creme, liniment, patch, stick</small><span class=\"ds-stamp\">Start here</span></a><a href=\"#\" class=\"ds-counter\">Cough and cold<small>Lozenges, syrups, flu remedy, inhaler</small></a><a href=\"#\" class=\"ds-counter\">Kids<small>Zoo-Vite gummies and jelly sticks</small></a></nav>",
-      "css": ".ds-counters{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;font-family:\"Archivo\",\"Helvetica Neue\",Arial,sans-serif;max-width:640px}.ds-counter{display:flex;flex-direction:column;gap:.25rem;padding:1rem 1.1rem;min-height:92px;text-decoration:none;color:var(--ink, #1f2933);background:#fff;border:1px solid var(--line, #e6eae8);border-radius:14px;font-weight:600;font-size:1.05rem;position:relative;transition:border-color .18s,box-shadow .18s,transform .18s}.ds-counter small{font-weight:400;color:var(--muted, #6b7280);font-size:.85rem;line-height:1.35}.ds-counter:hover{border-color:var(--line-2, #d5dcd8);box-shadow:0 6px 20px -14px rgba(31,41,51,.18);transform:translateY(-2px)}.ds-counter:focus-visible{outline:2px solid var(--ink, #1f2933);outline-offset:3px}.ds-counter-pain{background:var(--mint, #e6f4ec);border-color:transparent}.ds-counter-pain small{color:var(--ink-2, #4b5563)}.ds-stamp{position:absolute;right:.9rem;top:.9rem;font-size:.72rem;font-weight:600;padding:.2rem .6rem;background:var(--brand, #dd1860);color:#fff;border-radius:999px}"
+      "css": ".ds-packs{border:0;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:.5rem;font-family:\"Archivo\",\"Helvetica Neue\",Arial,sans-serif;color:var(--ink,#1f2933)}.ds-packs legend{font-weight:600;font-size:.95rem;margin-bottom:.5rem;padding:0;width:100%}.ds-pack{position:relative}.ds-pack input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}.ds-pack label{display:flex;flex-direction:column;gap:.1rem;min-height:56px;min-width:9rem;padding:.55rem .9rem .55rem 2.3rem;border:1.5px solid var(--line-2,#d3dae2);border-radius:10px;background:#fff;cursor:pointer;font-weight:600;font-size:.95rem;line-height:1.25;transition:border-color .18s,background .18s}.ds-pack label:hover{border-color:var(--ink,#1f2933)}.ds-pack label small{font-weight:400;color:var(--muted,#6b7280);font-size:.8rem;font-variant-numeric:tabular-nums}.ds-pack label::before{content:'';position:absolute;left:.85rem;top:50%;width:16px;height:16px;margin-top:-9px;border:1.5px solid var(--line-2,#d3dae2);border-radius:50%;background:#fff;transition:border-color .18s,background .18s}.ds-pack input:checked+label{border-color:var(--brand,#dd1860);background:var(--brand-tint,#fdeef3)}.ds-pack input:checked+label::before{border-color:var(--brand,#dd1860);background:var(--brand,#dd1860);box-shadow:inset 0 0 0 3px #fff}.ds-pack input:focus-visible+label{outline:2px solid var(--ink,#1f2933);outline-offset:3px}.ds-pack input:disabled+label{color:var(--muted,#6b7280);background:var(--surface,#f4f6f8);cursor:not-allowed}"
     },
     {
       "name": "Form field with validation",
@@ -564,94 +359,68 @@
       "refersTo": "input",
       "description": "Semibold label with a magenta-ink required asterisk, 10px white field with a 1.5px control rule; invalid fields get a 2px error border and a '! ' message; focus is a 2px ink outline.",
       "html": "<form class=\"ds-form\"><label><span class=\"ds-req\">Email</span><input type=\"email\" value=\"not-an-email\" aria-invalid=\"true\"><span class=\"ds-err\">A valid email is needed.</span></label><label><span>Mobile</span><input type=\"tel\" placeholder=\"+65\"><span class=\"ds-note\">We use these for the order confirmation and delivery updates only.</span></label></form>",
-      "css": ".ds-form{display:grid;gap:1rem;max-width:360px;font-family:\"Archivo\",\"Helvetica Neue\",Arial,sans-serif;color:var(--ink, #1f2933)}.ds-form label{display:grid;gap:.35rem;font-weight:600;font-size:.95rem}.ds-form input{min-height:46px;border:1.5px solid var(--line-2, #d5dcd8);border-radius:10px;padding:.6rem .9rem;font:400 17px/1.6 \"Archivo\",\"Helvetica Neue\",Arial,sans-serif;background:#fff;color:var(--ink, #1f2933);width:100%}.ds-form input:focus{outline:2px solid var(--ink, #1f2933);outline-offset:1px}.ds-req::after{content:' *';color:var(--brand-deep, #b3124c)}.ds-form [aria-invalid='true']{border-color:var(--error, #b42318);border-width:2px}.ds-err{font-size:.88rem;color:var(--error, #b42318);font-weight:500}.ds-err::before{content:'! ';font-weight:700}.ds-note{font-size:.88rem;color:var(--muted, #6b7280);font-weight:400}"
+      "css": ".ds-form{display:grid;gap:1rem;max-width:360px;font-family:\"Archivo\",\"Helvetica Neue\",Arial,sans-serif;color:var(--ink,#1f2933)}.ds-form label{display:grid;gap:.35rem;font-weight:600;font-size:.95rem}.ds-form input{min-height:46px;border:1.5px solid var(--line-2,#d3dae2);border-radius:10px;padding:.6rem .9rem;font:400 17px/1.6 \"Archivo\",\"Helvetica Neue\",Arial,sans-serif;background:#fff;color:var(--ink,#1f2933);width:100%}.ds-form input:focus{outline:2px solid var(--ink,#1f2933);outline-offset:1px}.ds-req::after{content:' *';color:var(--brand-ink,#a8114a)}.ds-form [aria-invalid='true']{border-color:var(--error,#b42318);border-width:2px}.ds-err{font-size:.88rem;color:var(--error,#b42318);font-weight:500}.ds-err::before{content:'! ';font-weight:700}.ds-note{font-size:.88rem;color:var(--muted,#6b7280);font-weight:400}"
     },
     {
       "name": "Quantity stepper",
       "kind": "custom",
-      "refersTo": "qty",
+      "refersTo": "qty-stepper",
       "description": "A pill with 44px minus/plus buttons and a 52px tabular number field; clamps 1..99 in JS.",
       "html": "<div class=\"ds-qty\" aria-label=\"Quantity\"><button type=\"button\" aria-label=\"Decrease\">&minus;</button><input type=\"number\" min=\"1\" max=\"99\" value=\"1\" aria-label=\"Quantity\"><button type=\"button\" aria-label=\"Increase\">+</button></div>",
-      "css": ".ds-qty{display:inline-flex;align-items:stretch;border:1.5px solid var(--line-2, #d5dcd8);border-radius:999px;overflow:hidden;min-height:46px;font-family:\"Archivo\",\"Helvetica Neue\",Arial,sans-serif}.ds-qty button{width:44px;border:0;background:#fff;font:600 1.2rem \"Archivo\",\"Helvetica Neue\",Arial,sans-serif;cursor:pointer;color:var(--ink, #1f2933)}.ds-qty button:hover{background:var(--surface, #f6f8f7)}.ds-qty button:focus-visible{outline:2px solid var(--ink, #1f2933);outline-offset:-3px}.ds-qty input{width:52px;border:0;text-align:center;font:600 1rem \"Archivo\",\"Helvetica Neue\",Arial,sans-serif;color:var(--ink, #1f2933);background:#fff;-moz-appearance:textfield;font-variant-numeric:tabular-nums}.ds-qty input::-webkit-inner-spin-button,.ds-qty input::-webkit-outer-spin-button{-webkit-appearance:none}"
+      "css": ".ds-qty{display:inline-flex;align-items:stretch;border:1.5px solid var(--line-2,#d3dae2);border-radius:999px;overflow:hidden;min-height:46px;font-family:\"Archivo\",\"Helvetica Neue\",Arial,sans-serif}.ds-qty button{width:44px;border:0;background:#fff;font:600 1.2rem \"Archivo\",\"Helvetica Neue\",Arial,sans-serif;cursor:pointer;color:var(--ink,#1f2933)}.ds-qty button:hover{background:var(--surface,#f4f6f8)}.ds-qty button:focus-visible{outline:2px solid var(--ink,#1f2933);outline-offset:-3px}.ds-qty input{width:52px;border:0;text-align:center;font:600 1rem \"Archivo\",\"Helvetica Neue\",Arial,sans-serif;color:var(--ink,#1f2933);background:#fff;-moz-appearance:textfield;font-variant-numeric:tabular-nums}.ds-qty input::-webkit-inner-spin-button,.ds-qty input::-webkit-outer-spin-button{-webkit-appearance:none}"
     }
   ],
   "narrative": {
-    "northStar": "The White Dispensing Counter",
-    "overview": "HST Medical is a pharmacy counter rendered in white: the product is handed over the way a pharmacist hands it over, name large, what it is for, how to use it, the pack beside it, and the price for the pack you actually chose. The ground is white, the alternate bands are a barely-there paper grey, rules are one pixel and light, and every panel has gently rounded 14px corners. Product photography is the only imagery; nothing decorative sits above a heading.\n\nOne typeface, Archivo, carries the whole site at four weights. Magenta is the brand and the single accent: it marks the one thing you can do next (the primary button, the active nav item, the selected pack size, checkout progress, the free-delivery meter) and nothing else. The Rheuma-Salve pack mint appears only as a soft tint on the hero pack panel and the pain-relief tiles, so the flagship range is recognisable from across the room without competing with the action colour.\n\nThe density is that of a well-kept counter rather than a wellness brand: compare tables come before product grids, five start-by-need cards sit under the headline, honest pack sizes carry real prices and item codes, and checkout is gated in three plain steps. Motion is limited to one authored moment, the pack-size reprint, plus 2px hover lifts; nothing scrolls into view and no animation library is loaded. The client declined the earlier heavy-display 'Dispensing Counter' rendition (dark grounds, dense label chrome, dotted thermal rules, narrow 900-weight type) in favour of this lighter one on 2026-10-02.",
+    "northStar": "The Pharmacy Shopfront in the Logo's Colours",
+    "overview": "HST Medical is the modern online-pharmacy shopfront the client pointed at (MediHeal / Pharmico style) rebuilt in the three colours already on the pack: the logo's magenta, the wordmark's slate and white. The page opens on a deep magenta block with rounded bottom corners; a white pill-shaped header floats on it carrying the logo, the need links, a grey search field and a magenta Bag. The headline is white on magenta, the first action is a white pill, the second an outline, and the Rheuma-Salve jar stands on a white rounded card with a small floating product card beside it. Everything below the block returns to white: six shop-by-need tiles whose packshots sit in light grey wells, a thin slate strip of benefits, product cards in grey wells with slate pill buttons, compare tables inside white panels on grey bands, one more magenta band of white fact cards, and a slate footer.\n\nOne typeface, Archivo, carries the whole site at five weights (400 to 800; 800 only for the faint \"RELIEF\" watermark). The colour roles are strict: magenta owns the hero block and exactly one lower band and otherwise appears only on the active element (the Bag, the primary Add to bag, the active nav pill, the checked pack tile, the checkout step bar, the free-delivery meter). Slate owns every dark control that is not the one primary action (product-card buttons, the pressed filter chip, the trade button) and the dark surfaces (strip, prototype notice, toast, footer). Light grey carries every product image, so packs photographed on white sit in the page without a cut-out edge (mix-blend-mode: multiply). The Rheuma-Salve mint survives only as a reserved token.\n\nThe structural model is unchanged: start-by-need tiles directly under the hero, compare tables before any product grid, honest pack sizes with real prices and item codes, a bag that counts, and a three-step gated checkout. Imagery is product photography only: no stock photos of people (none exist), no testimonials (none exist), no carousels. Motion is one authored moment (the pack-size reprint) plus short hover lifts, no scroll-reveal, no animation library. This rendition replaced the lighter \"White Dispensing Counter\" on 2026-10-02 at the client's request for the template look in the logo's colours.",
     "keyCharacteristics": [
-      "White ground, soft paper (#f6f8f7) alternate bands, 1px light rules; flat by default",
-      "14px rounded panels, 10px inputs and pack tiles, pill (999px) buttons, chips, nav and bag",
-      "Archivo only, weights 400/500/600/700, 17px body, tabular numerals, no eyebrows or kickers",
-      "Magenta (#dd1860) is the single accent and marks only the active element",
-      "Pack mint (#e6f4ec) is a tint, never a text colour and never a surface for grey text",
-      "Compare-first categories, start-by-need counters, honest pack sizes, gated three-step checkout",
-      "One authored motion (pack-size reprint) plus 2px hover lifts; reduced-motion keeps every state change",
+      "Deep magenta (#b3124c) hero block with 20px rounded bottom corners and a white floating pill header; white ground below with light grey (#f4f6f8) wells and bands",
+      "Palette is the logo's: magenta in three strengths plus two tints, the wordmark slate (#3d4a57 / #2b3640), white, two near-white greys and three inks",
+      "Archivo only, weights 400/500/600/700/800, 17px body, tabular numerals, no eyebrows or kickers",
+      "Four radii by role: 20px hero block and pack card, 14px panels, tiles and wells, 10px controls and thumbnails, pill for everything you press",
+      "Every product image on a grey well, multiply-blended; cards have no border and no shadow, only the well",
+      "Magenta for the hero, one band and the active element; slate for dark controls, strip, toast and footer",
+      "Start-by-need tiles, compare-first categories, honest pack sizes, gated three-step checkout",
+      "One authored motion (pack-size reprint) plus 3px hover lifts; reduced-motion keeps every state change",
       "Portable to a GeneratePress child theme and WP EasyCart CSS overrides"
     ],
     "rules": [
-      {
-        "name": "The One Accent Rule",
-        "body": "Magenta marks the single thing you can do next on a screen: the primary button, the active nav item, the checked pack tile, the current checkout step, the free-delivery meter, the Start-here stamp. Everything else is ink, grey, white or a light rule. If two magenta elements compete on one phone screen, one of them is wrong.",
-        "section": "colors"
-      },
-      {
-        "name": "The No Grey On Mint Rule",
-        "body": "Muted grey (#6b7280) is allowed on white (4.8:1) and on soft paper (4.5:1) only. On the mint tint it falls below AA, so every secondary line inside a mint panel or tile switches to soft ink (#4b5563).",
-        "section": "colors"
-      },
-      {
-        "name": "The Magenta Ink Rule",
-        "body": "Magenta text is always brand-deep (#b3124c, 6.8:1 on white): links, the active nav label, chip text, the required asterisk, benefit ticks. The brighter brand (#dd1860) is reserved for fills with white text on top (4.8:1) and for thin marks such as the meter and the step bar.",
-        "section": "colors"
-      },
-      {
-        "name": "The No Kicker Rule",
-        "body": "Nothing sits above a heading: no eyebrow, no category label, no icon. Context lives in the panel head row (muted facts in a line) or in the breadcrumb, never in small caps over an h1 or h2.",
-        "section": "typography"
-      },
-      {
-        "name": "The Tabular Price Rule",
-        "body": "Every number on the site, prices, item codes, dosages, quantities, is set in tabular numerals so columns and reprinted prices do not shift width. Prices carry the S$ prefix and two decimals, always.",
-        "section": "typography"
-      },
-      {
-        "name": "The Compare Before Grid Rule",
-        "body": "A category page shows which format fits which situation (the compare table: Product, Best for, How to use, Price, Add) before it shows a card grid. The home page does the same for the two focus ranges.",
-        "section": "layout"
-      },
-      {
-        "name": "The Flat Paper Rule",
-        "body": "Surfaces are flat at rest and separated by 1px light rules. The one soft shadow appears in exactly two cases: a panel sitting on a tinted band (where its rule becomes transparent), and the 2px hover lift on counters, shelf tiles and product cards. Nothing floats at rest except the undo toast.",
-        "section": "elevation"
-      },
-      {
-        "name": "The Pill Means Action Rule",
-        "body": "Fully rounded (999px) shapes are reserved for things you press or pick: buttons, chips, nav items, the bag, the quantity stepper, the stamp badge, the meter track. Containers are 14px; fields and pack tiles are 10px.",
-        "section": "shapes"
-      }
+      { "name": "The Two Fields Rule", "body": "Magenta is a field in exactly two places: the hero block (with the header band above it) and the \"Dispensed by pharmacists\" band. Everywhere else it marks the single active element: the Bag, the primary button, the active nav pill, the checked pack tile, the current checkout step, the free-delivery meter. A third magenta band, or a magenta section background anywhere else, is wrong.", "section": "colors" },
+      { "name": "The Slate Controls Rule", "body": "Dark controls that are not the one primary action are slate (#3d4a57, deeper #2b3640 on hover): product-card Add to bag, the pressed filter chip, Trade enquiries. The dark surfaces are slate-deep: strip, prototype notice, toast, footer. Slate never appears as a text colour; ink does that.", "section": "colors" },
+      { "name": "The No Grey On Magenta Rule", "body": "Muted grey (#6b7280) and soft ink (#4b5563) are allowed on white (5.3:1) and on well grey (4.9:1) only. On a magenta field every secondary line switches to On Magenta Soft (#ffd6e3, 9.9:1 on #b3124c); headings, checks and labels are white (6.7:1).", "section": "colors" },
+      { "name": "The Magenta Ink Rule", "body": "Magenta text is always brand-ink (#a8114a, 7.2:1 on white, 6.5:1 on the tint): links, the active nav label, chip and stamp text, the fact figures, the required asterisk, benefit ticks. The brighter brand (#dd1860) is reserved for fills with white text (4.8:1) and thin marks; brand-deep (#b3124c) is reserved for fields and hover fills.", "section": "colors" },
+      { "name": "The No Kicker Rule", "body": "Nothing sits above a heading: no eyebrow, no category label, no icon. Context lives in the panel head row (muted facts in a line) or in the breadcrumb, never in small caps over an h1 or h2.", "section": "typography" },
+      { "name": "The Tabular Price Rule", "body": "Every number on the site, prices, item codes, dosages, quantities, is set in tabular numerals so columns and reprinted prices do not shift width. Prices carry the S$ prefix and two decimals, always.", "section": "typography" },
+      { "name": "The Compare Before Grid Rule", "body": "A category page shows which format fits which situation (the compare table: Product, Best for, How to use, Price, Add) before it shows a card grid. The home page does the same for the two focus ranges, after the best sellers.", "section": "layout" },
+      { "name": "The Tiles Under The Block Rule", "body": "The first viewport is the magenta block (header pill, h1, dose, two CTAs, two checks; pack card with its floating product card) and the shop-by-need tiles start immediately under its rounded corners on white. Nothing else sits between them. On phones the tiles form a three-column grid under the pack.", "section": "layout" },
+      { "name": "The Three Floaters Rule", "body": "Only the header pill, the hero pack card with its product card, and the undo toast cast shadows. Panels, product cards, tiles and fact cards are flat at rest and flat on hover; their lift is a 2 to 3px translate, never a shadow.", "section": "elevation" },
+      { "name": "The Pill Means Action Rule", "body": "Fully rounded (999px) shapes are reserved for things you press or pick, plus the header bar that holds them: buttons, chips, nav items, the search field, the Bag, the quantity stepper, the stamp, the meter. Containers, tiles and wells are 14px; fields, thumbnails and notes are 10px; only the hero block and pack card are 20px.", "section": "shapes" },
+      { "name": "The Grey Well Rule", "body": "Every product image, from the 56px float thumbnail to the 520px product-page pack, sits on a Well Grey (#f4f6f8) rounded surface with the image multiply-blended into it. No product image is placed directly on white, on magenta, or inside a bordered box.", "section": "shapes" }
     ],
     "dos": [
-      "Do lead with the buyer's need: the h1 asks 'Pain, cough or cold? Start here.' and the five start-by-need counters follow it before any brand story.",
+      "Do open every page on the magenta band with the white pill header; on the home page let the band run into the hero block, on inner pages let the white half-band put the pill on the seam.",
+      "Do keep the hero's first viewport exact: header pill, h1, dose, a light CTA plus a ghost CTA, two checks on the left; pack card with the floating product card on the right; the six shop-by-need tiles directly under the block on white.",
+      "Do put every product image, at every size, in a Well Grey (#f4f6f8) rounded well with mix-blend-mode: multiply, 14px for tiles and cards, 10px for thumbnails.",
+      "Do use magenta as a field in exactly two places (hero block, \"Dispensed by pharmacists\" band) and otherwise only on the active element: the Bag, the primary button, the active nav pill, the checked pack, the current step, the meter.",
+      "Do make dark controls slate (#3d4a57): product-card Add to bag, the pressed filter chip, Trade enquiries; and dark surfaces slate-deep (#2b3640): strip, toast, footer, prototype notice.",
+      "Do write secondary text on magenta in On Magenta Soft (#ffd6e3) and headings, checks and labels in white; keep Muted Grey (#6b7280) and Soft Ink (#4b5563) to white and grey surfaces.",
       "Do put the compare table (Product, Best for, How to use, Price, Add) before the product grid on every category page and for both focus ranges on the home page.",
-      "Do show the pack size with its real price and item code, and re-print the price line when the pack changes; 'Price on request' and 'Ask in store' replace the number and the magenta button when no price exists.",
-      "Do keep one magenta element per phone screen: the primary button, or the active nav, or the checked pack, never two fighting for the eye.",
-      "Do write secondary text inside mint panels and tiles in soft ink (#4b5563), and keep muted grey (#6b7280) to white and soft-paper surfaces.",
-      "Do keep 44px minimum touch targets (chips, stepper buttons, nav toggle, bag) and the 17px body floor; the audience is 45+ on phones.",
-      "Do give every panel a 1px light rule on white, and swap the rule for the soft shadow only when the panel sits on a paper or mint band.",
-      "Do keep every pack image on a white or soft-paper well with explicit width and height, loaded lazily below the fold and fetchpriority=high for the one hero or product image.",
-      "Do keep the pharmacist register in copy: plain, direct, 'Always read the label and follow directions for use' on every product page, cautions in the soft-paper .caution box.",
+      "Do show the pack size with its real price and item code, and re-print the price line when the pack changes; \"Price on request\" and \"Ask in store\" replace the number and the magenta button when no price exists.",
+      "Do keep 44px minimum touch targets (chips, stepper buttons, header search, nav toggle) and the 17px body floor; the audience is 45+ on phones.",
+      "Do keep the pharmacist register in copy: plain, direct, \"Always read the label and follow directions for use\" on every product page, cautions in the grey .caution box.",
       "Do keep everything portable to a GeneratePress child theme and WP EasyCart CSS overrides: tokens on :root, no template forking, see WP-MAPPING.md."
     ],
     "donts": [
       "Don't add eyebrow labels, kickers, small-caps category lines or icons above any heading.",
-      "Don't use magenta for anything but the active element: no magenta rules, backgrounds for whole sections, decorative icons or secondary links in #dd1860.",
-      "Don't put grey text (#6b7280) on mint (#e6f4ec); it fails AA.",
-      "Don't add carousels, sliders, scroll-reveal, parallax, animation libraries or image-heavy heroes; the RFP budget is graphics-lite and instant on 4G.",
-      "Don't invent testimonials, awards, ratings, pharmacist names, clinical claims or prices; unconfirmed facts carry a 'to be confirmed' note.",
-      "Don't reintroduce the declined heavy rendition: dark grounds, Archivo 900 or narrow widths, dense label chrome, dotted thermal rules, perforated tabs, or a label header strip on the hero.",
-      "Don't use zero-offset halos, hard offset shadows, gradients or more than the one soft shadow (0 6px 20px -14px rgba(31,41,51,.18)).",
-      "Don't make pack mint a text colour or a full-page background; it is a tint for the hero pack panel, the pain-relief tiles, blockquotes and the form success note only.",
-      "Don't mix radii: containers 14px, fields and pack tiles 10px, pressables 999px; no 4px or 6px one-offs except the focus ring.",
+      "Don't put grey text (#6b7280 or #4b5563) on magenta or slate; use #ffd6e3 or white.",
+      "Don't add a third magenta band, a magenta section background, magenta rules, decorative magenta icons or secondary links in #dd1860; magenta text is always #a8114a.",
+      "Don't give product cards, panels, tiles or fact cards a shadow, at rest or on hover; only the header pill, the hero pack and float cards, and the toast float.",
+      "Don't place a product image directly on white, on magenta or inside a bordered box; the grey well is the frame.",
+      "Don't use stock photography of people, lifestyle imagery or illustrated characters; the only imagery is the packshots from the catalogue and the logo.",
+      "Don't add carousels, sliders, scroll-reveal, parallax, animation libraries, autoplay or image-heavy heroes beyond the one pack card; the RFP budget is graphics-lite and instant on 4G.",
+      "Don't invent testimonials, awards, ratings, pharmacist names, clinical claims or prices; there is no testimonial band because there are no testimonials. Unconfirmed facts carry a \"to be confirmed\" note.",
+      "Don't make pack mint (#e6f4ec) a band, a text colour or a card fill; it is a reserved tint, currently unused.",
+      "Don't mix radii: hero block and pack card 20px, panels, tiles and wells 14px, fields, thumbnails and notes 10px, pressables and the header bar 999px; no 4px or 6px one-offs except the focus ring.",
       "Don't let the bag or checkout proceed without items: the Checkout and Place order buttons stay disabled (opacity .45, aria-disabled) until the bag has a line."
     ]
   }
