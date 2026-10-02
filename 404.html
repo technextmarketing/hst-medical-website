@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,69 +14,70 @@
 <meta property="og:site_name" content="HST Medical">
 <meta property="og:image" content="https://technextmarketing.github.io/hst-medical-website/assets/img/og-cover.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#dd1860">
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" type="image/svg+xml" href="/hst-medical-website/assets/img/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/hst-medical-website/assets/css/style.css?v=20261002a">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/hst-medical-website/assets/css/style.css?v=20261002e">
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 <a class="sr-only" href="#main">Skip to content</a>
-<div class="proto" role="note">Design prototype for the HST Medical website RFP — demo store, nothing is sold or indexed. <a href="/hst-medical-website/">Home</a></div>
+<div class="live" id="live" aria-live="polite" aria-atomic="true"></div>
+<p class="proto">Design prototype for the HST Medical website RFP. Demo store: nothing is sold or indexed. <a href="/hst-medical-website/">Home</a></p>
 <header class="site-header">
-  <div class="container header-inner">
-    <a class="brand" href="/hst-medical-website/" aria-label="HST Medical — home"><img src="/hst-medical-website/assets/img/logo-hst-kowa-360.png" alt="HST Medical, a Kowa subsidiary" width="82" height="44" decoding="async"></a>
-    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span></button>
-    <nav class="nav" id="site-nav" aria-label="Main navigation">
-      <a href="/hst-medical-website/shop/">Store</a>
+  <div class="counter header-inner">
+    <a class="brand" href="/hst-medical-website/" aria-label="HST Medical, a Kowa subsidiary. Home"><img src="/hst-medical-website/assets/img/logo-hst-kowa-360.png" alt="HST Medical, Kowa subsidiary" width="78" height="42" decoding="async"></a>
+    <nav class="nav" id="site-nav" aria-label="Main">
       <a href="/hst-medical-website/shop/pain-relief/">Pain relief</a>
       <a href="/hst-medical-website/shop/cough-cold-flu/">Cough &amp; cold</a>
-      <a href="/hst-medical-website/brands/">Brands</a>
-      <a href="/hst-medical-website/resellers/">Resellers</a>
+      <a href="/hst-medical-website/shop/">All products</a>
+      <a href="/hst-medical-website/where-to-buy/">Where to buy</a>
+      <a href="/hst-medical-website/resellers/">Trade</a>
       <a href="/hst-medical-website/about/">About</a>
       <a href="/hst-medical-website/blog/">Health notes</a>
-      <a href="/hst-medical-website/contact/">Contact</a>
-      <a class="cart" href="/hst-medical-website/cart/" aria-label="Cart"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg><span class="count" hidden>0</span></a>
     </nav>
+    <a class="bag" href="/hst-medical-website/cart/" aria-label="Bag"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l1 12H5z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Bag</span><span class="count" hidden>0</span></a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
   </div>
 </header>
 
-<main id="main"><div class="narrow" style="padding:4rem 0;text-align:center"><span class="eyebrow">404</span><h1>That page is not on the shelf.</h1><p class="lead">The link may be old, or the product has moved. Try the store or search.</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="/hst-medical-website/shop/">Go to the store</a><a class="btn btn-outline" href="/hst-medical-website/">Home</a></div></div></main>
+<main id="main"><div class="counter"><div class="label" style="margin:2rem auto;max-width:720px"><div class="label-body" style="padding:2.5rem"><h1 style="font-size:2.4rem">That page is not on the shelf.</h1><p class="lead" style="margin:1rem 0 1.5rem">The link may be old, or the product has moved. Start again at the counter.</p><div class="tabs"><a class="tab stamped" href="/hst-medical-website/shop/pain-relief/">Pain relief</a><a class="tab" href="/hst-medical-website/shop/cough-cold-flu/">Cough and cold</a><a class="tab" href="/hst-medical-website/shop/">All products</a><a class="tab" href="/hst-medical-website/">Home</a></div></div></div></div></main>
 <footer class="site-footer">
-  <div class="container">
+  <div class="counter">
     <div class="footer-grid">
       <div>
-        <img src="/hst-medical-website/assets/img/logo-hst-kowa-360.png" alt="HST Medical, a Kowa subsidiary" width="120" height="64" loading="lazy" decoding="async">
-        <p style="margin-top:.8rem">Trusted manufacturer and supplier of health supplements and pain-relief remedies to Singapore's major pharmacies since 1994. A subsidiary of Kowa Company, Ltd.</p>
-        <p class="small">Always read the label and follow directions for use.</p>
+        <img src="/hst-medical-website/assets/img/logo-hst-kowa-360.png" alt="HST Medical, Kowa subsidiary" width="110" height="59" loading="lazy" decoding="async">
+        <p style="margin-top:.8rem;max-width:40ch">Health supplements and pain-relief remedies formulated by pharmacists and TCM physicians, made in Singapore since 1994. A subsidiary of Kowa Company, Ltd.</p>
+        <p class="small" style="margin-top:.6rem">Always read the label and follow directions for use.</p>
       </div>
-      <div><h4>Shop</h4><ul>
-        <li><a href="/hst-medical-website/shop/pain-relief/">Premium pain relief</a></li>
+      <div><p class="ft-h">Shop</p><ul>
+        <li><a href="/hst-medical-website/shop/pain-relief/">Pain relief</a></li>
         <li><a href="/hst-medical-website/shop/cough-cold-flu/">Cough, cold &amp; flu</a></li>
-        <li><a href="/hst-medical-website/shop/immunity-energy/">Immunity &amp; energy</a></li>
-        <li><a href="/hst-medical-website/shop/beauty-wellness/">Beauty &amp; wellness</a></li>
-        <li><a href="/hst-medical-website/shop/kids/">Kids supplements</a></li>
-        <li><a href="/hst-medical-website/shop/">All products</a></li>
+        <li><a href="/hst-medical-website/shop/kids/">Kids</a></li>
+        <li><a href="/hst-medical-website/shop/stress-sleep/">Sleep</a></li>
+        <li><a href="/hst-medical-website/shop/immunity-energy/">Tonics</a></li>
+        <li><a href="/hst-medical-website/shop/">All 51 products</a></li>
       </ul></div>
-      <div><h4>Company</h4><ul>
-        <li><a href="/hst-medical-website/about/">About HST Medical</a></li>
+      <div><p class="ft-h">HST Medical</p><ul>
+        <li><a href="/hst-medical-website/about/">About us</a></li>
         <li><a href="/hst-medical-website/brands/">Our brands</a></li>
         <li><a href="/hst-medical-website/where-to-buy/">Where to buy</a></li>
-        <li><a href="/hst-medical-website/resellers/">Become a reseller</a></li>
+        <li><a href="/hst-medical-website/resellers/">Trade and resellers</a></li>
         <li><a href="/hst-medical-website/blog/">Health notes</a></li>
       </ul></div>
-      <div><h4>Help</h4><ul>
+      <div><p class="ft-h">Help</p><ul>
         <li><a href="/hst-medical-website/contact/">Contact us</a></li>
-        <li><a href="/hst-medical-website/cart/">Cart</a></li>
-        <li><a href="/hst-medical-website/privacy/">Privacy policy</a></li>
+        <li><a href="/hst-medical-website/cart/">Your bag</a></li>
+        <li><a href="/hst-medical-website/privacy/">Privacy</a></li>
         <li><a href="mailto:resellercontact@hstmedical.com">resellercontact@hstmedical.com</a></li>
       </ul></div>
     </div>
-    <div class="legal"><span>© 2026 HST Medical Pte Ltd. Singapore. All rights reserved.</span><span>Prototype by TechNext for the hstmedical.com redesign RFP.</span></div>
+    <div class="legal"><span>© 2026 HST Medical Pte Ltd, Singapore.</span><span>Prototype by TechNext for the hstmedical.com redesign RFP.</span></div>
   </div>
 </footer>
-<script src="/hst-medical-website/assets/js/site.js?v=20261002a" defer></script>
+<div class="toast" id="toast" hidden role="status"><span></span><button type="button">Undo</button></div>
+<script src="/hst-medical-website/assets/js/site.js?v=20261002e" defer></script>
 </body>
 </html>

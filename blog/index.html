@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,74 +14,73 @@
 <meta property="og:site_name" content="HST Medical">
 <meta property="og:image" content="https://technextmarketing.github.io/hst-medical-website/assets/img/og-cover.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#dd1860">
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/style.css?v=20261002a">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css?v=20261002e">
 <script>document.documentElement.classList.add('js');</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://technextmarketing.github.io/hst-medical-website/"}, {"@type": "ListItem", "position": 2, "name": "Health notes"}]}</script>
 </head>
 <body>
 <a class="sr-only" href="#main">Skip to content</a>
-<div class="proto" role="note">Design prototype for the HST Medical website RFP — demo store, nothing is sold or indexed. <a href="../">Home</a></div>
+<div class="live" id="live" aria-live="polite" aria-atomic="true"></div>
+<p class="proto">Design prototype for the HST Medical website RFP. Demo store: nothing is sold or indexed. <a href="../">Home</a></p>
 <header class="site-header">
-  <div class="container header-inner">
-    <a class="brand" href="../" aria-label="HST Medical — home"><img src="../assets/img/logo-hst-kowa-360.png" alt="HST Medical, a Kowa subsidiary" width="82" height="44" decoding="async"></a>
-    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span></button>
-    <nav class="nav" id="site-nav" aria-label="Main navigation">
-      <a href="../shop/">Store</a>
+  <div class="counter header-inner">
+    <a class="brand" href="../" aria-label="HST Medical, a Kowa subsidiary. Home"><img src="../assets/img/logo-hst-kowa-360.png" alt="HST Medical, Kowa subsidiary" width="78" height="42" decoding="async"></a>
+    <nav class="nav" id="site-nav" aria-label="Main">
       <a href="../shop/pain-relief/">Pain relief</a>
       <a href="../shop/cough-cold-flu/">Cough &amp; cold</a>
-      <a href="../brands/">Brands</a>
-      <a href="../resellers/">Resellers</a>
+      <a href="../shop/">All products</a>
+      <a href="../where-to-buy/">Where to buy</a>
+      <a href="../resellers/">Trade</a>
       <a href="../about/">About</a>
       <a href="../blog/" class="active">Health notes</a>
-      <a href="../contact/">Contact</a>
-      <a class="cart" href="../cart/" aria-label="Cart"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg><span class="count" hidden>0</span></a>
     </nav>
+    <a class="bag" href="../cart/" aria-label="Bag"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l1 12H5z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Bag</span><span class="count" hidden>0</span></a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
   </div>
 </header>
 
-<main id="main"><div class="container"><ol class="crumbs" aria-label="Breadcrumb"><li><a href="../">Home</a></li><li aria-current="page">Health notes</li></ol>
-<header class="page-hero"><span class="eyebrow">Health notes</span><h1>Short, practical reading.</h1><p class="lead">Guides written with HST Medical's pharmacists: how to choose, how to use, and what the marks on the pack mean.</p></header>
-<div class="grid grid-3"><a class="card post-card card-link reveal" href="balm-creme-liniment-or-patch/"><time datetime="2026-10-02">2026-10-02</time><h3>Balm, crème, liniment or patch? Choosing the right Rheuma-Salve® format</h3><p>Five formats, one formula. Where it hurts and where you are decide which to reach for.</p></a>
-<a class="card post-card card-link reveal" href="cough-cold-or-flu-which-remedy/"><time datetime="2026-09-25">2026-09-25</time><h3>Cough, cold or flu? Matching the symptom to the remedy</h3><p>Sore throat, chesty cough, fever or blocked nose: six herbal remedies, each with a job.</p></a>
-<a class="card post-card card-link reveal" href="what-gmp-and-halal-mean/"><time datetime="2026-09-18">2026-09-18</time><h3>What GMP and Halal certification mean for your supplements</h3><p>Two marks on the pack, and what each one guarantees about how the product was made.</p></a></div></div></main>
+<main id="main"><div class="counter"><ol class="crumbs" aria-label="Breadcrumb"><li><a href="../">Home</a></li><li aria-current="page">Health notes</li></ol>
+<header class="page-head"><h1>Health notes</h1><p class="lead">Short, practical reading written with HST Medical's pharmacists: how to choose, how to use, and what the marks on the pack mean.</p></header>
+<div class="label"><nav class="notes" aria-label="Health notes"><a href="balm-creme-liniment-or-patch/"><time datetime="2026-10-02">2026-10-02</time><span><b>Balm, crème, liniment or patch? Choosing the right Rheuma-Salve® format</b>Five formats, one formula. Where it hurts and where you are decide which to reach for.</span></a><a href="cough-cold-or-flu-which-remedy/"><time datetime="2026-09-25">2026-09-25</time><span><b>Cough, cold or flu? Matching the symptom to the remedy</b>Sore throat, chesty cough, fever or blocked nose: six herbal remedies, each with a job.</span></a><a href="what-gmp-and-halal-mean/"><time datetime="2026-09-18">2026-09-18</time><span><b>What GMP and Halal certification mean for your supplements</b>Two marks on the pack, and what each one guarantees about how the product was made.</span></a></nav></div></div></main>
 <footer class="site-footer">
-  <div class="container">
+  <div class="counter">
     <div class="footer-grid">
       <div>
-        <img src="../assets/img/logo-hst-kowa-360.png" alt="HST Medical, a Kowa subsidiary" width="120" height="64" loading="lazy" decoding="async">
-        <p style="margin-top:.8rem">Trusted manufacturer and supplier of health supplements and pain-relief remedies to Singapore's major pharmacies since 1994. A subsidiary of Kowa Company, Ltd.</p>
-        <p class="small">Always read the label and follow directions for use.</p>
+        <img src="../assets/img/logo-hst-kowa-360.png" alt="HST Medical, Kowa subsidiary" width="110" height="59" loading="lazy" decoding="async">
+        <p style="margin-top:.8rem;max-width:40ch">Health supplements and pain-relief remedies formulated by pharmacists and TCM physicians, made in Singapore since 1994. A subsidiary of Kowa Company, Ltd.</p>
+        <p class="small" style="margin-top:.6rem">Always read the label and follow directions for use.</p>
       </div>
-      <div><h4>Shop</h4><ul>
-        <li><a href="../shop/pain-relief/">Premium pain relief</a></li>
+      <div><p class="ft-h">Shop</p><ul>
+        <li><a href="../shop/pain-relief/">Pain relief</a></li>
         <li><a href="../shop/cough-cold-flu/">Cough, cold &amp; flu</a></li>
-        <li><a href="../shop/immunity-energy/">Immunity &amp; energy</a></li>
-        <li><a href="../shop/beauty-wellness/">Beauty &amp; wellness</a></li>
-        <li><a href="../shop/kids/">Kids supplements</a></li>
-        <li><a href="../shop/">All products</a></li>
+        <li><a href="../shop/kids/">Kids</a></li>
+        <li><a href="../shop/stress-sleep/">Sleep</a></li>
+        <li><a href="../shop/immunity-energy/">Tonics</a></li>
+        <li><a href="../shop/">All 51 products</a></li>
       </ul></div>
-      <div><h4>Company</h4><ul>
-        <li><a href="../about/">About HST Medical</a></li>
+      <div><p class="ft-h">HST Medical</p><ul>
+        <li><a href="../about/">About us</a></li>
         <li><a href="../brands/">Our brands</a></li>
         <li><a href="../where-to-buy/">Where to buy</a></li>
-        <li><a href="../resellers/">Become a reseller</a></li>
+        <li><a href="../resellers/">Trade and resellers</a></li>
         <li><a href="../blog/">Health notes</a></li>
       </ul></div>
-      <div><h4>Help</h4><ul>
+      <div><p class="ft-h">Help</p><ul>
         <li><a href="../contact/">Contact us</a></li>
-        <li><a href="../cart/">Cart</a></li>
-        <li><a href="../privacy/">Privacy policy</a></li>
+        <li><a href="../cart/">Your bag</a></li>
+        <li><a href="../privacy/">Privacy</a></li>
         <li><a href="mailto:resellercontact@hstmedical.com">resellercontact@hstmedical.com</a></li>
       </ul></div>
     </div>
-    <div class="legal"><span>© 2026 HST Medical Pte Ltd. Singapore. All rights reserved.</span><span>Prototype by TechNext for the hstmedical.com redesign RFP.</span></div>
+    <div class="legal"><span>© 2026 HST Medical Pte Ltd, Singapore.</span><span>Prototype by TechNext for the hstmedical.com redesign RFP.</span></div>
   </div>
 </footer>
-<script src="../assets/js/site.js?v=20261002a" defer></script>
+<div class="toast" id="toast" hidden role="status"><span></span><button type="button">Undo</button></div>
+<script src="../assets/js/site.js?v=20261002e" defer></script>
 </body>
 </html>

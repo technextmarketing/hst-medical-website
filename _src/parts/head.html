@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="{{BODYCLASS}}">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,31 +13,31 @@
 <meta property="og:site_name" content="HST Medical">
 <meta property="og:image" content="{{OG}}">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#dd1860">
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" type="image/svg+xml" href="{{ROOT}}assets/img/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ROOT}}assets/css/style.css?v={{V}}">
 <script>document.documentElement.classList.add('js');</script>
 {{EXTRA}}</head>
 <body>
 <a class="sr-only" href="#main">Skip to content</a>
-<div class="proto" role="note">Design prototype for the HST Medical website RFP — demo store, nothing is sold or indexed. <a href="{{ROOT}}">Home</a></div>
+<div class="live" id="live" aria-live="polite" aria-atomic="true"></div>
+<p class="proto">Design prototype for the HST Medical website RFP. Demo store: nothing is sold or indexed. <a href="{{ROOT}}">Home</a></p>
 <header class="site-header">
-  <div class="container header-inner">
-    <a class="brand" href="{{ROOT}}" aria-label="HST Medical — home"><img src="{{ROOT}}assets/img/logo-hst-kowa-360.png" alt="HST Medical, a Kowa subsidiary" width="82" height="44" decoding="async"></a>
-    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span></button>
-    <nav class="nav" id="site-nav" aria-label="Main navigation">
-      <a href="{{ROOT}}shop/"{{A_shop}}>Store</a>
+  <div class="counter header-inner">
+    <a class="brand" href="{{ROOT}}" aria-label="HST Medical, a Kowa subsidiary. Home"><img src="{{ROOT}}assets/img/logo-hst-kowa-360.png" alt="HST Medical, Kowa subsidiary" width="78" height="42" decoding="async"></a>
+    <nav class="nav" id="site-nav" aria-label="Main">
       <a href="{{ROOT}}shop/pain-relief/"{{A_pain}}>Pain relief</a>
       <a href="{{ROOT}}shop/cough-cold-flu/"{{A_cough}}>Cough &amp; cold</a>
-      <a href="{{ROOT}}brands/"{{A_brands}}>Brands</a>
-      <a href="{{ROOT}}resellers/"{{A_resellers}}>Resellers</a>
+      <a href="{{ROOT}}shop/"{{A_shop}}>All products</a>
+      <a href="{{ROOT}}where-to-buy/"{{A_where}}>Where to buy</a>
+      <a href="{{ROOT}}resellers/"{{A_resellers}}>Trade</a>
       <a href="{{ROOT}}about/"{{A_about}}>About</a>
       <a href="{{ROOT}}blog/"{{A_blog}}>Health notes</a>
-      <a href="{{ROOT}}contact/"{{A_contact}}>Contact</a>
-      <a class="cart" href="{{ROOT}}cart/" aria-label="Cart"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg><span class="count" hidden>0</span></a>
     </nav>
+    <a class="bag" href="{{ROOT}}cart/" aria-label="Bag"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l1 12H5z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Bag</span><span class="count" hidden>0</span></a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
   </div>
 </header>
