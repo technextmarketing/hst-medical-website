@@ -12,7 +12,7 @@ import json, os, re, html, datetime
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.dirname(HERE)
 BASE = "https://technextmarketing.github.io/hst-medical-website/"
-V = "20261002e"
+V = "20261002h"
 PROTOTYPE = True
 TODAY = datetime.date.today().isoformat()
 
@@ -26,8 +26,10 @@ CAT_ORDER = ["pain-relief", "cough-cold-flu", "traditional-pain-relief", "bones-
 FILTER_GROUPS = [("Relief", ["pain-relief", "traditional-pain-relief", "cough-cold-flu", "bones-joints"]),
                  ("Every day", ["immunity-allergy", "immunity-energy", "alertness-memory-vision", "stress-sleep"]),
                  ("Family and beauty", ["kids", "beauty-wellness", "heart-liver-vitality"])]
-COUNTERS = [("pain-relief", "Pain relief", "Balm, crème, liniment, patch, stick"), ("cough-cold-flu", "Cough and cold", "Lozenges, syrups, flu remedy, inhaler"),
-            ("kids", "Kids", "Zoo-Vite gummies and jelly sticks"), ("stress-sleep", "Sleep", "Melatonin and magnesium"), ("immunity-energy", "Tonics", "Ginseng, cordyceps, lingzhi")]
+COUNTERS = [("pain-relief", "Pain relief", "Balm, crème, patch, stick", "p03"), ("cough-cold-flu", "Cough and cold", "Lozenges, syrups, inhaler", "p27"),
+            ("kids", "Kids", "Gummies and jelly sticks", "p23"), ("stress-sleep", "Sleep", "Melatonin and magnesium", "p43"),
+            ("immunity-energy", "Tonics", "Ginseng, cordyceps, lingzhi", "p09"), ("", "All products", "51 products, 11 shelves", "p13")]
+BENEFITS = ["Free island-wide delivery over S$60", "Made under GMP in Singapore", "Halal-certified options", "Formulated by pharmacists and TCM physicians", "On the shelf at Guardian, Watsons and NHGP", "A Kowa company since 2024"]
 RETAILERS_CONFIRMED = ["Guardian", "Watsons", "NHGP pharmacies"]
 RETAILERS_TBC = ["Unity (to confirm)", "GP clinics and TCM halls (to confirm)", "Online marketplaces (to confirm)"]
 
@@ -203,14 +205,14 @@ def crumbs(root, items):
     return '<ol class="crumbs" aria-label="Breadcrumb">%s</ol>' % "".join(lis), jsonld({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": ld})
 
 NAV_IDS = ["pain", "cough", "shop", "where", "resellers", "about", "blog"]
-def page(out_rel, title, desc, body, active="", extra_head="", og_image=None, root=None):
+def page(out_rel, title, desc, body, active="", extra_head="", og_image=None, root=None, body_class=""):
     depth = out_rel.count("/")
     root = ("../" * depth) if root is None else root
     canonical = BASE + (out_rel[:-len("index.html")] if out_rel.endswith("index.html") else out_rel)
     robots = '<meta name="robots" content="noindex,nofollow">\n' if PROTOTYPE else ""
     head = read("head.html").replace("{{TITLE}}", esc(title)).replace("{{DESC}}", esc(desc)).replace("{{ROOT}}", root) \
         .replace("{{CANONICAL}}", canonical).replace("{{ROBOTS}}", robots).replace("{{V}}", V).replace("{{OG}}", og_image or BASE + "assets/img/og-cover.png") \
-        .replace("{{EXTRA}}", extra_head)
+        .replace("{{EXTRA}}", extra_head).replace("{{BODYCLASS}}", body_class)
     for nid in NAV_IDS:
         head = head.replace("{{A_%s}}" % nid, ' class="active"' if nid == active else "")
     foot = read("footer.html").replace("{{ROOT}}", root).replace("{{V}}", V).replace("{{YEAR}}", str(datetime.date.today().year))
@@ -244,41 +246,55 @@ GUIDES = {
 # ---------------------------------------------------------------- HOME
 def build_home():
     root = ""
-    counters = "".join(f"""<a href="shop/{cid}/"{' class="pain"' if i == 0 else ''}>{esc(name)}<small>{esc(sub)}</small>{'<span class="stamp">Start here</span>' if i == 0 else ''}</a>""" for i, (cid, name, sub) in enumerate(COUNTERS))
+    counters = "".join(f"""<a href="shop/{cid + '/' if cid else ''}"><span class="tile"><img src="assets/img/products/{img}-thumb.webp" alt="" width="200" height="200" loading="lazy" decoding="async"></span><span>{esc(name)}</span><small>{esc(sub)}</small>{'<span class="stamp">Start here</span>' if i == 0 else ''}</a>""" for i, (cid, name, sub, img) in enumerate(COUNTERS))
+    strip = "".join(f"<li>{IC['tick']}<span>{esc(b)}</span></li>" for b in BENEFITS)
+    best = [BY_SLUG[s] for s in ["rheuma-salve-balm", "alievaid-herbal-drops", "deep-sea-squalene", "pearl-powder", "crocodile-pure-skin-oil", "zoo-vite-multivitamin-gummies", "flu-gard", "melatonin-5mg"]]
+    best_cards = "\n".join(product_label(p, root) for p in best)
+    brands_row = "".join(f"<li>{b}</li>" for b in ["Rheuma-Salve®", "Heritage®", "HST Medical®", "Zoo-Vite®", "Kowa"])
     shelf = "".join(f"""<a href="shop/{cid}/"{' class="pain"' if cid == 'pain-relief' else ''}><b>{esc(CATS[cid]['name'])}</b><span>{esc(CATS[cid]['blurb'])}</span><small>{len(cat_products(cid))} products</small></a>""" for cid in CAT_ORDER)
     notes = "".join(f"""<a href="blog/{s}/"><time datetime="{d}">{d}</time><span><b>{esc(t)}</b>{esc(x)}</span></a>""" for s, t, d, x, _ in POSTS)
     body = f"""
 <main id="main">
 <section class="hero" aria-labelledby="h1">
-  <div class="counter"><div class="label">
-    {label_head('<b>HST Medical</b> <span>Dispensed for you</span> <span>Formulated by pharmacists and TCM physicians</span>', 'Singapore · since 1994 · a Kowa company')}
-    <div class="hero-body">
-      <div>
-        <h1 id="h1">Pain, cough or cold? Start here.</h1>
-        <p class="dose">Singapore-made remedies you already know from the Guardian, Watsons and NHGP shelf. Pick the format that fits, see the real price for the real pack, and we deliver island-wide.</p>
-        <ul class="checks" style="margin-top:1.25rem">
-          <li>{IC['tick']}<span>Made under GMP in Singapore; Halal-certified options</span></li>
-          <li>{IC['tick']}<span>Thirty years on the pharmacy shelf; a Kowa subsidiary since 2024</span></li>
-          <li>{IC['tick']}<span>Free island-wide delivery over S$60</span></li>
-        </ul>
+  <div class="label">
+    <div class="hero-block">
+      <div class="hero-body">
+        <div>
+          <h1 id="h1">Pain, cough or cold? Start here.</h1>
+          <p class="dose">Singapore-made remedies you already know from the Guardian, Watsons and NHGP shelf. Pick the format that fits, see the real price for the real pack, and we deliver island-wide.</p>
+          <div class="hero-ctas"><a class="btn btn-light" href="shop/pain-relief/">Shop pain relief {IC['arrow']}</a><a class="btn btn-ghost" href="shop/cough-cold-flu/">Cough and cold</a></div>
+          <ul class="checks">
+            <li>{IC['tick']}<span>Formulated by pharmacists and TCM physicians, made under GMP</span></li>
+            <li>{IC['tick']}<span>Thirty years on Singapore's pharmacy shelves; a Kowa company since 2024</span></li>
+          </ul>
+        </div>
+        <figure class="hero-pack">
+          <img src="assets/img/products/p03.webp" alt="Heritage Rheuma-Salve Balm 50g jar and box" width="536" height="536" fetchpriority="high" decoding="async">
+          <a class="float" href="products/rheuma-salve-balm/"><img src="assets/img/products/p03-thumb.webp" alt="" width="56" height="56"><span><b>Rheuma-Salve® Balm 50g</b><small>Best seller · {esc(money(BY_SLUG['rheuma-salve-balm']['price']))}</small></span><span class="go">{IC['arrow']}</span></a>
+        </figure>
       </div>
-      <figure class="hero-pack">
-        <img src="assets/img/products/p03.webp" alt="Heritage Rheuma-Salve Balm 50g jar and box" width="536" height="536" fetchpriority="high" decoding="async">
-        <a class="tab stamped" href="products/rheuma-salve-balm/">Rheuma-Salve® Balm 50g <small>Best seller · {esc(money(BY_SLUG['rheuma-salve-balm']['price']))}</small></a>
-      </figure>
+      <div class="watermark" aria-hidden="true">RELIEF</div>
     </div>
-    <nav class="counters" aria-label="Start by need">{counters}</nav>
-  </div></div>
+    <div class="hero-foot"><nav class="counters" aria-label="Shop by need">{counters}</nav></div>
+  </div>
+</section>
+<div class="strip" aria-label="Why shop with HST Medical"><ul>{strip}</ul></div>
+
+<section class="band" aria-labelledby="h-best">
+  <div class="counter">
+    <div class="band-head"><div><h2 id="h-best">Best sellers</h2><p>What Singapore buys most, with the real price for the real pack.</p></div><a class="btn btn-quiet" href="shop/">All 51 products {IC['arrow']}</a></div>
+    <div class="labels">{best_cards}</div>
+  </div>
 </section>
 
-<section class="band" aria-labelledby="h-pain">
+<section class="band paper" aria-labelledby="h-pain">
   <div class="counter">
     <div class="band-head"><div><h2 id="h-pain">Which pain relief do I need?</h2><p>{esc(GUIDES['pain-relief']['intro'])}</p></div><a class="btn btn-quiet" href="shop/pain-relief/">The pain relief counter {IC['arrow']}</a></div>
     <div class="label heritage"><div class="label-body">{compare_table('pain-relief', root)}</div></div>
   </div>
 </section>
 
-<section class="band paper" aria-labelledby="h-cough">
+<section class="band" aria-labelledby="h-cough">
   <div class="counter">
     <div class="band-head"><div><h2 id="h-cough">Cough, cold or flu: match the symptom</h2><p>{esc(GUIDES['cough-cold-flu']['intro'])}</p></div><a class="btn btn-quiet" href="shop/cough-cold-flu/">The cough and cold counter {IC['arrow']}</a></div>
     <div class="label"><div class="label-body">{compare_table('cough-cold-flu', root)}</div></div>
@@ -292,21 +308,24 @@ def build_home():
   </div>
 </section>
 
-<section class="band paper" aria-labelledby="h-trust">
-  <div class="counter grid12" style="align-items:start">
-    <div style="grid-column:1 / span 7"><h2 id="h-trust">Dispensed by pharmacists since 1994</h2>
-      <div class="label" style="margin-top:1.25rem"><div class="facts">
-        <div><b>1994</b><p>Founded in Singapore as a manufacturer and supplier to the major pharmacy chains.</p></div>
-        <div><b>GMP</b><p>Made under Good Manufacturing Practice, with Halal-certified and vegan options across the range.</p></div>
-        <div><b>Two lines</b><p>HST Medical® for contemporary formulas; Heritage® for traditional Asian remedies prepared to modern standards.</p></div>
-        <div><b>Kowa</b><p>A subsidiary of Kowa Company, Ltd. since 2024, the Japanese group behind Vantelin.</p></div>
-      </div></div></div>
-    <div style="grid-column:8 / span 5"><h2 style="font-size:1.4rem">Where to buy</h2>
-      <p style="margin:.5rem 0 .25rem">On the shelf at:</p><ul class="where">{''.join('<li>%s</li>' % esc(r) for r in RETAILERS_CONFIRMED)}</ul>
-      <p class="small" style="margin-top:.75rem">Other stockists are being confirmed with HST Medical. <a href="where-to-buy/">Stockist list and delivery details</a>.</p>
-      <div class="label" style="margin-top:1.5rem"><div class="label-body trade"><div><h3>Pharmacies, clinics and distributors</h3><p class="small" style="margin-top:.25rem">Open a trade account, download the product sheets and order through your HST Medical territory manager.</p></div><a class="btn" href="resellers/">Trade enquiries</a></div></div>
+<section class="band brand" aria-labelledby="h-trust">
+  <div class="counter">
+    <div class="band-head"><div><h2 id="h-trust">Dispensed by pharmacists since 1994</h2><p>Four facts behind every pack on the shelf.</p></div><a class="btn btn-light" href="about/">Our story {IC['arrow']}</a></div>
+    <div class="facts">
+      <div><b>1994</b><p>Founded in Singapore as a manufacturer and supplier to the major pharmacy chains.</p></div>
+      <div><b>GMP</b><p>Made under Good Manufacturing Practice, with Halal-certified and vegan options across the range.</p></div>
+      <div><b>Two lines</b><p>HST Medical® for contemporary formulas; Heritage® for traditional Asian remedies prepared to modern standards.</p></div>
+      <div><b>Kowa</b><p>A subsidiary of Kowa Company, Ltd. since 2024, the Japanese group behind Vantelin.</p></div>
+    </div>
+    <div class="grid12" style="margin-top:var(--gutter);align-items:center">
+      <div style="grid-column:1 / span 6"><h3>Where to buy</h3><p style="margin:.5rem 0 .25rem">On the shelf at:</p><ul class="where">{''.join('<li>%s</li>' % esc(r) for r in RETAILERS_CONFIRMED)}</ul><p class="small" style="margin-top:.75rem">Other stockists are being confirmed with HST Medical. <a href="where-to-buy/" style="color:#fff">Stockist list and delivery details</a>.</p></div>
+      <div style="grid-column:7 / span 6" class="label"><div class="label-body trade"><div><h3>Pharmacies, clinics and distributors</h3><p class="small" style="margin-top:.25rem">Open a trade account, download the product sheets and order through your HST Medical territory manager.</p></div><a class="btn btn-dark" href="resellers/">Trade enquiries</a></div></div>
     </div>
   </div>
+</section>
+
+<section class="band" aria-labelledby="h-brands" style="padding-bottom:0">
+  <div class="counter"><div class="band-head" style="margin-bottom:1rem"><h2 id="h-brands" style="font-size:1.3rem">Our brands</h2><a class="btn btn-quiet btn-sm" href="brands/">About the brands {IC['arrow']}</a></div><ul class="brands-row">{brands_row}</ul></div>
 </section>
 
 <section class="band" aria-labelledby="h-notes">
@@ -320,7 +339,7 @@ def build_home():
                  "potentialAction": {"@type": "SearchAction", "target": BASE + "shop/?q={search_term_string}", "query-input": "required name=search_term_string"}}]})
     page("index.html", "HST Medical Singapore — Rheuma-Salve® Pain Relief, Cough & Cold Remedies, Heritage® Tonics",
          "Pain, cough or cold? Start at the HST Medical counter: Rheuma-Salve®, Alievaid, Flu Gard and 51 pharmacist-formulated products made in Singapore since 1994. A Kowa subsidiary. GMP, Halal options.",
-         body, extra_head=ld)
+         body, extra_head=ld, body_class="home")
     add_sitemap(BASE, "1.0")
 
 # ---------------------------------------------------------------- SHOP + CATEGORIES
@@ -444,9 +463,9 @@ def simple(out_rel, title, desc, h1, lead, inner, active="", extra=""):
     page(out_rel, title, desc, body, active=active, extra_head=crumb_ld + extra)
     add_sitemap(BASE + out_rel[:-len("index.html")])
 
-def field(name, label, typ="text", req=False, **attrs):
+def field(name, label, typ="text", req=False, err=None, **attrs):
     a = " ".join('%s="%s"' % (k.replace("_", "-"), esc(v)) for k, v in attrs.items())
-    return f"""<label><span class="{'req' if req else ''}">{label}</span><input type="{typ}" name="{name}"{' required' if req else ''} {a}><span class="err">{label} is needed.</span></label>"""
+    return f"""<label><span class="{'req' if req else ''}">{label}</span><input type="{typ}" name="{name}"{' required' if req else ''} {a}><span class="err">{err or (label + ' is needed.')}</span></label>"""
 
 def build_static():
     simple("about/index.html", "About HST Medical — Singapore's Pharmacy-Shelf Remedies Since 1994",
@@ -520,7 +539,7 @@ def build_static():
     {field('country', 'Country or region', value='Singapore')}
     {field('ranges', 'Ranges of interest', placeholder='e.g. Rheuma-Salve®, cough and cold, Zoo-Vite®')}
     <label><span>Message</span><textarea name="message" placeholder="Number of outlets, expected volume, timing"></textarea></label>
-    <label class="check"><input type="checkbox" name="consent" required><span>I agree to be contacted about a trade account; my details are handled under the <a href="../privacy/">privacy policy</a>.</span></label><span class="err" style="margin-top:-.5rem">Please tick the consent box.</span>
+    <div class="lbl"><label class="check"><input type="checkbox" name="consent" required><span>I agree to be contacted about a trade account; my details are handled under the <a href="../privacy/">privacy policy</a>.</span></label><span class="err">Please tick the consent box so we can contact you.</span></div>
     <button class="btn btn-stamp" type="submit">Send enquiry {IC['arrow']}</button>
     <p class="note">Prototype: nothing is sent. The production form posts to the WordPress contact handler and notifies resellercontact@hstmedical.com.</p>
     <p class="ok">Thank you. A territory manager will contact you within two working days.</p>
@@ -566,16 +585,16 @@ def build_static():
     <section class="step"><h2>Who is this order for?</h2>
       <div class="row">{field('email', 'Email', 'email', True, autocomplete='email', inputmode='email')}{field('mobile', 'Mobile', 'tel', True, autocomplete='tel', inputmode='tel')}</div>
       <p class="note">We use these for the order confirmation and delivery updates only.</p>
-      <div class="step-nav"><span></span><button class="btn" type="button" data-next>Continue to delivery {IC['arrow']}</button></div></section>
+      <div class="step-nav"><span></span><button class="btn btn-stamp" type="button" data-next>Continue to delivery {IC['arrow']}</button></div></section>
     <section class="step" hidden><h2>Where should we deliver?</h2>
       <div class="row">{field('first', 'First name', req=True, autocomplete='given-name')}{field('last', 'Last name', req=True, autocomplete='family-name')}</div>
       {field('address', 'Address', req=True, autocomplete='street-address')}
-      <div class="row">{field('unit', 'Unit', autocomplete='address-line2')}{field('postal', 'Postal code', req=True, inputmode='numeric', autocomplete='postal-code', pattern='[0-9]{{6}}')}<label><span>Country</span><select name="country" autocomplete="country-name"><option>Singapore</option><option>Malaysia</option><option>Other</option></select></label></div>
+      <div class="row">{field('unit', 'Unit', autocomplete='address-line2')}{field('postal', 'Postal code', req=True, err='Enter the 6-digit postal code.', inputmode='numeric', autocomplete='postal-code', pattern='[0-9]{6}')}<label><span>Country</span><select name="country" autocomplete="country-name"><option>Singapore</option><option>Malaysia</option><option>Other</option></select></label></div>
       <div class="lbl"><span>Delivery method</span><label class="check"><input type="radio" name="ship" checked><span>Courier, 2 to 3 working days (free over S$60, otherwise S$4.50)</span></label><label class="check"><input type="radio" name="ship"><span>Self-collection, by appointment</span></label></div>
-      <div class="step-nav"><button class="btn btn-quiet" type="button" data-prev>Back</button><button class="btn" type="button" data-next>Continue to payment {IC['arrow']}</button></div></section>
+      <div class="step-nav"><button class="btn btn-quiet" type="button" data-prev>Back</button><button class="btn btn-stamp" type="button" data-next>Continue to payment {IC['arrow']}</button></div></section>
     <section class="step" hidden><h2>How would you like to pay?</h2>
       <div class="lbl"><span>Payment</span><label class="check"><input type="radio" name="pay" checked><span>Card (Visa, Mastercard, Amex)</span></label><label class="check"><input type="radio" name="pay"><span>PayNow</span></label><label class="check"><input type="radio" name="pay"><span>GrabPay, Apple Pay, Google Pay</span></label></div>
-      <label class="check"><input type="checkbox" name="terms" required><span class="req">I accept the terms of sale and the <a href="../privacy/">privacy policy</a></span></label><span class="err" style="margin-top:-.5rem">Please accept the terms to place the order.</span>
+      <div class="lbl"><label class="check"><input type="checkbox" name="terms" required><span class="req">I accept the terms of sale and the <a href="../privacy/">privacy policy</a></span></label><span class="err">Please tick the box to accept the terms before placing the order.</span></div>
       <div class="step-nav"><button class="btn btn-quiet" type="button" data-prev>Back</button><button class="btn btn-stamp" type="submit" data-needs-items>Place order {IC['arrow']}</button></div>
       <div class="assure"><div><b>Secure payment</b>Card details are handled by the payment gateway, never stored here.</div><div><b>Delivery 2 to 3 working days</b>Island-wide courier; tracking by email.</div><div><b>Questions?</b><a href="../contact/">Contact us</a> before or after your order.</div></div>
       <p class="caution">Always read the label and follow directions for use.</p></section>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="home">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,12 +14,12 @@
 <meta property="og:site_name" content="HST Medical">
 <meta property="og:image" content="https://technextmarketing.github.io/hst-medical-website/assets/img/og-cover.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#b3124c">
 <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=20261002e">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css?v=20261002h">
 <script>document.documentElement.classList.add('js');</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://technextmarketing.github.io/hst-medical-website/#org", "name": "HST Medical Pte Ltd", "url": "https://technextmarketing.github.io/hst-medical-website/", "logo": "https://technextmarketing.github.io/hst-medical-website/assets/img/logo-hst-kowa.png", "parentOrganization": {"@type": "Organization", "name": "Kowa Company, Ltd."}, "foundingDate": "1994", "address": {"@type": "PostalAddress", "addressCountry": "SG"}, "sameAs": ["https://hstmedical.com"]}, {"@type": "WebSite", "url": "https://technextmarketing.github.io/hst-medical-website/", "name": "HST Medical", "publisher": {"@id": "https://technextmarketing.github.io/hst-medical-website/#org"}, "potentialAction": {"@type": "SearchAction", "target": "https://technextmarketing.github.io/hst-medical-website/shop/?q={search_term_string}", "query-input": "required name=search_term_string"}}]}</script>
 </head>
@@ -29,7 +29,7 @@
 <p class="proto">Design prototype for the HST Medical website RFP. Demo store: nothing is sold or indexed. <a href="">Home</a></p>
 <header class="site-header">
   <div class="counter header-inner">
-    <a class="brand" href="" aria-label="HST Medical, a Kowa subsidiary. Home"><img src="assets/img/logo-hst-kowa-360.png" alt="HST Medical, Kowa subsidiary" width="78" height="42" decoding="async"></a>
+    <a class="brand" href="" aria-label="HST Medical, a Kowa subsidiary. Home"><img src="assets/img/logo-hst-kowa-360.png" alt="HST Medical, Kowa subsidiary" width="74" height="40" decoding="async"></a>
     <nav class="nav" id="site-nav" aria-label="Main">
       <a href="shop/pain-relief/">Pain relief</a>
       <a href="shop/cough-cold-flu/">Cough &amp; cold</a>
@@ -39,6 +39,7 @@
       <a href="about/">About</a>
       <a href="blog/">Health notes</a>
     </nav>
+    <form class="hsearch" role="search" action="shop/" method="get"><label class="sr-only" for="hq">Search products</label><input id="hq" type="search" name="q" placeholder="Search medicines, supplements" autocomplete="off"><button type="submit" aria-label="Search"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button></form>
     <a class="bag" href="cart/" aria-label="Bag"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l1 12H5z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Bag</span><span class="count" hidden>0</span></a>
     <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
   </div>
@@ -46,28 +47,93 @@
 
 <main id="main">
 <section class="hero" aria-labelledby="h1">
-  <div class="counter"><div class="label">
-    <div class="label-head"><b>HST Medical</b> <span>Dispensed for you</span> <span>Formulated by pharmacists and TCM physicians</span><span class="right">Singapore · since 1994 · a Kowa company</span></div>
-    <div class="hero-body">
-      <div>
-        <h1 id="h1">Pain, cough or cold? Start here.</h1>
-        <p class="dose">Singapore-made remedies you already know from the Guardian, Watsons and NHGP shelf. Pick the format that fits, see the real price for the real pack, and we deliver island-wide.</p>
-        <ul class="checks" style="margin-top:1.25rem">
-          <li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Made under GMP in Singapore; Halal-certified options</span></li>
-          <li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Thirty years on the pharmacy shelf; a Kowa subsidiary since 2024</span></li>
-          <li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Free island-wide delivery over S$60</span></li>
-        </ul>
+  <div class="label">
+    <div class="hero-block">
+      <div class="hero-body">
+        <div>
+          <h1 id="h1">Pain, cough or cold? Start here.</h1>
+          <p class="dose">Singapore-made remedies you already know from the Guardian, Watsons and NHGP shelf. Pick the format that fits, see the real price for the real pack, and we deliver island-wide.</p>
+          <div class="hero-ctas"><a class="btn btn-light" href="shop/pain-relief/">Shop pain relief <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn btn-ghost" href="shop/cough-cold-flu/">Cough and cold</a></div>
+          <ul class="checks">
+            <li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Formulated by pharmacists and TCM physicians, made under GMP</span></li>
+            <li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Thirty years on Singapore's pharmacy shelves; a Kowa company since 2024</span></li>
+          </ul>
+        </div>
+        <figure class="hero-pack">
+          <img src="assets/img/products/p03.webp" alt="Heritage Rheuma-Salve Balm 50g jar and box" width="536" height="536" fetchpriority="high" decoding="async">
+          <a class="float" href="products/rheuma-salve-balm/"><img src="assets/img/products/p03-thumb.webp" alt="" width="56" height="56"><span><b>Rheuma-Salve® Balm 50g</b><small>Best seller · S$10.10</small></span><span class="go"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        </figure>
       </div>
-      <figure class="hero-pack">
-        <img src="assets/img/products/p03.webp" alt="Heritage Rheuma-Salve Balm 50g jar and box" width="536" height="536" fetchpriority="high" decoding="async">
-        <a class="tab stamped" href="products/rheuma-salve-balm/">Rheuma-Salve® Balm 50g <small>Best seller · S$10.10</small></a>
-      </figure>
+      <div class="watermark" aria-hidden="true">RELIEF</div>
     </div>
-    <nav class="counters" aria-label="Start by need"><a href="shop/pain-relief/" class="pain">Pain relief<small>Balm, crème, liniment, patch, stick</small><span class="stamp">Start here</span></a><a href="shop/cough-cold-flu/">Cough and cold<small>Lozenges, syrups, flu remedy, inhaler</small></a><a href="shop/kids/">Kids<small>Zoo-Vite gummies and jelly sticks</small></a><a href="shop/stress-sleep/">Sleep<small>Melatonin and magnesium</small></a><a href="shop/immunity-energy/">Tonics<small>Ginseng, cordyceps, lingzhi</small></a></nav>
-  </div></div>
+    <div class="hero-foot"><nav class="counters" aria-label="Shop by need"><a href="shop/pain-relief/"><span class="tile"><img src="assets/img/products/p03-thumb.webp" alt="" width="200" height="200" loading="lazy" decoding="async"></span><span>Pain relief</span><small>Balm, crème, patch, stick</small><span class="stamp">Start here</span></a><a href="shop/cough-cold-flu/"><span class="tile"><img src="assets/img/products/p27-thumb.webp" alt="" width="200" height="200" loading="lazy" decoding="async"></span><span>Cough and cold</span><small>Lozenges, syrups, inhaler</small></a><a href="shop/kids/"><span class="tile"><img src="assets/img/products/p23-thumb.webp" alt="" width="200" height="200" loading="lazy" decoding="async"></span><span>Kids</span><small>Gummies and jelly sticks</small></a><a href="shop/stress-sleep/"><span class="tile"><img src="assets/img/products/p43-thumb.webp" alt="" width="200" height="200" loading="lazy" decoding="async"></span><span>Sleep</span><small>Melatonin and magnesium</small></a><a href="shop/immunity-energy/"><span class="tile"><img src="assets/img/products/p09-thumb.webp" alt="" width="200" height="200" loading="lazy" decoding="async"></span><span>Tonics</span><small>Ginseng, cordyceps, lingzhi</small></a><a href="shop/"><span class="tile"><img src="assets/img/products/p13-thumb.webp" alt="" width="200" height="200" loading="lazy" decoding="async"></span><span>All products</span><small>51 products, 11 shelves</small></a></nav></div>
+  </div>
+</section>
+<div class="strip" aria-label="Why shop with HST Medical"><ul><li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Free island-wide delivery over S$60</span></li><li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Made under GMP in Singapore</span></li><li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Halal-certified options</span></li><li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Formulated by pharmacists and TCM physicians</span></li><li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>On the shelf at Guardian, Watsons and NHGP</span></li><li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>A Kowa company since 2024</span></li></ul></div>
+
+<section class="band" aria-labelledby="h-best">
+  <div class="counter">
+    <div class="band-head"><div><h2 id="h-best">Best sellers</h2><p>What Singapore buys most, with the real price for the real pack.</p></div><a class="btn btn-quiet" href="shop/">All 51 products <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+    <div class="labels"><article class="label plabel heritage" data-cat="pain-relief" data-search="rheuma-salve® pain relief balm heritage premium pain relief extra-strength pain relief balm deep joint and muscle pain, stiffness, chest congestion">
+  <a class="img" href="products/rheuma-salve-balm/" tabindex="-1" aria-hidden="true"><img src="assets/img/products/p03-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"></a>
+  <div class="body"><span class="brand heritage">Heritage® · 50g (also 20g, value &amp; travel packs)</span>
+  <h3><a href="products/rheuma-salve-balm/">Rheuma-Salve® Pain Relief Balm</a></h3>
+  <p class="for">For: Deep joint and muscle pain, stiffness, chest congestion</p></div>
+  <div class="foot"><span class="price">S$10.10<small>incl. GST</small></span><button class="btn btn-sm" data-add data-id="rheuma-salve-balm" data-name="Rheuma-Salve® Pain Relief Balm" data-price="10.1" data-variant="Single pack" data-code="410323" data-img="assets/img/products/p03-thumb.webp" data-url="products/rheuma-salve-balm/"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l1 12H5z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg> Add to bag</button></div>
+</article>
+<article class="label plabel " data-cat="cough-cold-flu" data-search="alievaid herbal drops hst medical cough, cold &amp; flu cough &amp; sore throat relief sore throat and irritating cough; freshens breath">
+  <a class="img" href="products/alievaid-herbal-drops/" tabindex="-1" aria-hidden="true"><img src="assets/img/products/p26-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"></a>
+  <div class="body"><span class="brand ">HST Medical® · 12 lozenges</span>
+  <h3><a href="products/alievaid-herbal-drops/">Alievaid Herbal Drops</a></h3>
+  <p class="for">For: Sore throat and irritating cough; freshens breath</p></div>
+  <div class="foot"><span class="price">S$4.95<small>incl. GST</small></span><button class="btn btn-sm" data-add data-id="alievaid-herbal-drops" data-name="Alievaid Herbal Drops" data-price="4.95" data-variant="Single pack" data-code="114092" data-img="assets/img/products/p26-thumb.webp" data-url="products/alievaid-herbal-drops/"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l1 12H5z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg> Add to bag</button></div>
+</article>
+<article class="label plabel heritage" data-cat="beauty-wellness" data-search="deep sea squalene heritage beauty &amp; wellness immunity and skin health protects the liver and kidney organs, maintains healthy cholesterol levels">
+  <a class="img" href="products/deep-sea-squalene/" tabindex="-1" aria-hidden="true"><img src="assets/img/products/p13-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"></a>
+  <div class="body"><span class="brand heritage">Heritage® · 200 softgels</span>
+  <h3><a href="products/deep-sea-squalene/">Deep Sea Squalene</a></h3>
+  <p class="for">For: Protects the liver and kidney organs, Maintains healthy cholesterol levels</p></div>
+  <div class="foot"><span class="price">S$96.00<small>incl. GST</small></span><button class="btn btn-sm" data-add data-id="deep-sea-squalene" data-name="Deep Sea Squalene" data-price="96.0" data-variant="Single pack" data-code="110049" data-img="assets/img/products/p13-thumb.webp" data-url="products/deep-sea-squalene/"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l1 12H5z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg> Add to bag</button></div>
+</article>
+<article class="label plabel heritage" data-cat="beauty-wellness" data-search="pure medicinal pearl powder heritage beauty &amp; wellness from the inside out soothes the nerves and calms the mind, revitalizes natural skin allure">
+  <a class="img" href="products/pearl-powder/" tabindex="-1" aria-hidden="true"><img src="assets/img/products/p14-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"></a>
+  <div class="body"><span class="brand heritage">Heritage® · 60 vegicaps</span>
+  <h3><a href="products/pearl-powder/">Pure Medicinal Pearl Powder</a></h3>
+  <p class="for">For: Soothes the nerves and calms the mind, Revitalizes natural skin allure</p></div>
+  <div class="foot"><span class="price">S$224.10<small>incl. GST</small></span><button class="btn btn-sm" data-add data-id="pearl-powder" data-name="Pure Medicinal Pearl Powder" data-price="224.1" data-variant="Single pack" data-code="110001" data-img="assets/img/products/p14-thumb.webp" data-url="products/pearl-powder/"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l1 12H5z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg> Add to bag</button></div>
+</article>
+<article class="label plabel heritage" data-cat="beauty-wellness" data-search="crocodile pure skin oil heritage beauty &amp; wellness rejuvenate the skin vitamins a and e protect and repair skin, essential omega 3, 6 and 9 fatty acids soothe inflammation and regenerate skin cells">
+  <a class="img" href="products/crocodile-pure-skin-oil/" tabindex="-1" aria-hidden="true"><img src="assets/img/products/p16-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"></a>
+  <div class="body"><span class="brand heritage">Heritage® · 50ml</span>
+  <h3><a href="products/crocodile-pure-skin-oil/">Crocodile Pure Skin Oil</a></h3>
+  <p class="for">For: Vitamins A and E protect and repair skin, Essential omega 3, 6 and 9 fatty acids soothe inflammation and regenerate skin cells</p></div>
+  <div class="foot"><span class="price">S$79.00<small>incl. GST</small></span><button class="btn btn-sm" data-add data-id="crocodile-pure-skin-oil" data-name="Crocodile Pure Skin Oil" data-price="79.0" data-variant="Single pack" data-code="113491" data-img="assets/img/products/p16-thumb.webp" data-url="products/crocodile-pure-skin-oil/"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l1 12H5z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg> Add to bag</button></div>
+</article>
+<article class="label plabel zoo" data-cat="kids" data-search="zoo-vite® “safari buddies” multivitamin gummies zoo-vite kids supplements supports healthy growth and development promotes growth &amp; development, aids metabolism &amp; energy production">
+  <a class="img" href="products/zoo-vite-multivitamin-gummies/" tabindex="-1" aria-hidden="true"><img src="assets/img/products/p23-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"></a>
+  <div class="body"><span class="brand zoo">Zoo-Vite® · 60 gummies</span>
+  <h3><a href="products/zoo-vite-multivitamin-gummies/">Zoo-Vite® “Safari Buddies” Multivitamin Gummies</a></h3>
+  <p class="for">For: Promotes growth &amp; development, Aids metabolism &amp; energy production</p></div>
+  <div class="foot"><span class="price">S$32.60<small>incl. GST</small></span><button class="btn btn-sm" data-add data-id="zoo-vite-multivitamin-gummies" data-name="Zoo-Vite® “Safari Buddies” Multivitamin Gummies" data-price="32.6" data-variant="Single pack" data-code="112494" data-img="assets/img/products/p23-thumb.webp" data-url="products/zoo-vite-multivitamin-gummies/"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l1 12H5z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg> Add to bag</button></div>
+</article>
+<article class="label plabel " data-cat="cough-cold-flu" data-search="flu gard herbal remedy hst medical cough, cold &amp; flu cold and flu relief fever, body aches, runny nose and sneezing">
+  <a class="img" href="products/flu-gard/" tabindex="-1" aria-hidden="true"><img src="assets/img/products/p28-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"></a>
+  <div class="body"><span class="brand ">HST Medical® · 30 vegicaps</span>
+  <h3><a href="products/flu-gard/">Flu Gard Herbal Remedy</a></h3>
+  <p class="for">For: Fever, body aches, runny nose and sneezing</p></div>
+  <div class="foot"><span class="price">S$22.30<small>incl. GST</small></span><button class="btn btn-sm" data-add data-id="flu-gard" data-name="Flu Gard Herbal Remedy" data-price="22.3" data-variant="Single pack" data-code="113415" data-img="assets/img/products/p28-thumb.webp" data-url="products/flu-gard/"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l1 12H5z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg> Add to bag</button></div>
+</article>
+<article class="label plabel " data-cat="stress-sleep" data-search="melatonin 5mg hst medical stress, anxiety &amp; sleep sleep health promotes relaxation &amp; quality sleep, relieves jet lag discomfort">
+  <a class="img" href="products/melatonin-5mg/" tabindex="-1" aria-hidden="true"><img src="assets/img/products/p43-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"></a>
+  <div class="body"><span class="brand ">HST Medical® · 30 vegicaps</span>
+  <h3><a href="products/melatonin-5mg/">Melatonin 5mg</a></h3>
+  <p class="for">For: Promotes relaxation &amp; quality sleep, Relieves jet lag discomfort</p></div>
+  <div class="foot"><span class="price">S$20.50<small>incl. GST</small></span><button class="btn btn-sm" data-add data-id="melatonin-5mg" data-name="Melatonin 5mg" data-price="20.5" data-variant="Single pack" data-code="113194" data-img="assets/img/products/p43-thumb.webp" data-url="products/melatonin-5mg/"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l1 12H5z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg> Add to bag</button></div>
+</article></div>
+  </div>
 </section>
 
-<section class="band" aria-labelledby="h-pain">
+<section class="band paper" aria-labelledby="h-pain">
   <div class="counter">
     <div class="band-head"><div><h2 id="h-pain">Which pain relief do I need?</h2><p>Rheuma-Salve® has been Singapore&#x27;s pharmacy-shelf pain relief since 1994. One formula, five formats. The right pick depends on where it hurts, how long you need relief, and whether you are at home, at work or on the move.</p></div><a class="btn btn-quiet" href="shop/pain-relief/">The pain relief counter <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
     <div class="label heritage"><div class="label-body"><div class="table-wrap"><table class="compare"><thead><tr><th scope="col"><span class="sr-only">Pack</span></th><th scope="col">Product</th><th scope="col">Best for</th><th scope="col">How to use</th><th scope="col">Price</th><th scope="col"><span class="sr-only">Add</span></th></tr></thead><tbody><tr><td class="img"><img class="thumb" src="assets/img/products/p03-thumb.webp" alt="" width="72" height="72" loading="lazy"></td>
@@ -89,7 +155,7 @@
   </div>
 </section>
 
-<section class="band paper" aria-labelledby="h-cough">
+<section class="band" aria-labelledby="h-cough">
   <div class="counter">
     <div class="band-head"><div><h2 id="h-cough">Cough, cold or flu: match the symptom</h2><p>Six herbal remedies cover the arc of a cold, from the first tickle in the throat to a blocked nose that will not clear. All are formulated by HST Medical&#x27;s pharmacists and TCM physicians.</p></div><a class="btn btn-quiet" href="shop/cough-cold-flu/">The cough and cold counter <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
     <div class="label"><div class="label-body"><div class="table-wrap"><table class="compare"><thead><tr><th scope="col"><span class="sr-only">Pack</span></th><th scope="col">Product</th><th scope="col">Best for</th><th scope="col">How to use</th><th scope="col">Price</th><th scope="col"><span class="sr-only">Add</span></th></tr></thead><tbody><tr><td class="img"><img class="thumb" src="assets/img/products/p26-thumb.webp" alt="" width="72" height="72" loading="lazy"></td>
@@ -121,21 +187,24 @@
   </div>
 </section>
 
-<section class="band paper" aria-labelledby="h-trust">
-  <div class="counter grid12" style="align-items:start">
-    <div style="grid-column:1 / span 7"><h2 id="h-trust">Dispensed by pharmacists since 1994</h2>
-      <div class="label" style="margin-top:1.25rem"><div class="facts">
-        <div><b>1994</b><p>Founded in Singapore as a manufacturer and supplier to the major pharmacy chains.</p></div>
-        <div><b>GMP</b><p>Made under Good Manufacturing Practice, with Halal-certified and vegan options across the range.</p></div>
-        <div><b>Two lines</b><p>HST Medical® for contemporary formulas; Heritage® for traditional Asian remedies prepared to modern standards.</p></div>
-        <div><b>Kowa</b><p>A subsidiary of Kowa Company, Ltd. since 2024, the Japanese group behind Vantelin.</p></div>
-      </div></div></div>
-    <div style="grid-column:8 / span 5"><h2 style="font-size:1.4rem">Where to buy</h2>
-      <p style="margin:.5rem 0 .25rem">On the shelf at:</p><ul class="where"><li>Guardian</li><li>Watsons</li><li>NHGP pharmacies</li></ul>
-      <p class="small" style="margin-top:.75rem">Other stockists are being confirmed with HST Medical. <a href="where-to-buy/">Stockist list and delivery details</a>.</p>
-      <div class="label" style="margin-top:1.5rem"><div class="label-body trade"><div><h3>Pharmacies, clinics and distributors</h3><p class="small" style="margin-top:.25rem">Open a trade account, download the product sheets and order through your HST Medical territory manager.</p></div><a class="btn" href="resellers/">Trade enquiries</a></div></div>
+<section class="band brand" aria-labelledby="h-trust">
+  <div class="counter">
+    <div class="band-head"><div><h2 id="h-trust">Dispensed by pharmacists since 1994</h2><p>Four facts behind every pack on the shelf.</p></div><a class="btn btn-light" href="about/">Our story <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+    <div class="facts">
+      <div><b>1994</b><p>Founded in Singapore as a manufacturer and supplier to the major pharmacy chains.</p></div>
+      <div><b>GMP</b><p>Made under Good Manufacturing Practice, with Halal-certified and vegan options across the range.</p></div>
+      <div><b>Two lines</b><p>HST Medical® for contemporary formulas; Heritage® for traditional Asian remedies prepared to modern standards.</p></div>
+      <div><b>Kowa</b><p>A subsidiary of Kowa Company, Ltd. since 2024, the Japanese group behind Vantelin.</p></div>
+    </div>
+    <div class="grid12" style="margin-top:var(--gutter);align-items:center">
+      <div style="grid-column:1 / span 6"><h3>Where to buy</h3><p style="margin:.5rem 0 .25rem">On the shelf at:</p><ul class="where"><li>Guardian</li><li>Watsons</li><li>NHGP pharmacies</li></ul><p class="small" style="margin-top:.75rem">Other stockists are being confirmed with HST Medical. <a href="where-to-buy/" style="color:#fff">Stockist list and delivery details</a>.</p></div>
+      <div style="grid-column:7 / span 6" class="label"><div class="label-body trade"><div><h3>Pharmacies, clinics and distributors</h3><p class="small" style="margin-top:.25rem">Open a trade account, download the product sheets and order through your HST Medical territory manager.</p></div><a class="btn btn-dark" href="resellers/">Trade enquiries</a></div></div>
     </div>
   </div>
+</section>
+
+<section class="band" aria-labelledby="h-brands" style="padding-bottom:0">
+  <div class="counter"><div class="band-head" style="margin-bottom:1rem"><h2 id="h-brands" style="font-size:1.3rem">Our brands</h2><a class="btn btn-quiet btn-sm" href="brands/">About the brands <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div><ul class="brands-row"><li>Rheuma-Salve®</li><li>Heritage®</li><li>HST Medical®</li><li>Zoo-Vite®</li><li>Kowa</li></ul></div>
 </section>
 
 <section class="band" aria-labelledby="h-notes">
@@ -179,6 +248,6 @@
   </div>
 </footer>
 <div class="toast" id="toast" hidden role="status"><span></span><button type="button">Undo</button></div>
-<script src="assets/js/site.js?v=20261002e" defer></script>
+<script src="assets/js/site.js?v=20261002h" defer></script>
 </body>
 </html>

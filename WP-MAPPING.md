@@ -23,7 +23,7 @@ standalone), with no blocks, no FSE and no theme.json layout dependency, as the 
 | JSON-LD (Organization, WebSite, Product+Offer, BreadcrumbList, CollectionPage/ItemList, FAQPage, Article) | `inc/schema.php` hooked to `wp_head` | Pulls product data from EasyCart tables, no SEO plugin lock-in |
 
 ## Performance budget carried into the theme
-- One web font (Fraunces, 2 weights, `display=swap`), system stack for body text.
+- One web font (Archivo, used at 400–700, `display=swap`) for display and body.
 - No carousels, no animation libraries, no jQuery. Reveal effect is CSS + a 10-line IntersectionObserver, disabled under `prefers-reduced-motion`.
 - Images as WebP with explicit `width`/`height` (CLS ≈ 0), `loading="lazy"` below the fold, `fetchpriority="high"` on the single hero/product image.
 - Target: PageSpeed mobile ≥ 90 on a throttled 4G profile, total page weight < 400 KB on product pages.

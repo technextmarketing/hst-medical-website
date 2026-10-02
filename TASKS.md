@@ -11,6 +11,16 @@ Everything below is what stands between the prototype and a submitted proposal /
 5. **Optional annex: Odoo B2B reseller portal** (trade accounts, pricelists, re-orders, territory-manager routing). Positioned as Phase 2, never as a replacement for the WordPress storefront the RFP mandates.
 6. **Content inventory of hstmedical.com**: full URL list for the 301 redirect map, existing blog posts, policy pages, multilingual pages, Trustindex reviews, award assets.
 
+## A2. Done 2026-10-02: Impeccable audit + redesign
+Critique scored the first prototype 23/40 (full report in `.impeccable/critique/`). Redesign shipped (finish review: ship):
+start-by-need counters, compare tables before grids on the two focus ranges, real pack-size radios that re-price the
+product page, bag with steppers/undo/free-delivery meter, gated 3-step checkout with inline validation and aria-live,
+store search with empty state, cart icon outside the hamburger, heading order fixed, 44px targets, soft white rendition
+pinned by the client. Polish leftovers (not blockers): SVG instead of the two ✓ glyphs in form success and step bar;
+hover state on pack tiles; chevron instead of rotated + on open accordions; cap the phone product image height; move
+item codes off consumer pack chips; trim the Google Fonts request to the four weights used; brand line under the card
+title; drop the border on hover-lifted cards. Re-run `/impeccable critique` after these to record the new score.
+
 ## B. Design and content completion (prototype → final design)
 7. **Product copy pass on all 51 SKUs.** Catalogue text is lifted verbatim; the 12 focus SKUs need a benefit-led rewrite and the remaining 39 need a consistency edit (tagline, 3–5 benefits, usage, ingredients, origin).
 8. **Photography.** Product images come from the catalogue PDF (max ~900px, some with box-and-jar composites). Request original packshots (2000px, transparent background) and 2–3 lifestyle images per featured range.

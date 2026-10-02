@@ -143,7 +143,7 @@
       if (f.closest('[hidden]')) return;
       var bad = !f.checkValidity();
       f.setAttribute('aria-invalid', bad ? 'true' : 'false');
-      var wrap = f.closest('label,.lbl'); if (wrap) wrap.classList.toggle('is-error', bad);
+      var wrap = f.closest('.lbl') || f.closest('label'); if (wrap) wrap.classList.toggle('is-error', bad);
       if (bad && ok) { ok = false; f.focus(); }
     });
     return ok;
@@ -154,7 +154,7 @@
       if (!validate(f)) { say('Please complete the highlighted fields.'); return; }
       f.classList.add('sent'); var okEl = f.querySelector('.ok'); if (okEl) { okEl.scrollIntoView({ block: 'nearest' }); say(okEl.textContent); }
     });
-    f.addEventListener('input', function (e) { var t = e.target; if (t.getAttribute('aria-invalid') === 'true' && t.checkValidity()) { t.setAttribute('aria-invalid', 'false'); var w = t.closest('label,.lbl'); if (w) w.classList.remove('is-error'); } });
+    f.addEventListener('input', function (e) { var t = e.target; if (t.getAttribute('aria-invalid') === 'true' && t.checkValidity()) { t.setAttribute('aria-invalid', 'false'); var w = t.closest('.lbl') || t.closest('label'); if (w) w.classList.remove('is-error'); } });
   });
   var steps = d.querySelectorAll('.step');
   if (steps.length) {
