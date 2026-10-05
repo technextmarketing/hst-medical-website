@@ -14,7 +14,7 @@ import chat_kb
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.dirname(HERE)
-BASE = "https://technextmarketing.github.io/hst-medical-website/"
+BASE = "https://technextsg.github.io/hst-medical-website/"
 V = "20261007e"
 PROTOTYPE = True
 TODAY = datetime.date.today().isoformat()
@@ -312,7 +312,7 @@ def story_journey(root):
     return "".join(f"""<li class="tl"><span class="tl-dot" aria-hidden="true"></span><b class="tl-year"><time datetime="{y}">{y}</time></b><h3>{esc(t)}</h3><p>{esc(x)}</p></li>""" for y, t, x in steps)
 
 
-FLIPBOOK = "https://technextmarketing.github.io/hst-medical-catalogue/#p=1"
+FLIPBOOK = "https://technextsg.github.io/hst-medical-catalogue/#p=1"
 
 
 FLIPBOOK_BASE = FLIPBOOK.split("#")[0]

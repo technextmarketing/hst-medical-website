@@ -2217,7 +2217,7 @@
     watchPage();
     restore();
   }
-  var KB_FLIP = 'https://technextmarketing.github.io/hst-medical-catalogue/#p=1';
+  var KB_FLIP = 'https://technextsg.github.io/hst-medical-catalogue/#p=1';
 
   function packPick(b) {
     var c = b.closest('[data-hc-card]'), p = prod(c.getAttribute('data-slug')), vi = +b.getAttribute('data-hc-pack'), v = p && p.v[vi];

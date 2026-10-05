@@ -11,7 +11,7 @@ page, a bag with steppers, undo and a free-delivery meter, and a gated three-ste
 decisions live in `DESIGN.md`; product truth in `PRODUCT.md`; the direction contract in
 `.impeccable/surfaces/index-html.md`.
 
-- Test link: https://technextmarketing.github.io/hst-medical-website/
+- Test link: https://technextsg.github.io/hst-medical-website/
 - Local preview: `serve-hst-medical.bat` at the Marketing drive root → http://localhost:3973 (launch name `hst-medical`)
 - Source of truth: `_src/` (templates + data). Edit there, then run `python _src/build.py` from this folder.
 
