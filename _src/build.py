@@ -15,7 +15,7 @@ import chat_kb
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.dirname(HERE)
 BASE = "https://technextmarketing.github.io/hst-medical-website/"
-V = "20261007d"
+V = "20261007e"
 PROTOTYPE = True
 TODAY = datetime.date.today().isoformat()
 

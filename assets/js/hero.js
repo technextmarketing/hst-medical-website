@@ -140,8 +140,9 @@
    - Positions are computed per frame (transform/opacity only) and spring toward the target stop.
    - Drag or flick to spin (pointer capture starts after 6px, so plain clicks still work); a click on a back pack
      brings it forward, a click on the front pack opens its page; arrows in the "now" card step it.
-   - The front pack drives the "now" card (name, size, price, Add to bag for THAT pack), its ingredient chips, the
-     spotlight flash and the light sweep. Auto-turns every 2.6 s while scene 1 is showing and the hero is not held.
+   - The front pack drives the "now" card (name, size, price, Add to bag for THAT pack), its ingredient chips and the
+     spotlight. The light sweep (.lit) plays only when the visitor picks a pack (click, arrows, drag, keyboard), once
+     the spin settles; automatic turns (every 2.6 s while scene 1 shows and the hero is not held) never light it.
    - Reduced motion: no auto-turn, stops jump instead of spring. */
 (function () {
   var d = document, box = d.querySelector('[data-orbit]');
@@ -150,7 +151,7 @@
   try { data = JSON.parse(d.getElementById('hx-orbit-data').textContent); } catch (e) { return; }
   if (!N || data.length !== N) return;
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
-  var STEP = 360 / N, angle = 0, target = 0, vel = 0, raf = 0, front = 0, W = 0, H = 0;
+  var STEP = 360 / N, angle = 0, target = 0, vel = 0, raf = 0, front = 0, W = 0, H = 0, picked = false, quietUntil = 0;
   var label = box.querySelector('[data-now="label"]'), meta = box.querySelector('[data-now="meta"]'), card = box.querySelector('.hx-now');
   var add = box.querySelector('.hx-now-add'), ingr = box.querySelector('.hx-ingr'), spot = box.querySelector('.hx-spot'), live = d.getElementById('live');
   var esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
@@ -194,13 +195,16 @@
     }
     layout();
     setFront(nearest(angle));
+    if (!drag && angle === target && picked) { picked = false; light(); }
     raf = (drag || angle !== target) ? requestAnimationFrame(tick) : 0;
   }
   function go(t) {
     target = t;
-    if (reduce) { angle = t; vel = 0; layout(); setFront(nearest(angle)); return; }
+    if (reduce) { angle = t; vel = 0; layout(); setFront(nearest(angle)); if (picked) { picked = false; light(); } return; }
     if (!raf) raf = requestAnimationFrame(tick);
   }
+  function light() { quietUntil = Date.now() + 8000; items.forEach(function (el) { el.classList.remove('lit'); }); var el = items[front]; void el.offsetWidth; el.classList.add('lit'); }
+  function pick() { picked = true; items.forEach(function (el) { el.classList.remove('lit'); }); if (angle === target && !raf) { picked = false; light(); } }
   function stepBy(n) { go(Math.round(target / STEP) * STEP + n * STEP); }
   function bring(i) { var diff = ((i * STEP - target) % 360 + 540) % 360 - 180; go(target + diff); }
   function announce() { var o = data[nearest(target)]; say(o.name + ', ' + o.meta); }
@@ -232,7 +236,7 @@
   function end(e) {
     if (e.pointerId !== pid) return;
     pid = null;
-    if (drag) { drag = false; box.classList.remove('grabbing'); go(Math.round((angle + v * 9) / STEP) * STEP); announce(); }
+    if (drag) { drag = false; box.classList.remove('grabbing'); picked = true; go(Math.round((angle + v * 9) / STEP) * STEP); announce(); }
   }
   box.addEventListener('pointerup', end);
   box.addEventListener('pointercancel', end);
@@ -241,22 +245,22 @@
     var a = e.target.closest('.hx-pk'); if (!a) return;
     if (moved > 6) { e.preventDefault(); moved = 0; return; }
     var i = +a.getAttribute('data-k');
-    if (i !== nearest(target)) { e.preventDefault(); bring(i); announce(); }
+    if (i !== nearest(target)) { e.preventDefault(); picked = true; bring(i); announce(); } else if (moved <= 6) { pick(); }
   });
   items.forEach(function (el) {
-    el.addEventListener('focus', function () { if (el.matches(':focus-visible') && +el.getAttribute('data-k') !== nearest(target)) bring(+el.getAttribute('data-k')); });
+    el.addEventListener('focus', function () { if (!el.matches(':focus-visible')) return; picked = true; if (+el.getAttribute('data-k') !== nearest(target)) bring(+el.getAttribute('data-k')); else pick(); });
     el.addEventListener('dragstart', function (e) { e.preventDefault(); });
   });
   box.querySelectorAll('[data-spin]').forEach(function (b) {
-    b.addEventListener('click', function () { stepBy(+b.getAttribute('data-spin')); announce(); });
+    b.addEventListener('click', function () { picked = true; stepBy(+b.getAttribute('data-spin')); announce(); });
   });
 
   /* auto-turn while the product scene is showing */
   (function loop() {
     setTimeout(function () {
       var showing = hero && hero.getAttribute('data-scene') === '0' && hero.classList.contains('auto');
-      var paused = !hero || hero.classList.contains('hold') || hero.classList.contains('off') || d.documentElement.classList.contains('intro') || d.hidden || drag || pid !== null;
-      if (showing && !paused && !reduce) stepBy(1);
+      var paused = picked || Date.now() < quietUntil || !hero || hero.classList.contains('hold') || hero.classList.contains('off') || d.documentElement.classList.contains('intro') || d.hidden || drag || pid !== null;
+      if (showing && !paused && !reduce) { items.forEach(function (el) { el.classList.remove('lit'); }); stepBy(1); }
       loop();
     }, 2600);
   })();

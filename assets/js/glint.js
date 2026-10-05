@@ -2,16 +2,16 @@
    marquee, brand fans, about page, product pages, bag, chat). Light only: no reflections.
    - Each product image gets a sibling overlay <i class="glint"> masked by the image itself, so the light only ever
      touches the pack, never the background (components.css section 4).
-   - It plays once when the image first scrolls into view (staggered), again on hover, and every few seconds on the
-     product page's main image. While it plays, the overlay copies the image's live transform each frame, so lifts,
-     tilts and fans stay aligned.
+   - It plays only when an image is selected: mouse hover, a tap / pen press, or keyboard focus. Never on its own
+     (no play on scroll-in, no timer). While it plays, the overlay copies the image's live transform each frame, so
+     lifts, tilts and fans stay aligned.
    - New images (filters, bag lines, chat cards) are picked up by a MutationObserver. Reduced motion: off. */
 (function () {
   if (!window.matchMedia || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   var d = document, SEL = 'img[src*="assets/img/products/"],img[src*="assets/img/hero/rs-"]';
   var SKIP = '.hx, .hx-cell, .cbk, .glint-off, [data-no-glint]';
   var HOST = '.plabel, .mcard, .bento a, .counters a, .rg-item, .bp, .line, .pdp-pack, .ab-formats li, a, figure, li';
-  var done = typeof WeakSet === 'function' ? new WeakSet() : null, queue = [], qt = 0;
+  var done = typeof WeakSet === 'function' ? new WeakSet() : null;
 
   function place(img, g) {
     g.style.left = img.offsetLeft + 'px'; g.style.top = img.offsetTop + 'px';
@@ -39,13 +39,6 @@
     if (img) play(img);
     if (queue.length) qt = setTimeout(flush, 90);
   }
-  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) {
-    es.forEach(function (e) {
-      if (!e.isIntersecting) return;
-      io.unobserve(e.target); queue.push(e.target);
-      if (!qt) qt = setTimeout(flush, 260);
-    });
-  }, { threshold: 0.4 }) : null;
   var ro = 'ResizeObserver' in window ? new ResizeObserver(function (es) {
     es.forEach(function (e) { if (e.target._glint) place(e.target, e.target._glint); });
   }) : null;
@@ -53,6 +46,10 @@
   function make(img) {
     if ((done && done.has(img)) || img._glint || img.closest(SKIP)) return;
     if (done) done.add(img);
+    /* the overlay is placed against the image's own parent, so it can never widen a page or a swipe row */
+    var par = img.parentElement;
+    if (!par) return;
+    if (getComputedStyle(par).position === 'static') par.style.position = 'relative';
     var g = d.createElement('i');
     g.className = 'glint'; g.setAttribute('aria-hidden', 'true');
     img.insertAdjacentElement('afterend', g);
@@ -63,16 +60,17 @@
     };
     if (img.complete && img.naturalWidth) ready(); else img.addEventListener('load', ready, { once: true });
     if (ro) ro.observe(img);
-    if (io) io.observe(img);
     var host = img.closest(HOST) || img.parentElement;
     if (host && !host._glintHover) {
       host._glintHover = true;
       host.addEventListener('pointerenter', function (e) {
         if (e.pointerType !== 'mouse') return;
         clearTimeout(host._gt);
-        host._gt = setTimeout(function () { host.querySelectorAll(SEL).forEach(function (im) { if (im._glint) play(im); }); }, 240);
+        host._gt = setTimeout(function () { host.querySelectorAll(SEL).forEach(function (im) { if (im._glint) play(im); }); }, 150);
       });
       host.addEventListener('pointerleave', function () { clearTimeout(host._gt); });
+      host.addEventListener('pointerdown', function (e) { if (e.pointerType !== 'mouse') host.querySelectorAll(SEL).forEach(function (im) { if (im._glint) play(im); }); });
+      host.addEventListener('focusin', function (e) { if (e.target.matches && e.target.matches(':focus-visible')) host.querySelectorAll(SEL).forEach(function (im) { if (im._glint) play(im); }); });
     }
   }
   function scan(root) { (root || d).querySelectorAll(SEL).forEach(make); }
@@ -85,11 +83,4 @@
     if (hit) { clearTimeout(mt); mt = setTimeout(scan, 150); }
   }).observe(d.body, { childList: true, subtree: true });
 
-  /* product page: a showroom light across the main pack every few seconds while it is on screen */
-  var pk = d.querySelector('.pdp-pack'), main = pk && pk.querySelector('.zoomer img');
-  if (main) {
-    var vis = true;
-    if (io) new IntersectionObserver(function (es) { vis = es[0].isIntersecting; }).observe(main);
-    setInterval(function () { if (vis && !d.hidden && !pk.classList.contains('zoom')) play(main); }, 6500);
-  }
 })();

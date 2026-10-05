@@ -68,7 +68,7 @@
 .ab-hstwrap{position:relative}
 .ab-hst{position:relative;isolation:isolate;overflow:hidden;padding:clamp(4rem,8vw,6.5rem) var(--gutter) clamp(9.5rem,15vw,12.5rem);color:#fff;text-align:center;background-color:var(--brand-deep);background-position:center;background-size:cover;background-repeat:no-repeat}
 .ab-hst h2{color:#fff;margin-bottom:1rem;font-size:clamp(2.1rem,1.3rem + 2.8vw,3.5rem)}
-.ab-hst h2 b{font-weight:inherit;color:#fff;text-shadow:0 0 26px rgba(255,214,227,.85)}
+.ab-hst h2 b{font-weight:inherit;color:#ffd8e6}
 .ab-hst p{max-width:58ch;margin:0 auto;color:#fff;font-size:1.12rem}
 .ab-values{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gutter);margin-top:clamp(-10rem,-11vw,-6.5rem)}
 .ab-value{position:relative;isolation:isolate;overflow:hidden;background:#fff;border-radius:26px;padding:clamp(1.6rem,2.6vw,2.2rem)}
@@ -394,6 +394,8 @@
   .ab-ci b{font-size:1rem}
   .ab-visit .map{min-height:230px;border-radius:20px}
 }
+
+@media (pointer:coarse){.ab-ranges a{min-height:44px}}   /* chips are 44px targets on any touch screen */
 
 /* landscape phones (844x390): headings and intros stop filling the screen */
 @media (orientation:landscape) and (max-height:520px) and (min-width:761px) and (max-width:1100px){

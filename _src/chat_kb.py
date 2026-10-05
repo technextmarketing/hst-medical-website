@@ -78,7 +78,7 @@ FORMAT = {
 # Curated aliases: how people actually say it. Name n-grams are generated on top of these.
 ALIASES = {
     "rheuma-salve-balm": ["balm", "balms", "pain balm", "pain relief balm", "rheuma balm", "rs balm", "salve balm", "white balm", "snowy white balm",
-                          "extra strength balm", "ointment", "muscle rub", "pain rub", "tiger balm style", "the jar", "50g balm", "rheuma salve balm"],
+                          "extra strength balm", "ointment", "muscle rub", "pain rub", "the jar", "50g balm", "rheuma salve balm"],
     "rheuma-salve-creme": ["creme", "cremes", "cream", "creams", "rheuma cream", "pain cream", "muscle cream", "rs cream", "rs creme", "rheuma creme", "salve cream", "salve creme"],
     "rheuma-salve-liniment": ["liniment", "liniments", "linament", "roll on", "rollon", "roll-on", "roller", "roll on oil", "headache oil", "headache roll on",
                               "motion sickness oil", "rs liniment", "rheuma liniment", "salve liniment", "headache roller"],
@@ -224,7 +224,7 @@ NEEDS_KB = [
     ("stress", "stress and calm", ["stress", "stressed", "anxiety", "anxious", "relax", "relaxation", "calm", "nervous", "tension", "worried", "overwhelmed", "restless", "irritable", "cope with stress", "mental stress", "work stress", "unwind"],
      ["stress-sleep"], ["magnesium-glycinate", "american-ginseng", "pearl-powder", "lingzhi-cracked-spores", "melatonin-5mg"], ["stress", "calm", "nerve", "relax"], ""),
     ("kids", "kids' vitamins", ["kids vitamins", "kid vitamins", "children vitamins", "kids vitamin", "child vitamin", "kids supplements", "kids supplement", "vitamins for kids", "vitamins for children", "picky eater", "picky eaters", "fussy eater",
-                                "growing child", "growth", "child", "children", "kids", "kid", "toddler", "toddlers", "school child", "my son", "my daughter", "gummies for kids", "baby vitamins", "teenager", "teen"],
+                                "growing child", "growth", "school child", "gummies for kids", "baby vitamins", "vitamins for my son", "vitamins for my daughter", "vitamin for my child", "vitamin for my kid", "vitamins for toddlers", "vitamins for teens"],
      ["kids"], ["zoo-vite-multivitamin-gummies", "zoo-vite-elderberry-gummies", "zoo-vite-immune-jelly", "zoo-vite-dha-jelly", "zoo-vite-lutein-jelly"], ["growth", "immune"], ""),
     ("kids-immunity", "kids' immunity", ["kids immunity", "children immunity", "child immunity", "kids immune", "kids cold", "kids always sick", "kids fall sick", "child falls sick"],
      ["kids"], ["zoo-vite-immune-jelly", "zoo-vite-elderberry-gummies", "zoo-vite-multivitamin-gummies"], ["immun"], ""),
@@ -268,6 +268,9 @@ NEEDS_KB = [
     ("gift", "gifts", ["gift", "gifts", "present", "presents", "gift for parents", "for my parents", "for my mother", "for my father", "for elderly", "for grandparents", "birthday gift", "thoughtful gift", "gift idea", "gift ideas", "corporate gift", "cny"],
      ["traditional-pain-relief", "immunity-energy"], ["safflower-red-flower-oil", "qian-li-zhui-feng-oil", "korean-red-ginseng", "american-ginseng", "cordyceps-cs-4"], ["gift", "energy"], ""),
 ]
+
+# The home page's own "Best sellers" row (build.py build_home), so "what is popular" answers match the site.
+BEST = ["rheuma-salve-balm", "alievaid-herbal-drops", "deep-sea-squalene", "pearl-powder", "crocodile-pure-skin-oil", "zoo-vite-multivitamin-gummies", "flu-gard", "melatonin-5mg"]
 
 # Health words we recognise but the catalogue does not claim to treat: answer honestly instead of guessing.
 UNCOVERED = ["toothache", "tooth ache", "dental", "cancer", "chemo", "covid", "diabetes", "hypertension", "depression", "asthma", "acne", "pimple", "pimples", "hay fever", "hayfever", "allergy", "allergies", "allergic",
@@ -640,7 +643,7 @@ def build(OUT, BASE, FLIPBOOK, PRODUCTS, CATS, CAT_ORDER, GUIDES, NEEDS, NEED_IC
         "order_status": "This prototype does not keep customer orders, so I cannot look up an order here. For an order you placed on hstmedical.com, email the order desk at %s with your order number, or call %s ext. %s." % (contact["order"], contact["phone"], contact["ext"]),
         "returns": "I do not have a returns or refund policy on file. For a damaged parcel, a wrong item or any order problem, email %s with your order number and the team will help." % contact["order"],
         "promo": "I do not have a current promotion on file, and this prototype's bag does not apply discounts. Offers are announced on the HST Medical Telegram channel (t.me/hstmedical); you can also ask the order desk at %s." % contact["order"],
-        "genuine": where["fakes_more"],
+        "genuine": where["fakes_more"].replace("the stores below", "the stores on our Where to buy page"),
         "about": "HST Medical Pte Ltd is a Singapore maker and supplier of health supplements and pain relief remedies. It grew from the Heng Say Tong medical hall (1930), was incorporated in 1994 (UEN %s), and has been part of Kowa Pharmaceutical Asia Pte. Ltd. since 29 May 2026. The brands are Rheuma-Salve, Heritage, HST Medical and Zoo-Vite. Higher, Stronger, Together." % contact["uen"],
         "quality": "HST Medical formulates with pharmacists and TCM physicians, manufactures under GMP, verifies the authenticity of ingredients and tests finished products. Alievaid Herbal Drops carry Halal (Malaysia) certification; for any other product, Halal status is not listed in the catalogue, so please check the pack or ask us.",
         "trade": "HST Medical supplies pharmacies, clinics, TCM halls, e-commerce sellers and overseas distributors directly. Email %s or use the trade enquiry form, and a territory manager will be in touch within two working days." % contact["trade"],
@@ -659,7 +662,7 @@ def build(OUT, BASE, FLIPBOOK, PRODUCTS, CATS, CAT_ORDER, GUIDES, NEEDS, NEED_IC
     kb = {
         "v": 1, "base": BASE, "flipbook": flip_base, "flip_pages": idx["pageCount"],
         "site": {"free_above": D["free_above"], "fee": D["fee"], "gst": 9, "max_qty": 20},
-        "facts": facts, "contact": contact, "cats": cats, "products": prods, "alias": alias_list, "spell": SPELL, "needs": needs, "uncovered": UNCOVERED, "faqs": faqs, "posts": posts,
+        "facts": facts, "contact": contact, "cats": cats, "products": prods, "alias": alias_list, "spell": SPELL, "needs": needs, "uncovered": UNCOVERED, "faqs": faqs, "posts": posts, "best": [s for s in BEST if s in by_slug],
         "pages": pages, "chunks": chunks, "chains": chains, "stores": stores, "areas": areas, "chapters": [{"no": c["no"], "t": c["title"], "pg": c["page"], "last": c["last"]} for c in idx["chapters"]],
         "about": about,
     }

@@ -108,6 +108,14 @@
     + 'topic total touch tough tower track trade train treat trend trial tried tries truck truly trust truth twice under union unity until upper upset urban usage usual valid value video virus visit '
     + 'vital voice waste watch water wheel where which while white whole whose woman women world worry worse worst worth would wound write wrong wrote young youth').split(/\s+/).forEach(function (x) { if (x) STOP[x] = 1; });
 
+  ('them many every ever else even away lots thus whom wish half days ways gone seen once soon walk week '
+    + 'make made makes making took taken gave given keep kept come came goes went going done does did being been having had says said tells told asks asked calls called needs needed uses using finds found '
+    + 'looks looked seems seem feel felt thinks thought knows knew works worked tries tried leave left means meant shows showed turns turned starts started helps helped plays played runs ran moves moved lives lived '
+    + 'brings brought happen happened write wrote provide sits stood loses lost pays paid meet met includes included continue sets learns learned changes changed leads led understand watch follow created speak '
+    + 'reads read allow adds added spend grow opens walk offer remember love consider appear buys wait serve sends expect build stay fall reach medical general service services natural company business customer '
+    + 'online order orders ordered delivery quickly really actually probably maybe perhaps already always never often sometimes usually mostly nearly almost enough quite rather several another either whether '
+    + 'rather during without within across against among toward towards around behind beside beyond except inside outside throughout unlike until upon whose whenever wherever whatever whoever however').split(/\s+/).forEach(function (x) { if (x) STOP[x] = 1; });
+
   /* words the assistant itself understands (so typos of them get repaired): commands, topics, health words */
   var LEXICON = ('add buy purchase order checkout check out pay payment proceed remove delete clear empty cancel change update show view display list open bag cart basket total subtotal price prices cost how much cheap cheaper cheapest '
     + 'expensive free delivery deliver shipping ship courier postage island overseas international gst tax stock available availability recommend suggest suggestion help helpful need want looking find search have got '
@@ -120,7 +128,9 @@
     + 'aches sore tired weak stress sleep sleeping insomnia cough cold flu fever throat phlegm nose blocked sinus headache migraine dizzy giddy joint joints knee knees back neck shoulder muscle muscles sprain strain bruise '
     + 'swelling arthritis rheumatism immunity immune energy stamina vitality eyes vision memory brain skin hair beauty digestion liver kidney urinary bladder heart cholesterol bones calcium kids children child baby infant '
     + 'toddler elderly women men vitamin vitamins supplement supplements herbal tonic ginseng cordyceps lingzhi melatonin magnesium omega probiotic collagen pearl squalene turmeric ginkgo glucosamine elderberry lutein '
-    + 'rheuma salve alievaid lintus gard zoo vite ivy leaf sinus clear boost rosehips therra synbioten curqmax algaomega neuro arthro libi maxi cal flugard minigels penguin panda skippy charley safari').split(/\s+/);
+    + 'rheuma salve alievaid lintus gard zoo vite ivy leaf sinus clear boost rosehips therra synbioten curqmax algaomega neuro arthro libi maxi cal flugard minigels penguin panda skippy charley safari '
+    + 'pharmacist pharmacists doctor doctors nurse clinic clinics hospital refund refunds parcel package tracking track status invoice receipt warranty damaged broken wrong missing reseller wholesale gift gifts '
+    + 'airport mall orchard jurong tampines woodlands yishun bishan clementi bedok punggol sengkang serangoon hougang novena chinatown harbourfront paya lebar mrt station near nearest closest nearby').split(/\s+/);
 
   /* ------------------------------------------------------------------ tokenising */
   var UNITW = 'pieces|piece|boxes|box|packs|pack|tubes|tube|jars|jar|bottles|bottle|sachets|sachet|sets|set|units|unit|strips|strip|caps|tabs|capsules|capsule|tablets|tablet|gummies|gummy|sticks|stick|patches|patch|softgels|vegicaps|lozenges|drops|pcs|pc|bags|bag';
@@ -195,7 +205,7 @@
       if (!toks.length) return;
       var sq = toks.join('');
       if (sq.length < 2) return;
-      var e = I.alias[sq] || (I.alias[sq] = { sq: sq, n: toks.length, owners: [] });
+      var e = I.alias[sq] || (I.alias[sq] = { sq: sq, n: toks.length, owners: [], toks: toks });
       kb.alias[phrase].forEach(function (o) { if (e.owners.indexOf(o) < 0) e.owners.push(o); });
       toks.forEach(function (t) { addVocab(t, 2); });
     });
@@ -262,9 +272,9 @@
       if (!arr) continue;
       for (k = 0; k < arr.length; k++) {
         v = arr[k];
-        if (v.charCodeAt(0) !== t.charCodeAt(0)) continue;
+        if (v.length < 4 || v.charCodeAt(0) !== t.charCodeAt(0)) continue;
         dd = dl(t, v, max);
-        if (dd > max) continue;
+        if (dd > max || (dd >= 2 && v.charCodeAt(1) !== t.charCodeAt(1))) continue;
         pr = IDX.vp[v] || 0;
         if (dd < bd || (dd === bd && pr > bp)) { bd = dd; best = v; bp = pr; tie = false; }
         else if (dd === bd && pr === bp && v !== best) tie = true;
@@ -286,7 +296,7 @@
   var AUD = { kid: 'child', kids: 'child', child: 'child', children: 'child', childs: 'child', son: 'child', daughter: 'child', toddler: 'child', toddlers: 'child', baby: 'baby', babies: 'baby', infant: 'baby', newborn: 'baby',
     boy: 'child', girl: 'child', teen: 'child', teenager: 'child', grandson: 'child', granddaughter: 'child', nephew: 'child', niece: 'child', elderly: 'elder', senior: 'elder', seniors: 'elder', parents: 'elder',
     grandmother: 'elder', grandfather: 'elder', grandma: 'elder', grandpa: 'elder', mother: 'elder', father: 'elder', mum: 'elder', mom: 'elder', dad: 'elder', pregnant: 'preg', pregnancy: 'preg', expecting: 'preg', breastfeeding: 'preg', nursing: 'preg', lactating: 'preg' };
-  var RE_CAUTION = /\b(pregnan\w*|expecting a baby|breast ?feed\w*|nursing|lactating|baby|babies|infant|newborn|toddler|under (2|two|3|three|12|twelve|6|six)|(kid|kids|child|children|son|daughter)\b|medication|meds|blood thinners?|warfarin|antibiotics?|diabet\w*|blood pressure|hypertension|heart (disease|condition|problem|patient)|kidney (disease|problem|failure)|liver (disease|problem)|cancer|asthma|epilepsy|surgery|operation|elderly|senior|allergic to|allergy to|chronic|sensitive skin|on (other )?(medicine|medication|meds|pills)|taking (medicine|medication|meds|pills)|g6pd|ulcer|stroke patient|high cholesterol)\b/;
+  var RE_CAUTION = /\b(pregnan\w*|expecting a baby|breast ?feed\w*|nursing|lactating|baby|babies|infant|newborn|toddler|under (2|two|3|three|12|twelve|6|six)|(kid|kids|child|children|son|daughter)\b|medication|meds|blood thinners?|warfarin|antibiotics?|diabet\w*|blood pressure|hypertension|heart (disease|condition|problem|patient)|kidney (disease|problem|failure)|liver (disease|problem)|cancer|asthma|epilepsy|surgery|operation|elderly|senior|allergic to|allergy to|chronic|sensitive skin|on (other )?(medicine|medication|meds|pills)|taking (medicine|medication|meds|pills)|g6pd|ulcer|stroke patient|high cholesterol|(\d+|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve) (year|years|yr|yrs|month|months|week|weeks) old)\b/;
 
   function stemsOf(T) { return T.filter(function (x) { return x !== ','; }).map(stem); }
 
@@ -296,8 +306,12 @@
     if (a) Object.keys(a).forEach(function (ph) { var t = lite(ph); if (t.length) m[t.join('')] = { sq: t.join(''), n: t.length, owners: [a[ph]], learned: true }; });
     return m;
   }
-  function fuzzyAlias(sq) {
-    var max = maxEdits(sq.length), best = null, bd = 9, tie = false, L, k, arr, key, dd;
+  var EDGE = { add: 1, buy: 1, get: 1, want: 1, need: 1, order: 1, take: 1, give: 1, put: 1, please: 1, x: 1, and: 1, with: 1, for: 1, the: 1, a: 1, an: 1, of: 1, to: 1, my: 1, some: 1, any: 1, in: 1, is: 1, are: 1, do: 1, you: 1, i: 1, me: 1, it: 1, how: 1, much: 1, what: 1, ',': 1 };
+  /* a fuzzy alias hit must line up word by word with the alias (so "ivy leaf drops x 3" never swallows the "x 3")
+     and may not touch command words at its edges; 2 edits need the same first two letters */
+  function fuzzyAlias(sq, spanToks) {
+    var max = maxEdits(sq.length), best = null, bd = 9, tie = false, L, k, arr, key, dd, e;
+    if (EDGE[spanToks[0]] || EDGE[spanToks[spanToks.length - 1]]) return null;
     for (L = sq.length - max; L <= sq.length + max; L++) {
       arr = IDX.aliasBy[L];
       if (!arr) continue;
@@ -305,9 +319,16 @@
         key = arr[k];
         if (key.charCodeAt(0) !== sq.charCodeAt(0)) continue;
         dd = dl(sq, key, max);
-        if (dd > max) continue;
+        if (dd > max || (dd >= 2 && key.charCodeAt(1) !== sq.charCodeAt(1))) continue;
+        e = IDX.alias[key];
+        var at = e.toks, ok = true, z;
+        if (at.length === spanToks.length) {
+          for (z = 0; z < at.length; z++) { var lim = maxEdits(Math.max(at[z].length, spanToks[z].length)); if (dl(spanToks[z], at[z], lim) > lim || /\d/.test(spanToks[z]) && spanToks[z] !== at[z]) { ok = false; break; } }
+        } else if (at.length === spanToks.length + 1 && dd <= 1) ok = true;   // glued words: "rheumasalv balm"
+        else ok = false;
+        if (!ok) continue;
         if (dd < bd) { bd = dd; best = key; tie = false; }
-        else if (dd === bd && key !== best) { if (IDX.alias[key].owners.length < IDX.alias[best].owners.length) best = key; else if (IDX.alias[key].owners.join() !== IDX.alias[best].owners.join()) tie = true; }
+        else if (dd === bd && key !== best) { if (e.owners.length < IDX.alias[best].owners.length) best = key; else if (e.owners.join() !== IDX.alias[best].owners.join()) tie = true; }
       }
     }
     return best && !tie ? { e: IDX.alias[best], d: bd } : null;
@@ -327,7 +348,7 @@
         }
         if (!hit && sq.length >= 5) {
           var single = j === i, tk = T[i];
-          if (!(single && (STOP[tk] || IDX.vocab[tk])) && !/^\d/.test(sq)) { var f = fuzzyAlias(sq); if (f) { hit = f.e; dist = f.d; } }
+          if (!(single && (STOP[tk] || IDX.vocab[tk])) && !/^\d/.test(sq)) { var f = fuzzyAlias(sq, T.slice(i, j + 1)); if (f) { hit = f.e; dist = f.d; } }
         }
         if (hit) cands.push({ s: i, e: j + 1, n: j - i + 1, owners: hit.owners, dist: dist, key: hit.sq, learned: !!hit.learned });
       }
@@ -373,7 +394,7 @@
         if (nx && NOT_QTY_AFTER[nx]) continue;
         if (pv && /^(number|no|num|item|option|size|strength|page|p|pg|ref|code|on)$/.test(pv) && !cover[i - 1]) continue;
         if (pv === 'x' || nx === 'x') { qs.push({ i: i, v: +t, kind: 'x', unit: false, xs: pv === 'x' }); continue; }
-        qs.push({ i: i, v: +t, kind: 'num', unit: !!(nx && UNITWORD[nx]), un: nx });
+        qs.push({ i: i, v: +t, kind: 'num', unit: !!(nx && UNITWORD[nx]), un: nx, prev: pv });
         continue;
       }
       if (/^\d+(?:\.\d+)?(?:g|ml|mg)$/.test(t)) { ps.push({ i: i, k: 'size', v: t }); continue; }
@@ -425,7 +446,9 @@
     // "6 bottles", "2 pack", "x 6" with a size: the number names a pack when the product has that pack
     qs.forEach(function (q) {
       var has = p.vk.some(function (v) { return v.mult === q.v; });
-      if (has && ((q.unit && /^(bottles?|sachets?|packs?|boxes|box|pieces)$/.test(q.un || '')) || (q.xs && sizes.length))) { mult = q.v; usedQ[q.i] = true; }
+      // "6 bottles" names the 6-bottle pack only when that pack's own label says bottles; "2 pcs" or "2 packs" are plain quantities
+      var unitOk = q.unit && /^(bottles?|sachets?)$/.test(q.un || '') && p.vk.some(function (v) { return v.mult === q.v && fold(v.l).indexOf(singular(q.un)) > -1; });
+      if (has && (unitOk || (q.xs && sizes.length) || (q.prev === 'of' && words.bundle))) { mult = q.v; usedQ[q.i] = true; }
     });
     var any = sizes.length || mult || Object.keys(words).length;
     if (!any) {
@@ -602,7 +625,11 @@
 
   /* ================================================================== 3. DIALOGUE: what the shopper means */
   var RE = {
-    red: /\b(chest pain|pain in (my )?chest|chest (is )?(tight|hurts|crushing)|tight(ness)? (in|of) (my )?chest|heart attack|(cannot|can not|hard to|difficulty|trouble|struggling to|unable to) breath\w*|difficulty breathing|short(ness)? of breath|gasping|stopped breathing|not breathing|choking|can not breathe|stroke|face (is )?droop\w*|slurred speech|sudden (numbness|weakness|confusion)|worst headache|thunderclap|(severe|heavy|uncontrolled|non ?stop|profuse) bleeding|bleeding (heavily|a lot|badly|profusely|non ?stop)|(will not|wont|cannot) stop bleeding|vomit\w* blood|cough\w* (up )?blood|blood in (my )?(stool|urine|vomit|poo)|bloody (stool|poo|urine)|unconscious|passed out|collaps\w+|fainted|not responding|unresponsive|seizure|convuls\w+|overdos\w+|took too many|swallowed (a lot|too many|the whole|a whole)|poison\w*|suicid\w*|kill (myself|me)|end (my|it all)|want to die|self ?harm|hurt(ing)? myself|no reason to live|anaphyla\w*|allergic reaction|(swollen|swelling) (face|lips|tongue|throat)|throat (is )?closing|baby (is )?(not|turning|limp)|newborn fever|dying|i am dying|ambulance|emergency)\b/,
+    infant: /\b(baby|babies|infant|newborn|\d+ (week|weeks|month|months) old)\b.*\b(fever|high temperature|temperature|burning up|convuls\w+|fits?|not feeding|will not feed|limp|floppy|blue lips|not waking|hard to wake)\b|\b(fever|high temperature|burning up)\b.*\b(baby|babies|infant|newborn|\d+ (week|weeks|month|months) old)\b/,
+    reviews: /\b(reviews?|ratings?|rated|testimonials?|stars|what do (customers|people|users) say|customer feedback|any complaints)\b/,
+    best: /\b(best ?sellers?|top ?sellers?|most popular|popular (products?|items?|ones?)|what (do )?(people|customers) (buy|like|get)|favou?rites?|what do you recommend|what is recommended|what is popular|what should i (buy|get)|any recommendations?|your picks?|top picks?|staff picks?|recommend (me )?something|recommend me)\b/,
+    hours: /\b(what time (are you|do you|is it)? ?(open|close)|are you (open|closed)|open (on|during|today|now|late|till|until)|closing time|opening time|what are your hours|operating hours|service hours|working days)\b/,
+    red: /\b(chest pain|pain in (my )?chest|chest (is )?(tight|hurts|crushing)|chest (tightness|pressure|discomfort|heaviness)|tight(ness)? (in|of) (my )?chest|swallowed (a |an |the )?(battery|batteries|magnets?|coins?|button|bleach|poison|pills?|tablets?|medicine|medication|detergent|chemicals?|cleaning)\w*|(ate|drank|ingested|swallowed) (bleach|poison|detergent|chemicals?)|heart attack|(cannot|can not|hard to|difficulty|trouble|struggling to|unable to) breath\w*|difficulty breathing|short(ness)? of breath|gasping|stopped breathing|not breathing|choking|can not breathe|stroke|face (is )?droop\w*|slurred speech|sudden (numbness|weakness|confusion)|worst headache|thunderclap|(severe|heavy|uncontrolled|non ?stop|profuse) bleeding|bleeding (heavily|a lot|badly|profusely|non ?stop)|(will not|wont|cannot) stop bleeding|vomit\w* blood|cough\w* (up )?blood|blood in (my )?(stool|urine|vomit|poo)|bloody (stool|poo|urine)|unconscious|passed out|collaps\w+|fainted|not responding|unresponsive|seizure|convuls\w+|overdos\w+|took too many|swallowed (a lot|too many|the whole|a whole)|poison\w*|suicid\w*|kill (myself|me)|end (my|it all)|want to die|self ?harm|hurt(ing)? myself|no reason to live|anaphyla\w*|allergic reaction|(swollen|swelling) (face|lips|tongue|throat|eyes)|(face|lips|tongue|throat|eyes) (is |are |feel |feels |got |have |has |becoming |becomes |look |looks )?(swollen|swelling|swelled|puffy)|throat (is )?closing|baby (is )?(not|turning|limp)|newborn fever|dying|i am dying|ambulance|emergency)\b/,
     selfharm: /\b(suicid\w*|kill (myself|me)|end (my|it all)|want to die|self ?harm|hurt(ing)? myself|no reason to live)\b/,
     greet: /^(hi|hello|hey|hiya|helo|hallo|howdy|greetings|hai|yo|sup|good (morning|afternoon|evening|day)|morning|afternoon|evening)\b/,
     thanks: /\b(thanks|thank you|cheers|appreciate it|much appreciated|many thanks|thank u)\b/,
@@ -615,7 +642,9 @@
     yes: /^(yes|yes please|please do|sure|ok|okay|alright|all right|fine|go ahead|do it|confirm|confirmed|correct|right|exactly|that is right|that is correct|sounds good|good|please|yes go ahead|ok go ahead|yes confirm|of course|definitely|absolutely|certainly|why not|sure thing|y|can|can can|ok can|yes can|add it|add them|add that|add this|do so|proceed|go|continue|yes add|yes add it|okay add|ok add|that one|this one|that is the one|that one please|yes that one|yes that is it|yes it is|i do|please add|please add it|go on|sure add|sure add it|ok please|okay please|yes ok|yes sure)( please| lah)?$/,
     no: /^(no|no thanks|no thank you|not really|not now|no need|do not|do not do that|do not add|not that|wrong|that is wrong|that is not it|not what i meant|cancel that|do not add it|stop|no stop|no no|nah|never|not that one|none|none of them|neither)( thanks| thank you| please)?$/,
     bagCue: /\bbag\b/,
-    bagShow: /\b(show|view|see|check|open|display|list|review|look at|what is in|what do i have|whats in|what have i|contents|how many (items|things)|what is my|my total|subtotal|sub total|total (so far|now)|so far|how much (is|are) (my|the) (bag|total|order))\b/,
+    bagShow: /\b(show|view|see|check|open|display|list|review|look at|what is in|what do i have|whats in|what have i|contents|how many (items|things)|what is my|my total|subtotal|sub total|total (so far|now)|so far|how much (is|are|do i owe) (my|the) (bag|total|order)|how much (is|are) (my|the) (bag|total|order))\b/,
+    totalQ: /\b(my total|total so far|subtotal|sub total|order total|bag total|how many (items|things|products)( do i have| have i| are there| in)?|how much (is|are|do i owe)? ?(my |the )?(total|bag|order|everything)|what is (my|the) total|how much (have|do) i (got|owe|spent)|what do i owe|amount due|total (price|cost|amount))\b/,
+    again: /\b(same as (last|before|previous)( time| order)?|same again|the usual|my usual|re ?order|order again|buy again|same order|last order|previous order|repeat (my |the )?(last |previous )?order|what i (got|bought|ordered) (last|before|previously))\b/,
     clear: /\b(clear|empty|reset|remove (everything|all)|delete (everything|all)|clear out|start fresh|cancel (my )?(whole |entire )?(order|bag)|cancel everything|take (everything|all) out|dump (the )?bag|empty out|wipe)\b/,
     checkout: /\b(check ?out|pay now|proceed to (payment|checkout|pay)|place (my |the |an )?order|complete (my |the )?(order|purchase)|ready to pay|buy now|i am ready to pay|pay for (it|this|these|my|everything)|let me pay|submit (my )?order|confirm (my )?order|go to (checkout|payment)|make (the |my )?payment|finali[sz]e|i want to pay|take me to (checkout|payment)|proceed|pay up)\b/,
     payq: /\b(how (do|can|to|should) (i |we )?pay|payment (method|option|type)s?|which (payment|card)|what (payment|card)|accept|paynow|credit card|debit card|visa|master ?card|amex|grab ?pay|apple pay|google pay|paypal|cash on delivery|cod\b|instal+ment|atome|hoolah|pay (by|with|using)|can i pay|do you take|bank transfer|nets|ewallet|e wallet|pay on delivery|pay later)\b/,
@@ -625,12 +654,12 @@
     more: /\b(another|one more|1 more|extra|add one more|plus one|a second|one extra|more of (it|them|that|this))\b/,
     stores: /\b(where (can|do|could|should) (i |we )?(buy|get|find|purchase|see)|where (to|do you sell)|where is it sold|where can it be bought|stockists?|outlets?|branch(es)?|stores? (near|in|at|around)|any (store|stores|shop|shops|pharmacy|pharmacies|outlet|branch) (near|in|at|around|that|which|nearby)|near (me|us|here)|nearby|nearest|closest|physical (store|shop|location)|in ?store|walk ?in|which (store|pharmacy|stores|pharmacies|shop|shops|mall|malls)|find (a |the |your )?(store|shop|pharmacy|outlet|branch)|store (locator|finder|list)|pharmacies?|guardian|watsons?|nhgp|nhg|polyclinics?|fair ?price|ntuc|essentials|retailers?|supermarkets?|sell (it |this |these )?(at|in)|available (at|in)|carry (it |this )?(at|in)|stocked (at|in)|do (you|u) have (a )?(store|shop|branch|outlet|physical)|visit (the |a |your )?(store|shop)|buy (it |this |them )?(at|in|from) (a )?(store|shop|pharmacy|guardian|watsons|nhgp|fairprice)|where (is|are) (the )?(store|stores|shop|shops|pharmacy|pharmacies))\b/,
     where_buy: /\bwhere\b.*\b(buy|get|find|purchase|sell|sold|available|stock\w*)\b/,
-    orderStatus: /\b(track(ing)?|where is my (order|parcel|package|delivery|item|stuff)|order status|status of (my )?order|(my|the) order (status|number|id|is (late|delayed|missing))|has my order|did my order|have i (received|got)|not (yet )?(received|arrived|delivered)|invoice|receipt|confirmation (email|mail)|cancel (my )?order|change (my )?(order|address|delivery)|modify (my )?order|amend (my )?order|order history|past orders?|previous orders?|my orders?)\b/,
+    orderStatus: /\b(track(ing)?|(my|the) (order|parcel|package|delivery) (has )?(not|never|still not|yet to) (arrive|arrived|come|came|reach|reached|here)|where is my (order|parcel|package|delivery|item|stuff)|order status|status of (my )?order|(my|the) order (status|number|id|is (late|delayed|missing))|has my order|did my order|have i (received|got)|not (yet )?(received|arrived|delivered)|invoice|receipt|confirmation (email|mail)|cancel (my )?order|change (my )?(order|address|delivery)|modify (my )?order|amend (my )?order|order history|past orders?|previous orders?|my orders?)\b/,
     returns: /\b(returns?|refunds?|exchange|replace(ment)?|damaged|broken|wrong item|missing item|faulty|defective|money back|warranty|complain\w*|spoilt|spoiled|expired product|leaking|leaked|missing parts?)\b/,
-    delivery: /\b(deliver\w*|ship\w*|courier|postage|post to|arrive|arrival|when (will|can|do) (it|i|my|you)|how long (will|does|to|is|for)|how fast|free (delivery|shipping)|delivery (fee|charge|cost|time|days|date)|same day|next day|express|island ?wide|overseas|international|abroad|malaysia|indonesia|philippines|vietnam|hong kong|australia|thailand|outside singapore|p ?o box|restricted area|self ?collect\w*|pick ?up|collect(ion)? (my|the|it|in)|minimum (order|spend|purchase)|min spend|how much (to|do i) (spend|need)|free above|free over|threshold)\b/,
+    delivery: /\b(deliver\w*|ship\w*|courier|postage|post to|arrive|arrival|when (will|can|do) (it|i|my|you)|how long (will|does|to|is|for)|how fast|free (delivery|shipping)|delivery (fee|charge|cost|time|days|date)|same day|next day|express|island ?wide|overseas|international|abroad|malaysia|indonesia|philippines|vietnam|hong kong|australia|thailand|outside singapore|p ?o box|restricted area|self ?collect\w*|pick ?up|collect(ion)? (my|the|it|in)|collect (it |them |my order )?(myself|by myself|in person|on my own)|come (down |over )?(to )?(collect|pick)|minimum (order|spend|purchase)|min spend|how much (to|do i) (spend|need)|free above|free over|threshold)\b/,
     overseas: /\b(overseas|international|abroad|malaysia|indonesia|philippines|vietnam|hong kong|australia|thailand|outside singapore|other countr\w+|china|japan|korea|usa|uk|europe|dubai|brunei|taiwan|india|ship to|deliver to (my )?(friend|family|relative)? ?(in|to)? ?(overseas|another country))\b/,
     gst: /\b(gst|tax|inclusive|exclusive|incl|excl|vat|prices? include|including gst|inclusive of)\b/,
-    contact: /\b(contact|call|phone|hotline|telephone|e ?mail|whatsapp|talk to|speak (to|with)|chat with|human|agent|real person|staff|someone|customer (service|care|support)|support|pharmacist|doctor|office|address|where are you|location|visit you|head ?quarters?|hq|opening hours|office hours|business hours|working hours|hours|reach you|get in touch|number|enquir\w+|inquir\w+|feedback|complain\w*)\b/,
+    contact: /\b(contact (you|us|hst|number|details|info|information|email|person|team|nu)|(your|the|a) (contact|phone|telephone|hotline|email|e ?mail)( number| address| details)?|how (can|do|to|should) (i|we) (contact|reach|call|email|e ?mail|get hold of)|call (you|us|hst|the office)|phone (number|you|us)|hotline|telephone|e ?mail (address|you|us|id)|whatsapp|(talk|speak|chat|connect|get) (to|with|through to) (a |an |the |your )?(human|person|someone|pharmacist|agent|staff|doctor|real|customer|representative|rep|team|somebody|anyone|live)|customer (service|care|support|services)|live (chat|agent|person|support)|human|real person|your (office|address|location|hq|head ?office|shop|store|warehouse)|where (are|is) (you|hst)( located| based)?|where is your (office|shop|store|hq)|opening hours|office hours|business hours|working hours|reach you|get in touch|enquir\w+|inquir\w+|feedback|complain\w*|ask (a |the |your )?pharmacist|pharmacists?)\b/,
     trade: /\b(trade|reseller|resellers|resell|wholesale|wholesaler|distributor|distributors|distribution|bulk (order|buy|purchase|price|pricing|discount)|b2b|become a (stockist|reseller|distributor)|retail partner|partner(ship)?|supply (my|our)|carry your products|stock your|import|export|oem|private label|clinic account|pharmacy account|corporate (order|gift|purchase)|trade (account|price|pricing|enquiry))\b/,
     about: /\b(about (you|hst|the company|us|your company)|who (is|are) hst|what is hst|who owns|company|history|since when|founded|founder|established|kowa|heng say tong|1994|1930|our story|where (are you|is hst) from|made by|owner|parent company|subsidiary|brands?|rheuma salve (brand|company)|how old|how long (have you|has hst)|your story|singapore (brand|company)|hst medical (is|are)|tell me about hst|what (does|do) hst|who is behind|mission|motto|higher stronger together)\b/,
     awards: /\b(awards?|winner|won|prize|recogni[sz]ed|trophy|best seller award|guardian awards?|beauty insider)\b/,
@@ -643,21 +672,21 @@
     catalogue: /\b(catalog(ue)?s?|brochure|flip ?book|product sheets?|data sheets?|spec sheets?|pdf|leaflet|e ?book|the book|digital book|lookbook|full list|range book|magazine)\b/,
     howto: /\b(how (do|can|to|should) (i |we )?(buy|order|purchase|shop|use (this|the) (site|website|chat)|place an order|get started|add (to|things)|checkout|check out)|how does (ordering|buying|shopping|the shop|the site|checkout) work|steps to (buy|order)|ordering process|how to (buy|order))\b/,
     nav: /\b(go to|open|take me to|show me the|link (to|for)|where is the|navigate|bring me to|jump to|visit)\b/,
-    giftcard: /\b(gift (card|voucher|certificate)|e ?gift)\b/,
+    giftcard: /\b(gift (card|cards|voucher|vouchers|certificate|certificates)|e ?gift)\b/,
     compare: /\b(compare|comparison|differences?|different|versus|vs|which (one )?(is|are) (better|best|stronger|cheaper|safer)|better (than|for)|between|or which|which (should|would|do) (i|you)|tell the difference|what sets|same as|similar to|alternatives? (to|for))\b/,
     strongAdd: /^(please |pls |can you |could you |kindly )?(add|buy|purchase|order|grab|get|put|include|chuck|throw|reserve|bring|send|pick|select|choose|give|i ?ll (take|have|get|go for)|i will (take|have|get|go for))\b|\b(i want|i need|i would like|i will (take|have|get)|let me (get|have|buy|take|order)|can i (get|have|buy|order)|may i (get|have|buy|order)|could i (get|have|buy|order)|give me|get me|bring me|send me|looking to buy|want to (buy|order|get|add)|going to (buy|order|get)|need to (buy|order|get)|like to (buy|order|get|add)|buy me|order me|put (it|them|that|this)? ?in (my |the )?bag|add (it|them|that|this|these|those)? ?(to|into|in) (my |the )?bag|go for|go with|settle for|take (it|them|one|two|three|this|that|these))\b/,
     addVerb: /\b(add|buy|purchase|order|grab|get|put|include|chuck|throw|reserve|bring|send|pick|select|choose|give|want|need|like|take|have|i ?ll take|looking for|interested in|go for|go with)\b/,
-    qtyChange: /\b(make it|make that|set (it|that|them)? ?(to)?|change (it|that|them|the (qty|quantity|number|amount))? ?(to)?|update (it|that|them)? ?(to)?|change \w+ (to|into)|make \w+ (to|into)|(qty|quantity|amount|number) (to|of|=)|only (want|need)? ?\d|just (want|need)? ?\d|make (the )?(qty|quantity) \d|reduce (it |that |them )?to|increase (it |that |them )?to|bring (it |that |them )?(down|up) to|down to|up to \d)\b/,
+    qtyChange: /\b(change|make|set|update|adjust|edit|amend|modify|switch|increase|decrease|reduce|raise|lower|bring|instead|only|just|down to|up to)\b/,
     price: /\b(price|prices|pricing|cost|costs|how much|much (is|are|does|do|for)|expensive|cheap|cheaper|cheapest|sgd|dollars?|rate|charge|fee for|priced|worth|berapa|bao duo qian)\b/,
     packs: /\b(packs?|sizes?|variants?|options?|bundles?|twin|triple|value pack|travel (pack|size)|different (sizes|packs)|what sizes|which sizes|pack sizes?|how many (packs|sizes)|come in|comes in|available in|bigger|smaller|larger|multipack|multi ?pack|per box|per bottle|in a (box|pack|bottle)|item code|sku|code)\b/,
     ingredients: /\b(ingredients?|contain\w*|made (of|from|with|out of)|whats in|what is in|active|composition|formula|formulation|content|inside|extract|ginseng in|has (it )?(any )?(menthol|camphor|alcohol|sugar|gelatin|caffeine|steroid|steroids|paraben|parabens|preservatives?|colou?rings?|additives?)|sugar|alcohol|caffeine|steroid|preservatives?|additives?|gluten|dairy|lactose|soy|nuts?|shellfish|fish)\b/,
     usage: /\b(how (to|do i|should i|often|many|much to|long (do|should|can|to)) (use|take|apply|rub|consume|eat|drink|put|dose|massage|wear|store|keep)|usage|use (it|this|them)|dosage|dose|directions|instructions|apply|how often|how many times|when (to|should i|do i|can i) (take|use|apply|drink)|before or after (food|meals?)|with (food|water|milk)|empty stomach|per day|a day|daily|twice|how long (can|should|do|to)|how many (capsules|tablets|gummies|sachets|drops|vegicaps|softgels|sticks|patches|pieces|pills)|take it|use for|can be used|dose for|how to take|how to use|how much should|recommended (dose|dosage|amount|intake)|per serving|serving|morning or night|time of day|at night|bedtime)\b/,
     cautions: /\b(side effects?|safe|safety|caution\w*|warning\w*|allerg\w*|pregnan\w*|breast ?feed\w*|nursing|infant|baby|babies|child|children|kids?|toddlers?|elderly|seniors?|old (folks|people|man|lady)|medication|medicines?|interact\w*|contraindicat\w*|can (i|we|my|a|an|the|he|she|they|you) (use|take|apply|eat|drink|give|have)|can (my )?(child|kid|baby|mum|dad|mother|father|wife|husband|elderly|son|daughter|parents)|suitable|ok for|okay for|ok to|is it ok|is it okay|diabet\w*|blood pressure|hypertension|kidney|liver disease|asthma|surgery|driving|alcohol|overdose|too much|expir\w*|shelf life|storage|store it|keep it|harmful|dangerous|risk|risks|stop using|reaction|rash|irritat\w*|burn|burning|sensitive|sun ?light|drowsy|drowsiness|addictive|habit forming|dependency|long term|long-term|every day|everyday|daily use|young|age limit|how old|minimum age|from what age|what age)\b/,
-    origin: /\b(made in|origin|where (is|are) (it|this|they|these) (made|from|manufactured|produced)|manufactur\w*|country|produced|from where|where from|made where|sourced?|where does it come from|imported|source of)\b/,
+    origin: /\b(made in|origin|where (is|are|was|were|does|do|did)\b.*\b(made|from|manufactured|produced|come|comes|sourced|grown)|manufactur\w*|country of|produced in|produced by|from where|where from|made where|where made|sourced?|imported|source of|which country|what country)\b/,
     halal: /\b(halal|vegan|vegetarian|gelatin|gelatine|pork|alcohol free|kosher|animal (product|ingredient|derived)|plant based|plant-based|veg)\b/,
     sheet: /\b(product sheet|data sheet|spec sheet|sheet|catalogue page|brochure|leaflet|flip ?book|in the book|page number|which page|what page|pdf)\b/,
     stock: /\b(in stock|out of stock|stock|available|availability|sold out|restock|back in stock|do you (still )?have|got stock|is it available|any stock|how many (left|in stock)|currently available)\b/,
-    general: /\b(what is|what are|tell me (about|more)|info|information|details?|describe|description|about (the|this|it)|benefit|benefits|good for|what does (it|this) do|what is (it|this) for|used for|for what|purpose|reviews?|ratings?|effective|does it work|any good|worth it|how does (it|this) work|is it good|recommended|popular|best ?seller|bestsellers?|famous|what makes)\b/,
+    general: /\b(what is|what are|tell me (about|more)|info|information|details?|describe|description|about (the|this|it)|benefit|benefits|good for|what does (it|this) do|what is (it|this) for|used for|for what|purpose|effective|does it work|any good|worth it|how does (it|this) work|is it good|famous|what makes)\b/,
     size: /\b(how (big|large|small|heavy|tall|long)|how many (ml|g|grams?|capsules|tablets|gummies|pieces|sachets|sticks|patches|drops|softgels|vegicaps|pills)|size|weight|volume|dimensions?|what size)\b/,
     recommend: /\b(recommend\w*|suggest\w*|good for|best for|help (with|for|me|my)|something (for|to|that)|anything (for|to|that)|got any|any (product|products|remedy|remedies|supplement|supplements)|what (should|can|do|would) (i|you)|which (one )?(should|do|would|is best|is good|works)|what (is|are) (good|best|the best)|looking for|i (have|got|am having|am suffering|suffer)|my \w+ (hurts?|aches?|is (sore|hurting|aching|painful))|suffering|struggling|treat|relieve|cure|remedy|remedies|fix|solution|to help|ease|soothe|what do you have for|do you have (anything|something|any)|can you recommend|what to take|what to use|what to buy|options for|ideas? for|for my|for the)\b/,
     browse: /\b(show|see|list|browse|view|what do you (have|sell|carry|stock|offer)|what (products|items|things) (do you have|are there)|range|all (the )?(products|items|your products|categories|ranges)|categories|category|catalog|everything|full (range|list)|what (else|more)|other (products|items|things|options)|more (products|items|options)|shelf|shelves|aisle|section)\b/,
@@ -692,7 +721,7 @@
     if (/\b(both|all (of )?(them|these|those|three|four|five|the above)|each|every one|all)\b/.test(t) && L.length) return { owners: L.slice(0, 5), kind: 'all' };
     if (/\b(cheaper|cheapest|least expensive|lowest price|budget one|cheap one)\b/.test(t) && L.length) { var c = L.slice().sort(function (a, b) { return (prod(a).min || 1e9) - (prod(b).min || 1e9); }); return { owners: [c[0]], kind: 'cheap' }; }
     if (/\b(expensive|priciest|most expensive|premium one|pricier|dearest)\b/.test(t) && L.length) { var e = L.slice().sort(function (a, b) { return (prod(b).min || 0) - (prod(a).min || 0); }); return { owners: [e[0]], kind: 'dear' }; }
-    if (/\b(them|those|these|ones)\b/.test(t) && L.length > 1) return { owners: L.slice(0, 5), kind: 'all' };
+    if (/\b(them|those|these|ones)\b/.test(t) && L.length) return { owners: L.length > 1 ? L.slice(0, 5) : [L[0]], kind: L.length > 1 ? 'all' : 'focus' };
     if (/\b(it|this|that|this one|that one|the same|same one|same|the one|one)\b/.test(t) && (foc || L.length)) return { owners: [foc || L[0]], kind: 'focus' };
     if (foc && /\b(this product|this item|this one|the product)\b/.test(t)) return { owners: [foc], kind: 'focus' };
     return null;
@@ -716,6 +745,12 @@
       if (f.length === 1) return f;
       if (f.length > 1) owners = f;
     }
+    var words = (e.ps || []).filter(function (x) { return x.k === 'word'; }).map(function (x) { return x.v; });
+    if (words.length) {
+      var f2 = owners.filter(function (id) { var p = prod(id); return words.every(function (wd) { return p.vk.some(function (v) { return v.words[wd] || (wd === 'twin' && v.mult === 2) || (wd === 'triple' && v.mult === 3) || (wd === 'value' && v.mult >= 5) || (wd === 'bundle' && v.mult >= 2); }); }); });
+      if (f2.length === 1) return f2;
+      if (f2.length > 1) owners = f2;
+    }
     if (A && A.aud === 'child') { var k = owners.filter(function (id) { return prod(id).c === 'kids'; }); if (k.length === 1) return k; }
     return owners;
   }
@@ -723,7 +758,7 @@
     var items = [], asks = [], skipped = [], notes = [], hold = [];
     entries.forEach(function (e) {
       var owners = e.owners.slice();
-      if (owners.length > 1) owners = narrowOwners(owners, e, A);
+      if (owners.length > 1) owners = narrowOwners(owners, e.att || e, A);
       var q = qtyFor(e.att, null);
       if (owners.length !== 1) {
         var ok = owners.filter(function (id) { return prod(id).buy; });
@@ -753,7 +788,7 @@
     for (i = 0; i < plain.length; i++) {
       if (ORD[plain[i]] !== undefined) { var ix = ORD[plain[i]] < 0 ? options.length - 1 : ORD[plain[i]]; if (options[ix]) return options[ix]; }
     }
-    if (plain.length <= 3) { var dg = plain.filter(function (x) { return /^\d$/.test(x); }); if (dg.length === 1 && options[+dg[0] - 1]) return options[+dg[0] - 1]; }
+    if (plain.length <= 3) { var dg = plain.filter(function (x) { return /^\d$/.test(x); }), oth = plain.filter(function (x) { return !/^\d$/.test(x) && !/^(number|no|num|option|item|pack|size|the|one|choice|pick|choose|select|take|i|will|want)$/.test(x); }); if (dg.length === 1 && !oth.length && options[+dg[0] - 1]) return options[+dg[0] - 1]; }
     var hit = A.M.filter(function (m) { return m.owners.some(function (o) { return options.indexOf(o) > -1; }); });
     if (hit.length) {
       var inter = hit[0].owners.filter(function (o) { return options.indexOf(o) > -1; });
@@ -795,6 +830,7 @@
     return { list: list, why: why, notes: uniq(notes), cats: cats, kidsCaution: kids };
   }
 
+  function raw0(A) { return String(A.raw || ''); }
   function audienceOf(A) { for (var i = 0; i < A.W.length; i++) if (AUD[A.W[i]]) return AUD[A.W[i]]; return null; }
 
   /* ---- analyse one message ---- */
@@ -874,7 +910,9 @@
   }
 
   function continuePending(A, S) {
-    var P = S.pending, t = A.t, n = A.W.length, yes = isYes(A), no = isNo(A), R, pick, strongNew = RE.strongAdd.test(t) && A.M.length && n > 3;
+    var P = S.pending, t = A.t, n = A.W.length, yes = isYes(A), no = isNo(A), R, pick;
+    // "add 2 creme" while a melatonin question is open: a new request, not an answer
+    var strongNew = RE.strongAdd.test(t) && A.M.length > 0 && A.M.every(function (m) { return !(P.options || [P.slug]).some(function (o) { return m.owners.indexOf(o) > -1; }); });
     if (!P) return null;
     switch (P.type) {
       case 'confirm':
@@ -896,7 +934,7 @@
         if (strongNew) break;
         var p = prod(P.slug), ps = A.qp.ps || [], ix = -1, i;
         for (i = 0; i < A.W.length; i++) if (ORD[A.W[i]] !== undefined) { var o = ORD[A.W[i]] < 0 ? P.options.length - 1 : ORD[A.W[i]]; if (P.options[o] !== undefined) ix = P.options[o]; }
-        if (ix < 0 && n <= 3) { var dg = A.W.filter(function (x) { return /^\d$/.test(x); }); if (dg.length === 1 && P.options[+dg[0] - 1] !== undefined) ix = P.options[+dg[0] - 1]; }
+        if (ix < 0 && n <= 3) { var dg = A.W.filter(function (x) { return /^\d$/.test(x); }), oth = A.W.filter(function (x) { return !/^\d$/.test(x) && !/^(number|no|num|option|item|pack|size|the|one|choice|pick|choose|select|take|i|will|want)$/.test(x); }); if (dg.length === 1 && !oth.length && P.options[+dg[0] - 1] !== undefined) ix = P.options[+dg[0] - 1]; }
         if (ix < 0 && ps.length) {
           var cv = chooseVariant(p, { ps: ps, qs: A.qp.qs }, S);
           if (!cv.tie && !cv.none && P.options.indexOf(cv.vi) > -1) ix = cv.vi;
@@ -904,6 +942,10 @@
         }
         if (ix < 0 && /\b(cheaper|cheapest|smaller|small|lowest)\b/.test(t)) ix = P.options.slice().sort(function (a, b) { return (p.vk[a].p || 1e9) - (p.vk[b].p || 1e9); })[0];
         if (ix < 0 && /\b(bigger|biggest|larger|largest|best value|more)\b/.test(t) && n <= 4) ix = P.options.slice().sort(function (a, b) { return (p.vk[b].p || 0) - (p.vk[a].p || 0); })[0];
+        if (ix >= 0 && P.swap) {
+          S.pending = null;
+          return swapDone(p, P.from ? { id: P.from } : null, ix, Math.min(MAXQ, P.qty || 1), S);
+        }
         if (ix >= 0) {
           S.pending = null;
           var qty = Math.min(MAXQ, P.qty || 1), it = { slug: p.id, vi: ix, variant: p.vk[ix].l, qty: qty, via: 'said' };
@@ -1004,6 +1046,29 @@
     R.slugs = uniq(R.items.map(function (i) { return i.slug; }));
     return R;
   }
+  /* "switch to the value pack" / "change pack": move what is in the bag to another pack size of the same product */
+  function swapDone(p, cur, vi, qty, S) {
+    var lab = p.vk[vi].l;
+    S.mem.packs[p.id] = lab;
+    S.last.intent = 'swap'; S.last.focus = p.id; S.last.list = [p.id]; S.last.added = [{ slug: p.id, vi: vi, variant: lab, qty: qty }];
+    return mk('swap', { items: [{ slug: p.id, fromId: cur ? cur.id : null, toVi: vi, variant: lab, qty: qty }], slugs: [p.id] });
+  }
+  function swapFlow(A, S, refs) {
+    var owners = A.M.length ? A.M[0].owners : (refs ? refs.owners : (S.last.added && S.last.added.length ? [S.last.added[S.last.added.length - 1].slug] : (S.last.focus ? [S.last.focus] : [])));
+    if (owners.length !== 1 || !prod(owners[0])) return null;
+    var p = prod(owners[0]);
+    if (p.v.length < 2) return mk('swap', { single: true, slugs: [p.id] });
+    var lines = bagLinesFor(S, p.id), cur = lines.length ? lines[lines.length - 1] : null;
+    var qty = cur ? cur.qty : (((S.last.added || []).filter(function (a) { return a.slug === p.id; })[0] || {}).qty || 1);
+    var curVi = cur ? p.vk.map(function (v) { return v.l; }).indexOf(cur.variant) : -1;
+    var cv = A.qp.ps.length ? chooseVariant(p, { ps: A.qp.ps, qs: A.qp.qs }, S) : null;
+    if (cv && !cv.tie && !cv.none && cv.via === 'said' && p.vk[cv.vi].p) return swapDone(p, cur, cv.vi, qty, S);
+    var opts = (cv && cv.tie ? cv.tie : p.vk.map(function (v, i) { return i; })).filter(function (i) { return i !== curVi && p.vk[i].p; });
+    if (!opts.length) return mk('swap', { single: true, slugs: [p.id] });
+    var ask = { type: 'pack', slug: p.id, options: opts, qty: qty, swap: true, from: cur ? cur.id : null };
+    S.pending = clone(ask); S.last.focus = p.id;
+    return mk('swap', { ask: ask, slugs: [p.id] });
+  }
   function setQtyFlow(A, S, refs) {
     var R = mk('qty'), ents = [], nums = A.qp.qs.filter(function (x) { return x.kind !== 'more' && x.kind !== 'art'; });
     if (!nums.length) return null;
@@ -1055,10 +1120,17 @@
     if (!n) return mk('help');
     var hasBag = /\bbag\b/.test(t), hasMention = M.length > 0;
     var aspect = null;
-    ASPECTS.some(function (a) { if (a[1].test(t)) { aspect = a[0]; return true; } return false; });
+    if (RE.reviews.test(t)) aspect = 'reviews';
+    else ASPECTS.some(function (a) { if (a[1].test(t)) { aspect = a[0]; return true; } return false; });
+    // "can i take melatonin with alcohol" is a caution, "does it contain alcohol" is an ingredient
+    if (aspect === 'ingredients' && /\b(can|may|should|could|safe|ok|okay)\b/.test(t) && !/\b(contain|contains|made of|made from|ingredients?|what is in|whats in)\b/.test(t)) aspect = 'cautions';
+    // "how many capsules in a bottle" is a size, "how many capsules should i take" is a dose
+    if (aspect === 'usage' && /\bhow many (capsules|tablets|gummies|sachets|drops|vegicaps|softgels|sticks|patches|pieces|pills|lozenges)\b/.test(t) && /\b(in|inside|come|comes|does it have|are there|per (box|bottle|pack|jar))\b/.test(t) && !/\b(take|per day|a day|daily|should|can i|do i|each|at a time)\b/.test(t)) aspect = 'size';
 
     /* 1. red flags always win: stop selling, point to emergency care */
     if (RE.red.test(t)) { S.pending = null; return mk('redflag', { kind: RE.selfharm.test(t) ? 'selfharm' : 'emergency' }); }
+    if (RE.infant.test(t)) { S.pending = null; return mk('redflag', { kind: 'infant' }); }
+    if (/[\u3400-\u9fff\uac00-\ud7af\u3040-\u30ff]/.test(raw0(A)) && n <= 1) return mk('lang');
 
     /* 2. an open question from the assistant */
     if (S.pending) { R = continuePending(A, S); if (R) return R; }
@@ -1066,7 +1138,11 @@
     /* 3. cancel / start over / undo */
     if (RE.reset.test(t)) { S.last = freshState().last; S.pending = null; return mk('reset'); }
     if (RE.cancel.test(t)) return mk('cancel');
-    if (RE.undo.test(t) && n <= 6) return mk('undo');
+    if (RE.undo.test(t) && n <= 6) {
+      var un = (L.added || []).map(function (a) { return { id: a.slug + '|' + a.variant, qty: a.qty }; });
+      L.added = null;
+      return mk('undo', { undo: un });
+    }
 
     /* 4. small talk (only when nothing shoppable is in the message) */
     var shop = hasMention || A.needs.length > 0;
@@ -1082,14 +1158,23 @@
     if (RE.bot.test(t) && !hasMention && n <= 9) return mk('bot');
     if (RE.thanks.test(t) && n <= 8 && !shop && !RE.stores.test(t)) return mk('thanks');
 
-    var strong = RE.strongAdd.test(t);
+    var strong = RE.strongAdd.test(t) && !/^(how|what|where|when|why|which|who)\b/.test(t);
     var refs = null;
     if (!hasMention && n <= 14) refs = refOwners(A, S);
 
     /* 5. bag: show, clear, remove, change quantity, checkout, how to order */
     if (RE.howto.test(t) && !strong) return mk('howto');
+    var swapCue = !strong && (/^(please )?(change|switch|swap) (the |my |this |that )?(pack|size|packs|sizes|variant)( size)?( please)?$/.test(t) || (A.qp.ps.length > 0 && /\b(switch|swap|change|move)\b/.test(t)) || (/\b(switch|swap)\b/.test(t) && /\b(pack|size)\b/.test(t)));
+    if (swapCue && (hasMention || refs || (L.added && L.added.length) || L.focus)) { R = swapFlow(A, S, refs); if (R) return R; }
     var bagOnly = /^(my |the |view |show |open |see |check |go to |what is in |whats in )*(bag|total|subtotal|sub total|order|items|bag total|order summary)( please| now| so far)?$/.test(t);
-    if (bagOnly || (hasBag && RE.bagShow.test(t) && !strong && !RE.clear.test(t) && !hasMention && !/\b(add|put|remove|delete)\b/.test(t))) { S.last.intent = 'bag'; return mk('bag'); }
+    if (bagOnly || RE.totalQ.test(t) || (hasBag && RE.bagShow.test(t) && !strong && !RE.clear.test(t) && !hasMention && !/\b(add|put|remove|delete)\b/.test(t))) { S.last.intent = 'bag'; return mk('bag'); }
+    if (RE.again.test(t) && !hasMention) {
+      var ml = (S.mem.last || []).filter(function (x) { return prod(x.slug) && prod(x.slug).buy; });
+      if (!ml.length) return mk('again', { empty: true });
+      var rit = ml.map(function (x) { var p = prod(x.slug), vi = 0; p.vk.forEach(function (v, k) { if (v.l === x.variant && v.p) vi = k; }); return { slug: x.slug, vi: vi, variant: p.vk[vi].l, qty: Math.max(1, Math.min(MAXQ, x.qty || 1)), via: 'memory' }; });
+      S.last.intent = 'add'; S.last.added = rit.map(function (i) { return { slug: i.slug, vi: i.vi, variant: i.variant, qty: i.qty }; }); S.last.list = rit.map(function (i) { return i.slug; }); S.last.focus = rit[rit.length - 1].slug;
+      return mk('add', { items: rit, slugs: S.last.list.slice(), again: true });
+    }
     if (RE.clear.test(t) && !hasMention && (hasBag || /\b(everything|all)\b/.test(t) || /^(clear|empty)\b/.test(t)) && !RE.strongAdd.test(t)) {
       if (!S.bag.length) return mk('clear', { empty: true });
       S.pending = { type: 'bagclear' }; return mk('clear', { ask: { type: 'confirm', action: 'clear' } });
@@ -1111,7 +1196,7 @@
     var storeCue = (RE.stores.test(t) || RE.where_buy.test(t)) && !(strong && hasMention && A.qp.qs.length && !/\b(where|which|near|nearest|store|stores|shop|pharmacy|guardian|watsons|nhgp)\b/.test(t));
     if (RE.trade.test(t) && !/\bwhere\b/.test(t)) { return mk('trade'); }
     if (!storeCue && n <= 6 && L.intent === 'stores') { sp = storePick(A.T, S); if (sp.areaSpan || sp.chainSpan) storeCue = true; }
-    if (!storeCue && !hasMention && /\b(deliver|delivery|ship)\b/.test(t) === false && n <= 4) { var ar0 = areaSearch(A.T); if (ar0 && (ar0.e - ar0.s) >= 1 && A.W.length - (ar0.e - ar0.s) <= 2 && /\b(near|at|in|around)\b/.test(t)) storeCue = true; }
+    if (!storeCue && !hasMention && !RE.delivery.test(t) && !RE.orderStatus.test(t)) { var ar0 = areaSearch(A.T); if (ar0 && (/\b(buy|get|find|purchase|sold|sell|available|stock\w*|carry|pick up|collect|near|nearest|closest|around|nearby)\b/.test(t) || n <= 3)) storeCue = true; }
     if (storeCue && !RE.orderStatus.test(t)) {
       sp = sp || storePick(A.T, S);
       if (!sp.area && !sp.chain && !sp.direct && /\b(near me|nearby|nearest|closest|near here|around here|near us)\b/.test(t) && S.mem.area) { sp = storePick(tokenize(S.mem.area), S); }
@@ -1123,23 +1208,25 @@
 
     /* 7. topics about the shop itself (only when no product is being discussed) */
     var prodTalk = hasMention || (refs && (aspect || strong));
+    if (RE.nav.test(t) && !hasMention) { var pg0 = spanLookup(A.T, IDX.pageAlias, 5, null); if (pg0 && pg0.id !== 'cart' && pg0.id !== 'checkout') return mk('navigate', { page: pg0.id }); }
     if (RE.orderStatus.test(t) && !RE.checkout.test(t) && !(strong && hasMention)) return mk('order_status');
     if (RE.returns.test(t) && !prodTalk) return mk('returns');
     if (RE.promo.test(t) && !(strong && hasMention && A.qp.qs.length)) { return mk('promo', { slugs: hasMention ? M[0].owners.slice(0, 3) : [] }); }
+    if (RE.payq.test(t) && !strong && !/\b(how (long|many|fast)|days|fee|charge|cost|minimum|free)\b/.test(t)) return mk('payment');
     if (RE.delivery.test(t) && !(strong && hasMention && A.qp.qs.length && !/\b(deliver|delivery|ship|shipping|courier)\b/.test(t)) && !(prodTalk && aspect && !/\b(deliver\w*|ship\w*|courier|free delivery)\b/.test(t))) {
       return mk('delivery', { topic: RE.overseas.test(t) && !/\b(singapore|island)\b/.test(t) ? 'overseas' : (/\b(self collect\w*|pick ?up|collect\w*)\b/.test(t) ? 'collect' : 'sg'), area: (areaSearch(A.T) || {}).area ? areaSearch(A.T).area.n : null });
     }
     if (RE.payq.test(t) && !strong) return mk('payment');
     if (RE.gst.test(t) && !prodTalk) return mk('gst');
     if (RE.trade.test(t)) return mk('trade');
-    if (RE.contact.test(t) && !prodTalk && !(A.needs.length && !/\b(contact|call|phone|email|talk|speak|pharmacist|human|office|address|hotline|whatsapp)\b/.test(t))) return mk('contact', { pharmacist: /\b(pharmacist|doctor)\b/.test(t) });
+    if ((RE.contact.test(t) || RE.hours.test(t)) && !prodTalk && !(A.needs.length && !/\b(contact|call|phone|email|talk|speak|pharmacist|human|office|address|hotline|whatsapp)\b/.test(t))) return mk('contact', { pharmacist: /\b(pharmacist|doctor)\b/.test(t), hours: RE.hours.test(t) });
     if (RE.catalogue.test(t) && !hasMention) return mk('catalogue');
     if (RE.tele.test(t) && !hasMention && !A.needs.length) return mk('promo', { tele: true });
     if (RE.privacy.test(t) && !prodTalk) return mk('privacy');
     if (RE.genuine.test(t) && !(hasMention && aspect)) return mk('genuine');
     if (RE.awards.test(t) && !hasMention) return mk('awards');
     if (RE.about.test(t) && !prodTalk && !A.needs.length) return mk('about');
-    if (RE.quality.test(t) && !prodTalk && !A.needs.length) return mk('quality');
+    if (RE.quality.test(t) && !prodTalk && !A.needs.length) return mk('quality', { hsa: /\b(hsa|health sciences authority|registered|registration|licen[sc]e\w*|approved)\b/.test(t) });
     if (RE.notes.test(t) && !hasMention && !A.needs.length) return mk('notes');
     if (RE.giftcard.test(t)) return mk('giftcard');
     if (RE.nav.test(t) && !hasMention) { var pg = spanLookup(A.T, IDX.pageAlias, 5, null); if (pg) return mk('navigate', { page: pg.id }); }
@@ -1147,7 +1234,21 @@
     if (pgOnly && !hasMention && pgOnly.e - pgOnly.s === n && pgOnly.id !== 'shop') return mk('navigate', { page: pgOnly.id });
 
     /* 8. other medicines and brands we do not sell */
-    if (RE.unknownThing.test(t) && !hasMention) { var um = RE.unknownThing.exec(t); return mk('notstocked', { term: um[1], slugs: (/\bbalm\b|\bsalonpas\b|\bvicks\b|\beagle\b|\baxe\b|\bpo chai\b|\bbak foong\b/.test(um[1]) ? ['rheuma-salve-balm', 'rheuma-salve-creme', 'rheuma-salve-medi-stick'] : []) }); }
+    if (RE.unknownThing.test(t)) { var um = RE.unknownThing.exec(t); return mk('notstocked', { term: um[1], slugs: (/\bbalm\b|\bsalonpas\b|\bvicks\b|\beagle\b|\baxe\b|\bpo chai\b|\bbak foong\b/.test(um[1]) ? ['rheuma-salve-balm', 'rheuma-salve-creme', 'rheuma-salve-medi-stick'] : []) }); }
+
+    /* 8b. a shelf named outright ("traditional oils", "cough and cold range") beats a loose product word inside it */
+    var catAll = spanLookup(A.T, IDX.catAlias, 6, null);
+    if (catAll) {
+      var cl = catAll.e - catAll.s, mlen = M.reduce(function (m, x) { return Math.max(m, x.e - x.s); }, 0);
+      var inside = hasMention && M.every(function (m) { return m.s >= catAll.s && m.e <= catAll.e; });
+      var bcue = RE.browse.test(t) || /\b(range|shelf|shelves|section|category|categories|products|supplements|remedies|items)\b/.test(t) || (!A.needs.length && n <= cl + 1);
+      if ((!hasMention || inside || (cl > mlen && bcue)) && (bcue || !A.needs.length) && !(hasMention && !inside && strong)) {
+        var cc = catOf(catAll.id), csl = cc.slugs.slice(), cheap = /\b(cheap|cheaper|cheapest|budget|affordable|inexpensive|lowest price)\b/.test(t);
+        if (cheap) csl.sort(function (a, b) { return (prod(a).min || 1e9) - (prod(b).min || 1e9); });
+        S.last.intent = 'browse'; S.last.cat = cc.id; S.last.list = csl.slice(0, 5); S.last.focus = csl[0]; S.last.aspect = null;
+        return mk('browse', { cat: cc.id, slugs: csl, caution: A.caution, cheap: cheap });
+      }
+    }
 
     /* 9. add to the bag */
     var addish = null;
@@ -1157,12 +1258,14 @@
     var verbOnly = /\b(want|need|like|take|have|get|buy|order|add|put|grab|pick|give|go for|go with)\b/.test(t);
     var ask = qWord && !strong && !/^(can|could|may) i (get|have|buy|order)\b/.test(t);
     var priceQ = (aspect === 'price' || aspect === 'stock' || aspect === 'packs' || aspect === 'general' || aspect === 'usage' || aspect === 'ingredients' || aspect === 'cautions' || aspect === 'halal' || aspect === 'origin' || aspect === 'sheet' || aspect === 'size') && !strong;
+    // "need vitamin c" / "got any melatonin": a loose type word with a weak verb is a request to see options, not an order
+    var looseWeak = !strong && !hasQty && M.every(function (m) { return m.owners.length > 1; }) && !/\b(add|buy|order|get|grab|take|give|put|want)\b/.test(t);
     if (hasMention) {
-      if (strong || more || (!priceQ && !ask && (hasQty || (verbOnly && !/\b(about|info|details|tell|know|price|cost|much)\b/.test(t))))) addish = true;
+      if (strong || more || (!priceQ && !ask && !looseWeak && (hasQty || (verbOnly && !/\b(about|info|details|tell|know|price|cost|much)\b/.test(t))))) addish = true;
       if (priceQ && hasQty && /\b(add|buy|order|get)\b/.test(t) && !/\b(how much|price|cost)\b/.test(t)) addish = true;
     } else if (refs && (strong || more || (hasQty && n <= 5 && !priceQ)) && !qWord) addish = true;
     if (addish) { R = addFlow(A, S, hasMention ? null : refs); if (R) return R; }
-    if (!hasMention && !refs && (strong) && !A.needs.length) {
+    if (!hasMention && !refs && (strong) && !A.needs.length && !A.aud) {
       // "add 2 zorb": a product we do not know -> did you mean
       var phrase = contentPhrase(A);
       if (phrase) {
@@ -1175,11 +1278,24 @@
 
     /* 10. a product (or a few) with a question about it */
     var wantProducts = hasMention ? M : null;
-    if (RE.compare.test(t) && (hasMention || refs)) {
+    var cmpCue = RE.compare.test(t) || (M.length >= 2 && /\bor\b/.test(t) && n <= 10);
+    if (cmpCue && (hasMention || refs)) {
       var cmp = [];
       if (M.length >= 2) M.forEach(function (m) { m.owners.slice(0, M.length === 2 && m.owners.length > 1 ? 5 : 3).forEach(function (o) { if (cmp.indexOf(o) < 0) cmp.push(o); }); });
       else if (M.length === 1 && M[0].owners.length >= 2) cmp = M[0].owners.slice(0, 6);
       else if (refs && refs.owners.length >= 2) cmp = refs.owners.slice(0, 5);
+      if (M.length === 1 && M[0].owners.length === 1) {
+        // "melatonin 5mg and 10mg": the second size names a sibling product
+        var szs = A.qp.ps.filter(function (x) { return x.k === 'size'; }).map(function (x) { return x.v; }), base = prod(M[0].owners[0]);
+        if (szs.length) {
+          var bt = fold(base.n).replace(/[^a-z ]/g, ' ').split(/\s+/).filter(function (x) { return x.length > 3 && !GENERIC_STEMS[stem(x)]; });
+          KB.products.forEach(function (p) {
+            var nm = fold(p.n + ' ' + p.sz).replace(/\s/g, '');
+            if (p.id !== base.id && cmp.indexOf(p.id) < 0 && bt.some(function (x) { return fold(p.n).indexOf(x) > -1; }) && szs.some(function (z) { return nm.indexOf(z) > -1; })) cmp.push(p.id);
+          });
+          if (cmp.length && cmp.indexOf(base.id) < 0) cmp.unshift(base.id);
+        }
+      }
       if (cmp.length >= 2) {
         var R3 = mk('compare', { slugs: cmp.slice(0, 6) });
         S.last.intent = 'compare'; S.last.list = R3.slugs.slice(); S.last.focus = R3.slugs[0]; S.last.aspect = null;
@@ -1189,10 +1305,15 @@
     }
     // short follow-ups: "and the creme?", "what about the patch?" keep the last question
     var follow = /^(and|what about|how about|then|so|also|or|ok and|okay and|and what about)\b/.test(t) && n <= 7;
+    // "is the balm good for knee pain": does this product fit that need, in the catalogue's own words
+    var fitCue = /\b(good for|suitable for|effective for|work for|works for|working for|help with|helps with|help for|helps for|ok for|okay for|safe for|used for|use for|right for|best for|enough for|good to)\b/.test(t) || (qWord && /\b(good|suitable|effective|work|works|help|helps|ok|okay|safe|right|best|use|used)\b/.test(t));
+    if (hasMention && A.needs.length && M.length === 1 && M[0].owners.length === 1 && fitCue && (!aspect || aspect === 'general' || aspect === 'cautions') && !follow) {
+      var recf = recommendFor(A, S, A.needs), f1 = M[0].owners[0];
+      return infoR([f1], 'fit', S, { needs: A.needs.map(function (x) { return x.id; }), fit: recf.list.indexOf(f1) > -1, why: recf.why[f1] || '', recs: recf.list.filter(function (x) { return x !== f1; }).slice(0, 3), note: recf.notes[0] || '', caution: A.caution });
+    }
     if (hasMention && (aspect || (follow && L.intent === 'info' && L.aspect))) {
       var asp = aspect || L.aspect || 'general';
       var slugs = uniq([].concat.apply([], M.map(function (m) { return m.owners; }))).slice(0, 4);
-      if (A.needs.length && asp === 'general' && !follow) { /* "is balm good for knee pain" */ }
       return infoR(slugs, asp, S, { caution: A.caution || (!!A.aud && A.aud !== 'elder') });
     }
     if (refs && aspect && !hasMention) {
@@ -1204,12 +1325,22 @@
       return mk('info', { aspect: aspect, ask: { type: 'product' } });
     }
 
+    /* 10b. the catalogue does not claim this product for a condition it does not cover */
+    var unc0 = null;
+    (KB.uncovered || []).forEach(function (u) { var ut = lite(u).join(' '); if (!unc0 && (' ' + t + ' ').indexOf(' ' + ut + ' ') > -1) unc0 = u; });
+    if (unc0 && hasMention && M.length === 1 && M[0].owners.length === 1 && !A.needs.length && (!aspect || aspect === 'general' || aspect === 'cautions' || aspect === 'fit')) {
+      return infoR([M[0].owners[0]], 'fit', S, { needs: [], fit: false, uncovered: unc0, caution: true });
+    }
+
     /* 11. needs and recommendations */
+    if (RE.best.test(t) && !A.needs.length && !hasMention) {
+      S.last.intent = 'recommend'; S.last.list = (KB.best || []).slice(0, 5); S.last.focus = (KB.best || [])[0]; S.last.aspect = null;
+      return mk('bestsellers', { slugs: (KB.best || []).slice(0, 8) });
+    }
     if (A.needs.length) {
       var rec = recommendFor(A, S, A.needs);
-      var fitOne = hasMention && M.length === 1 && M[0].owners.length === 1 && /\b(good|ok|okay|suitable|help|work|works|safe|effective|use|for)\b/.test(t) && (qWord || /\b(good|suitable|work|works|effective)\b/.test(t));
-      if (fitOne) { var f1 = M[0].owners[0]; var R4 = infoR([f1], 'fit', S, { needs: A.needs.map(function (x) { return x.id; }), fit: rec.list.indexOf(f1) > -1, why: rec.why[f1] || '', recs: rec.list.slice(0, 3), note: rec.notes[0] || '', caution: A.caution }); return R4; }
-      var R5 = mk('recommend', { needs: A.needs.map(function (x) { return x.id; }), slugs: rec.list.slice(0, 5), why: rec.why, notes: rec.notes, cats: rec.cats, caution: A.caution || rec.kidsCaution, aud: A.aud });
+      var kidsNeed = A.needs.some(function (x) { return /^kids/.test(x.id); });
+      var R5 = mk('recommend', { needs: A.needs.map(function (x) { return x.id; }), slugs: rec.list.slice(0, 5), why: rec.why, notes: rec.notes, cats: rec.cats, caution: A.caution || rec.kidsCaution || kidsNeed, aud: A.aud || (kidsNeed ? 'child' : null) });
       S.last.intent = 'recommend'; S.last.list = R5.slugs.slice(0, 5); S.last.focus = R5.slugs[0]; S.last.aspect = null; S.last.cat = rec.cats[0] || null;
       return R5;
     }
@@ -1217,9 +1348,10 @@
       var kn = needById('kids'); var R6 = mk('recommend', { needs: ['kids'], slugs: kn.p.map(function (x) { return x.s; }), why: kn.p.reduce(function (o, x) { o[x.s] = x.why; return o; }, {}), notes: [], cats: ['kids'], caution: true, aud: 'child' });
       S.last.intent = 'recommend'; S.last.list = R6.slugs.slice(0, 5); S.last.focus = R6.slugs[0]; return R6;
     }
-    var unc = null;
-    (KB.uncovered || []).forEach(function (u) { var ut = lite(u).join(' '); if (!unc && (' ' + t + ' ').indexOf(' ' + ut + ' ') > -1) unc = u; });
+    var unc = unc0;
     if (unc && !hasMention) { return mk('uncovered', { term: unc, caution: true }); }
+    // "something for my mum": a person but no need yet -> ask what it is for
+    if (A.aud && !hasMention && !A.needs.length && /\b(something|anything|gift|buy|get|for|help|recommend|suggest|what|good)\b/.test(t)) return mk('clarify', { aud: A.aud });
 
     /* 12. browse a shelf or the whole range */
     var cat = spanLookup(A.T, IDX.catAlias, 6, A.cover);
@@ -1229,12 +1361,16 @@
       return mk('browse', { cat: c.id, slugs: c.slugs.slice(), caution: A.caution });
     }
     if (RE.browse.test(t) && !hasMention && /\b(products?|items|range|everything|categories|category|catalog\w*|sell|have|carry|stock|offer|shelf|shelves|things|more|else|other)\b/.test(t)) { return mk('browse', { all: true }); }
-    if (/^(shop|store|products|all products|everything)$/.test(t)) return mk('browse', { all: true });
+    if (/^(shop|store|products|all products|everything|price list|prices|all prices|full price list|product list|list of products|price)$/.test(t)) return mk('browse', { all: true });
 
     /* 13. just a product name */
     if (hasMention) {
       var slugs2 = uniq([].concat.apply([], M.map(function (m) { return m.owners; })));
       if (M.length === 1 && M[0].owners.length > 7) return mk('browse', { brand: 'Heritage', slugs: M[0].owners.slice(0, 8) });
+      if (M.every(function (m) { return m.owners.length > 1; }) && (RE.recommend.test(t) || qWord || looseWeak) && !aspect) {
+        S.last.intent = 'recommend'; S.last.list = slugs2.slice(0, 5); S.last.focus = slugs2[0]; S.last.aspect = null;
+        return mk('recommend', { needs: [], slugs: slugs2.slice(0, 5), kind: 'type', caution: A.caution || A.aud === 'child' || A.aud === 'baby', aud: A.aud });
+      }
       return infoR(slugs2.slice(0, 4), 'general', S, { caution: A.caution, more: slugs2.length > 4 });
     }
     if (refs && n <= 4) return infoR(refs.owners.slice(0, 4), 'general', S, { via: 'context' });
@@ -1266,6 +1402,921 @@
     R.state = S;
     return R;
   }
-  w.HSTChat = { load: load, understand: understand, get kb() { return KB; },
-    debug: function (text, st) { var S = normState(clone(st)); var A = analyze(String(text), S); return { T: A.T, t: A.t, M: A.M, qp: A.qp, needs: A.needs, aud: A.aud, caution: A.caution, att: attach(A.M, A.qp, A.T) }; } };
+
+  /* ================================================================== 3b. ANSWERS (plain HTML built from the knowledge base; no emoji, no invented facts) */
+  var ICONS = {
+    chat: '<path d="M5.5 5.5h13A1.5 1.5 0 0 1 20 7v8.5a1.5 1.5 0 0 1-1.5 1.5H11l-4.5 3.5V17h-1A1.5 1.5 0 0 1 4 15.5V7a1.5 1.5 0 0 1 1.5-1.5z"/><path d="M8 10h8M8 13h5"/>',
+    close: '<path d="M6 6l12 12M18 6 6 18"/>',
+    send: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+    bag: '<path d="M5.5 8.5h13l-1 11.5h-11z"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/>',
+    dots: '<circle cx="12" cy="5.5" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="12" cy="18.5" r="1.2"/>',
+    tick: '<path d="M20 6 9 17l-5-5"/>',
+    plus: '<path d="M12 5v14M5 12h14"/>',
+    minus: '<path d="M5 12h14"/>',
+    pin: '<path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/>',
+    phone: '<path d="M5 4h3.5l2 5-2.5 1.5a11 11 0 0 0 5.5 5.5l1.5-2.5 5 2V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
+    arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+    book: '<path d="M5 4.5h10a2 2 0 0 1 2 2V20H7a2 2 0 0 1-2-2z"/><path d="M5 18a2 2 0 0 1 2-2h10"/>'
+  };
+  function icon(n, cls) { return '<svg class="' + (cls || 'hc-i') + '" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + ICONS[n] + '</svg>'; }
+  function P(h) { return '<p>' + h + '</p>'; }
+  function Bt(s) { return '<b>' + esc(s) + '</b>'; }
+  function aLink(rel, label, ext) { return '<a class="hc-a" href="' + esc(/^https?:/.test(rel) ? rel : href(rel)) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + esc(label) + (ext ? '<span class="hc-sr"> (opens in a new tab)</span>' : '') + '</a>'; }
+  function aBtn(rel, label, primary, ext, ic) { return '<a class="hc-btn' + (primary ? ' hc-btn-p' : '') + '" href="' + esc(/^https?:/.test(rel) ? rel : href(rel)) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + (ic ? icon(ic) : '') + esc(label) + (ext ? '<span class="hc-sr"> (opens in a new tab)</span>' : '') + '</a>'; }
+  function say(label, text) { return '<button type="button" class="hc-sayb" data-hc-say="' + esc(text || label) + '">' + esc(label) + '</button>'; }
+  function UL(items) { return items && items.length ? '<ul class="hc-ul"><li>' + items.join('</li><li>') + '</li></ul>' : ''; }
+  var ORDW = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth'];
+  function plural(n, w1, w2) { return n + ' ' + (n === 1 ? w1 : (w2 || w1 + 's')); }
+  function flipUrl(pg) { return KB.flipbook + '#p=' + (pg || 1); }
+  function nameOf(p) { return p.n; }
+  function pkTxt(it, p) { return it.variant && p.v.length > 1 ? ' (' + esc(it.variant) + ')' : ''; }
+  function vPrice(p, vi) { var v = p.v[vi || 0]; return v && v.p ? money(v.p) : ''; }
+
+  /* ---- product card: thumb, name, size, price, pack chips, quantity stepper, Add ---- */
+  function card(p, o) {
+    o = o || {};
+    var vi = o.vi || 0, v = p.v[vi] || p.v[0], multi = p.v.length > 1;
+    var packs = multi ? '<div class="hc-packs" role="radiogroup" aria-label="Pack size, ' + esc(p.sn) + '">' + p.v.map(function (x, i) {
+      return '<button type="button" class="hc-pack" role="radio" aria-checked="' + (i === vi ? 'true' : 'false') + '" data-hc-pack="' + i + '">' + esc(x.l) + ' <small>' + (x.p ? money(x.p) : 'on request') + '</small></button>';
+    }).join('') + '</div>' : '';
+    var buy = p.buy
+      ? '<div class="hc-buy"><div class="hc-qty" role="group" aria-label="Quantity"><button type="button" data-hc-step="-1" aria-label="Fewer">' + icon('minus') + '</button><output aria-live="off">1</output><button type="button" data-hc-step="1" aria-label="More">' + icon('plus') + '</button></div>'
+        + '<button type="button" class="hc-add" data-hc-add>' + icon('bag') + '<span>Add to bag</span></button></div>'
+      : '<div class="hc-buy">' + aBtn('where-to-buy/', 'Ask in store', false) + aBtn('contact/', 'Enquire', false) + '</div>';
+    return '<div class="hc-card" data-hc-card data-slug="' + esc(p.id) + '" data-vi="' + vi + '">'
+      + '<a class="hc-card-img" href="' + esc(href(p.url)) + '" tabindex="-1" aria-hidden="true"><img src="' + esc(href(p.img)) + '" alt="" width="64" height="64" loading="lazy" decoding="async"></a>'
+      + '<div class="hc-card-body"><a class="hc-card-name" href="' + esc(href(p.url)) + '">' + esc(p.n) + '</a>'
+      + '<span class="hc-card-meta">' + esc(p.b) + (p.sz ? ' \u00b7 ' + esc(p.sz) : '') + '</span>'
+      + (o.why ? '<span class="hc-card-why">' + esc(o.why) + '</span>' : '')
+      + '<span class="hc-card-price" data-hc-price>' + (v.p ? money(v.p) + ' <small>incl. GST</small>' : 'Price on request') + '</span></div>'
+      + '<div class="hc-card-ctl">' + packs + buy + '</div></div>';
+  }
+  function cards(slugs, o) {
+    o = o || {};
+    var h = slugs.filter(function (s) { return prod(s); }).map(function (s) { return card(prod(s), { why: o.why && o.why[s], vi: o.vi && o.vi[s] }); }).join('');
+    return h ? '<div class="hc-cards">' + h + '</div>' : '';
+  }
+
+  /* ---- the bag, as a block ---- */
+  function bagLines(info) {
+    return '<ul class="hc-lines">' + info.lines.map(function (l) {
+      return '<li><span><b>' + l.qty + ' \u00d7</b> ' + esc(l.name) + (l.variant && l.variant !== 'Single pack' ? ' <small>' + esc(l.variant) + '</small>' : '') + '</span><b>' + money((l.price || 0) * l.qty) + '</b></li>';
+    }).join('') + '</ul>';
+  }
+  function bagSummary(info) {
+    if (!info.count) return '';
+    return '<dl class="hc-sum"><div><dt>Subtotal (' + plural(info.count, 'item') + ')</dt><dd>' + money(info.sub) + '</dd></div><div><dt>Delivery</dt><dd>' + (info.ship ? money(info.ship) : 'Free') + '</dd></div><div class="hc-t"><dt>Total <small>incl. GST</small></dt><dd>' + money(info.total) + '</dd></div></dl>'
+      + '<p class="hc-note">' + (info.free ? 'Your order has free delivery in Singapore.' : 'Add ' + money(info.gap) + ' more for free delivery (free above ' + money(info.FREE) + ').') + '</p>';
+  }
+  function bagLine(info) {
+    if (!info.count) return 'Your bag is empty.';
+    return 'Bag: ' + plural(info.count, 'item') + ', ' + money(info.sub) + '. ' + (info.free ? 'Free delivery applies.' : 'Add ' + money(info.gap) + ' more for free delivery.');
+  }
+
+  /* ---- health words ---- */
+  var LABEL = 'Always read the label and follow the directions for use.';
+  function healthTail(R, extra) {
+    var h = '';
+    if (extra) h += '<p class="hc-note">' + esc(extra) + '</p>';
+    if (R && R.caution) h += '<p class="hc-note"><b>Please check first:</b> if this is for someone who is pregnant or breastfeeding, a child under 2, taking other medicines, or living with a medical condition, ask a pharmacist or doctor before using any product.</p>';
+    return h + '<p class="hc-note">' + LABEL + '</p>';
+  }
+  function needLabel(ids) { return (ids || []).map(function (id) { var n = needById(id); return n ? n.l : id; }); }
+  function joinAnd(a) { return a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1]; }
+
+  /* ---- aspects of a product ---- */
+  function aspectHtml(p, aspect, R) {
+    var h = '';
+    switch (aspect) {
+      case 'price': case 'packs':
+        if (!p.buy) return P(Bt(p.n) + ' is price on request, so it cannot be bought online yet. Ask in store or contact us.');
+        h += P(Bt(p.n) + (p.v.length > 1 ? ' comes in ' + p.v.length + ' pack sizes (prices in SGD, GST included):' : ': <b>' + vPrice(p, 0) + '</b> incl. GST.'));
+        if (p.v.length > 1) h += '<ul class="hc-ul">' + p.v.map(function (v) { return '<li>' + esc(v.l) + ': <b>' + (v.p ? money(v.p) : 'price on request') + '</b>' + (v.c ? ' <small>item ' + esc(v.c) + '</small>' : '') + '</li>'; }).join('') + '</ul>';
+        else if (aspect === 'packs' && p.v[0].c) h += P('Item code ' + esc(p.v[0].c) + '.');
+        return h;
+      case 'reviews':
+        return P('I do not have customer reviews or ratings on file, so I would rather not guess. What I can share is the catalogue\'s description of ' + Bt(p.n) + ':') + P(esc(clip(p.d, 260)));
+      case 'ingredients':
+        return P(Bt(p.n) + ': ' + (p.ing ? esc(p.ing) : 'see the pack for the full ingredient list.')) + (p.diet && p.diet.length ? P('<small>The catalogue also says: ' + esc(p.diet.join(' ')) + '</small>') : '') + '<p class="hc-note">The full list is on ' + aLink(p.url, 'the product page') + ' and the pack.</p>';
+      case 'usage':
+        return P(Bt(p.n) + ': how to use') + (UL((p.use || []).map(esc)) || P('Use as directed on the label.'));
+      case 'cautions':
+        return P(Bt(p.n) + ': cautions from the catalogue') + UL((p.cau || []).map(esc));
+      case 'origin':
+        return P(Bt(p.n) + ': ' + esc(p.o || 'the country of origin is printed on the pack') + '.');
+      case 'halal':
+        if (p.halal) return P(Bt(p.n) + ' carries Halal (Malaysia) certification, printed on the pack.');
+        return P(Bt(p.n) + ': Halal certification is not listed for this product in our catalogue, so please check the pack or ask us.') + (p.diet && p.diet.length ? P('The catalogue says: ' + esc(p.diet.join(' '))) : '');
+      case 'sheet':
+        return P(Bt(p.n) + (p.pg ? ' has its own product sheet on page ' + p.pg + ' of the catalogue.' : ' is in the product catalogue.')) + (p.pg ? '<p>' + aBtn(flipUrl(p.pg), 'Product sheet p.' + p.pg, false, true, 'book') + '</p>' : '');
+      case 'stock':
+        return P('I cannot see live stock levels. ' + (p.buy ? Bt(p.n) + ' is listed for sale online (' + (p.min != null ? 'from ' + money(p.min) : '') + '); the product page shows the pack sizes sold. For availability, email the order desk at ' + esc(KB.contact.order) + '.' : Bt(p.n) + ' is price on request, so ask in store or contact us.'));
+      case 'size':
+        return P(Bt(p.n) + ': ' + esc(p.sz || 'see the pack') + '.') + (p.v.length > 1 ? '<ul class="hc-ul">' + p.v.map(function (v) { return '<li>' + esc(v.l) + '</li>'; }).join('') + '</ul>' : '');
+      default: {
+        var ben = (p.ben || []).slice(0, 3);
+        return P(Bt(p.n) + (p.tg ? ', ' + esc(p.tg) : '')) + P(esc(clip(p.d, 300))) + (ben.length ? UL(ben.map(esc)) : '') + P('<small>For: ' + esc(p.f) + '</small>');
+      }
+    }
+  }
+  function clip(s, n) { s = String(s || ''); if (s.length <= n) return s; var c = s.slice(0, n), k = Math.max(c.lastIndexOf('. '), c.lastIndexOf('; ')); return k > n * 0.5 ? c.slice(0, k + 1) : c.slice(0, c.lastIndexOf(' ')).replace(/[,;:]$/, '') + '...'; }
+
+  /* ---- stores ---- */
+  function storeHtml(R) {
+    var list = (R.stores || []).map(function (k) { return KB.stores[k]; }), ch = R.retailer ? chainOf(R.retailer) : null, h = '';
+    if (!list.length) return '';
+    h += '<ul class="hc-stores">' + list.map(function (s) {
+      var tel = (s.t || '').split(/\s*\/\s*/)[0], q = encodeURIComponent(s.q);
+      return '<li><b>' + esc(s.cn) + ' \u00b7 ' + esc(s.n) + '</b><span>' + esc(s.a) + '</span><span class="hc-st-acts">' + (tel ? '<a class="hc-a" href="tel:' + esc(tel.replace(/[^+\d]/g, '')) + '">' + icon('phone') + esc(s.t) + '</a>' : '')
+        + '<a class="hc-a" href="https://www.google.com/maps/search/?api=1&amp;query=' + q + '" target="_blank" rel="noopener">' + icon('pin') + 'Directions<span class="hc-sr"> to ' + esc(s.cn + ' ' + s.n) + ' (opens Google Maps)</span></a></span></li>';
+    }).join('') + '</ul>';
+    return h;
+  }
+
+  /* ---- the answer for one turn: { text, extra, chips } ---- */
+  function startChips() { return [{ l: 'Back or joint pain', say: 'back and joint pain' }, { l: 'Cough or sore throat', say: 'cough and sore throat' }, { l: 'Help me sleep', say: 'help me sleep' }, { l: 'Kids vitamins', say: 'vitamins for kids' }, { l: 'Show my bag', say: 'show my bag' }, { l: 'Where to buy', say: 'where can i buy' }]; }
+  function afterChips(list) { return list; }
+  function shortOf(id) { var p = prod(id); return p ? p.sn : id; }
+
+  function compose(R, rep, S) {
+    var T = '', X = '', C = null, i, p, info = bagInfo(bagLoad());
+    var items = R.items || [], f = KB.facts, ct = KB.contact;
+    function out() { return { text: T, extra: X, chips: C || [] }; }
+
+    switch (R.intent) {
+      case 'greet':
+        T = P('Hello. I am ' + Bt('Ask HST') + ', an automated shop assistant for HST Medical. Tell me what you need, for example <i>add 2 balms</i>, <i>knee pain</i> or <i>where to buy</i>.');
+        C = startChips(); return out();
+      case 'help':
+        T = P('I answer from our catalogue and this website only. I can:') + UL(['add products to your bag: <i>add 2 rheuma salve balm</i>', 'suggest products for a need: <i>sore throat</i>, <i>can\'t sleep</i>, <i>knee pain</i>',
+          'show prices, pack sizes, ingredients, how to use and cautions', 'compare products, find a store near you, explain delivery, GST and payment', 'show, change or clear your bag, then send you to checkout']) + P('Payment is never taken in chat.');
+        C = startChips(); return out();
+      case 'thanks': T = P('You are welcome. Anything else I can help with?'); C = [{ l: 'Show my bag', say: 'show my bag' }, { l: 'Where to buy', say: 'where can i buy' }]; return out();
+      case 'bye': T = P('Thank you for visiting HST Medical. Your bag stays in this browser. Take care.'); C = []; return out();
+      case 'ack': T = P('OK. What else can I help with?'); C = startChips(); return out();
+      case 'smalltalk': T = P('I am well, thank you. What can I help you find today?'); C = startChips(); return out();
+      case 'bot': T = P(esc(f.bot)) + P('I learn in two ways: the catalogue behind me is rebuilt from this website, and in this browser I remember the names you confirm and the pack sizes you pick. Use the menu to forget them.'); C = startChips(); return out();
+      case 'cancel': T = P('No problem, I have dropped that. What else can I help with?'); C = startChips(); return out();
+      case 'reset': T = P('Starting over. What would you like to do?'); C = startChips(); return out();
+      case 'loading': T = P('One moment, I am still loading the catalogue.'); return out();
+
+      case 'lang': T = P('Sorry, I can only read English for now. Please type in English, or contact the team on ' + esc(ct.phone) + ' ext. ' + esc(ct.ext) + ' or at ' + esc(ct.email) + '.'); C = startChips(); return out();
+      case 'clarify': {
+        var who = R.aud === 'child' ? 'your child' : R.aud === 'baby' ? 'your baby' : R.aud === 'preg' ? 'you' : 'them';
+        T = P('Happy to help. What would you like help with for ' + who + '? Tell me the symptom or need, for example ' + (R.aud === 'child' ? '<i>cough</i>, <i>immunity</i> or <i>kids vitamins</i>' : '<i>joint pain</i>, <i>energy</i>, <i>sleep</i> or <i>immunity</i>') + '.');
+        if (R.aud === 'baby' || R.aud === 'preg') T += '<p class="hc-note">For babies, and during pregnancy or breastfeeding, please check with a pharmacist or doctor before using any product.</p>';
+        C = R.aud === 'child' ? [{ l: 'Kids vitamins', say: 'vitamins for kids' }, { l: 'Cough', say: 'cough' }, { l: 'Immunity', say: 'kids immunity' }] : [{ l: 'Joint pain', say: 'joint pain' }, { l: 'Energy', say: 'tired and low energy' }, { l: 'Sleep', say: 'help me sleep' }, { l: 'Immunity', say: 'immunity' }];
+        return out();
+      }
+      case 'bestsellers':
+        T = P('These are the best sellers on our home page, with the real price for the real pack:'); X = cards((R.slugs || []).slice(0, 4)) + '<p class="hc-acts">' + say('Show the rest', 'show all products') + '</p>';
+        C = [{ l: 'Add the first one', say: 'add the first one' }, { l: 'Back or joint pain', say: 'back and joint pain' }, { l: 'Cough or sore throat', say: 'cough and sore throat' }]; return out();
+      case 'redflag':
+        if (R.kind === 'infant') { T = P('<b>A fever in a baby needs a doctor.</b>') + P('Please see a doctor today or go to the nearest A&amp;E (accident and emergency). Call <b>995</b> if the baby is struggling to breathe, very drowsy or floppy, or has a fit.') + '<p class="hc-note">I am an automated assistant and cannot assess symptoms.</p>'; C = []; return out(); }
+        if (R.kind === 'selfharm') T = P('<b>I am sorry you are going through this. Please talk to someone now.</b>') + P('If you might act on these thoughts, call <b>995</b> or go to the nearest A&amp;E (accident and emergency) right away. You can also call the Samaritans of Singapore 24-hour hotline on <b>1767</b>. If someone is with you, ask them to stay with you.');
+        else T = P('<b>This sounds like it needs urgent medical care, not a shop.</b>') + P('Please call <b>995</b> now for an ambulance, or go to the nearest A&amp;E (accident and emergency) department. If someone is with you, ask them to stay with you and tell them what is happening.') + '<p class="hc-note">I am an automated assistant and cannot assess symptoms.</p>';
+        C = []; return out();
+
+      case 'add': {
+        var lines = [], total = 0;
+        (rep && rep.added || []).forEach(function (a) { var pp = prod(a.slug); lines.push('<b>' + a.qty + ' \u00d7 ' + esc(a.name) + '</b>' + (pp && pp.v.length > 1 ? ' (' + esc(a.variant) + ')' : '') + ', ' + money(a.qty * a.price)); total += a.qty * a.price; });
+        if (lines.length) {
+          T = P('Added ' + (lines.length === 1 ? lines[0] : '') + '.' ) ;
+          if (lines.length > 1) T = P('Added to your bag:') + UL(lines);
+          if (R.again) T = P('Same as last time, added to your bag:') + UL(lines);
+          if (items.some(function (it) { return it.via === 'memory' && !R.again; })) T += '<p class="hc-note">I used the pack size you picked before. Say <i>change pack</i> to pick another.</p>';
+          if (items.some(function (it) { return it.clamped; }) || (rep && rep.capped)) T += '<p class="hc-note">I keep each line to ' + MAXQ + ' at most; the site\'s bag page can go higher.</p>';
+          X += '<p class="hc-bagline">' + esc(bagLine(info)) + '</p><p class="hc-acts"><button type="button" class="hc-sayb" data-hc-say="undo">Undo</button></p>';
+          // a bigger pack that matches what they asked for
+          var tip = null;
+          (rep && rep.added || []).forEach(function (a) {
+            var pp = prod(a.slug); if (!pp || tip || a.qty < 2) return;
+            var cur = pp.vk.filter(function (v) { return v.l === a.variant; })[0], baseSz = cur ? (cur.size[0] || cur.baseSize || '') : '';
+            pp.vk.forEach(function (v) {
+              var m = /[\u00d7x]\s?(\d+)|bundle of (\d+)|^(twin|triple)/i.exec(v.l), mult = v.mult || (m && /^twin/i.test(m[3] || '') ? 2 : m && /^triple/i.test(m[3] || '') ? 3 : 0);
+              var sameSize = !v.size.length || (baseSz && v.size.indexOf(baseSz) > -1);
+              if (!tip && v.p && mult === a.qty && v.l !== a.variant && sameSize && v.p < a.qty * a.price) tip = { v: v, save: a.qty * a.price - v.p, qty: a.qty };
+            });
+          });
+          if (tip) X += '<p class="hc-note">Tip: the ' + esc(tip.v.l) + ' is ' + money(tip.v.p) + ', which is ' + money(tip.save) + ' less than ' + tip.qty + ' single packs. Say <i>switch to the ' + esc(tip.v.l) + '</i> to change.</p>';
+          C = [{ l: 'View bag', say: 'show my bag' }, { l: 'Checkout', say: 'checkout' }, { l: 'Keep shopping', say: 'what else do you have' }];
+        }
+        (R.skipped || []).forEach(function (s) { var pp = prod(s.slug); if (pp) { T += P(Bt(pp.n) + ' is price on request, so I cannot add it to the bag. Ask in store or contact us and we will help.'); X += '<p class="hc-acts">' + aBtn('where-to-buy/', 'Where to buy', false) + aBtn('contact/', 'Contact us', false) + '</p>'; } });
+        var a = R.ask;
+        if (a) {
+          if (a.type === 'which') {
+            T += P('Which one did you mean?' + (a.qty > 1 ? ' I will add ' + a.qty + '.' : ''));
+            X += cards(a.options.slice(0, 4)); C = a.options.slice(0, 5).map(function (o, k) { return { l: shortOf(o), say: 'the ' + ORDW[k] + ' one' }; });
+          } else if (a.type === 'pack') {
+            p = prod(a.slug);
+            T += P('Which pack size of ' + Bt(p.n) + (a.qty > 1 ? ' (' + a.qty + ' of them)' : '') + '?');
+            C = a.options.map(function (vi, k) { return { l: p.v[vi].l + ' \u00b7 ' + vPrice(p, vi), say: 'the ' + ORDW[k] + ' one' }; });
+          } else if (a.type === 'confirm') {
+            var cl = (a.items || []).map(function (it) { var pp = prod(it.slug); return it.qty + ' \u00d7 ' + pp.n + (pp.v.length > 1 ? ' (' + it.variant + ')' : '') + ' = ' + money(it.qty * pp.v[it.vi].p); });
+            T += P('That is a larger order: <b>' + esc(cl.join('; ')) + '</b>. Shall I add it to your bag?');
+            C = [{ l: 'Yes, add it', say: 'yes' }, { l: 'No, cancel', say: 'no' }];
+          }
+        }
+        if (!lines.length && !a && !(R.skipped || []).length) { T = P('I could not add that. Tell me the product name and how many, for example <i>add 2 balms</i>.'); C = startChips(); }
+        return out();
+      }
+
+      case 'remove': {
+        if (rep && rep.removed && rep.removed.length) {
+          T = P('Removed ' + joinAnd(rep.removed.map(function (r) { return '<b>' + r.qty + ' \u00d7 ' + esc(r.name) + '</b>'; })) + ' from your bag.');
+          X = '<p class="hc-bagline">' + esc(bagLine(info)) + '</p>'; C = info.count ? [{ l: 'View bag', say: 'show my bag' }, { l: 'Checkout', say: 'checkout' }] : startChips();
+        } else {
+          T = P((R.missing && R.missing.length ? Bt(shortOf(R.missing[0])) + ' is not in your bag.' : 'I could not tell which item to remove.') + (info.count ? ' Here is what is in it:' : ' Your bag is empty.')); X = info.count ? '<div class="hc-bagbox">' + bagLines(info) + '</div>' : '';
+          C = info.count ? [{ l: 'View bag', say: 'show my bag' }] : startChips();
+        }
+        return out();
+      }
+      case 'qty': {
+        if (rep && rep.changed && rep.changed.length || rep && rep.removed && rep.removed.length) {
+          T = P((rep.changed || []).map(function (c) { return 'Updated <b>' + esc(c.name) + '</b>: ' + c.from + ' to ' + c.to + '.'; }).concat((rep.removed || []).map(function (r) { return 'Removed <b>' + esc(r.name) + '</b>.'; })).join(' '));
+          X = '<p class="hc-bagline">' + esc(bagLine(info)) + '</p>'; C = info.count ? [{ l: 'View bag', say: 'show my bag' }, { l: 'Checkout', say: 'checkout' }] : startChips();
+        } else { T = P((R.missing && R.missing.length ? Bt(shortOf(R.missing[0])) + ' is not in your bag yet. Say <i>add ' + R.items.length + '</i> with its name to add it.' : 'I could not tell which item to change. Tell me the product and the number, for example <i>make the balm 3</i>.')); C = [{ l: 'View bag', say: 'show my bag' }]; }
+        return out();
+      }
+      case 'swap': {
+        if (R.single) { T = P('That product comes in one pack size, so there is nothing to switch to.'); C = [{ l: 'View bag', say: 'show my bag' }]; return out(); }
+        if (R.ask) {
+          p = prod(R.ask.slug);
+          T = P('Which pack size of ' + Bt(p.n) + ' would you like instead?' + (info.count ? ' I will swap it in your bag.' : ''));
+          C = R.ask.options.map(function (vi, k) { return { l: p.v[vi].l + ' \u00b7 ' + vPrice(p, vi), say: 'the ' + ORDW[k] + ' one' }; });
+          return out();
+        }
+        if (rep && rep.swapped && rep.swapped.length) {
+          T = P('Switched: ' + joinAnd(rep.swapped.map(function (s) { return '<b>' + s.qty + ' \u00d7 ' + esc(s.name) + '</b> is now the ' + esc(s.to) + ' (' + money(s.price) + ' each)'; })) + '.');
+          X = '<p class="hc-bagline">' + esc(bagLine(info)) + '</p>'; C = [{ l: 'View bag', say: 'show my bag' }, { l: 'Checkout', say: 'checkout' }];
+        } else { T = P('I could not switch that. Tell me the product and the pack, for example <i>switch the balm to the value pack</i>.'); C = [{ l: 'View bag', say: 'show my bag' }]; }
+        return out();
+      }
+      case 'undo': {
+        if (rep && rep.removed && rep.removed.length) { T = P('Undone: removed ' + joinAnd(rep.removed.map(function (r) { return '<b>' + r.qty + ' \u00d7 ' + esc(r.name) + '</b>'; })) + '.'); X = '<p class="hc-bagline">' + esc(bagLine(info)) + '</p>'; C = info.count ? [{ l: 'View bag', say: 'show my bag' }] : startChips(); }
+        else { T = P('There is nothing recent to undo. To remove something, say <i>remove the balm</i>.'); C = [{ l: 'View bag', say: 'show my bag' }]; }
+        return out();
+      }
+      case 'clear':
+        if (R.empty) { T = P('Your bag is already empty.'); C = startChips(); return out(); }
+        if (R.ask) { T = P('Clear everything from your bag (' + plural(info.count, 'item') + ', ' + money(info.sub) + ')?'); C = [{ l: 'Yes, clear it', say: 'yes' }, { l: 'No, keep it', say: 'no' }]; return out(); }
+        T = P('Your bag is empty now.'); C = startChips(); return out();
+      case 'bag':
+        if (!info.count) { T = P('Your bag is empty. What would you like to add?'); C = startChips(); return out(); }
+        T = P('Your bag'); X = '<div class="hc-bagbox">' + bagLines(info) + bagSummary(info) + '</div><p class="hc-acts">' + aBtn('checkout/', 'Checkout', true, false, 'arrow') + aBtn('cart/', 'Open bag', false) + '</p>';
+        C = [{ l: 'Keep shopping', say: 'what else do you have' }, { l: 'Clear bag', say: 'clear my bag' }]; return out();
+      case 'checkout':
+        if (!info.count) { T = P('Your bag is empty, so there is nothing to check out yet. What would you like to add?'); C = startChips(); return out(); }
+        T = P('Here is your order. Checkout asks for your delivery details and takes payment on its own page. I never take card details or personal information in chat.');
+        X = '<div class="hc-bagbox">' + bagLines(info) + bagSummary(info) + '</div><p class="hc-acts">' + aBtn('checkout/', 'Go to checkout', true, false, 'arrow') + aBtn('cart/', 'Review bag', false) + '</p>';
+        C = [{ l: 'Delivery details', say: 'how long does delivery take' }, { l: 'Keep shopping', say: 'what else do you have' }]; return out();
+      case 'howto':
+        T = P('Ordering is quick:') + '<ol class="hc-ol"><li>Tell me what you want, for example <i>add 2 rheuma salve balm</i>, or describe a need such as <i>knee pain</i> and pick from my suggestions.</li><li>Choose the pack size and quantity on a product card, then tap Add to bag.</li><li>Say <i>show my bag</i> to review, then <i>checkout</i>.</li></ol>' + P('Checkout takes your delivery details and payment on a secure page, never in chat.');
+        C = [{ l: 'Show my bag', say: 'show my bag' }, { l: 'Delivery', say: 'how much is delivery' }]; return out();
+
+      case 'again':
+        T = P('I do not remember an earlier order in this browser yet. Tell me what you would like, for example <i>add 2 balms</i>.'); C = startChips(); return out();
+
+      case 'recommend': {
+        var ids = R.slugs || [], nl = needLabel(R.needs);
+        if (!ids.length) { T = P('I could not find anything in the catalogue for that.'); C = startChips(); return out(); }
+        if (R.closest) T = P('These are the closest matches I found in the catalogue:');
+        else if (R.kind === 'type') T = P('Here are the options:');
+        else T = P(nl.length ? 'For <b>' + esc(joinAnd(nl)) + '</b>, these are described for it in our catalogue:' : 'These may help:');
+        X = cards(ids.slice(0, 3), { why: R.why });
+        if (ids.length > 3) X += '<p class="hc-acts">' + say('Show ' + (ids.length - 3) + ' more', 'show the other ' + (ids.length - 3) + ' options') + '</p>';
+        var tail = healthTail(R, (R.notes && R.notes[0]) || '');
+        if (R.aud === 'child') tail = '<p class="hc-note">For children, check the age range on each pack.</p>' + tail;
+        X += tail;
+        C = [{ l: 'Add the first one', say: 'add the first one' }];
+        if (ids.length > 1) C.push({ l: 'Compare these', say: 'difference between the ' + shortOf(ids[0]) + ' and the ' + shortOf(ids[1]) });
+        C.push({ l: 'How to use the first one', say: 'how do i use the first one' }); C.push({ l: 'Show my bag', say: 'show my bag' });
+        return out();
+      }
+      case 'info': {
+        var slugs = (R.slugs || []).filter(function (s) { return prod(s); }), asp = R.aspect || 'general';
+        if (R.ask && R.ask.type === 'product') { T = P('Which product do you mean? Tell me its name.'); C = startChips(); return out(); }
+        if (!slugs.length) { T = P('Which product do you mean? Tell me its name.'); C = startChips(); return out(); }
+        if (asp === 'fit') {
+          p = prod(slugs[0]);
+          if (R.uncovered) { T = P('The catalogue does not list ' + Bt(p.n) + ' for <b>' + esc(R.uncovered) + '</b>, and I cannot give medical advice about it. It is for: ' + esc(p.f) + '. A pharmacist or doctor is the best person to ask.'); X = cards([p.id]) + healthTail(R); C = [{ l: 'Contact us', say: 'contact' }, { l: 'How to use it', say: 'how do i use it' }]; return out(); }
+          if (R.fit) T = P(Bt(p.n) + ' is listed for this in the catalogue: <i>' + esc(R.why || p.f) + '</i>.');
+          else T = P('The catalogue does not list ' + Bt(p.n) + ' for ' + esc(joinAnd(needLabel(R.needs))) + '. It is for: ' + esc(p.f) + '.' + ((R.recs || []).length ? ' These are described for it:' : ''));
+          X = cards([p.id]) + ((R.recs || []).length && !R.fit ? cards(R.recs.slice(0, 2)) : '') + healthTail(R, R.note);
+          C = [{ l: 'Add it', say: 'add it' }, { l: 'How to use it', say: 'how do i use it' }, { l: 'Other pack sizes', say: 'what pack sizes does it have' }]; return out();
+        }
+        if (R.more) T += '';
+        slugs.slice(0, 3).forEach(function (s) { T += aspectHtml(prod(s), asp, R); });
+        if (slugs.length > 3) T += P('There are ' + slugs.length + ' matches; these are the first three.');
+        var healthy = /^(usage|cautions|ingredients|general|halal)$/.test(asp);
+        X = cards(slugs.slice(0, 3));
+        if (asp === 'cautions' || R.caution) X += healthTail(R); else if (healthy) X += '<p class="hc-note">' + LABEL + '</p>';
+        C = [{ l: 'Add it', say: slugs.length > 1 ? 'add the first one' : 'add it' }];
+        if (asp !== 'usage') C.push({ l: 'How to use it', say: 'how do i use ' + (slugs.length > 1 ? 'the first one' : 'it') });
+        if (asp !== 'price' && asp !== 'packs') C.push({ l: 'Price and packs', say: 'how much is ' + (slugs.length > 1 ? 'the first one' : 'it') });
+        if (asp !== 'cautions') C.push({ l: 'Is it safe?', say: 'is it safe for kids or pregnancy' });
+        return out();
+      }
+      case 'compare': {
+        var cs = (R.slugs || []).filter(function (s) { return prod(s); });
+        var faq = null;
+        if (cs.indexOf('rheuma-salve-balm') > -1 && cs.indexOf('rheuma-salve-creme') > -1 && cs.length === 2) KB.faqs.forEach(function (q) { if (/difference between the balm/i.test(q.q)) faq = q; });
+        T = P('Side by side, from the catalogue:');
+        X = '<ul class="hc-cmp">' + cs.map(function (s) { var pp = prod(s); return '<li><b>' + esc(pp.sn) + '</b><span>For: ' + esc(pp.f) + '</span><span>' + esc(pp.sz) + ' \u00b7 ' + (pp.min != null ? 'from ' + money(pp.min) : 'price on request') + '</span></li>'; }).join('') + '</ul>';
+        if (faq) X += '<p class="hc-faq"><b>' + esc(faq.q) + '</b><br>' + esc(faq.a) + '</p>';
+        if (cs.every(function (s) { return /^rheuma-salve/.test(s); })) X += '<p>' + aLink('blog/balm-creme-liniment-or-patch/', 'Read: Balm, cr\u00e8me, liniment or patch?') + '</p>';
+        X += cards(cs.slice(0, 4)) + '<p class="hc-note">' + LABEL + '</p>';
+        C = [{ l: 'Add the first one', say: 'add the first one' }, { l: 'Add both', say: 'add both' }]; return out();
+      }
+      case 'browse': {
+        if (R.brand) { T = P(esc(R.brand) + '\u00ae is a family of traditional remedies and tonics. Here are a few; the full list is on the shop page.'); X = cards((R.slugs || []).slice(0, 3)) + '<p class="hc-acts">' + aBtn('shop/?q=' + encodeURIComponent(R.brand.toLowerCase()), 'See all ' + R.brand + ' products', false) + '</p>'; C = startChips(); return out(); }
+        if (R.all) {
+          T = P('We have ' + KB.products.length + ' products across ' + KB.cats.length + ' shelves. Pick one to see what is on it:');
+          X = '<ul class="hc-shelves">' + KB.cats.map(function (c) { return '<li>' + say(c.n + ' (' + c.slugs.length + ')', 'show me ' + c.n) + '</li>'; }).join('') + '</ul><p class="hc-acts">' + aBtn('shop/', 'Open the shop', false, false, 'arrow') + aBtn(flipUrl(1), 'Product catalogue', false, true, 'book') + '</p>';
+          C = startChips(); return out();
+        }
+        var c = catOf(R.cat);
+        T = P('<b>' + esc(c.n) + '</b> (' + c.slugs.length + ' products). ' + esc(c.b));
+        X = cards(c.slugs.slice(0, 3)) + '<p class="hc-acts">' + aBtn(c.url, 'See all ' + c.slugs.length + ' in ' + c.n, false, false, 'arrow') + aBtn(flipUrl(c.pg), 'Product sheets p.' + c.pg + '-' + c.last, false, true, 'book') + '</p>' + (R.caution ? healthTail(R) : '');
+        C = [{ l: 'Add the first one', say: 'add the first one' }, { l: 'Compare these', say: 'difference between the ' + shortOf(c.slugs[0]) + ' and the ' + shortOf(c.slugs[1]) }, { l: 'Show my bag', say: 'show my bag' }]; return out();
+      }
+      case 'stores': {
+        var chn = R.retailer ? chainOf(R.retailer) : null, picks = R.stores || [];
+        if (!picks.length && !chn) {
+          T = P('HST Medical is on the shelf at Guardian, Watsons and NHGP pharmacies, at Essentials Pharmacy (People\'s Park Centre) and online at FairPrice. Tell me your area, a mall or your nearest MRT station and I will list the closest stores.');
+          X = '<p class="hc-acts">' + aBtn('where-to-buy/', 'See all stores', false, false, 'arrow') + '</p>'; C = [{ l: 'Orchard', say: 'stores near orchard' }, { l: 'Jurong', say: 'stores near jurong' }, { l: 'Tampines', say: 'stores near tampines' }, { l: 'Woodlands', say: 'stores near woodlands' }];
+          return out();
+        }
+        if (chn && chn.id === 'fairprice' && !picks.length) { T = P('FairPrice carries HST Medical online only (no stores are listed).'); X = '<p class="hc-acts">' + aBtn(chn.online, 'Shop on FairPrice', false, true) + aBtn('where-to-buy/', 'See all stores', false) + '</p>'; C = startChips(); return out(); }
+        var where = R.area ? 'near <b>' + esc(cap1(R.area)) + '</b>' : '';
+        if (R.area && !R.direct) T = P('I do not list a ' + (chn ? esc(chn.n) + ' ' : '') + 'store in ' + esc(cap1(R.area)) + ' itself. These are the closest stores we list:');
+        else if (R.area) T = P((chn ? esc(chn.n) + ' ' : '') + 'stores ' + where + ':');
+        else T = P(Bt(chn ? chn.n : 'Stores') + (chn ? ' (' + chn.nst + ' listed). A few of them:' : ':'));
+        X = storeHtml(R);
+        if (chn && chn.note) X += '<p class="hc-note">' + esc(chn.note) + '</p>';
+        if (chn && chn.hotline) X += '<p class="hc-note">NHGP hotline ' + esc(chn.hotline) + (chn.hh ? ', ' + esc(chn.hh) : '') + '.</p>';
+        if (R.slugs && R.slugs.length) X += '<p class="hc-note">' + esc(R.slugs.map(shortOf).join(', ')) + ': ask the pharmacist for stock, as ranges differ by store.</p>';
+        X += '<p class="hc-acts">' + (chn && chn.online ? aBtn(chn.online, 'Shop ' + chn.n + ' online', false, true) : '') + aBtn('where-to-buy/', 'See all ' + KB.stores.length + ' stores', false, false, 'arrow') + '</p>';
+        C = [{ l: 'Delivery to my home', say: 'how much is delivery' }, { l: 'Show my bag', say: 'show my bag' }]; return out();
+      }
+      case 'delivery': {
+        if (R.topic === 'overseas') { T = P(esc(f.overseas)); X = '<p class="hc-acts">' + aBtn('mailto:' + ct.order, 'Email the order desk', false) + '</p>'; }
+        else if (R.topic === 'collect') { T = P('The checkout page offers self-collection by appointment as well as courier. To arrange a collection, call ' + esc(ct.phone) + ' ext. ' + esc(ct.ext) + ' or email ' + esc(ct.order) + '. Our address is ' + esc(ct.address) + '.'); }
+        else { T = P((R.area ? 'We deliver across Singapore, including ' + esc(cap1(R.area)) + '. ' : '') + esc(f.delivery)); }
+        if (info.count && R.topic !== 'overseas') X += '<p class="hc-bagline">' + esc(bagLine(info)) + '</p>';
+        C = [{ l: 'Show my bag', say: 'show my bag' }, { l: 'Payment methods', say: 'what payment methods do you accept' }, { l: 'Where to buy', say: 'where can i buy' }]; return out();
+      }
+      case 'payment': T = P(esc(f.payment)); C = [{ l: 'Show my bag', say: 'show my bag' }, { l: 'Checkout', say: 'checkout' }, { l: 'Delivery', say: 'how much is delivery' }]; return out();
+      case 'gst': T = P(esc(f.gst)); C = [{ l: 'Delivery', say: 'how much is delivery' }, { l: 'Show my bag', say: 'show my bag' }]; return out();
+      case 'order_status': T = P(esc(f.order_status)); X = '<p class="hc-acts">' + aBtn('mailto:' + ct.order, 'Email ' + ct.order, false) + aBtn('tel:' + ct.phone.replace(/[^+\d]/g, ''), 'Call ' + ct.phone, false) + '</p>'; C = startChips(); return out();
+      case 'returns': T = P(esc(f.returns)); X = '<p class="hc-acts">' + aBtn('mailto:' + ct.order, 'Email ' + ct.order, false) + aBtn('contact/', 'Contact page', false) + '</p>'; C = startChips(); return out();
+      case 'contact':
+        T = (R.pharmacist ? P(esc(f.pharmacist)) : P((R.hours ? 'I do not have opening hours on file. ' : '') + 'You can reach HST Medical here. We reply within two working days.'));
+        X = '<ul class="hc-ul hc-contact"><li>Phone: <a class="hc-a" href="tel:' + esc(ct.phone.replace(/[^+\d]/g, '')) + '">' + esc(ct.phone) + '</a> ext. ' + esc(ct.ext) + '</li><li>Product and general questions: <a class="hc-a" href="mailto:' + esc(ct.email) + '">' + esc(ct.email) + '</a></li><li>Orders and delivery: <a class="hc-a" href="mailto:' + esc(ct.order) + '">' + esc(ct.order) + '</a></li><li>Trade: <a class="hc-a" href="mailto:' + esc(ct.trade) + '">' + esc(ct.trade) + '</a></li><li>Telegram: ' + aLink(ct.telegram, 't.me/hstmedical', true) + '</li><li>' + esc(ct.name) + ', ' + esc(ct.address) + ' (UEN ' + esc(ct.uen) + ')</li></ul><p class="hc-acts">' + aBtn('contact/', 'Contact page', false) + aBtn(ct.map, 'Map', false, true, 'pin') + '</p>';
+        C = startChips(); return out();
+      case 'trade': T = P(esc(f.trade)); X = '<p class="hc-acts">' + aBtn('resellers/', 'Trade enquiry form', true, false, 'arrow') + aBtn('mailto:' + ct.trade, 'Email trade desk', false) + '</p>'; C = startChips(); return out();
+      case 'about': {
+        T = P(esc(f.about));
+        X = '<ul class="hc-ul">' + KB.about.timeline.map(function (t_) { return '<li><b>' + esc(t_.y) + '</b> ' + esc(t_.t) + '</li>'; }).join('') + '</ul><p class="hc-acts">' + aBtn('about/', 'Our story', false, false, 'arrow') + aBtn('brands/', 'Our brands', false) + '</p>';
+        C = [{ l: 'Awards', say: 'any awards' }, { l: 'Where to buy', say: 'where can i buy' }, { l: 'Contact', say: 'contact' }]; return out();
+      }
+      case 'awards': T = P('Awards shown on our About page:') + UL(f.awards.split('; ').map(esc)); X = '<p class="hc-acts">' + aBtn('about/', 'About HST Medical', false, false, 'arrow') + '</p>'; C = startChips(); return out();
+      case 'quality': T = P(esc(f.quality)) + (R.hsa ? P('I do not have regulatory registration or approval details on file, so please ask the team on ' + esc(ct.email) + ' if you need them.') : ''); X = '<p class="hc-acts">' + aBtn('blog/what-gmp-and-halal-mean/', 'Read: What GMP and Halal mean', false, false, 'arrow') + '</p>'; C = startChips(); return out();
+      case 'genuine': T = P(esc(f.genuine)); X = '<p class="hc-acts">' + aBtn('where-to-buy/', 'Where to buy', false, false, 'arrow') + '</p>'; C = startChips(); return out();
+      case 'promo':
+        T = P(R.tele ? esc(f.tele) : esc(f.promo)); X = '<p class="hc-acts">' + aBtn(ct.telegram, 'HST Medical on Telegram', true, true) + '</p>';
+        if (R.slugs && R.slugs.indexOf('algaomega') > -1) X += '<p class="hc-note">AlgaOmega does list a Buy 1 get 1 free pack on its product page.</p>';
+        C = [{ l: 'Show my bag', say: 'show my bag' }, { l: 'Delivery', say: 'how much is delivery' }]; return out();
+      case 'privacy': T = P(esc(f.privacy)); X = '<p class="hc-acts">' + aBtn('privacy/', 'Privacy policy', false, false, 'arrow') + '</p>'; C = startChips(); return out();
+      case 'notes': T = P('Our health notes, short reads on choosing and using the range:'); X = '<ul class="hc-ul">' + KB.posts.map(function (n) { return '<li>' + aLink(n.u, n.t) + '</li>'; }).join('') + '</ul><p class="hc-acts">' + aBtn('blog/', 'All health notes', false, false, 'arrow') + '</p>'; C = startChips(); return out();
+      case 'catalogue':
+        T = P(esc(f.catalogue) + ' It opens in a new tab.');
+        X = '<p class="hc-acts">' + aBtn(flipUrl(1), 'Open the product catalogue', true, true, 'book') + '</p><ul class="hc-chap">' + KB.chapters.map(function (c_) { return '<li><a class="hc-a" href="' + esc(flipUrl(c_.pg)) + '" target="_blank" rel="noopener">' + esc(c_.t) + ' <small>p.' + c_.pg + '</small></a></li>'; }).join('') + '</ul>';
+        C = startChips(); return out();
+      case 'navigate': { var pg = pageOf(R.page); if (pg) { T = P('Here is the ' + esc(pg.t) + ' page.'); X = '<p class="hc-acts">' + aBtn(pg.u, pg.t, true, false, 'arrow') + '</p>'; } else T = P('I could not find that page.'); C = startChips(); return out(); }
+      case 'giftcard': T = P('I do not see gift cards on this site. If you are shopping for someone, tell me who it is for and what they need and I will suggest products.'); C = startChips(); return out();
+      case 'notstocked': {
+        var med = !(R.slugs && R.slugs.length);
+        T = P(med ? Bt(cap1(R.term)) + ' is not part of HST Medical\'s range, and I can only speak about our own products. For other medicines, please ask a pharmacist or doctor.' : Bt(cap1(R.term)) + ' is not an HST Medical product, so I do not have it. Our own balms, cr\u00e8me and stick for aches and pains are:');
+        X = R.slugs && R.slugs.length ? cards(R.slugs) + '<p class="hc-note">' + LABEL + '</p>' : '';
+        C = startChips(); return out();
+      }
+      case 'uncovered':
+        T = P('I could not find a product in our catalogue that is described for <b>' + esc(R.term) + '</b>, and I cannot give medical advice. A pharmacist or doctor is the best person to ask.');
+        X = '<p class="hc-acts">' + aBtn('contact/', 'Contact us', false) + aBtn('shop/', 'Browse the range', false, false, 'arrow') + '</p><p class="hc-note">' + LABEL + '</p>'; C = startChips(); return out();
+      case 'faq': {
+        var ch = R.chunk;
+        T = P('<b>' + esc(ch.s || ch.t) + '</b>') + P(esc(ch.x));
+        X = '<p>' + aLink(ch.u, 'From: ' + ch.t) + '</p>' + ((/^shop\//.test(ch.u) || /^blog\//.test(ch.u)) ? '<p class="hc-note">' + LABEL + '</p>' : '');
+        C = startChips(); return out();
+      }
+      case 'unknown': case 'fallback': {
+        var sg = (R.suggest || []).filter(function (s) { return prod(s); });
+        if (R.intent === 'unknown') T = P('I do not recognise <b>' + esc(R.phrase) + '</b> as one of our products.' + (sg.length ? ' Did you mean one of these?' : ''));
+        else T = P(sg.length ? 'Sorry, I am not sure I understood. Did you mean one of these?' : 'Sorry, I did not understand that. I can add products to your bag, suggest something for a symptom or need, show prices and pack sizes, or find a store.');
+        if (sg.length) { X = cards(sg.slice(0, 3)); C = sg.slice(0, 3).map(function (s, k) { return { l: shortOf(s), say: 'the ' + ORDW[k] + ' one' }; }); X += '<p class="hc-note">Pick one and I will remember what you typed for next time.</p>'; }
+        else C = startChips();
+        if (!sg.length) X = '<p class="hc-acts">' + aBtn('shop/', 'Browse all products', false, false, 'arrow') + aBtn('contact/', 'Contact us', false) + '</p>';
+        return out();
+      }
+    }
+    T = P('I am not sure how to help with that yet.'); C = startChips(); return out();
+  }
+
+  /* ================================================================== 4. THE BAG (the site's own: localStorage hst-bag, shared through window.HSTBag) */
+  function bagLoad() {
+    try { if (w.HSTBag && w.HSTBag.load) { var b = w.HSTBag.load(); return Array.isArray(b) ? b : []; } } catch (e) { /* fall through */ }
+    var s = lsGet(BAG_KEY);
+    return Array.isArray(s) ? s : [];
+  }
+  function bagCount(bag) { return (bag || []).reduce(function (s, l) { return s + (l.qty || 0); }, 0); }
+  function bagInfo(bag) {
+    var FREE = (KB && KB.site && KB.site.free_above) || 30, FEE = (KB && KB.site && KB.site.fee) || 1.99, sub = 0;
+    (bag || []).forEach(function (l) { sub += (l.price || 0) * (l.qty || 0); });
+    sub = Math.round(sub * 100) / 100;
+    var ship = sub && sub <= FREE ? FEE : 0, gap = sub && sub <= FREE ? Math.max(0.01, Math.round((FREE - sub + 0.01) * 100) / 100) : 0;
+    return { lines: bag || [], count: bagCount(bag), sub: sub, ship: ship, total: Math.round((sub + ship) * 100) / 100, gap: gap, free: sub > FREE, FREE: FREE, FEE: FEE };
+  }
+  function paintFallback(bag) {
+    var n = bagCount(bag);
+    d.querySelectorAll('.bag .count, .mbar-bag .count').forEach(function (el) { el.textContent = n; el.hidden = !n; });
+    d.querySelectorAll('.bag').forEach(function (el) { el.setAttribute('aria-label', 'Bag, ' + n + ' item' + (n === 1 ? '' : 's')); });
+  }
+  function bump() {
+    var bag = d.querySelector('.bag');
+    if (!bag || reduce) return;
+    bag.classList.remove('bump'); void bag.offsetWidth; bag.classList.add('bump');
+  }
+  /* on /cart/ and /checkout/ the lines are drawn by site.js: re-draw them without reloading when we can */
+  function refreshBagPage(bag) {
+    var host = d.getElementById('bag-lines');
+    if (!host) return;
+    try {
+      if (w.HSTBag && typeof w.HSTBag.render === 'function') { w.HSTBag.render(); return; }
+      var tmp = d.createElement('span'), inp = d.createElement('input');
+      tmp.className = 'qty'; tmp.hidden = true; inp.setAttribute('data-line', '__hc__'); inp.value = '1'; tmp.appendChild(inp); d.body.appendChild(tmp);
+      inp.dispatchEvent(new Event('change', { bubbles: true }));
+      tmp.parentNode.removeChild(tmp);
+      var rows = host.querySelectorAll('.line').length;
+      if (rows !== (bag || []).length) throw new Error('bag page did not redraw');
+    } catch (e) {
+      ssSet('hst-chat-reopen', 1);
+      w.location.reload();
+    }
+  }
+  function bagSave(bag) {
+    var ok = true;
+    if (w.HSTBag && w.HSTBag.save) { try { w.HSTBag.save(bag); } catch (e) { ok = lsSet(BAG_KEY, bag); paintFallback(bag); } }
+    else { ok = lsSet(BAG_KEY, bag); paintFallback(bag); }
+    refreshBagPage(bag);
+    bump();
+    return ok;
+  }
+  function findLine(bag, id) { for (var i = 0; i < bag.length; i++) if (bag[i].id === id) return bag[i]; return null; }
+
+  /* pure: apply what the shopper asked for (an `understand` result) to a bag; returns the new bag and what changed */
+  function applyToBag(bag0, R) {
+    var bag = clone(bag0) || [], rep = { added: [], removed: [], changed: [], skipped: [], missing: [], capped: false };
+    var i;
+    if (R.intent === 'add') {
+      (R.items || []).forEach(function (it) {
+        var p = prod(it.slug), v = p && p.v[it.vi || 0];
+        if (!p || !v || !v.p) { rep.skipped.push(it.slug); return; }
+        var id = it.slug + '|' + v.l, hit = findLine(bag, id), qty = Math.max(1, Math.min(MAXQ, parseInt(it.qty, 10) || 1)), nq;
+        if (hit) {
+          nq = Math.min(Math.max(MAXQ, hit.qty), hit.qty + qty);
+          if (nq < hit.qty + qty) rep.capped = true;
+          rep.added.push({ id: id, slug: it.slug, name: p.n, variant: v.l, price: v.p, qty: nq - hit.qty, total: nq, img: p.img, url: p.url });
+          hit.qty = nq;
+        } else {
+          bag.push({ id: id, name: p.n, variant: v.l, code: v.c || '', price: v.p, img: p.img, url: p.url, qty: qty });
+          rep.added.push({ id: id, slug: it.slug, name: p.n, variant: v.l, price: v.p, qty: qty, total: qty, img: p.img, url: p.url });
+        }
+      });
+    } else if (R.intent === 'remove') {
+      (R.items || []).forEach(function (it) {
+        var l = findLine(bag, it.id);
+        if (!l) return;
+        var all = it.qty === 'all' || it.qty >= l.qty, nm = l.name, vr = l.variant, q = all ? l.qty : it.qty;
+        if (all) bag = bag.filter(function (x) { return x.id !== it.id; }); else l.qty -= it.qty;
+        rep.removed.push({ id: it.id, name: nm, variant: vr, qty: q, left: all ? 0 : l.qty });
+      });
+    } else if (R.intent === 'qty') {
+      (R.items || []).forEach(function (it) {
+        var l = findLine(bag, it.id);
+        if (!l) return;
+        var before = l.qty;
+        if (it.qty <= 0) { bag = bag.filter(function (x) { return x.id !== it.id; }); rep.removed.push({ id: it.id, name: l.name, variant: l.variant, qty: before, left: 0 }); return; }
+        l.qty = Math.min(MAXQ, it.qty);
+        rep.changed.push({ id: it.id, name: l.name, variant: l.variant, from: before, to: l.qty });
+      });
+    } else if (R.intent === 'swap') {
+      rep.swapped = [];
+      (R.items || []).forEach(function (it) {
+        var p = prod(it.slug), v = p && p.v[it.toVi];
+        if (!v || !v.p) { rep.skipped.push(it.slug); return; }
+        var from = it.fromId ? findLine(bag, it.fromId) : null, qty = Math.max(1, Math.min(MAXQ, it.qty || (from ? from.qty : 1)));
+        if (from) bag = bag.filter(function (x) { return x.id !== it.fromId; });
+        var id = it.slug + '|' + v.l, hit = findLine(bag, id);
+        if (hit) hit.qty = Math.min(Math.max(MAXQ, hit.qty), hit.qty + qty);
+        else bag.push({ id: id, name: p.n, variant: v.l, code: v.c || '', price: v.p, img: p.img, url: p.url, qty: qty });
+        rep.swapped.push({ name: p.n, from: from ? from.variant : null, to: v.l, qty: qty, price: v.p });
+      });
+    } else if (R.intent === 'clear' && R.confirmed) {
+      rep.removed = bag.map(function (l) { return { id: l.id, name: l.name, variant: l.variant, qty: l.qty, left: 0 }; });
+      bag = [];
+    } else if (R.intent === 'undo' && R.undo) {
+      R.undo.forEach(function (u) {
+        var l = findLine(bag, u.id);
+        if (!l) return;
+        var all = u.qty >= l.qty;
+        if (all) bag = bag.filter(function (x) { return x.id !== u.id; }); else l.qty -= u.qty;
+        rep.removed.push({ id: u.id, name: l.name, variant: l.variant, qty: Math.min(u.qty, l.qty + (all ? 0 : u.qty)), left: all ? 0 : l.qty });
+      });
+    }
+    return { bag: bag, report: rep };
+  }
+
+  /* ================================================================== 5. THE WIDGET: floating stack, panel, conversation */
+  var UI = null, STATE = null, started = false, busy = false, isOpen = false, lastFocus = null, sessTimer = 0, fast = false, vvOn = false;
+  function phone() { try { return w.matchMedia('(max-width: 760px)').matches; } catch (e) { return false; } }
+  function initState() {
+    var s = freshState(), mem = lsGet(MEM_KEY);
+    if (mem && typeof mem === 'object') { s.mem.aliases = mem.aliases || {}; s.mem.packs = mem.packs || {}; s.mem.last = mem.last || []; s.mem.area = mem.area || null; }
+    return s;
+  }
+  function saveMem() { lsSet(MEM_KEY, { v: 1, aliases: STATE.mem.aliases, packs: STATE.mem.packs, last: STATE.mem.last, area: STATE.mem.area }); }
+  function pageCtx() {
+    var path = w.location.pathname, m = /\/products\/([a-z0-9-]+)\/?(?:index\.html)?$/.exec(path), c = /\/shop\/([a-z0-9-]+)\/?(?:index\.html)?$/.exec(path);
+    return { product: m ? m[1] : null, cat: c ? c[1] : null };
+  }
+  function ensureKB() { return load(); }
+
+  /* ---- one turn of conversation: understand, act on the bag, answer ---- */
+  function execute(R, S) {
+    var rep = {};
+    if (!/^(add|remove|qty|clear|undo|swap)$/.test(R.intent)) return rep;
+    if ((R.intent === 'add' || R.intent === 'swap') && !(R.items || []).length) return rep;
+    if (R.intent === 'clear' && !R.confirmed) return rep;
+    var res = applyToBag(bagLoad(), R);
+    rep = res.report;
+    if (rep.added.length + rep.removed.length + rep.changed.length + (rep.swapped ? rep.swapped.length : 0)) bagSave(res.bag);
+    if (R.intent === 'add' && rep.added.length) S.mem.last = rep.added.map(function (a) { return { slug: a.slug, variant: a.variant, qty: a.qty }; });
+    return rep;
+  }
+  function turn(text) {
+    STATE.bag = bagLoad();
+    var R = understand(text, STATE), S2 = R.state;
+    S2.bag = [];
+    var rep = execute(R, S2);
+    STATE = S2;
+    saveMem();
+    return { R: R, rep: rep, out: compose(R, rep, S2) };
+  }
+
+  /* ---- DOM ---- */
+  function botHtml(out) { return (out.text ? '<div class="hc-b">' + out.text + '</div>' : '') + (out.extra ? '<div class="hc-x">' + out.extra + '</div>' : ''); }
+  function persist() {
+    clearTimeout(sessTimer);
+    sessTimer = setTimeout(function () {
+      if (!UI) return;
+      var msgs = [].slice.call(UI.log.children).filter(function (m) { return !m.classList.contains('hc-typing'); }).slice(-40).map(function (m) { return { w: m.classList.contains('hc-m-user') ? 'u' : 'b', h: m.innerHTML }; });
+      var s = clone(STATE); s.bag = [];
+      var data = { v: 1, m: msgs, s: s, chips: UI.chipData || [], open: isOpen };
+      var str = JSON.stringify(data);
+      while (str.length > 150000 && data.m.length > 6) { data.m.shift(); str = JSON.stringify(data); }
+      ssSet(SESS_KEY, data);
+    }, 120);
+  }
+  function scrollLog(el, top) {
+    var log = UI.log;
+    if (!el) { log.scrollTop = log.scrollHeight; return; }
+    if (top && el.offsetHeight > log.clientHeight - 24) log.scrollTop = Math.max(0, log.scrollTop + el.getBoundingClientRect().top - log.getBoundingClientRect().top - 12);
+    else log.scrollTop = log.scrollHeight;
+  }
+  function addMsg(who, html) {
+    var m = d.createElement('div');
+    m.className = 'hc-m hc-m-' + who;
+    m.innerHTML = who === 'user' ? '<div class="hc-b">' + html + '</div>' : html;
+    UI.log.appendChild(m);
+    scrollLog(m, who === 'bot');
+    persist();
+    return m;
+  }
+  function setChips(list) {
+    UI.chipData = list || [];
+    UI.chips.innerHTML = (list || []).map(function (c) { return '<button type="button" class="hc-chip" data-hc-say="' + esc(c.say || c.l) + '" data-hc-label="' + esc(c.l) + '">' + esc(c.l) + '</button>'; }).join('');
+    UI.chips.hidden = !(list && list.length);
+    UI.chips.scrollLeft = 0;
+  }
+  function typing(on) {
+    var t = UI.log.querySelector('.hc-typing');
+    if (on && !t) { t = d.createElement('div'); t.className = 'hc-m hc-m-bot hc-typing'; t.setAttribute('aria-hidden', 'true'); t.innerHTML = '<div class="hc-b"><span></span><span></span><span></span></div>'; UI.log.appendChild(t); scrollLog(t, false); }
+    if (!on && t) t.parentNode.removeChild(t);
+  }
+  function deliver(res) {
+    var len = (res.out.text || '').length + (res.out.extra || '').length / 4;
+    var wait = reduce || fast ? 0 : Math.min(900, 320 + len / 6);
+    typing(true);
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        typing(false);
+        var m = addMsg('bot', botHtml(res.out));
+        setChips(res.out.chips);
+        persist();
+        resolve(res.R);
+      }, wait);
+    });
+  }
+  function failed() {
+    typing(false);
+    addMsg('bot', '<div class="hc-b"><p>Sorry, I could not load the catalogue just now. You can <a class="hc-a" href="' + esc(href('shop/')) + '">browse all products</a> or <a class="hc-a" href="' + esc(href('contact/')) + '">contact us</a>, then try me again in a moment.</p></div>');
+    setChips([]);
+  }
+  function send(text, label) {
+    text = String(text == null ? '' : text).trim();
+    if (!text) return Promise.resolve(null);
+    if (!UI) mount();
+    addMsg('user', esc(label || text));
+    setChips([]);
+    typing(true);
+    return ensureKB().then(function () { return deliver(turn(text)); }).catch(function (e) { failed(); return null; });
+  }
+  /* "Add" pressed on a product card: the same path as typing it */
+  function cardAdd(slug, vi, qty) {
+    var p = prod(slug);
+    if (!p) return Promise.resolve(null);
+    var v = p.v[vi] || p.v[0], it = { slug: slug, vi: p.v.indexOf(v), variant: v.l, qty: Math.max(1, Math.min(MAXQ, qty | 0 || 1)), via: 'card' };
+    addMsg('user', esc('Add ' + it.qty + ' \u00d7 ' + p.sn + (p.v.length > 1 ? ' (' + v.l + ')' : '')));
+    setChips([]);
+    typing(true);
+    return ensureKB().then(function () {
+      var S = STATE, R;
+      S.pending = null;
+      S.last.intent = 'add'; S.last.focus = slug; S.last.list = [slug]; S.last.aspect = null;
+      if (it.vi > 0) S.mem.packs[slug] = v.l;
+      if (it.qty > ASKQ) {
+        R = mk('add', { ask: { type: 'confirm', action: 'add', items: [it] }, state: S });
+        S.pending = { type: 'confirm', action: 'add', items: [it] };
+        return deliver({ R: R, rep: {}, out: compose(R, {}, S) });
+      }
+      S.last.added = [{ slug: slug, vi: it.vi, variant: it.variant, qty: it.qty }];
+      R = mk('add', { items: [it], slugs: [slug], state: S });
+      var rep = execute(R, S);
+      saveMem();
+      return deliver({ R: R, rep: rep, out: compose(R, rep, S) });
+    }).catch(function () { failed(); return null; });
+  }
+
+  /* ---- greeting and context ---- */
+  function greet() {
+    var pc = pageCtx(), p = pc.product && prod(pc.product), t = '', chips = startChips();
+    t = '<p>Hello, I am <b>Ask HST</b>, an automated shop assistant. I answer from our catalogue only and I am not a pharmacist. Tell me what you need, for example <i>add 2 balms</i>, <i>knee pain</i> or <i>where to buy</i>.</p>';
+    if (p) {
+      t += '<p>You are looking at <b>' + esc(p.n) + '</b>. Ask me about it, or say <i>add 2</i> to put it in your bag.</p>';
+      chips = [{ l: 'Price and pack sizes', say: 'how much is it' }, { l: 'How to use it', say: 'how do i use it' }, { l: 'Is it safe for kids?', say: 'is it safe for kids' }, { l: 'Add 1 to my bag', say: 'add 1 of this' }, { l: 'Show my bag', say: 'show my bag' }];
+    }
+    typing(false);
+    addMsg('bot', '<div class="hc-b">' + t + '</div>');
+    setChips(chips);
+  }
+  function applyPage() {
+    var pc = pageCtx();
+    if (pc.product && prod(pc.product)) { STATE.last.focus = pc.product; STATE.last.list = [pc.product]; STATE.page = pc.product; }
+    else STATE.page = null;
+    if (pc.cat) STATE.last.cat = pc.cat;
+  }
+  function start() {
+    if (started) return;
+    started = true;
+    ensureKB().then(function () { applyPage(); if (!UI.log.children.length) greet(); persist(); }).catch(function () { failed(); });
+  }
+
+  /* ---- open / close ---- */
+  function focusables() {
+    return [].slice.call(UI.panel.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),[tabindex]:not([tabindex="-1"])')).filter(function (e) { return e.offsetParent !== null || e === d.activeElement; });
+  }
+  function onVV() {
+    if (!isOpen || !phone() || !w.visualViewport) return;
+    var vv = w.visualViewport, kb = Math.max(0, w.innerHeight - vv.height - vv.offsetTop);
+    if (kb < 120) kb = 0;   /* a real on-screen keyboard is far taller than browser chrome changes */
+    UI.panel.style.setProperty('--hc-kb', kb + 'px');
+    UI.panel.style.setProperty('--hc-vh', Math.round(vv.height) + 'px');
+  }
+  function setOpen(open) {
+    if (!UI || open === isOpen) return;
+    isOpen = open;
+    UI.root.classList.toggle('is-open', open);
+    UI.launch.setAttribute('aria-expanded', open ? 'true' : 'false');
+    var ph = phone();
+    if (open) {
+      lastFocus = d.activeElement;
+      UI.panel.hidden = false; UI.scrim.hidden = !ph;
+      void UI.panel.offsetWidth;
+      UI.panel.classList.add('is-in'); UI.scrim.classList.add('is-in');
+      if (ph) d.documentElement.classList.add('hc-lock');
+      start();
+      if (w.visualViewport && !vvOn) { vvOn = true; w.visualViewport.addEventListener('resize', onVV); w.visualViewport.addEventListener('scroll', onVV); }
+      onVV();
+      setTimeout(function () { if (!isOpen) return; if (ph) UI.panel.focus({ preventScroll: true }); else UI.input.focus({ preventScroll: true }); }, reduce ? 0 : 120);
+      scrollLog(null);
+    } else {
+      UI.panel.classList.remove('is-in'); UI.scrim.classList.remove('is-in');
+      d.documentElement.classList.remove('hc-lock');
+      UI.panel.style.removeProperty('--hc-kb'); UI.panel.style.removeProperty('--hc-vh'); UI.panel.style.transform = '';
+      menu(false);
+      setTimeout(function () { if (!isOpen) { UI.panel.hidden = true; UI.scrim.hidden = true; } }, reduce ? 0 : 280);
+      try { (lastFocus && lastFocus !== d.body && lastFocus !== d.documentElement && d.body.contains(lastFocus) && lastFocus.offsetParent !== null ? lastFocus : UI.launch).focus({ preventScroll: true }); } catch (e) { /* ignore */ }
+    }
+    if (UI.checkFoot) UI.checkFoot();
+    persist();
+  }
+  function menu(open) {
+    if (!UI) return;
+    UI.menu.hidden = !open;
+    UI.menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) { var f = UI.menu.querySelector('button'); if (f) f.focus(); }
+  }
+  function restart() {
+    UI.log.innerHTML = ''; ssDel(SESS_KEY);
+    var keep = STATE.mem; STATE = initState(); STATE.mem = keep; applyPage();
+    greet(); persist();
+  }
+  function forget() {
+    lsDel(MEM_KEY); STATE.mem = { aliases: {}, packs: {}, last: [], area: null };
+    addMsg('bot', '<div class="hc-b"><p>Done. I have forgotten the names, pack sizes and last order I learned in this browser. Your bag is untouched.</p></div>');
+    setChips(startChips());
+  }
+
+  /* ---- mount ---- */
+  function mount() {
+    if (UI || !d.body) return;
+    STATE = initState();
+    var root = d.createElement('div');
+    root.className = 'hc'; root.id = 'hc';
+    var cover = ROOT + 'assets/img/catalogue/p001.webp';
+    root.innerHTML =
+      '<a class="hc-book" href="' + esc(KB_FLIP) + '" target="_blank" rel="noopener" aria-label="Product catalogue (opens in a new tab)">'
+      + '<span class="hc-bk" aria-hidden="true"><span class="hc-bk-b"></span><span class="hc-bk-s"></span><span class="hc-bk-r"></span><span class="hc-bk-f"><img src="' + esc(cover) + '" alt="" width="339" height="480" decoding="async"></span></span>'
+      + '<span class="hc-tip" aria-hidden="true">Product catalogue</span></a>'
+      + '<button type="button" class="hc-launch" aria-expanded="false" aria-controls="hc-panel">' + icon('chat', 'hc-i hc-i-chat') + icon('close', 'hc-i hc-i-x') + '<span class="hc-l-open">Ask HST</span><span class="hc-l-close">Close</span></button>'
+      + '<div class="hc-scrim" hidden></div>'
+      + '<section class="hc-panel" id="hc-panel" role="dialog" aria-modal="true" aria-labelledby="hc-title" tabindex="-1" hidden>'
+      + '<div class="hc-grab" aria-hidden="true"><i></i></div>'
+      + '<header class="hc-head"><span class="hc-av" aria-hidden="true"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="32"/><path d="M22 18h6v11h8V18h6v28h-6V34h-8v12h-6z"/></svg></span>'
+      + '<div class="hc-ht"><h2 id="hc-title">Ask HST</h2><p>Automated shop assistant \u00b7 answers from our catalogue</p></div>'
+      + '<div class="hc-menuwrap"><button type="button" class="hc-ib hc-menubtn" aria-haspopup="menu" aria-expanded="false" aria-label="Chat menu">' + icon('dots') + '</button>'
+      + '<div class="hc-menu" role="menu" hidden><button type="button" role="menuitem" data-hc-act="restart">Start over</button><button type="button" role="menuitem" data-hc-act="forget">Forget what you learned</button><a role="menuitem" class="hc-mi" href="' + esc(KB_FLIP) + '" target="_blank" rel="noopener">Product catalogue<span class="hc-sr"> (opens in a new tab)</span></a></div></div>'
+      + '<button type="button" class="hc-ib hc-close" aria-label="Close chat">' + icon('close') + '</button></header>'
+      + '<div class="hc-log" role="log" aria-live="polite" aria-relevant="additions" tabindex="0" aria-label="Conversation"></div>'
+      + '<div class="hc-chips" role="group" aria-label="Suggested replies" hidden></div>'
+      + '<form class="hc-form" autocomplete="off"><label class="hc-sr" for="hc-input">Type your message</label>'
+      + '<input id="hc-input" name="hc-q" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" maxlength="240" placeholder="Try: add 2 balms, or knee pain">'
+      + '<button type="submit" class="hc-send" aria-label="Send">' + icon('send') + '</button></form></section>';
+    d.body.appendChild(root);
+    UI = { root: root, book: root.querySelector('.hc-book'), launch: root.querySelector('.hc-launch'), scrim: root.querySelector('.hc-scrim'), panel: root.querySelector('.hc-panel'),
+      log: root.querySelector('.hc-log'), chips: root.querySelector('.hc-chips'), form: root.querySelector('.hc-form'), input: root.querySelector('#hc-input'),
+      menu: root.querySelector('.hc-menu'), menuBtn: root.querySelector('.hc-menubtn'), chipData: [] };
+
+    UI.launch.addEventListener('click', function () { setOpen(!isOpen); });
+    UI.launch.addEventListener('pointerenter', function () { ensureKB().catch(function () { /* retried on open */ }); }, { once: true });
+    UI.scrim.addEventListener('click', function () { setOpen(false); });
+    root.querySelector('.hc-close').addEventListener('click', function () { setOpen(false); });
+    UI.menuBtn.addEventListener('click', function () { menu(UI.menu.hidden); });
+    UI.menu.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-hc-act]');
+      if (!b) { if (e.target.closest('a')) menu(false); return; }
+      menu(false);
+      if (b.getAttribute('data-hc-act') === 'restart') restart(); else forget();
+      UI.input.focus({ preventScroll: true });
+    });
+    d.addEventListener('click', function (e) { if (UI && !UI.menu.hidden && !e.target.closest('.hc-menuwrap')) menu(false); });
+    UI.form.addEventListener('submit', function (e) { e.preventDefault(); var v = UI.input.value.trim(); if (!v) return; UI.input.value = ''; send(v); });
+    UI.chips.addEventListener('click', function (e) { var b = e.target.closest('[data-hc-say]'); if (b) send(b.getAttribute('data-hc-say'), b.getAttribute('data-hc-label')); });
+    UI.log.addEventListener('click', function (e) {
+      var b;
+      if ((b = e.target.closest('[data-hc-say]'))) { e.preventDefault(); send(b.getAttribute('data-hc-say'), b.textContent.trim()); return; }
+      if ((b = e.target.closest('[data-hc-pack]'))) { packPick(b); return; }
+      if ((b = e.target.closest('[data-hc-step]'))) { qtyStep(b); return; }
+      if ((b = e.target.closest('[data-hc-add]'))) { var c = b.closest('[data-hc-card]'); if (!c) return; var q = c.querySelector('.hc-qty output'); b.classList.add('is-added'); setTimeout(function () { b.classList.remove('is-added'); }, 1400); cardAdd(c.getAttribute('data-slug'), +c.getAttribute('data-vi') || 0, q ? +q.textContent : 1); }
+    });
+    d.addEventListener('keydown', function (e) {
+      if (!isOpen) return;
+      if (e.key === 'Escape') { e.preventDefault(); if (!UI.menu.hidden) { menu(false); UI.menuBtn.focus(); } else setOpen(false); return; }
+      if (e.key === 'Tab') {
+        var f = focusables();
+        if (!f.length) return;
+        var first = f[0], last = f[f.length - 1];
+        if (!UI.panel.contains(d.activeElement)) { e.preventDefault(); first.focus(); }
+        else if (e.shiftKey && (d.activeElement === first || d.activeElement === UI.panel)) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && d.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+    d.addEventListener('focusin', function (e) { if (isOpen && phone() && !UI.panel.contains(e.target) && !UI.root.contains(e.target)) { var f = focusables(); (f[0] || UI.panel).focus({ preventScroll: true }); } });
+    dragToClose();
+    watchPage();
+    restore();
+  }
+  var KB_FLIP = 'https://technextmarketing.github.io/hst-medical-catalogue/#p=1';
+
+  function packPick(b) {
+    var c = b.closest('[data-hc-card]'), p = prod(c.getAttribute('data-slug')), vi = +b.getAttribute('data-hc-pack'), v = p && p.v[vi];
+    if (!v) return;
+    [].forEach.call(c.querySelectorAll('[data-hc-pack]'), function (x) { x.setAttribute('aria-checked', x === b ? 'true' : 'false'); });
+    c.setAttribute('data-vi', vi);
+    var pr = c.querySelector('[data-hc-price]'); if (pr) pr.innerHTML = v.p ? money(v.p) + ' <small>incl. GST</small>' : 'Price on request';
+    var add = c.querySelector('[data-hc-add]'); if (add) add.disabled = !v.p;
+  }
+  function qtyStep(b) {
+    var out = b.closest('.hc-qty').querySelector('output'), n = Math.max(1, Math.min(MAXQ, (+out.textContent || 1) + (+b.getAttribute('data-hc-step'))));
+    out.textContent = n;
+  }
+
+  /* ---- a long conversation survives page changes (sessionStorage) ---- */
+  function restore() {
+    var s = ssGet(SESS_KEY);
+    if (!s || !s.m || !s.m.length) return;
+    s.m.forEach(function (m) { var el = d.createElement('div'); el.className = 'hc-m hc-m-' + (m.w === 'u' ? 'user' : 'bot'); el.innerHTML = m.h; UI.log.appendChild(el); });
+    if (s.s) { var mem = STATE.mem; STATE = normState(s.s); STATE.mem = mem; }
+    started = true;
+    setChips(s.chips || []);
+    ensureKB().then(function () { applyPage(); }).catch(function () { /* later */ });
+    if (ssGet('hst-chat-reopen')) { ssDel('hst-chat-reopen'); setTimeout(function () { setOpen(true); }, 60); }
+  }
+
+  /* ---- states of the page the stack must respect ---- */
+  function hits(a, b, pad) { return a.left < b.right + pad && a.right > b.left - pad && a.top < b.bottom + pad && a.bottom > b.top - pad; }
+  function watchPage() {
+    var root = UI.root, foot = d.querySelector('.site-footer'), lastY = w.pageYOffset || 0, idleT = 0, tick = false, away = false;
+    function sync() {
+      var nav = d.getElementById('site-nav'), bb = d.querySelector('.buybar');
+      root.classList.toggle('hc--hide', !!(nav && nav.classList.contains('open')) || d.documentElement.classList.contains('intro'));
+      root.classList.toggle('hc--lift', !!(bb && bb.classList.contains('show')));
+    }
+    /* the book steps aside while the footer is in view; the whole stack fades while it would sit on a footer link */
+    function checkFoot() {
+      if (!foot || isOpen) { root.classList.remove('hc--foot', 'hc--cover'); return; }
+      var fr = foot.getBoundingClientRect(), inView = fr.top < w.innerHeight && fr.bottom > 0, cover = false;
+      root.classList.toggle('hc--foot', inView);
+      if (inView) {
+        var sr = UI.launch.getBoundingClientRect(), box = { left: sr.left, right: sr.right, top: sr.top, bottom: sr.bottom };
+        if (!root.classList.contains('hc--foot')) { var br = UI.book.getBoundingClientRect(); box.left = Math.min(box.left, br.left); box.top = Math.min(box.top, br.top); }
+        [].forEach.call(foot.querySelectorAll('a,p,address,li'), function (el) {
+          if (cover) return;
+          var r = el.getBoundingClientRect();
+          if (r.width && r.height && r.bottom > 0 && r.top < w.innerHeight && hits(r, box, 6)) cover = true;
+        });
+      }
+      root.classList.toggle('hc--cover', cover);
+    }
+    function setAway(v) { if (v !== away) { away = v; root.classList.toggle('hc--away', v); } }
+    function onScroll() {
+      if (tick) return;
+      tick = true;
+      requestAnimationFrame(function () {
+        tick = false;
+        var y = w.pageYOffset || 0, dy = y - lastY;
+        if (phone() && !isOpen) {
+          if (dy > 10) setAway(true); else if (dy < -10) setAway(false);
+          clearTimeout(idleT); idleT = setTimeout(function () { setAway(false); checkFoot(); }, 700);
+        } else setAway(false);
+        lastY = y; checkFoot();
+      });
+    }
+    sync(); checkFoot();
+    w.addEventListener('scroll', onScroll, { passive: true });
+    w.addEventListener('resize', function () { checkFoot(); });
+    UI.checkFoot = checkFoot;
+    if ('IntersectionObserver' in w && foot) new IntersectionObserver(function () { checkFoot(); }, { threshold: [0, 0.02, 0.1, 0.3, 0.6, 1] }).observe(foot);
+    if (!w.MutationObserver) return;
+    var mo = new MutationObserver(sync), nav = d.getElementById('site-nav'), bb = d.querySelector('.buybar');
+    if (nav) mo.observe(nav, { attributes: true, attributeFilter: ['class'] });
+    if (bb) mo.observe(bb, { attributes: true, attributeFilter: ['class'] });
+    mo.observe(d.documentElement, { attributes: true, attributeFilter: ['class'] });
+  }
+  /* phones: drag the grab handle or header down to close the sheet */
+  function dragToClose() {
+    var y0 = null, dy = 0, grab = UI.panel.querySelector('.hc-grab'), head = UI.panel.querySelector('.hc-head');
+    function down(e) { if (!phone() || e.target.closest('button,a,input')) return; y0 = e.clientY; dy = 0; UI.panel.style.transition = 'none'; try { e.currentTarget.setPointerCapture(e.pointerId); } catch (x) { /* ignore */ } }
+    function move(e) { if (y0 === null) return; dy = Math.max(0, e.clientY - y0); UI.panel.style.transform = 'translateY(' + dy + 'px)'; }
+    function up() { if (y0 === null) return; var close = dy > 90; y0 = null; UI.panel.style.transition = ''; UI.panel.style.transform = ''; if (close) setOpen(false); }
+    [grab, head].forEach(function (el) { el.addEventListener('pointerdown', down); el.addEventListener('pointermove', move); el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up); });
+    grab.addEventListener('click', function () { if (phone() && !dy) setOpen(false); });
+  }
+
+  /* ================================================================== 6. PUBLIC API (also the test hook) */
+  w.HSTChat = {
+    version: 1,
+    load: load,
+    get kb() { return KB; },
+    understand: understand,
+    apply: applyToBag,
+    reply: function (text) { if (!UI) mount(); return send(text); },
+    open: function () { if (!UI) mount(); setOpen(true); },
+    close: function () { if (UI) setOpen(false); },
+    state: function () { return clone(STATE); },
+    fast: function (on) { fast = on !== false; },
+    debug: function (text, st) { var S = normState(clone(st)); var A = analyze(String(text), S); return { T: A.T, t: A.t, M: A.M, qp: A.qp, needs: A.needs, aud: A.aud, caution: A.caution, att: attach(A.M, A.qp, A.T), refs: refOwners(A, S), strong: RE.strongAdd.test(A.t) }; }
+  };
+  if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', mount); else mount();
 })();

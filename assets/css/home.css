@@ -132,7 +132,8 @@
 
 /* scene 1: the Rheuma-Salve turntable. hero.js places every pack on an ellipse (transform, z-index, opacity, --fog)
    and springs between stops; drag / flick to spin, click a pack to bring it forward, arrows in the "now" card.
-   The front pack tilts to the pointer, gets a light sweep and a floor reflection; its ingredients float beside it. */
+   Only the front (selected) pack has the floor reflection; the light sweep plays only when the visitor picks a pack
+   (click, arrows, drag, keyboard), never on the automatic turns. Ingredients float beside the front pack. */
 .m-product{touch-action:pan-y;cursor:grab;-webkit-user-select:none;user-select:none}
 .m-product.grabbing{cursor:grabbing}
 .m-product .hx-halo{position:absolute;left:6%;right:2%;top:2%;bottom:10%;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.34),rgba(255,255,255,.1) 55%,rgba(255,255,255,0) 72%)}
@@ -151,11 +152,11 @@
 .hx-pk .bob{display:block;height:100%;perspective:900px}
 .hx-pk .tilt{position:relative;display:block;height:100%;transition:transform .45s cubic-bezier(.34,1.4,.64,1)}
 .hx-pk img{display:block;height:100%;width:auto;max-width:none;-webkit-user-drag:none;
-  filter:drop-shadow(0 20px 20px rgba(60,0,22,.4)) saturate(calc(1 - var(--fog,0) * .55)) brightness(calc(1 - var(--fog,0) * .16));
-  -webkit-box-reflect:below 3px linear-gradient(transparent 70%,rgba(255,255,255,.2))}
+  filter:drop-shadow(0 20px 20px rgba(60,0,22,.4)) saturate(calc(1 - var(--fog,0) * .55)) brightness(calc(1 - var(--fog,0) * .16))}
+.hx-pk.is-front img{-webkit-box-reflect:below 3px linear-gradient(transparent 70%,rgba(255,255,255,.2))}
 .hx-sheen{position:absolute;inset:0;pointer-events:none;-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
   background:linear-gradient(105deg,rgba(255,255,255,0) 38%,rgba(255,255,255,.7) 50%,rgba(255,255,255,0) 62%) 170% 0/260% 100% no-repeat;opacity:0}
-.hx-pk.is-front .hx-sheen{animation:hx-sheen 1.25s cubic-bezier(.45,0,.2,1) .2s both}
+.hx-pk.is-front.lit .hx-sheen{animation:hx-sheen 1.25s cubic-bezier(.45,0,.2,1) .1s both}
 @keyframes hx-sheen{0%{opacity:1;background-position:170% 0}100%{opacity:1;background-position:-70% 0}}
 .hx-pk.is-front .tilt{transform:rotateY(calc(var(--ox,0) * 16deg)) rotateX(calc(var(--oy,0) * -10deg));transition:transform .3s ease-out}
 .hx-scene.is-on .hx-pk .bob{animation:hx-pk-in 1.1s cubic-bezier(.16,1,.3,1) both,hx-bob 6s ease-in-out infinite;animation-delay:calc(.2s + var(--k,0) * .09s),calc(1.4s + var(--k,0) * .35s)}
