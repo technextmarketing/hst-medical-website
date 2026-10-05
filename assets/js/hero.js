@@ -145,7 +145,7 @@
     k = (k % N + N) % N;
     pick(k); tabs[k].focus();
   });
-  if (ind) ind.addEventListener('animationend', function (e) { if (e.animationName === 'hs-bar' && !stopped) go(cur + 1, false, 1); });
+  if (ind) ind.addEventListener('animationend', function (e) { if (e.animationName === 'hs-bar' && !stopped && !Object.keys(holds).length) go(cur + 1, false, 1); });
   if (pause && !reduce) {
     pause.hidden = false;
     pause.addEventListener('click', function () { stopped = !stopped; sync(); if (!stopped) moveInd(cur); });

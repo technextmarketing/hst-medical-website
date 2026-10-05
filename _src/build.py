@@ -14,7 +14,7 @@ import home_sections, page_where, page_about
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.dirname(HERE)
 BASE = "https://technextmarketing.github.io/hst-medical-website/"
-V = "20261007a"
+V = "20261007c"
 PROTOTYPE = True
 TODAY = datetime.date.today().isoformat()
 

@@ -105,6 +105,8 @@ dl.fields{margin:0}
 .btn:hover{background:var(--brand);border-color:var(--brand);color:#fff;transform:translateY(-1px);box-shadow:0 12px 22px -14px rgba(221,24,96,.9)}
 .btn:active{transform:translateY(0) scale(.98)}
 .btn:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+/* two-tone ring wherever the surface is magenta or the button is filled magenta: white inner, ink outer */
+.btn-stamp:focus-visible,.hs :focus-visible,.home:not(.scrolled) .site-header :focus-visible,.ab-hst :focus-visible,.ab-cta-card :focus-visible{outline:2px solid #fff;outline-offset:2px;box-shadow:0 0 0 5px var(--ink)}
 .btn-stamp{background:linear-gradient(180deg,#e62b6e,#cc1356);border-color:transparent;color:#fff;box-shadow:0 8px 18px -12px rgba(204,19,86,.75),inset 0 1px 0 rgba(255,255,255,.22)}
 .btn-stamp:hover{background:linear-gradient(180deg,#d81c60,#b3124c);border-color:transparent;color:#fff;box-shadow:0 12px 22px -12px rgba(179,18,76,.8),inset 0 1px 0 rgba(255,255,255,.2)}
 .btn-dark{background:var(--brand-deep);border-color:var(--brand-deep);color:#fff}
@@ -1169,7 +1171,7 @@ ol.crumbs a:hover{color:var(--brand-ink)}
 @keyframes img-develop{from{translate:0 24px;scale:.94;filter:blur(8px)}}
 .btn .ic{transition:transform var(--t) var(--ease-out)}
 .btn:hover .ic:last-child:not(:first-child){transform:translateX(3px)}
-.hs.off *,.hs.off *::before{animation-play-state:paused!important}
+.hs.off *,.hs.off *::before,.hs.off *::after{animation-play-state:paused!important}
 
 @media (prefers-reduced-motion:reduce){
   .printing .print{animation:none}

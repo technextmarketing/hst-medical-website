@@ -69,7 +69,7 @@
 .ab-hst{position:relative;isolation:isolate;overflow:hidden;padding:clamp(4rem,8vw,6.5rem) var(--gutter) clamp(9.5rem,15vw,12.5rem);color:#fff;text-align:center;background-color:var(--brand-deep);background-position:center;background-size:cover;background-repeat:no-repeat}
 .ab-hst h2{color:#fff;margin-bottom:1rem;font-size:clamp(2.1rem,1.3rem + 2.8vw,3.5rem)}
 .ab-hst h2 b{font-weight:inherit;color:#fff;text-shadow:0 0 26px rgba(255,214,227,.85)}
-.ab-hst p{max-width:58ch;margin:0 auto;color:var(--on-brand-2);font-size:1.12rem}
+.ab-hst p{max-width:58ch;margin:0 auto;color:#fff;font-size:1.12rem}
 .ab-values{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gutter);margin-top:clamp(-10rem,-11vw,-6.5rem)}
 .ab-value{position:relative;isolation:isolate;overflow:hidden;background:#fff;border-radius:26px;padding:clamp(1.6rem,2.6vw,2.2rem)}
 .ab-value .ic{width:46px;height:46px;color:var(--brand);stroke-width:1.5}
@@ -208,12 +208,12 @@
 .ab-note{margin-top:1.25rem}
 
 /* ---- reseller CTA ---- */
-.ab-cta-card{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);align-items:center;gap:var(--gutter);padding:clamp(1.75rem,4.2vw,3.5rem);border-radius:32px;color:#fff;background:linear-gradient(118deg,#ec4482 0%,var(--brand) 42%,var(--brand-deep) 100%);box-shadow:0 44px 80px -48px rgba(179,18,76,.8);transition:transform .6s var(--ease-out),box-shadow .6s var(--ease-out)}
+.ab-cta-card{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);align-items:center;gap:var(--gutter);padding:clamp(1.75rem,4.2vw,3.5rem);border-radius:32px;color:#fff;background:linear-gradient(118deg,#cc2c68 0%,var(--brand-deep) 55%,#8f0e3d 100%);box-shadow:0 44px 80px -48px rgba(179,18,76,.8);transition:transform .6s var(--ease-out),box-shadow .6s var(--ease-out)}
 .ab-cta-card::before{content:"";position:absolute;z-index:-1;inset:-45%;background:radial-gradient(28% 34% at 30% 42%,rgba(255,255,255,.24),rgba(255,255,255,0) 70%),radial-gradient(26% 32% at 72% 62%,rgba(255,176,208,.42),rgba(255,176,208,0) 70%);animation:ab-drift 16s ease-in-out infinite alternate}
 .ab-cta-card::after{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(105deg,rgba(255,255,255,0) 38%,rgba(255,255,255,.17) 50%,rgba(255,255,255,0) 62%);background-size:260% 100%;background-repeat:no-repeat;animation:ab-sheen 7.5s ease-in-out infinite}
 .ab-cta-card:hover{transform:translateY(-4px);box-shadow:0 52px 90px -48px rgba(179,18,76,.9)}
 .ab-cta-card h2{color:#fff;font-size:clamp(1.65rem,1.1rem + 1.7vw,2.5rem)}
-.ab-cta-copy p{color:var(--on-brand-2);margin-top:.75rem;max-width:50ch;font-size:1.05rem}
+.ab-cta-copy p{color:#fff;margin-top:.75rem;max-width:50ch;font-size:1.05rem}
 .ab-cta-packs{position:relative;height:clamp(200px,22vw,270px)}
 .ab-cta-packs::before{content:"";position:absolute;inset:6% 4% 0;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.5),rgba(255,255,255,0));pointer-events:none}
 .ab-cta-packs img{position:absolute;bottom:6%;width:40%;height:auto;filter:drop-shadow(0 20px 18px rgba(90,0,34,.32));animation:ab-float 6.5s ease-in-out infinite;transition:scale .7s var(--ease-out)}
