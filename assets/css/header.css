@@ -162,46 +162,70 @@ html.home{--top-h:85px}
 @media (max-width:960px){html.home{--top-h:73px}.home:not(.scrolled) .nav.open a{color:var(--ink-2)}.home:not(.scrolled) .nav.open a.active{color:var(--brand-ink)}}
 @media (max-width:560px){html.home{--top-h:65px}}
 
-/* ---- entry: the logo builds itself from exact full-resolution parts (inline script in head.html; once per visit) ----
-   Part boxes are % of the 1019x505 lock-up, measured by _src/logo_cutout.py intro_slices(). Animations wait for .ix-go
-   (all parts decoded) so nothing pops in; the timeline runs about 3.6 s, then the logo flies to the header. */
-.intro-splash{--ix:0;--iy:0;position:fixed;inset:0;z-index:999;display:grid;place-items:center;overflow:hidden;cursor:pointer;
-  background:radial-gradient(70% 70% at calc(50% + var(--ix)*8%) calc(46% + var(--iy)*8%),#d02a69 0%,#b3124c 46%,#760a32 100%);
-  clip-path:inset(0 0 0 0);transition:clip-path .9s cubic-bezier(.7,0,.2,1) .08s}
-.intro-splash.ix-exit{clip-path:inset(0 0 100% 0);pointer-events:none}
+/* ---- entry: the logo performs itself (inline script in head.html; once per visit, ?intro replays) ----
+   Smoothness: only transform/opacity animate on big layers; the pointer light is a moved layer (no full-screen repaint);
+   the curtain slides (composited) while the logo flies separately; animations wait for .ix-go (all parts decoded). */
+.intro-splash{--ix:0;--iy:0;position:fixed;inset:0;z-index:999;display:grid;place-items:center;overflow:hidden;cursor:pointer}
 .intro-splash:not(.ix-go) *{animation-play-state:paused!important}
-.ix-bg{position:absolute;inset:0;pointer-events:none}
-.ix-bloom{position:absolute;left:50%;top:46%;width:120vmax;aspect-ratio:1;translate:-50% -50%;border-radius:50%;background:radial-gradient(circle,rgba(255,176,208,.5),rgba(255,176,208,0) 42%);animation:ix-bloom 2s cubic-bezier(.16,1,.3,1) both}
-.ix-ring{position:absolute;left:50%;top:46%;width:46vmin;aspect-ratio:1;translate:-50% -50%;border-radius:50%;border:1.5px solid rgba(255,255,255,.32);opacity:0;animation:ix-ring 2.8s cubic-bezier(.16,1,.3,1) .2s both}
-.ix-ring.r2{animation-delay:.65s;border-style:dashed}.ix-ring.r3{animation-delay:1.1s}
-.ix-stage{position:relative;display:grid;justify-items:center;gap:clamp(1.4rem,3vw,2.2rem);transform:translateY(-2%)}
-.ix-logo{position:relative;width:min(600px,84vw);aspect-ratio:1019/505;will-change:transform;
-  transform:perspective(1000px) rotateY(calc(var(--ix)*14deg)) rotateX(calc(var(--iy)*-12deg));transition:transform .6s cubic-bezier(.16,1,.3,1)}
-.ix-part{position:absolute;display:block;max-width:none;height:auto;user-select:none;-webkit-user-drag:none}
-.ix-mark{left:0;top:0;width:42.591%;transform-origin:50% 50%;animation:ix-mark 1.25s cubic-bezier(.34,1.45,.64,1) .2s both;transition:rotate 1.1s cubic-bezier(.34,1.3,.64,1)}
+.ix-curtain{position:absolute;inset:0;overflow:hidden;background:linear-gradient(160deg,#c6175c 0%,#b3124c 45%,#7a0a34 100%);will-change:transform;transition:transform 1s cubic-bezier(.7,0,.2,1) .1s}
+.ix-exit{pointer-events:none}
+.ix-exit .ix-curtain{transform:translateY(-101%)}
+.ix-light{position:absolute;left:50%;top:46%;width:150vmax;aspect-ratio:1;margin:-75vmax 0 0 -75vmax;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,170,205,.55) 0%,rgba(255,170,205,.18) 22%,rgba(255,170,205,0) 42%);
+  transform:translate(calc(var(--ix)*8vw),calc(var(--iy)*8vh));transition:transform 1.2s cubic-bezier(.16,1,.3,1);will-change:transform;animation:ix-light 1.8s cubic-bezier(.16,1,.3,1) both}
+.ix-ring{position:absolute;left:50%;top:46%;width:44vmin;aspect-ratio:1;margin:-22vmin 0 0 -22vmin;border-radius:50%;border:1.5px solid rgba(255,255,255,.3);opacity:0;will-change:transform,opacity;animation:ix-ring 3s cubic-bezier(.16,1,.3,1) .3s both}
+.ix-ring.r2{animation-delay:1.2s;border-style:dashed}
+.ix-stage{position:relative;z-index:1;transform:translateY(-4%)}
+.ix-logo{position:relative;width:min(600px,84vw);aspect-ratio:1019/505;will-change:transform;transform-origin:50% 50%;
+  transform:perspective(1100px) rotateY(calc(var(--ix)*10deg)) rotateX(calc(var(--iy)*-8deg));transition:transform .9s cubic-bezier(.16,1,.3,1)}
+.ix-part{position:absolute;display:block;max-width:none;height:auto;user-select:none;-webkit-user-drag:none;will-change:transform,opacity}
+.ix-mark{left:0.000%;top:0.000%;width:42.983%}
+.ix-h0{left:46.320%;top:17.624%;width:18.449%}
+.ix-h1{left:66.143%;top:17.624%;width:14.917%}
+.ix-h2{left:81.158%;top:17.624%;width:18.057%}
+.ix-m0{left:46.124%;top:62.376%;width:8.243%}
+.ix-m1{left:57.213%;top:62.376%;width:4.612%}
+.ix-m2{left:64.082%;top:62.376%;width:6.379%}
+.ix-m3{left:73.013%;top:62.376%;width:1.766%}
+.ix-m4{left:77.429%;top:62.376%;width:6.183%}
+.ix-m5{left:85.280%;top:62.376%;width:6.968%}
+.ix-m6{left:94.504%;top:62.376%;width:4.711%}
+.ix-kowa{left:46.124%;top:85.545%;width:53.876%}
+.ix-mark{transform-origin:50% 90%;animation:ix-drop 1.05s cubic-bezier(.3,1.25,.5,1) .25s both,ix-nod 1s cubic-bezier(.45,0,.3,1) 2.55s both;transition:rotate 1.2s cubic-bezier(.34,1.3,.64,1)}
 .ix-mark:hover{rotate:360deg}
-.ix-hst{left:45.927%;top:17.228%;width:54.073%;animation:ix-rise .95s cubic-bezier(.16,1,.3,1) .95s both}
-.ix-med{left:45.927%;top:61.98%;width:54.073%;transform-origin:0 50%;animation:ix-settle 1s cubic-bezier(.16,1,.3,1) 1.35s both}
-.ix-kowa{left:45.927%;top:85.149%;width:54.073%;animation:ix-up .85s cubic-bezier(.16,1,.3,1) 1.75s both}
+.ix-ripple{position:absolute;left:21.5%;top:50%;width:42%;aspect-ratio:1;margin:-21% 0 0 -21%;border-radius:50%;border:2px solid rgba(255,255,255,.7);opacity:0;animation:ix-ripple 1.1s cubic-bezier(.16,1,.3,1) .95s both}
+.ix-h0,.ix-h1,.ix-h2{transform-origin:50% 100%;animation:ix-letter .8s cubic-bezier(.34,1.56,.64,1) calc(1.05s + var(--k)*.13s) both}
+[class*=" ix-m"]:not(.ix-mark){animation:ix-drip .6s cubic-bezier(.16,1,.3,1) calc(1.55s + var(--k)*.06s) both}
+.ix-kowa{animation:ix-slide .85s cubic-bezier(.16,1,.3,1) 2.1s both}
 .ix-sheen{position:absolute;inset:0;background:linear-gradient(105deg,transparent 36%,rgba(255,255,255,.9) 50%,transparent 64%) 170% 0/260% 100% no-repeat;
-  -webkit-mask:url("../img/intro/ix-full.webp") 0 0/100% 100% no-repeat;mask:url("../img/intro/ix-full.webp") 0 0/100% 100% no-repeat;animation:ix-sheen 1.4s cubic-bezier(.45,0,.2,1) 2.15s both}
-.ix-tag{display:flex;align-items:center;gap:1rem;margin:0;max-width:none;color:#fff;font:700 clamp(.95rem,.75rem + .8vw,1.3rem) var(--font-display);letter-spacing:.16em;text-transform:uppercase;text-shadow:0 2px 14px rgba(60,0,22,.35)}
+  -webkit-mask:url("../img/intro/ix-full.webp") 0 0/100% 100% no-repeat;mask:url("../img/intro/ix-full.webp") 0 0/100% 100% no-repeat;animation:ix-sheen 1.3s cubic-bezier(.45,0,.2,1) 2.45s both}
+.ix-aroma{position:absolute;left:21.5%;top:4%;width:0;height:0;pointer-events:none}
+.ix-leaf{position:absolute;left:0;top:0;width:clamp(14px,2.2vw,22px);opacity:0;animation:ix-leaf 2.4s cubic-bezier(.2,.7,.3,1) calc(1.2s + var(--j)*.16s) both}
+.ix-leaf svg{display:block;width:100%;height:auto;fill:rgba(255,255,255,.18);stroke:#fff;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.ix-leaf:nth-child(odd){--sx:-1}.ix-leaf:nth-child(even){--sx:1}
+.ix-puff .ix-leaf{animation:ix-leaf 2s cubic-bezier(.2,.7,.3,1) calc(var(--j)*.1s) both}
+.ix-tag{position:absolute;left:0;right:0;top:calc(46% + min(300px,42vw)*.62);display:flex;justify-content:center;align-items:center;gap:1rem;margin:0;max-width:none;color:#fff;
+  font:700 clamp(.95rem,.75rem + .8vw,1.3rem) var(--font-display);letter-spacing:.16em;text-transform:uppercase;text-shadow:0 2px 14px rgba(60,0,22,.35)}
 .ix-tag span{animation:ix-up .75s cubic-bezier(.16,1,.3,1) both}
-.ix-tag span:nth-of-type(1){animation-delay:2.35s}.ix-tag span:nth-of-type(2){animation-delay:2.55s}.ix-tag span:nth-of-type(3){animation-delay:2.75s}
-.ix-tag i{width:6px;height:6px;border-radius:50%;background:#fff;opacity:.8;animation:ix-pop .5s cubic-bezier(.34,1.6,.64,1) 2.45s both}
-.ix-tag i:nth-of-type(2){animation-delay:2.65s}
-.ix-skip{position:absolute;right:clamp(16px,3vw,32px);bottom:clamp(16px,3vw,28px);padding:.6rem 1.1rem;border:1.5px solid rgba(255,255,255,.5);border-radius:12px;background:transparent;color:#fff;font:600 .88rem var(--font);cursor:pointer;animation:ix-up .5s .8s both;transition:background .2s,border-color .2s}
+.ix-tag span:nth-of-type(1){animation-delay:2.7s}.ix-tag span:nth-of-type(2){animation-delay:2.9s}.ix-tag span:nth-of-type(3){animation-delay:3.1s}
+.ix-tag i{width:6px;height:6px;border-radius:50%;background:#fff;opacity:.85;animation:ix-pop .5s cubic-bezier(.34,1.6,.64,1) 2.8s both}
+.ix-tag i:nth-of-type(2){animation-delay:3s}
+.ix-skip{position:absolute;right:clamp(16px,3vw,32px);bottom:clamp(16px,3vw,28px);padding:.6rem 1.1rem;border:1.5px solid rgba(255,255,255,.5);border-radius:12px;background:transparent;color:#fff;font:600 .88rem var(--font);cursor:pointer;animation:ix-up .5s 1s both;transition:background .2s,border-color .2s}
 .ix-skip:hover{background:rgba(255,255,255,.14);border-color:#fff}
-.ix-bar{position:absolute;left:0;bottom:0;height:3px;width:100%;background:rgba(255,255,255,.85);transform-origin:0 50%;animation:ix-bar 3.6s linear both}
-.ix-exit .ix-tag,.ix-exit .ix-skip,.ix-exit .ix-bar,.ix-exit .ix-bg{opacity:0;transition:opacity .35s}
-@keyframes ix-bloom{from{scale:.2;opacity:0}}
-@keyframes ix-ring{0%{opacity:0;scale:.6}30%{opacity:.9}100%{opacity:0;scale:2.8}}
-@keyframes ix-mark{0%{opacity:0;transform:scale(.2) rotate(-220deg)}55%{opacity:1}}
-@keyframes ix-rise{from{clip-path:inset(100% 0 0 0);transform:translateY(30%)}to{clip-path:inset(0 0 0 0);transform:none}}
-@keyframes ix-settle{from{opacity:0;transform:scaleX(1.32);clip-path:inset(0 100% 0 0)}to{opacity:1;transform:none;clip-path:inset(0 0 0 0)}}
+.ix-bar{position:absolute;left:0;bottom:0;height:3px;width:100%;background:rgba(255,255,255,.85);transform-origin:0 50%;animation:ix-bar 4.1s linear both}
+.ix-exit .ix-tag,.ix-exit .ix-skip,.ix-exit .ix-bar,.ix-exit .ix-ring,.ix-exit .ix-aroma{opacity:0;transition:opacity .3s}
+@keyframes ix-light{from{opacity:0;scale:.4}}
+@keyframes ix-ring{0%{opacity:0;transform:scale(.6)}30%{opacity:.85}100%{opacity:0;transform:scale(2.6)}}
+@keyframes ix-drop{0%{opacity:0;transform:translateY(-120%) rotate(-28deg)}55%{opacity:1;transform:translateY(0) rotate(4deg) scale(1.06,.9)}72%{transform:translateY(-6%) rotate(-2deg) scale(.97,1.04)}100%{transform:none}}
+@keyframes ix-nod{0%,100%{transform:none}35%{transform:rotate(-7deg)}70%{transform:rotate(3deg)}}
+@keyframes ix-ripple{0%{opacity:.9;transform:scale(.9)}100%{opacity:0;transform:scale(1.9)}}
+@keyframes ix-letter{0%{opacity:0;transform:translateY(55%) scale(.4) rotate(-12deg)}100%{opacity:1;transform:none}}
+@keyframes ix-drip{0%{opacity:0;transform:translateY(-120%)}100%{opacity:1;transform:none}}
+@keyframes ix-slide{from{opacity:0;transform:translateX(-10%);clip-path:inset(0 100% 0 0)}to{opacity:1;transform:none;clip-path:inset(0 0 0 0)}}
+@keyframes ix-sheen{from{background-position:170% 0}to{background-position:-70% 0}}
+@keyframes ix-leaf{0%{opacity:0;transform:translate(0,0) rotate(0) scale(.4)}18%{opacity:1}100%{opacity:0;transform:translate(calc(var(--sx)*(16px + var(--j)*10px)),calc(-90px - var(--j)*16px)) rotate(calc(var(--sx)*(40deg + var(--j)*18deg))) scale(1)}}
 @keyframes ix-up{from{opacity:0;transform:translateY(14px)}}
 @keyframes ix-pop{from{opacity:0;transform:scale(0)}}
-@keyframes ix-sheen{from{background-position:170% 0}to{background-position:-70% 0}}
 @keyframes ix-bar{from{transform:scaleX(0)}}
 html.intro{overflow:hidden}
 html.intro .hs,html.intro .hs *{animation-play-state:paused!important}

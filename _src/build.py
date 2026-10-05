@@ -14,7 +14,7 @@ import home_sections, page_where, page_about
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.dirname(HERE)
 BASE = "https://technextmarketing.github.io/hst-medical-website/"
-V = "20261006r"
+V = "20261006t"
 PROTOTYPE = True
 TODAY = datetime.date.today().isoformat()
 
@@ -568,7 +568,8 @@ def build_home():
     best_cards = "\n".join(product_label(p, root) for p in best)
     brands_row = "".join(f"<li>{b}</li>" for b in ["Rheuma-Salve®", "Heritage®", "HST Medical®", "Zoo-Vite®", "Kowa"])
     bento = "".join(f"""<a class="b-{i}" href="shop/{cid}/"><span class="bt"><b>{esc(CATS[cid]['name'])}</b>{'<span class="bb">%s</span>' % esc(CATS[cid]['blurb']) if i == 0 else ''}<small>{len(cat_products(cid))} products</small></span><span class="bimg"><img src="assets/img/products/{BENTO_IMG.get(cid, cat_products(cid)[0]['image'])}-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"></span><span class="bgo">{IC['arrow']}</span></a>""" for i, cid in enumerate(CAT_ORDER))
-    bento += f"""<a class="b-all" href="shop/"><span class="bt"><b>All 51 products</b><small>Every shelf, one store</small></span><span class="bgo">{IC['arrow']}</span></a>"""
+    fan = "".join('<img src="assets/img/products/%s-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async" style="--f:%d">' % (i, k) for k, i in enumerate(("p23", "p13", "p03", "p27", "p43")))
+    bento += f"""<a class="b-all" href="shop/"><span class="bt"><b><span class="ball-n">51</span> products, one store</b><small>Every shelf from balms to gummies. Browse them all</small></span><span class="ball-fan" aria-hidden="true">{fan}</span><span class="bgo">{IC['arrow']}</span></a>"""
     timeline = "".join(f"""<li><b>{y}</b><span>{esc(t)}</span></li>""" for y, t in TIMELINE)
     ctx = {"root": root, "PRODUCTS": PRODUCTS, "CATS": CATS, "BY_SLUG": BY_SLUG, "POSTS": POSTS, "IC": IC, "esc": esc, "money": money,
            "cat_products": cat_products, "brand_label": brand_label}

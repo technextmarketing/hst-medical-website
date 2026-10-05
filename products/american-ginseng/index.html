@@ -19,30 +19,36 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../assets/css/style.css?v=20261006r">
-<link rel="stylesheet" href="../../assets/css/header.css?v=20261006r">
-<link rel="stylesheet" href="../../assets/css/footer.css?v=20261006r">
-<link rel="stylesheet" href="../../assets/css/sections.css?v=20261006r">
+<link rel="stylesheet" href="../../assets/css/style.css?v=20261006t">
+<link rel="stylesheet" href="../../assets/css/header.css?v=20261006t">
+<link rel="stylesheet" href="../../assets/css/footer.css?v=20261006t">
+<link rel="stylesheet" href="../../assets/css/sections.css?v=20261006t">
 <script>document.documentElement.classList.add('js');</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://technextmarketing.github.io/hst-medical-website/"}, {"@type": "ListItem", "position": 2, "name": "All products", "item": "https://technextmarketing.github.io/hst-medical-website/shop/"}, {"@type": "ListItem", "position": 3, "name": "Immunity & Energy", "item": "https://technextmarketing.github.io/hst-medical-website/shop/immunity-energy/"}, {"@type": "ListItem", "position": 4, "name": "American Ginseng"}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Product", "name": "American Ginseng", "brand": {"@type": "Brand", "name": "Heritage"}, "image": "https://technextmarketing.github.io/hst-medical-website/assets/img/products/p08-white.webp", "description": "American Ginseng is highly favoured for its invigorating properties to improve endurance and enhance overall wellness. It is an excellent tonic to tonify qi, nourish yin, clear heat, and promote production of body fluid. It supports the immune system, revitalises physical energy and stamina, relieve", "category": "Immunity & Energy", "manufacturer": {"@id": "https://technextmarketing.github.io/hst-medical-website/#org"}, "url": "https://technextmarketing.github.io/hst-medical-website/products/american-ginseng/", "offers": [{"@type": "Offer", "name": "Single pack", "priceCurrency": "SGD", "price": "100.85", "availability": "https://schema.org/InStock", "sku": "111770", "url": "https://technextmarketing.github.io/hst-medical-website/products/american-ginseng/"}, {"@type": "Offer", "name": "Twin pack", "priceCurrency": "SGD", "price": "156.00", "availability": "https://schema.org/InStock", "url": "https://technextmarketing.github.io/hst-medical-website/products/american-ginseng/"}]}</script>
 </head>
 <body>
-<script>/* entry: the HST Medical logo builds itself from its parts, then flies into the header. Once per visit; click, key, scroll or Skip ends it; never under reduced motion. Parts: assets/img/intro (cut by _src/logo_cutout.py intro_slices). */
-(function(){var d=document,r=d.documentElement;try{if(sessionStorage.getItem('hst-intro')||matchMedia('(prefers-reduced-motion: reduce)').matches)return;sessionStorage.setItem('hst-intro','1');}catch(e){return;}
-r.classList.add('intro');var P='../../assets/img/intro/ix-',im=function(n){return '<img class="ix-part ix-'+n+'" src="'+P+n+'.webp" alt="" decoding="sync">';};
-d.body.insertAdjacentHTML('afterbegin','<div class="intro-splash" aria-hidden="true"><div class="ix-bg"><i class="ix-bloom"></i><i class="ix-ring r1"></i><i class="ix-ring r2"></i><i class="ix-ring r3"></i></div><div class="ix-stage"><div class="ix-logo">'+im('mark')+im('hst')+im('med')+im('kowa')+'<span class="ix-sheen"></span></div><p class="ix-tag"><span>Higher</span><i></i><span>Stronger</span><i></i><span>Together</span></p></div><button class="ix-skip" type="button" tabindex="-1">Skip</button><i class="ix-bar"></i></div>');
-var s=d.body.firstElementChild,lg=s.querySelector('.ix-logo'),gone=false,t1=0,started=false;
+<script>/* entry: the HST Medical logo performs itself, then flies into the header. Once per visit (add ?intro to replay);
+   click, key, scroll or Skip ends it; never under reduced motion. Parts in assets/img/intro (cut by _src/logo_cutout.py). */
+(function(){var d=document,r=d.documentElement,force=/[?&]intro\b/.test(location.search);
+try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(!force&&sessionStorage.getItem('hst-intro'))return;sessionStorage.setItem('hst-intro','1');}catch(e){if(!force)return;}
+r.classList.add('intro');var P='../../assets/img/intro/ix-',im=function(n,k){return '<img class="ix-part ix-'+n+'" src="'+P+n+'.webp" alt="" style="--k:'+(k||0)+'">';};
+var parts=im('mark')+im('h0',0)+im('h1',1)+im('h2',2);for(var i=0;i<7;i++)parts+=im('m'+i,i);parts+=im('kowa');
+var leaves='';for(var j=0;j<6;j++)leaves+='<i class="ix-leaf" style="--j:'+j+'"><svg viewBox=\'0 0 24 24\'><path d=\'M12 21C6 17 5 9 12 3c7 6 6 14 0 18z\'/><path d=\'M12 21V9\'/></svg></i>';
+d.body.insertAdjacentHTML('afterbegin','<div class="intro-splash" aria-hidden="true"><div class="ix-curtain"><div class="ix-light"></div><i class="ix-ring r1"></i><i class="ix-ring r2"></i><p class="ix-tag"><span>Higher</span><i></i><span>Stronger</span><i></i><span>Together</span></p><button class="ix-skip" type="button" tabindex="-1">Skip</button><i class="ix-bar"></i></div><div class="ix-stage"><div class="ix-logo"><span class="ix-ripple"></span><span class="ix-aroma">'+leaves+'</span>'+parts+'<span class="ix-sheen"></span></div></div></div>');
+var s=d.body.firstElementChild,lg=s.querySelector('.ix-logo'),mk=s.querySelector('.ix-mark'),gone=false,t1=0,started=false;
 var finish=function(){if(gone)return;gone=true;clearTimeout(t1);r.classList.remove('intro');s.classList.add('ix-exit');
  var tg=d.querySelector('.site-header .brand');
- if(tg&&lg.animate){var a=lg.getBoundingClientRect(),b=tg.getBoundingClientRect(),sc=b.height/a.height;
+ if(tg&&lg.animate){var a=lg.getBoundingClientRect(),b=tg.getBoundingClientRect(),sc=b.height/a.height,dx=b.left-a.left,dy=b.top-a.top;
   lg.style.transition='none';
-  lg.animate([{transform:getComputedStyle(lg).transform,opacity:1},{transform:'translate('+(b.left-a.left)+'px,'+(b.top-a.top)+'px) scale('+sc+')',opacity:.9,offset:.82},{transform:'translate('+(b.left-a.left)+'px,'+(b.top-a.top)+'px) scale('+sc+')',opacity:0}],{duration:900,easing:'cubic-bezier(.7,0,.2,1)',fill:'forwards'});}
- setTimeout(function(){if(s.parentNode)s.parentNode.removeChild(s);},980);};
-var start=function(){if(started)return;started=true;s.classList.add('ix-go');t1=setTimeout(finish,3600);};
-var imgs=[].slice.call(s.querySelectorAll('img')),left=imgs.length;imgs.forEach(function(i){if(i.complete)left--;else i.addEventListener('load',function(){if(--left<=0)start();});i.addEventListener('error',function(){if(--left<=0)start();});});
-if(left<=0)start();setTimeout(start,900);setTimeout(function(){if(!gone)finish();},6000);
-s.addEventListener('pointermove',function(e){s.style.setProperty('--ix',(e.clientX/innerWidth-.5).toFixed(3));s.style.setProperty('--iy',(e.clientY/innerHeight-.5).toFixed(3));});
+  lg.animate([{transform:getComputedStyle(lg).transform,opacity:1},{transform:'translate('+dx*.45+'px,'+(dy*.45-40)+'px) scale('+(1-(1-sc)*.5)+')',opacity:1,offset:.45},{transform:'translate('+dx+'px,'+dy+'px) scale('+sc+')',opacity:.95,offset:.88},{transform:'translate('+dx+'px,'+dy+'px) scale('+sc+')',opacity:0}],{duration:1000,easing:'cubic-bezier(.65,0,.25,1)',fill:'forwards'});}
+ setTimeout(function(){if(s.parentNode)s.parentNode.removeChild(s);},1050);};
+var start=function(){if(started)return;started=true;s.classList.add('ix-go');t1=setTimeout(finish,4100);};
+var imgs=[].slice.call(s.querySelectorAll('img')),left=imgs.length,one=function(){if(--left<=0)start();};
+imgs.forEach(function(i){if(i.complete)left--;else{i.addEventListener('load',one);i.addEventListener('error',one);}});
+if(left<=0)start();setTimeout(start,1200);setTimeout(function(){if(!gone)finish();},7000);
+var raf=0,px=0,py=0;s.addEventListener('pointermove',function(e){px=e.clientX/innerWidth-.5;py=e.clientY/innerHeight-.5;if(!raf)raf=requestAnimationFrame(function(){raf=0;s.style.setProperty('--ix',px.toFixed(3));s.style.setProperty('--iy',py.toFixed(3));});});
+mk.addEventListener('pointerenter',function(){s.classList.remove('ix-puff');void s.offsetWidth;s.classList.add('ix-puff');});
 s.addEventListener('click',finish);addEventListener('keydown',finish,{once:true});addEventListener('wheel',finish,{once:true,passive:true});addEventListener('touchmove',finish,{once:true,passive:true});})();</script>
 <a class="sr-only" href="#main">Skip to content</a>
 <div class="live" id="live" aria-live="polite" aria-atomic="true"></div>
@@ -238,6 +244,6 @@ s.addEventListener('click',finish);addEventListener('keydown',finish,{once:true}
   </div>
 </footer>
 <div class="toast" id="toast" hidden role="status"><span></span><button type="button">Undo</button></div>
-<script src="../../assets/js/site.js?v=20261006r" defer></script>
+<script src="../../assets/js/site.js?v=20261006t" defer></script>
 </body>
 </html>

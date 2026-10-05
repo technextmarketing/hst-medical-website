@@ -120,3 +120,59 @@ def intro_slices():
     rev.save(os.path.join(out, "ix-full.webp"), "WEBP", quality=94, exact=True)
     print("logo", w, h, "layout % (left, top, width, height):", lay)
     return lay
+
+
+def intro_letters():
+    """Split the reversed lock-up into the roundel, the letters H S T, the seven letters of MEDICAL and the Kowa line
+    (column gaps inside each text row), save each as its own image and return CSS boxes in % of the lock-up."""
+    full = Image.open(os.path.join(IMG, "intro", "ix-full.webp")).convert("RGBA")
+    al = np.asarray(full.getchannel("A")) > 30
+    h, w = al.shape
+    cols = al.sum(axis=0)
+    gap = next(x for x in range(int(w * 0.3), w) if cols[x] == 0)
+    start = next(x for x in range(gap, w) if cols[x] > 0)
+    rows = al[:, start:].sum(axis=1)
+    bands, on = [], False
+    for y, v in enumerate(rows):
+        if v and not on:
+            y0, on = y, True
+        if not v and on:
+            bands.append((y0, y)); on = False
+    if on:
+        bands.append((y0, h))
+    bands = [b for b in bands if b[1] - b[0] > 6][:3]
+    out = os.path.join(IMG, "intro")
+    boxes = {"mark": (0, 0, gap, h)}
+
+    def letters(y0, y1, minw):
+        c = al[y0:y1, start:].sum(axis=0)
+        segs, on = [], False
+        for x, v in enumerate(c):
+            if v and not on:
+                x0, on = x, True
+            if not v and on:
+                segs.append((x0 + start, x + start)); on = False
+        if on:
+            segs.append((x0 + start, w))
+        merged = []
+        for s in segs:   # glue fragments narrower than minw to their neighbour
+            if merged and (s[0] - merged[-1][1] < 3 or s[1] - s[0] < minw):
+                merged[-1] = (merged[-1][0], s[1])
+            else:
+                merged.append(s)
+        return merged
+
+    (h0, h1), (m0, m1), (k0, k1) = bands
+    for i, (x0, x1) in enumerate(letters(h0, h1, 8)):
+        boxes["h%d" % i] = (x0, h0, x1, h1)
+    for i, (x0, x1) in enumerate(letters(m0, m1, 4)):
+        boxes["m%d" % i] = (x0, m0, x1, m1)
+    boxes["kowa"] = (start, k0, w, k1)
+    pad = 4
+    css = []
+    for name, (x0, y0, x1, y1) in boxes.items():
+        x0p, y0p, x1p, y1p = max(0, x0 - pad), max(0, y0 - pad), min(w, x1 + pad), min(h, y1 + pad)
+        full.crop((x0p, y0p, x1p, y1p)).save(os.path.join(out, "ix-%s.webp" % name), "WEBP", quality=95, exact=True)
+        css.append(".ix-%s{left:%.3f%%;top:%.3f%%;width:%.3f%%}" % (name, x0p / w * 100, y0p / h * 100, (x1p - x0p) / w * 100))
+    print(" ".join(sorted(boxes)))
+    return "\n".join(css)
