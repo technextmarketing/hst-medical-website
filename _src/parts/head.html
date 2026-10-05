@@ -17,17 +17,36 @@
 <link rel="icon" type="image/svg+xml" href="{{ROOT}}assets/img/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ROOT}}assets/css/style.css?v={{V}}">
+<link rel="stylesheet" href="{{ROOT}}assets/css/header.css?v={{V}}">
+<link rel="stylesheet" href="{{ROOT}}assets/css/footer.css?v={{V}}">
+<link rel="stylesheet" href="{{ROOT}}assets/css/sections.css?v={{V}}">
 <script>document.documentElement.classList.add('js');</script>
 {{EXTRA}}</head>
 <body>
+<script>/* entry: the HST Medical logo builds itself from its parts, then flies into the header. Once per visit; click, key, scroll or Skip ends it; never under reduced motion. Parts: assets/img/intro (cut by _src/logo_cutout.py intro_slices). */
+(function(){var d=document,r=d.documentElement;try{if(sessionStorage.getItem('hst-intro')||matchMedia('(prefers-reduced-motion: reduce)').matches)return;sessionStorage.setItem('hst-intro','1');}catch(e){return;}
+r.classList.add('intro');var P='{{ROOT}}assets/img/intro/ix-',im=function(n){return '<img class="ix-part ix-'+n+'" src="'+P+n+'.webp" alt="" decoding="sync">';};
+d.body.insertAdjacentHTML('afterbegin','<div class="intro-splash" aria-hidden="true"><div class="ix-bg"><i class="ix-bloom"></i><i class="ix-ring r1"></i><i class="ix-ring r2"></i><i class="ix-ring r3"></i></div><div class="ix-stage"><div class="ix-logo">'+im('mark')+im('hst')+im('med')+im('kowa')+'<span class="ix-sheen"></span></div><p class="ix-tag"><span>Higher</span><i></i><span>Stronger</span><i></i><span>Together</span></p></div><button class="ix-skip" type="button" tabindex="-1">Skip</button><i class="ix-bar"></i></div>');
+var s=d.body.firstElementChild,lg=s.querySelector('.ix-logo'),gone=false,t1=0,started=false;
+var finish=function(){if(gone)return;gone=true;clearTimeout(t1);r.classList.remove('intro');s.classList.add('ix-exit');
+ var tg=d.querySelector('.site-header .brand');
+ if(tg&&lg.animate){var a=lg.getBoundingClientRect(),b=tg.getBoundingClientRect(),sc=b.height/a.height;
+  lg.style.transition='none';
+  lg.animate([{transform:getComputedStyle(lg).transform,opacity:1},{transform:'translate('+(b.left-a.left)+'px,'+(b.top-a.top)+'px) scale('+sc+')',opacity:.9,offset:.82},{transform:'translate('+(b.left-a.left)+'px,'+(b.top-a.top)+'px) scale('+sc+')',opacity:0}],{duration:900,easing:'cubic-bezier(.7,0,.2,1)',fill:'forwards'});}
+ setTimeout(function(){if(s.parentNode)s.parentNode.removeChild(s);},980);};
+var start=function(){if(started)return;started=true;s.classList.add('ix-go');t1=setTimeout(finish,3600);};
+var imgs=[].slice.call(s.querySelectorAll('img')),left=imgs.length;imgs.forEach(function(i){if(i.complete)left--;else i.addEventListener('load',function(){if(--left<=0)start();});i.addEventListener('error',function(){if(--left<=0)start();});});
+if(left<=0)start();setTimeout(start,900);setTimeout(function(){if(!gone)finish();},6000);
+s.addEventListener('pointermove',function(e){s.style.setProperty('--ix',(e.clientX/innerWidth-.5).toFixed(3));s.style.setProperty('--iy',(e.clientY/innerHeight-.5).toFixed(3));});
+s.addEventListener('click',finish);addEventListener('keydown',finish,{once:true});addEventListener('wheel',finish,{once:true,passive:true});addEventListener('touchmove',finish,{once:true,passive:true});})();</script>
 <a class="sr-only" href="#main">Skip to content</a>
 <div class="live" id="live" aria-live="polite" aria-atomic="true"></div>
-<p class="proto">Design prototype for the HST Medical website RFP. Demo store: nothing is sold or indexed. <a href="{{ROOT}}">Home</a></p>
 <header class="site-header">
   <div class="counter header-inner">
-    <a class="brand" href="{{ROOT}}" aria-label="HST Medical, a Kowa subsidiary. Home"><img src="{{ROOT}}assets/img/logo-hst-kowa-360.png" alt="HST Medical, Kowa subsidiary" width="74" height="40" decoding="async"></a>
+    <a class="brand" href="{{ROOT}}" aria-label="HST Medical, a Kowa subsidiary. Home"><img class="logo-std" src="{{ROOT}}assets/img/logo-hst.webp" alt="HST Medical, Kowa subsidiary" width="121" height="60" fetchpriority="high"><img class="logo-rev" src="{{ROOT}}assets/img/logo-hst-rev.webp" alt="" width="121" height="60" decoding="async"></a>
+    <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><svg class="ic i-menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ic i-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     <nav class="nav" id="site-nav" aria-label="Main">
       <a href="{{ROOT}}shop/pain-relief/"{{A_pain}}>Pain relief</a>
       <a href="{{ROOT}}shop/cough-cold-flu/"{{A_cough}}>Cough &amp; cold</a>
@@ -37,8 +56,9 @@
       <a href="{{ROOT}}about/"{{A_about}}>About</a>
       <a href="{{ROOT}}blog/"{{A_blog}}>Health notes</a>
     </nav>
-    <form class="hsearch" role="search" action="{{ROOT}}shop/" method="get"><label class="sr-only" for="hq">Search products</label><input id="hq" type="search" name="q" placeholder="Search medicines, supplements" autocomplete="off"><button type="submit" aria-label="Search"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button></form>
-    <a class="bag" href="{{ROOT}}cart/" aria-label="Bag"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l1 12H5z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Bag</span><span class="count" hidden>0</span></a>
-    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <div class="hs-slot">
+      <form class="hsearch" role="search" action="{{ROOT}}shop/" method="get"><label class="hs-ic" for="hq"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4-4"/></svg><span class="sr-only">Search products</span></label><input id="hq" type="search" name="q" placeholder="Search medicines, supplements" autocomplete="off" enterkeyhint="search"><button type="submit" aria-label="Search"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 7l5 5-5 5"/></svg></button></form>
+    </div>
+    <a class="bag" href="{{ROOT}}cart/" aria-label="Bag"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 8.5h13l-1 11.5h-11z"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/></svg><span class="bag-t">Bag</span><span class="count" hidden>0</span></a>
   </div>
 </header>

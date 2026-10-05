@@ -18,19 +18,38 @@
 <link rel="icon" type="image/svg+xml" href="../../assets/img/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../assets/css/style.css?v=20261005d">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/style.css?v=20261006r">
+<link rel="stylesheet" href="../../assets/css/header.css?v=20261006r">
+<link rel="stylesheet" href="../../assets/css/footer.css?v=20261006r">
+<link rel="stylesheet" href="../../assets/css/sections.css?v=20261006r">
 <script>document.documentElement.classList.add('js');</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://technextmarketing.github.io/hst-medical-website/"}, {"@type": "ListItem", "position": 2, "name": "All products", "item": "https://technextmarketing.github.io/hst-medical-website/shop/"}, {"@type": "ListItem", "position": 3, "name": "Premium Pain Relief", "item": "https://technextmarketing.github.io/hst-medical-website/shop/pain-relief/"}, {"@type": "ListItem", "position": 4, "name": "Rheuma-Salve® Crème"}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Product", "name": "Rheuma-Salve® Crème", "brand": {"@type": "Brand", "name": "Heritage"}, "image": "https://technextmarketing.github.io/hst-medical-website/assets/img/products/p04-white.webp", "description": "Rheuma-Salve Crème delivers rapid and deep penetrating pain relief at sore, tense, painful muscles and joints stemming from arthritis, bursitis, tendonitis and other conditions. It utilises a proprietary blend of premium quality essential oils and pharmaceutical grade ingredients that satisfy BP (Br", "category": "Premium Pain Relief", "manufacturer": {"@id": "https://technextmarketing.github.io/hst-medical-website/#org"}, "url": "https://technextmarketing.github.io/hst-medical-website/products/rheuma-salve-creme/", "offers": [{"@type": "Offer", "name": "Single pack", "priceCurrency": "SGD", "price": "10.10", "availability": "https://schema.org/InStock", "sku": "113057", "url": "https://technextmarketing.github.io/hst-medical-website/products/rheuma-salve-creme/"}, {"@type": "Offer", "name": "Travel pack 10 Sachets", "priceCurrency": "SGD", "price": "12.00", "availability": "https://schema.org/InStock", "url": "https://technextmarketing.github.io/hst-medical-website/products/rheuma-salve-creme/"}, {"@type": "Offer", "name": "Twin pack", "priceCurrency": "SGD", "price": "16.60", "availability": "https://schema.org/InStock", "url": "https://technextmarketing.github.io/hst-medical-website/products/rheuma-salve-creme/"}]}</script>
 </head>
 <body>
+<script>/* entry: the HST Medical logo builds itself from its parts, then flies into the header. Once per visit; click, key, scroll or Skip ends it; never under reduced motion. Parts: assets/img/intro (cut by _src/logo_cutout.py intro_slices). */
+(function(){var d=document,r=d.documentElement;try{if(sessionStorage.getItem('hst-intro')||matchMedia('(prefers-reduced-motion: reduce)').matches)return;sessionStorage.setItem('hst-intro','1');}catch(e){return;}
+r.classList.add('intro');var P='../../assets/img/intro/ix-',im=function(n){return '<img class="ix-part ix-'+n+'" src="'+P+n+'.webp" alt="" decoding="sync">';};
+d.body.insertAdjacentHTML('afterbegin','<div class="intro-splash" aria-hidden="true"><div class="ix-bg"><i class="ix-bloom"></i><i class="ix-ring r1"></i><i class="ix-ring r2"></i><i class="ix-ring r3"></i></div><div class="ix-stage"><div class="ix-logo">'+im('mark')+im('hst')+im('med')+im('kowa')+'<span class="ix-sheen"></span></div><p class="ix-tag"><span>Higher</span><i></i><span>Stronger</span><i></i><span>Together</span></p></div><button class="ix-skip" type="button" tabindex="-1">Skip</button><i class="ix-bar"></i></div>');
+var s=d.body.firstElementChild,lg=s.querySelector('.ix-logo'),gone=false,t1=0,started=false;
+var finish=function(){if(gone)return;gone=true;clearTimeout(t1);r.classList.remove('intro');s.classList.add('ix-exit');
+ var tg=d.querySelector('.site-header .brand');
+ if(tg&&lg.animate){var a=lg.getBoundingClientRect(),b=tg.getBoundingClientRect(),sc=b.height/a.height;
+  lg.style.transition='none';
+  lg.animate([{transform:getComputedStyle(lg).transform,opacity:1},{transform:'translate('+(b.left-a.left)+'px,'+(b.top-a.top)+'px) scale('+sc+')',opacity:.9,offset:.82},{transform:'translate('+(b.left-a.left)+'px,'+(b.top-a.top)+'px) scale('+sc+')',opacity:0}],{duration:900,easing:'cubic-bezier(.7,0,.2,1)',fill:'forwards'});}
+ setTimeout(function(){if(s.parentNode)s.parentNode.removeChild(s);},980);};
+var start=function(){if(started)return;started=true;s.classList.add('ix-go');t1=setTimeout(finish,3600);};
+var imgs=[].slice.call(s.querySelectorAll('img')),left=imgs.length;imgs.forEach(function(i){if(i.complete)left--;else i.addEventListener('load',function(){if(--left<=0)start();});i.addEventListener('error',function(){if(--left<=0)start();});});
+if(left<=0)start();setTimeout(start,900);setTimeout(function(){if(!gone)finish();},6000);
+s.addEventListener('pointermove',function(e){s.style.setProperty('--ix',(e.clientX/innerWidth-.5).toFixed(3));s.style.setProperty('--iy',(e.clientY/innerHeight-.5).toFixed(3));});
+s.addEventListener('click',finish);addEventListener('keydown',finish,{once:true});addEventListener('wheel',finish,{once:true,passive:true});addEventListener('touchmove',finish,{once:true,passive:true});})();</script>
 <a class="sr-only" href="#main">Skip to content</a>
 <div class="live" id="live" aria-live="polite" aria-atomic="true"></div>
-<p class="proto">Design prototype for the HST Medical website RFP. Demo store: nothing is sold or indexed. <a href="../../">Home</a></p>
 <header class="site-header">
   <div class="counter header-inner">
-    <a class="brand" href="../../" aria-label="HST Medical, a Kowa subsidiary. Home"><img src="../../assets/img/logo-hst-kowa-360.png" alt="HST Medical, Kowa subsidiary" width="74" height="40" decoding="async"></a>
+    <a class="brand" href="../../" aria-label="HST Medical, a Kowa subsidiary. Home"><img class="logo-std" src="../../assets/img/logo-hst.webp" alt="HST Medical, Kowa subsidiary" width="121" height="60" fetchpriority="high"><img class="logo-rev" src="../../assets/img/logo-hst-rev.webp" alt="" width="121" height="60" decoding="async"></a>
+    <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><svg class="ic i-menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ic i-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     <nav class="nav" id="site-nav" aria-label="Main">
       <a href="../../shop/pain-relief/" class="active">Pain relief</a>
       <a href="../../shop/cough-cold-flu/">Cough &amp; cold</a>
@@ -40,9 +59,10 @@
       <a href="../../about/">About</a>
       <a href="../../blog/">Health notes</a>
     </nav>
-    <form class="hsearch" role="search" action="../../shop/" method="get"><label class="sr-only" for="hq">Search products</label><input id="hq" type="search" name="q" placeholder="Search medicines, supplements" autocomplete="off"><button type="submit" aria-label="Search"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button></form>
-    <a class="bag" href="../../cart/" aria-label="Bag"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l1 12H5z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Bag</span><span class="count" hidden>0</span></a>
-    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <div class="hs-slot">
+      <form class="hsearch" role="search" action="../../shop/" method="get"><label class="hs-ic" for="hq"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4-4"/></svg><span class="sr-only">Search products</span></label><input id="hq" type="search" name="q" placeholder="Search medicines, supplements" autocomplete="off" enterkeyhint="search"><button type="submit" aria-label="Search"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 7l5 5-5 5"/></svg></button></form>
+    </div>
+    <a class="bag" href="../../cart/" aria-label="Bag"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 8.5h13l-1 11.5h-11z"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/></svg><span class="bag-t">Bag</span><span class="count" hidden>0</span></a>
   </div>
 </header>
 
@@ -100,41 +120,124 @@
   <p class="for">For: Pocket relief at the desk, gym or on the road; no mess</p></div>
   <div class="foot"><span class="price">S$13.00<small>incl. GST</small></span><button class="btn btn-sm" data-add data-id="rheuma-salve-medi-stick" data-name="Rheuma-Salve® On-the-Go Medi-Stick" data-price="13.0" data-variant="Single pack" data-code="114016" data-img="assets/img/products/p07-thumb.webp" data-url="products/rheuma-salve-medi-stick/"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l1 12H5z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg> Add to bag</button></div>
 </article></div></div></section>
-</main>
-<footer class="site-footer">
+</main><footer class="site-footer">
   <div class="counter">
-    <div class="footer-grid">
-      <div>
-        <img src="../../assets/img/logo-hst-kowa-360.png" alt="HST Medical, Kowa subsidiary" width="110" height="59" loading="lazy" decoding="async">
-        <p style="margin-top:.8rem;max-width:40ch">Health supplements and pain-relief remedies formulated by pharmacists and TCM physicians. A Singapore company since 1994, now part of Kowa Pharmaceutical Asia.</p>
-        <p class="small" style="margin-top:.6rem">Always read the label and follow directions for use.</p>
+
+    <section class="ft-help" aria-labelledby="ft-help-title">
+      <div class="ft-help-head">
+        <div>
+          <h2 class="ft-help-title" id="ft-help-title">Talk to the HST Medical team</h2>
+        </div>
+        <p class="ft-help-sub">Questions about a remedy, an order or stocking our brands? Reach the right desk directly.</p>
       </div>
-      <div><p class="ft-h">Shop</p><ul>
-        <li><a href="../../shop/pain-relief/">Pain relief</a></li>
-        <li><a href="../../shop/cough-cold-flu/">Cough, cold &amp; flu</a></li>
-        <li><a href="../../shop/kids/">Kids</a></li>
-        <li><a href="../../shop/stress-sleep/">Sleep</a></li>
-        <li><a href="../../shop/immunity-energy/">Tonics</a></li>
-        <li><a href="../../shop/">All 51 products</a></li>
-      </ul></div>
-      <div><p class="ft-h">HST Medical</p><ul>
-        <li><a href="../../about/">About us</a></li>
-        <li><a href="../../brands/">Our brands</a></li>
-        <li><a href="../../where-to-buy/">Where to buy</a></li>
-        <li><a href="../../resellers/">Trade and resellers</a></li>
-        <li><a href="../../blog/">Health notes</a></li>
-      </ul></div>
-      <div><p class="ft-h">Help</p><ul>
-        <li><a href="../../contact/">Contact us</a></li>
-        <li><a href="../../cart/">Your bag</a></li>
-        <li><a href="../../privacy/">Privacy</a></li>
-        <li><a href="mailto:resellercontact@hstmedical.com">resellercontact@hstmedical.com</a></li>
-      </ul></div>
+      <ul class="ft-cards">
+        <li class="ft-card">
+          <span class="ft-card-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><path d="M4 14a2 2 0 0 1 2-2h1v6H6a2 2 0 0 1-2-2z"/><path d="M20 14a2 2 0 0 0-2-2h-1v6h1a2 2 0 0 0 2-2z"/><path d="M17 18v.5a2.5 2.5 0 0 1-2.5 2.5H12"/></svg></span>
+          <div class="ft-card-body">
+            <h3 class="ft-card-h">Customer service</h3>
+            <p class="ft-card-meta">Product questions</p>
+            <a class="ft-card-link" href="tel:+6565365108"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h3.5l2 5-2.5 1.5a11 11 0 0 0 5.5 5.5l1.5-2.5 5 2V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg><span>+65 6536 5108 <span class="ft-ext">ext 816</span></span></a>
+            <a class="ft-card-link" href="mailto:contact@hstmedical.com"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg><span>contact<wbr>@hstmedical.com</span></a>
+          </div>
+        </li>
+        <li class="ft-card">
+          <span class="ft-card-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5"/><path d="M12 13v8"/><path d="m7.5 5.5 9 5"/></svg></span>
+          <div class="ft-card-body">
+            <h3 class="ft-card-h">Orders</h3>
+            <p class="ft-card-meta">Online orders and delivery</p>
+            <a class="ft-card-link" href="mailto:order@hstmedical.com"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg><span>order<wbr>@hstmedical.com</span></a>
+          </div>
+        </li>
+        <li class="ft-card">
+          <span class="ft-card-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 10.5V20h15v-9.5"/><path d="M3 10 5 4h14l2 6"/><path d="M3 10a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M10 20v-5h4v5"/></svg></span>
+          <div class="ft-card-body">
+            <h3 class="ft-card-h">Trade and resellers</h3>
+            <p class="ft-card-meta">Pharmacies, clinics and retailers</p>
+            <a class="ft-card-link" href="mailto:resellercontact@hstmedical.com"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg><span>resellercontact<wbr>@hstmedical.com</span></a>
+            <a class="ft-card-link ft-go" href="../../resellers/"><span>Become a reseller</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+          </div>
+        </li>
+        <li class="ft-card">
+          <span class="ft-card-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3 3 10.5l6.5 2.5L12 20z"/><path d="M21 3 9.5 13"/></svg></span>
+          <div class="ft-card-body">
+            <h3 class="ft-card-h">Telegram</h3>
+            <p class="ft-card-meta">Promotions and new products</p>
+            <a class="ft-card-link ft-go" href="https://t.me/hstmedical" target="_blank" rel="noopener"><span>Get offers on Telegram</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+            <p class="ft-card-note">t.me/hstmedical</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <div class="ft-main">
+      <div class="ft-brand">
+        <div class="ft-brand-id">
+          <a class="ft-logo" href="../../" aria-label="HST Medical, a Kowa subsidiary. Home"><img src="../../assets/img/logo-hst.webp" alt="HST Medical, Kowa subsidiary" width="484" height="240" loading="lazy" decoding="async"></a>
+          <p class="ft-blurb">Health supplements and pain-relief remedies formulated by pharmacists and TCM physicians. A Singapore company since 1994, now part of Kowa Pharmaceutical Asia.</p>
+        </div>
+        <address class="ft-addr">
+          <span class="ft-addr-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
+          <span class="ft-addr-txt"><strong>HST MEDICAL PTE LTD</strong><br>152 Paya Lebar Road #02-06<br>Citipoint Industrial Complex<br>Singapore 409020</span>
+          <a class="ft-go ft-dir" href="https://www.google.com/maps/search/?api=1&amp;query=152+Paya+Lebar+Road+Citipoint+Industrial+Complex+Singapore+409020" target="_blank" rel="noopener"><span>Get directions</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg><span class="sr-only"> (opens Google Maps in a new tab)</span></a>
+        </address>
+      </div>
+
+      <nav class="ft-nav" aria-label="Footer">
+        <div class="ft-col">
+          <h2 class="ft-h">Shop</h2>
+          <ul>
+            <li><a href="../../shop/pain-relief/"><span>Pain relief</span></a></li>
+            <li><a href="../../shop/cough-cold-flu/"><span>Cough, cold &amp; flu</span></a></li>
+            <li><a href="../../shop/kids/"><span>Kids</span></a></li>
+            <li><a href="../../shop/stress-sleep/"><span>Sleep</span></a></li>
+            <li><a href="../../shop/immunity-energy/"><span>Tonics</span></a></li>
+            <li><a href="../../shop/"><span>All 51 products</span></a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h2 class="ft-h">HST Medical</h2>
+          <ul>
+            <li><a href="../../about/"><span>About us</span></a></li>
+            <li><a href="../../brands/"><span>Our brands</span></a></li>
+            <li><a href="../../where-to-buy/"><span>Where to buy</span></a></li>
+            <li><a href="../../resellers/"><span>Trade and resellers</span></a></li>
+            <li><a href="../../blog/"><span>Health notes</span></a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h2 class="ft-h">Help</h2>
+          <ul>
+            <li><a href="../../contact/"><span>Contact us</span></a></li>
+            <li><a href="../../cart/"><span>Your bag</span></a></li>
+            <li><a href="../../where-to-buy/"><span>Delivery: free above S$30</span></a></li>
+            <li><a href="../../privacy/"><span>Privacy</span></a></li>
+          </ul>
+        </div>
+      </nav>
     </div>
-    <div class="legal"><span>© 2026 HST Medical Pte Ltd, Singapore.</span><span>Prototype by TechNext for the hstmedical.com redesign RFP.</span></div>
+
+    <div class="ft-shelf">
+      <p class="ft-shelf-h">On the shelf at</p>
+      <ul class="ft-chips">
+        <li>Guardian</li>
+        <li>Watsons</li>
+        <li>NHGP pharmacies</li>
+      </ul>
+      <a class="ft-go ft-shelf-link" href="../../where-to-buy/"><span>See where to buy</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+    </div>
+
+    <div class="ft-legal">
+      <div class="ft-legal-txt">
+        <p>&copy; 2026 HST Medical Pte Ltd <span aria-hidden="true">&middot;</span> UEN 199405743E</p>
+        <p>Always read the label and follow directions for use.</p>
+        <p>Prototype by TechNext for the hstmedical.com redesign RFP.</p>
+      </div>
+      <a class="ft-top" href="#main"><span>Back to top</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5"/><path d="m6 11 6-6 6 6"/></svg></a>
+    </div>
+
   </div>
 </footer>
 <div class="toast" id="toast" hidden role="status"><span></span><button type="button">Undo</button></div>
-<script src="../../assets/js/site.js?v=20261005d" defer></script>
+<script src="../../assets/js/site.js?v=20261006r" defer></script>
 </body>
 </html>

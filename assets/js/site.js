@@ -9,8 +9,13 @@
   function money(n) { return 'S$' + n.toFixed(2); }
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* header stuck state (style it via .scrolled .site-header; never change its height) */
+  var root_ = d.documentElement, onScroll = function () { root_.classList.toggle('scrolled', window.scrollY > 10); };
+  onScroll(); addEventListener('scroll', onScroll, { passive: true });
+
   /* mobile nav */
   var tg = d.querySelector('.nav-toggle'), nav = d.getElementById('site-nav');
+  if (tg && nav) d.addEventListener('keydown', function (e) { if (e.key === 'Escape' && nav.classList.contains('open')) { nav.classList.remove('open'); tg.setAttribute('aria-expanded', 'false'); tg.focus(); } });
   if (tg && nav) tg.addEventListener('click', function () {
     var open = nav.classList.toggle('open'); tg.setAttribute('aria-expanded', open);
   });
@@ -84,11 +89,11 @@
     if (!lines) return;
     var c = load(), sub = 0, FREE = 30, SHIP = 1.99; /* live store: free above S$30, S$1.99 at S$30 and below */
     if (!c.length) {
-      lines.innerHTML = '<div class="empty"><b>Your bag is empty.</b>Start at the counter: <a href="' + root + 'shop/pain-relief/">pain relief</a>, <a href="' + root + 'shop/cough-cold-flu/">cough and cold</a>, or <a href="' + root + 'shop/">all products</a>.</div>';
+      lines.innerHTML = '<div class="empty bag-empty"><svg class="ic bag-empty-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 8.5h13l-1 11.5h-11z"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/></svg><b>Your bag is empty.</b><span>Start with what you need today.</span><span class="bag-empty-ctas"><a class="btn btn-stamp" href="' + root + 'shop/pain-relief/">Pain relief</a><a class="btn btn-quiet" href="' + root + 'shop/cough-cold-flu/">Cough and cold</a><a class="btn btn-quiet" href="' + root + 'shop/">All products</a></span></div>';
     } else {
       lines.innerHTML = c.map(function (i) {
         sub += i.price * i.qty;
-        return '<div class="line"><img src="' + root + i.img + '" alt="" width="72" height="72"><div><a class="name" href="' + root + i.url + '">' + i.name + '</a><span class="meta">' + (i.variant ? i.variant + ' · ' : '') + money(i.price) + ' each' + (i.code ? ' · Item ' + i.code : '') + '</span><button class="rm" data-rm="' + i.id + '">Remove</button></div>' +
+        return '<div class="line"><img src="' + root + i.img + '" alt="" width="72" height="72"><div><a class="name" href="' + root + i.url + '">' + i.name + '</a><span class="meta">' + (i.variant ? i.variant + ' · ' : '') + money(i.price) + ' each' + (i.code ? ' · Item ' + i.code : '') + '</span><button class="rm" data-rm="' + i.id + '"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12"/></svg>Remove</button></div>' +
           '<div class="qty" aria-label="Quantity for ' + i.name + '"><button type="button" data-step="-1" aria-label="Decrease">−</button><input type="number" min="1" max="99" value="' + i.qty + '" data-line="' + i.id + '" aria-label="Quantity"><button type="button" data-step="1" aria-label="Increase">+</button></div><span class="sum">' + money(i.price * i.qty) + '</span></div>';
       }).join('');
     }
@@ -204,7 +209,7 @@
   }
 
   if (!reduce && 'IntersectionObserver' in window) {
-    var vh = innerHeight, targets = d.querySelectorAll('.labels > .plabel, .compare tbody tr, .counters > a, .shelf > a, .notes > a, #bag-lines > .line');
+    var vh = innerHeight, targets = d.querySelectorAll('.labels > .plabel, .compare tbody tr, .counters > a, .shelf > a, .notes > a, #bag-lines > .line, .mcard, .bento > a, .assure li, .timeline, .award, .kowa-card, .kowa-media, .kowa-copy, .map, .journey, .journey .ms, .filters .cat, .cat-stage');
     var io = new IntersectionObserver(function (es) {
       var k = 0;
       es.forEach(function (e) {
@@ -230,6 +235,24 @@
       el.addEventListener('pointerleave', function () { el.style.removeProperty('--tx'); el.style.removeProperty('--ty'); });
     });
   }
+
+  /* symptom matcher: pick a need, the matching card lifts and the rest step back */
+  d.querySelectorAll('[data-matcher]').forEach(function (m) {
+    var all = m.querySelector('.need-all'), box = m.querySelector('.mcards');
+    function pickNeed(slug) {
+      m.querySelectorAll('.need:not(.need-all)').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-need') === slug ? 'true' : 'false'); });
+      m.classList.toggle('has-pick', !!slug); if (all) all.hidden = !slug;
+      var hit = null;
+      m.querySelectorAll('.mcard').forEach(function (c) { var on = c.getAttribute('data-card') === slug; c.classList.toggle('is-match', on); if (on) hit = c; });
+      if (hit && box && box.scrollWidth > box.clientWidth + 4) box.scrollTo({ left: hit.offsetLeft - box.offsetLeft - parseFloat(getComputedStyle(box).paddingLeft || 0), behavior: reduce ? 'auto' : 'smooth' });
+      if (hit) say('Best match: ' + hit.querySelector('h3').textContent + '.');
+    }
+    m.addEventListener('click', function (e) {
+      var b = e.target.closest('.need'); if (!b) return;
+      var slug = b.getAttribute('data-need');
+      pickNeed(b.getAttribute('aria-pressed') === 'true' ? '' : slug);
+    });
+  });
 
   var pk = d.querySelector('.pdp-pack'), zm = pk && pk.querySelector('.zoomer');
   if (zm) {

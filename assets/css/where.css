@@ -1,0 +1,269 @@
+/* HST Medical: Where to buy (owned separately; linked only on this page, after style.css, header.css, footer.css and
+   sections.css). Prefix wtb-. Rules: light tints only, no line boxes, no tiles behind icons (plain magenta strokes),
+   no eyebrow labels, every CTA highlighted, every motion has a reduced-motion fallback.
+   Rhythm: sections --wtb-sec apart (about 92px at desktop), 24px gutters, everything on the 1240px .counter. */
+
+.wtb{--wtb-top:85px;--wtb-sec:clamp(3.5rem,6.4vw,5.75rem);--wtb-gap:24px;
+  --wtb-sh:0 1px 2px rgba(31,41,51,.04),0 8px 22px -12px rgba(31,41,51,.14),0 22px 40px -30px rgba(31,41,51,.22);
+  --wtb-sh-hi:0 2px 4px rgba(31,41,51,.04),0 18px 34px -18px rgba(179,18,76,.3),0 32px 52px -38px rgba(31,41,51,.32);
+  overflow-x:clip;font-variant-numeric:normal}  /* body's tabular-nums widens Inter's hyphens ("B1 - 291") */
+@media (max-width:960px){.wtb{--wtb-top:73px}}
+@media (max-width:640px){.wtb{--wtb-top:65px;--wtb-gap:16px}}
+.wtb [hidden]{display:none!important}
+.wtb .ic{flex:none}
+.wtb li{max-width:none}
+:where(.wtb) ul{list-style:none;margin:0;padding:0}
+.wtb-word{font:800 1.4rem/1 var(--font-display);letter-spacing:-.02em;color:var(--ink)}
+
+/* ================================================================ hero + partner logo tiles */
+.wtb-hero{position:relative;isolation:isolate;overflow:clip;padding-bottom:var(--wtb-sec)}
+.wtb-hero::before{content:"";position:absolute;z-index:-1;top:-34%;right:-14%;width:min(900px,96vw);aspect-ratio:1;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(251,220,230,.92) 0%,rgba(253,238,243,.6) 36%,rgba(253,238,243,0) 70%)}
+.wtb-hero .crumbs a{display:inline-block;padding-block:12px;margin-block:-12px}  /* 44px tap area */
+.wtb-hero-copy{max-width:760px;padding-top:clamp(2rem,5vw,3.75rem);animation:wtb-up .8s var(--ease-out) backwards}
+.wtb-hero h1{margin:0 0 1rem;font-size:clamp(2.5rem,1.4rem + 3.4vw,4.1rem);letter-spacing:-.04em}
+.wtb-hero .lead{max-width:50ch;font-size:clamp(1.08rem,1rem + .35vw,1.25rem);line-height:1.55}
+.wtb-hero-acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:2rem}
+.wtb-hero-acts .btn-stamp:hover .ic{transform:translateY(3px)}
+
+.wtb-logos{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--wtb-gap);margin-top:clamp(2.75rem,5.5vw,4rem)}
+.wtb-logos>li{animation:wtb-rise .9s var(--ease-out) backwards;animation-delay:calc(var(--i,0) * 70ms + 180ms)}
+.wtb-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;height:100%;min-height:152px;padding:26px 20px 22px;border-radius:20px;
+  background:#fff;color:var(--muted);font-size:.95rem;text-decoration:none;box-shadow:var(--wtb-sh);transition:transform .5s var(--ease-out),box-shadow .5s var(--ease-out),color .3s}
+.wtb-tile-logo{display:grid;place-items:center;width:100%;height:56px}
+.wtb-tile-logo img,.wtb-tab-logo img{width:auto;height:auto;max-width:min(150px,100%);max-height:46px;transition:transform .6s var(--ease-out),opacity .3s,filter .3s}
+.wtb-l-nhgp img{max-width:min(164px,100%);max-height:52px}
+.wtb-tile-n b{margin-right:.15rem;font:700 1.1rem/1 var(--font-display);color:var(--ink);transition:color .3s}
+.wtb-tile:hover{transform:translateY(-6px);box-shadow:var(--wtb-sh-hi);color:var(--brand-ink)}
+.wtb-tile:hover b{color:var(--brand-ink)}
+.wtb-tile:hover .wtb-tile-logo img{transform:scale(1.05)}
+.wtb-tile:focus-visible,.wtb-tab:focus-visible,.wtb-dir:focus-visible,.wtb-mini:focus-visible,.wtb-clear:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+
+/* ================================================================ store finder (light tint band) */
+.wtb-finder{padding:var(--wtb-sec) 0;background:linear-gradient(180deg,#fff5f8 0%,#fdf0f5 100%);scroll-margin-top:calc(var(--wtb-top) - 2.5rem)}
+.wtb-finder-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px 48px}
+.wtb-finder-copy{max-width:640px}
+.wtb-finder h2,.wtb-online h2{font-size:clamp(1.75rem,1.3rem + 1.4vw,2.4rem);letter-spacing:-.03em}
+.wtb-finder-copy p{margin-top:.75rem;color:var(--ink-2);font-size:1.05rem;line-height:1.6}
+
+.wtb-search{position:relative;flex:0 1 420px;min-width:min(100%,300px)}
+.wtb-search>.ic{position:absolute;left:20px;top:50%;width:20px;height:20px;translate:0 -50%;color:var(--brand);pointer-events:none}
+.wtb-search input{width:100%;min-height:58px;padding:.8rem 56px .8rem 52px;border:0;border-radius:var(--r-pill);background:#fff;color:var(--ink);font:500 1rem/1.2 var(--font);
+  box-shadow:var(--wtb-sh);transition:box-shadow .3s var(--ease-out);-webkit-appearance:none;appearance:none}
+.wtb-search input::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none}
+.wtb-search input::placeholder{color:var(--muted)}
+.wtb-search input:hover{box-shadow:var(--wtb-sh-hi)}
+.wtb-search input:focus{outline:none;box-shadow:inset 0 0 0 2px var(--brand),var(--wtb-sh-hi)}
+.wtb-clear{position:absolute;right:7px;top:50%;translate:0 -50%;display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;border-radius:50%;background:transparent;color:var(--ink-2);cursor:pointer;transition:background .25s,color .25s}
+.wtb-clear .ic{width:18px;height:18px}
+.wtb-clear:hover{background:var(--brand-tint);color:var(--brand-ink)}
+
+/* retailer tabs */
+.wtb-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--wtb-gap);margin-top:40px}
+.wtb-tab{position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px 16px;min-height:88px;padding:16px 24px;border:0;border-radius:20px;
+  background:rgba(255,255,255,.55);color:var(--muted);font:500 .95rem/1.3 var(--font);text-align:left;cursor:pointer;
+  transition:background .3s,color .3s,box-shadow .45s var(--ease-out),transform .45s var(--ease-out),opacity .3s}
+.wtb-tab::after{content:"";position:absolute;left:24px;right:24px;bottom:0;height:3px;border-radius:3px 3px 0 0;background:var(--brand);transform:scaleX(0);transition:transform .5s var(--ease-out)}
+.wtb-tab-logo{display:grid;place-items:center start;min-width:0;height:48px}
+.wtb-tab-logo img{max-width:min(132px,100%);max-height:38px;opacity:.72;filter:saturate(.55)}
+.wtb-tab .wtb-l-nhgp img{max-width:min(140px,100%);max-height:44px}
+.wtb-tab-n{flex:none;white-space:nowrap}
+.wtb-tab-n b{font:700 1.05rem/1 var(--font-display);color:var(--ink-2);transition:color .3s}
+.wtb-tab:hover{background:#fff;color:var(--ink-2);transform:translateY(-2px)}
+.wtb-tab:hover img{opacity:1;filter:none}
+.wtb-tab[aria-selected="true"]{background:#fff;color:var(--ink-2);box-shadow:var(--wtb-sh-hi)}
+.wtb-tab[aria-selected="true"]::after{transform:scaleX(1)}
+.wtb-tab[aria-selected="true"] img{opacity:1;filter:none}
+.wtb-tab[aria-selected="true"] b{color:var(--brand-ink)}
+.is-search .wtb-tab{background:rgba(255,255,255,.75);box-shadow:none}
+.is-search .wtb-tab::after{transform:scaleX(0)}
+.is-search .wtb-tab img{opacity:1;filter:none}
+.is-search .wtb-tab b{color:var(--brand-ink)}
+.wtb-tab.is-zero{opacity:.5}
+.wtb-tab.is-zero b{color:var(--muted)}
+
+/* one retailer's stores */
+.wtb-panels{margin-top:48px}
+.wtb-off{display:none}
+html:not(.js) .wtb-off{display:block}           /* no JS: every retailer listed in turn */
+html:not(.js) .wtb-tabs{display:none}
+html:not(.js) .wtb-panel+.wtb-panel{margin-top:56px}
+.wtb-panel-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px 40px;margin-bottom:28px}
+.wtb-panel-copy{max-width:720px}
+.wtb-panel h3,.wtb-group-head h3{font-size:clamp(1.35rem,1.15rem + .6vw,1.65rem);letter-spacing:-.02em}
+.wtb-h-n{margin-left:.4rem;font:500 1rem/1 var(--font);letter-spacing:0;color:var(--muted);white-space:nowrap}
+.wtb-zh{font:500 1.05rem/1 var(--font);letter-spacing:0;color:var(--muted)}
+.wtb-stocked{margin-top:.6rem;color:var(--ink-2);font-size:1.02rem;line-height:1.6;max-width:62ch}
+.wtb-facts-row{display:flex;flex-wrap:wrap;gap:8px 32px;margin-top:.85rem}
+.wtb-fact{display:flex;align-items:center;gap:10px;color:var(--ink-2);font-size:.95rem;line-height:1.55;max-width:none}
+.wtb-fact .ic{width:20px;height:20px;color:var(--brand)}
+.wtb-fact a{display:inline-block;padding-block:12px;margin-block:-12px;font-weight:600;white-space:nowrap}  /* 44px tap area, same line box */
+.wtb-award img{flex:none;width:44px;height:44px;border-radius:12px;object-fit:cover}
+.wtb-shop{flex:none}
+.wtb-shop .ic{width:16px;height:16px;transition:transform .4s var(--ease-out)}
+.wtb-shop:hover .ic{transform:translate(2px,-2px)}
+
+.wtb-stores{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--wtb-gap)}
+.wtb-store{display:flex;flex-direction:column;padding:24px;border-radius:20px;background:#fff;box-shadow:var(--wtb-sh);transition:transform .45s var(--ease-out),box-shadow .45s var(--ease-out)}
+.wtb-store h4{font:600 1.05rem/1.35 var(--font-display);letter-spacing:-.01em;color:var(--ink)}
+.wtb-addr{margin-top:.5rem;color:var(--ink-2);font:400 .95rem/1.55 var(--font)}
+.wtb-acts{display:flex;align-items:flex-end;justify-content:space-between;gap:8px 12px;margin-top:auto;padding-top:18px}
+.wtb-tels{display:flex;flex-direction:column;min-width:0}
+.wtb-tel{display:inline-flex;align-items:center;gap:8px;min-height:44px;color:var(--ink-2);font-size:.93rem;font-weight:500;text-decoration:none;white-space:nowrap;transition:color .25s}
+.wtb-tel .ic{width:18px;height:18px;color:var(--brand)}
+.wtb-tel:hover{color:var(--brand-ink);text-decoration:underline}
+.wtb-dir{flex:none;display:inline-flex;align-items:center;gap:8px;min-height:44px;margin-left:auto;padding:0 18px;border-radius:12px;background:var(--brand-tint);color:var(--brand-ink);
+  font-size:.93rem;font-weight:600;text-decoration:none;transition:background .25s,color .25s,box-shadow .3s var(--ease-out)}
+.wtb-dir .ic{width:17px;height:17px;transition:transform .4s var(--ease-out)}
+.wtb-store:hover{transform:translateY(-4px);box-shadow:var(--wtb-sh-hi)}
+.wtb-store:hover .wtb-dir{background:var(--brand-tint-2)}
+.wtb-dir:hover,.wtb-store:hover .wtb-dir:hover{background:var(--brand);color:#fff;box-shadow:0 12px 22px -14px rgba(221,24,96,.9)}
+.wtb-dir:hover .ic{transform:translate(2px,-2px)}
+
+/* search results, grouped by retailer */
+.wtb-status{margin-bottom:28px;color:var(--ink-2);font-size:1rem;font-weight:500}
+.wtb-status:empty{display:none}
+.wtb-group+.wtb-group{margin-top:48px}
+.wtb-group-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin-bottom:20px}
+.wtb-group-head span{color:var(--muted);font-size:.95rem}
+.wtb-empty{display:flex;align-items:flex-start;gap:20px;padding:32px;border-radius:20px;background:#fff;box-shadow:var(--wtb-sh)}
+.wtb-empty>.ic{width:32px;height:32px;margin-top:2px;color:var(--brand);stroke-width:1.5}
+.wtb-empty h3{font-size:1.25rem}
+.wtb-empty p{margin-top:.5rem;color:var(--ink-2);line-height:1.6}
+.wtb-empty-acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:1.25rem}
+
+/* ================================================================ buy online + beware of fakes */
+.wtb-online-sec{padding-top:var(--wtb-sec);scroll-margin-top:calc(var(--wtb-top) - 2.5rem)}
+.wtb-online{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:48px;align-items:center;
+  padding:clamp(2rem,5vw,4rem);border-radius:28px;background:linear-gradient(135deg,#fdeef3 0%,#fff6f9 55%,#fde9f0 100%)}
+.wtb-online::before{content:"";position:absolute;z-index:-1;right:-8%;top:-28%;width:58%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.95) 0%,rgba(255,255,255,0) 66%);transition:transform 1s var(--ease-out)}
+.wtb-online:hover::before{transform:translate(-5%,6%) scale(1.08)}
+.wtb-online-lead{margin-top:.75rem;max-width:46ch;color:var(--ink-2);font-size:1.08rem;line-height:1.6}
+.wtb-perks{display:grid;gap:22px;margin-top:2rem}
+.wtb-perks li{display:flex;align-items:flex-start;gap:16px}
+.wtb-perks .ic{width:28px;height:28px;margin-top:1px;color:var(--brand);stroke-width:1.5}
+.wtb-perks span{display:grid;gap:3px;color:var(--ink-2);font-size:.95rem;line-height:1.5}
+.wtb-perks b{font:600 1.05rem/1.35 var(--font-display);color:var(--ink)}
+.wtb-online-cta{margin-top:2.25rem}
+.wtb-packs{position:relative;align-self:stretch;min-height:340px}
+.wtb-packs::after{content:"";position:absolute;left:14%;right:14%;bottom:5%;height:9%;border-radius:50%;background:radial-gradient(closest-side,rgba(31,41,51,.2),rgba(31,41,51,0));z-index:-1;transition:transform .7s var(--ease-out)}
+.wtb-pack{position:absolute;left:50%;bottom:7%;width:min(48%,240px);height:auto;transform-origin:50% 92%;filter:drop-shadow(0 16px 16px rgba(31,41,51,.16));
+  transition:translate .8s var(--ease-out),rotate .8s var(--ease-out),scale .8s var(--ease-out)}
+.wtb-pack.k0{z-index:1;translate:-112% 0;rotate:-10deg;scale:.84}
+.wtb-pack.k1{z-index:2;translate:-50% -5%}
+.wtb-pack.k2{z-index:1;translate:12% 0;rotate:10deg;scale:.84}
+.wtb-online:hover .wtb-pack.k0{translate:-128% -3%;rotate:-15deg;scale:.88}
+.wtb-online:hover .wtb-pack.k1{translate:-50% -11%;scale:1.05}
+.wtb-online:hover .wtb-pack.k2{translate:28% -3%;rotate:15deg;scale:.88}
+.wtb-online:hover .wtb-packs::after{transform:scaleX(1.2)}
+
+.wtb-elsewhere{display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px;margin-top:32px}
+.wtb-elsewhere>p{color:var(--muted);font-size:.95rem;font-weight:500}
+.wtb-elsewhere ul{display:flex;flex-wrap:wrap;gap:16px}
+.wtb-mini{display:grid;place-items:center;min-width:132px;min-height:60px;padding:10px 20px;border-radius:16px;background:#fff;box-shadow:var(--wtb-sh);transition:transform .45s var(--ease-out),box-shadow .45s var(--ease-out)}
+.wtb-mini img{width:auto;height:auto;max-width:110px;max-height:28px;transition:transform .5s var(--ease-out)}
+.wtb-mini:hover{transform:translateY(-3px);box-shadow:var(--wtb-sh-hi)}
+.wtb-mini:hover img{transform:scale(1.05)}
+
+.wtb-fakes{display:flex;align-items:flex-start;gap:20px;margin-top:48px;padding:28px 32px;border-radius:20px;background:linear-gradient(100deg,#fff5ea 0%,#fff9f2 60%,#fffcf8 100%)}
+.wtb-fakes>.ic{width:32px;height:32px;margin-top:2px;color:var(--brand);stroke-width:1.5}
+.wtb-fakes h2{font-size:1.2rem;letter-spacing:-.015em}
+.wtb-fakes p{margin-top:.4rem;color:var(--ink-2);font-size:1rem;line-height:1.6;max-width:90ch}
+
+/* ================================================================ visit HST Medical | stock HST Medical */
+.wtb-more{padding:var(--wtb-sec) 0 calc(var(--wtb-sec) + 8px)}
+.wtb-more-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:var(--wtb-gap);align-items:stretch}
+.wtb-visit,.wtb-trade{display:flex;flex-direction:column;align-items:flex-start;padding:clamp(1.5rem,3.2vw,2.5rem);border-radius:24px}
+.wtb-visit{background:#fff;box-shadow:var(--wtb-sh)}
+.wtb-trade{position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(150deg,#fbdce6 0%,#fdeef3 50%,#fff7fa 100%)}
+.wtb-trade::after{content:"";position:absolute;z-index:-1;right:-20%;bottom:-30%;width:72%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.9) 0%,rgba(255,255,255,0) 66%);transition:transform .9s var(--ease-out)}
+.wtb-trade:hover::after{transform:translate(-8%,-8%) scale(1.1)}
+.wtb-visit>.ic,.wtb-trade>.ic{width:36px;height:36px;margin-bottom:18px;color:var(--brand);stroke-width:1.4;transition:transform .6s var(--ease-out)}
+.wtb-trade:hover>.ic{transform:rotate(-8deg) scale(1.08)}
+.wtb-visit h2,.wtb-trade h2{font-size:clamp(1.5rem,1.2rem + .9vw,1.9rem);letter-spacing:-.025em}
+.wtb-visit address{display:grid;gap:2px;margin-top:.75rem;font-style:normal;color:var(--ink-2);line-height:1.6}
+.wtb-visit address b{font-weight:600;color:var(--ink)}
+.wtb-hq-tel{margin-top:.35rem;font-size:1rem}
+.wtb-ext-n{color:var(--muted);font-weight:400}
+.wtb-visit .map{align-self:stretch;flex:1;min-height:300px;margin-top:20px;border:0;border-radius:18px;box-shadow:none}
+.wtb-visit .map figcaption a{min-height:44px}
+.wtb-trade>p{margin:.75rem 0 1.75rem;color:var(--ink-2);font-size:1.05rem;line-height:1.6}
+.wtb-tbc{align-self:stretch;margin-top:auto;padding-top:40px}
+.wtb-tbc h3{font-size:1.02rem;letter-spacing:-.01em;color:var(--ink-2)}
+.wtb-tbc p{margin-top:.3rem;color:var(--muted);font-size:.92rem}
+.wtb-tbc ul{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.wtb-tbc li{padding:8px 14px;border-radius:var(--r-pill);background:rgba(255,255,255,.8);color:var(--ink-2);font-size:.9rem;font-weight:500;line-height:1.3}
+
+/* ================================================================ motion */
+@keyframes wtb-up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes wtb-rise{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes wtb-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.wtb-rv.wtb-pre{opacity:0}
+.wtb-rv.wtb-go{animation:wtb-up .85s var(--ease-out) backwards}
+/* retailer swap and search results: quick fade and rise, staggered; "backwards" so hover lifts still work afterwards */
+.wtb-enter .wtb-panel-head,.wtb-enter .wtb-status,.wtb-enter .wtb-group-head,.wtb-enter .wtb-empty{animation:wtb-in .38s var(--ease-out) backwards}
+.wtb-enter .wtb-store{animation:wtb-in .48s var(--ease-out) backwards;animation-delay:calc(var(--i,0) * 32ms + 50ms)}
+
+/* ================================================================ responsive */
+@media (max-width:1100px){
+  .wtb-tab{flex-direction:column;justify-content:center;gap:8px;min-height:112px;padding:18px 16px;text-align:center}
+  .wtb-tab-logo{place-items:center;width:100%}
+  .wtb-tab::after{left:20%;right:20%}
+}
+@media (max-width:1024px){
+  .wtb-stores{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .wtb-online{grid-template-columns:1fr;gap:16px}
+  .wtb-packs{order:-1;min-height:230px;margin:-.5rem 0 -.25rem}
+  .wtb-pack{width:min(32%,200px)}
+}
+@media (max-width:900px){
+  .wtb-logos{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .wtb-logos>li{grid-column:span 2}
+  .wtb-logos>li:nth-child(n+4){grid-column:span 3}
+  .wtb-more-grid{grid-template-columns:1fr}
+  .wtb-visit .map{flex:none;min-height:320px}
+}
+@media (max-width:760px){
+  .wtb-search{flex:1 1 100%}
+  .wtb-tabs{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:32px}
+  .wtb-panels{margin-top:36px}
+  .wtb-panel-head{margin-bottom:22px}
+  .wtb-fakes{padding:24px;gap:16px}
+}
+@media (max-width:640px){
+  .wtb-logos{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .wtb-logos>li,.wtb-logos>li:nth-child(n+4){grid-column:auto}
+  .wtb-logos>li:last-child:nth-child(odd){grid-column:1 / -1}
+  .wtb-tile{min-height:124px;padding:20px 14px 18px;gap:10px}
+  .wtb-tile-logo{height:48px}
+  .wtb-tile-logo img{max-width:min(128px,100%);max-height:40px}
+  .wtb-tile .wtb-l-nhgp img{max-width:min(136px,100%);max-height:44px}
+  .wtb-tab{min-height:100px;padding:16px 12px}
+  .wtb-stores{grid-template-columns:1fr}
+  .wtb-store{padding:20px}
+  .wtb-shop{width:100%}
+  .wtb-online{border-radius:24px}
+  .wtb-packs{min-height:168px;margin:-1rem 0 0}
+  .wtb-pack{width:40%}
+  .wtb-elsewhere li{flex:1 1 40%}
+  .wtb-mini{min-width:0;width:100%}
+  .wtb-elsewhere ul{width:100%;gap:12px}
+  .wtb-empty{flex-direction:column;padding:24px}
+}
+@media (max-width:420px){
+  .wtb-hero-acts .btn{flex:1 1 auto}
+  .wtb-online-cta,.wtb-trade .btn{width:100%}
+  .wtb-store{padding:20px 18px}
+  .wtb-dir{padding:0 14px}
+}
+
+/* ================================================================ reduced motion */
+@media (prefers-reduced-motion:reduce){
+  .wtb *,.wtb *::before,.wtb *::after{animation:none!important;transition-duration:.01ms!important;transition-delay:0s!important}
+  .wtb .wtb-pre{opacity:1!important}
+  .wtb-tile:hover,.wtb-tab:hover,.wtb-store:hover,.wtb-mini:hover,.wtb-tile:hover .wtb-tile-logo img,.wtb-mini:hover img,.wtb-trade:hover>.ic{transform:none}
+  .wtb-online:hover::before,.wtb-trade:hover::after{transform:none}
+  .wtb-online:hover .wtb-pack.k0{translate:-112% 0;rotate:-10deg;scale:.84}
+  .wtb-online:hover .wtb-pack.k1{translate:-50% -5%;scale:1}
+  .wtb-online:hover .wtb-pack.k2{translate:12% 0;rotate:10deg;scale:.84}
+}

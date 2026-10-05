@@ -7,12 +7,14 @@ Reads _src/products.json (catalogue_parse.py) and _src/store.json (live store pr
 to the site root as <folder>/index.html (clean URLs). Templates map 1:1 to classic WordPress files; see
 WP-MAPPING.md. PROTOTYPE = True adds noindex to every page and a robots Disallow (unlisted test link).
 """
-import json, os, re, html, datetime
+import json, os, re, html, datetime, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import home_sections, page_where, page_about
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.dirname(HERE)
 BASE = "https://technextmarketing.github.io/hst-medical-website/"
-V = "20261005d"
+V = "20261006r"
 PROTOTYPE = True
 TODAY = datetime.date.today().isoformat()
 
@@ -243,27 +245,186 @@ GUIDES = {
     },
 }
 
+
+# ---------------------------------------------------------------- home: assurance band, bento, story, map
+AIC = {
+    "truck": '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 9h4l3 3v4h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg>',
+    "shield": '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6z"/><path d="m9 12 2 2 4-4"/></svg>',
+    "flask": '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6L5 18a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 18l-5-9V3"/><path d="M7.5 14h9"/></svg>',
+    "leaf": '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19C5 10 10 5 20 4c0 10-5 15-14 15z"/><path d="M5 19c3-4 6-7 10-9"/></svg>',
+    "store": '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h16l-1.5-5h-13zM5 9v11h14V9"/><path d="M10 20v-6h4v6"/></svg>',
+    "kowa": '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M8 12h8M12 8v8"/></svg>',
+}
+ASSURE = [("truck", "Free delivery over S$30", "S$1.99 below that"), ("shield", "100% genuine", "Direct from HST Medical"),
+          ("flask", "Made under GMP", "Pharmacist-formulated"), ("leaf", "Halal options", "Marked on each pack"),
+          ("store", "On the shelf", "Guardian, Watsons, NHGP"), ("kowa", "Part of Kowa", "Kowa Pharmaceutical Asia")]
+BENTO_IMG = {"pain-relief": "p03", "cough-cold-flu": "p27", "kids": "p23", "stress-sleep": "p43", "immunity-energy": "p09", "beauty-wellness": "p13"}
+TIMELINE = [("1930", "Heng Say Tong medical hall opens"), ("1994", "HST Medical Pte Ltd is incorporated"),
+            ("2024", "Beauty Insider and Guardian awards"), ("2026", "Joins Kowa Pharmaceutical Asia (29 May)")]
+MAP_Q = "HST+Medical+Pte+Ltd,+152+Paya+Lebar+Road,+Citipoint+Industrial+Complex,+Singapore+409020"
+
+
+def map_embed(title):
+    return ('<figure class="map"><iframe title="%s" src="https://maps.google.com/maps?q=%s&amp;z=16&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>'
+            '<figcaption><a href="https://www.google.com/maps/search/?api=1&amp;query=%s" target="_blank" rel="noopener">Open in Google Maps</a></figcaption></figure>') % (esc(title), MAP_Q, MAP_Q)
+
+
+def live_manifest():
+    path = os.path.join(OUT, "assets", "img", "live", "manifest.json")
+    try:
+        return json.load(open(path, encoding="utf-8"))
+    except Exception:
+        return []
+
+
+AWARD_TEXT = {  # the award artwork's own wording
+    "award-beauty-insider-2024-shou-wu.webp": "Beauty Insider Health & Wellness Awards 2024: HST Medical Shou Wu Hair Plus, Best Hair Supplements (Beauty Insiders' Choice)",
+    "award-beauty-insider-2024-sleep-aid.webp": "Beauty Insider Health & Wellness Awards 2024: HST Medical Sleep Aid, Best Wellness Supplement (Readers' Choice)",
+    "award-guardian-2024.webp": "The Guardian Awards 2024: winner",
+}
+
+
+def story_awards(root):
+    aw = [m for m in live_manifest() if m.get("kind") == "award"][:3]
+    if not aw:
+        return ""
+    order = [1, 0, 2] if len(aw) == 3 else list(range(len(aw)))
+    cards = ""
+    for slot, k in enumerate(order):
+        m = aw[k]
+        t = AWARD_TEXT.get(m["file"], m.get("alt") or "Award")
+        cards += '<figure class="award a%d"><img src="%sassets/img/live/%s" alt="%s" width="%s" height="%s" loading="lazy" decoding="async"><figcaption>%s</figcaption></figure>' % (
+            slot, root, m["file"], esc(t), m.get("width", 600), m.get("height", 600), esc(t))
+    return '<div class="awards" aria-label="Awards">%s</div><p class="small award-note">Award artwork as published on hstmedical.com.</p>' % cards
+
+
+MORTAR = '<svg class="ms-ic" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 30h44c0 12-9 22-22 22S10 42 10 30z"/><path d="M22 52l-2 6h24l-2-6"/><path d="M40 30 52 8"/><circle cx="53" cy="7" r="3"/><path d="M18 36c3 6 8 9 14 9"/></svg>'
+
+
+def story_journey(root):
+    L = {m["file"]: m for m in live_manifest()}
+    awards = "".join('<img src="%sassets/img/live/%s" alt="" width="200" height="200" loading="lazy" decoding="async">' % (root, f) for f in AWARD_TEXT if f in L)
+    kowa = '<img class="ms-photo" src="%sassets/img/live/kowa-joined-signing.webp" alt="" width="1400" height="933" loading="lazy" decoding="async">' % root if "kowa-joined-signing.webp" in L else ""
+    steps = [
+        ("1930", "The medical hall", "Heng Say Tong opens: the family medical hall that gives HST its name.", '<span class="ms-art ms-art-ic">%s</span>' % MORTAR),
+        ("1994", "HST Medical is incorporated", "Pharmacists and TCM physicians start formulating for Singapore's pharmacy chains.", '<span class="ms-art ms-art-logo"><img src="%sassets/img/logo-hst.webp" alt="" width="484" height="240" loading="lazy" decoding="async"></span>' % root),
+        ("2024", "Award-winning", "Beauty Insider Health & Wellness Awards and The Guardian Awards.", '<span class="ms-art ms-art-awards">%s</span>' % awards),
+        ("2026", "Part of Kowa", "Joins Kowa Pharmaceutical Asia on 29 May, within the Japanese Kowa group.", '<span class="ms-art ms-art-photo">%s</span>' % kowa),
+    ]
+    return "".join(f"""<li class="ms" style="--k:{n}"><span class="ms-dot" aria-hidden="true"></span>{art}<b class="ms-year">{y}</b><h3>{esc(t)}</h3><p>{esc(x)}</p></li>""" for n, (y, t, x, art) in enumerate(steps))
+
+
+FLIPBOOK = "https://technextmarketing.github.io/hst-medical-catalogue/#p=1"
+
+
+def catalogue_section(root):
+    """Home: the product-sheet flipbook. A designed book cover links straight to the flipbook (separate unlisted
+    site), opening in a new tab so the store stays open."""
+    packs = "".join('<img src="%sassets/img/products/%s-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async">' % (root, i) for i in ("p03", "p27", "p23"))
+    pts = "".join('<li>%s<span>%s</span></li>' % (IC["tick"], esc(t)) for t in ("51 product sheets, one per product", "Ingredients, how to use and cautions", "Pack sizes and item codes for ordering"))
+    return f"""<section class="band catalogue" aria-labelledby="h-cat">
+  <div class="counter cat-grid">
+    <div class="cat-copy">
+      <h2 id="h-cat">Browse the product catalogue</h2>
+      <p class="lead">Every HST Medical®, Heritage®, Rheuma-Salve® and Zoo-Vite® product sheet in one flip-through book.</p>
+      <ul class="cat-points">{pts}</ul>
+      <div class="cat-ctas"><a class="btn btn-stamp" href="{FLIPBOOK}" target="_blank" rel="noopener">Open the catalogue {IC['arrow']}<span class="sr-only"> (opens in a new tab)</span></a></div>
+    </div>
+    <div class="cat-stage">
+      <a class="book" href="{FLIPBOOK}" target="_blank" rel="noopener" aria-label="Open the HST Medical product catalogue (opens in a new tab)">
+        <span class="book-pages" aria-hidden="true"></span>
+        <span class="book-cover">
+          <img class="book-logo" src="{root}assets/img/logo-hst-rev.webp" alt="" width="484" height="240" loading="lazy" decoding="async">
+          <span class="book-title">Product Sheets</span>
+          <span class="book-sub">Health · Wellness · Beauty</span>
+          <span class="book-packs" aria-hidden="true">{packs}</span>
+          <span class="book-open">Open {IC['arrow']}</span>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>"""
+
+
+def kowa_band(root):
+    k = {m["file"]: m for m in live_manifest() if m.get("kind") == "kowa"}
+    m, sg = k.get("kowa-joined-banner.webp"), k.get("kowa-joined-signing.webp")
+    if not m:
+        return ""
+    inset = ('<img class="kowa-inset" src="%sassets/img/live/%s" alt="%s" width="%s" height="%s" loading="lazy" decoding="async">'
+             % (root, sg["file"], esc(sg.get("alt") or ""), sg.get("width", 1400), sg.get("height", 933))) if sg else ""
+    facts = "".join('<li>%s<span>%s</span></li>' % (AIC[i], esc(t)) for i, t in [
+        ("kowa", "Part of Kowa Pharmaceutical Asia Pte. Ltd. since 29 May 2026"),
+        ("shield", "Within the Japanese Kowa group, the makers of Vantelin"),
+        ("store", "Same brands, same pharmacists, same shelves")])
+    return f"""<section class="band kowa-band" aria-labelledby="h-kowa">
+  <div class="counter kowa-grid">
+    <div class="kowa-media">
+      <span class="kowa-shape" aria-hidden="true"></span>
+      <figure class="kowa-photo"><img src="{root}assets/img/live/{m['file']}" alt="{esc(m.get('alt') or 'Management and staff from Kowa and HST Medical')}" width="{m.get('width', 1400)}" height="{m.get('height', 933)}" loading="lazy" decoding="async"></figure>
+      {inset}
+      <span class="kowa-badge"><b>29 May</b><small>2026</small></span>
+    </div>
+    <div class="kowa-copy">
+      <h2 id="h-kowa">We have joined <em>Kowa Pharmaceutical Asia</em></h2>
+      <p>HST Medical is now part of the Japanese Kowa group. Kowa's research depth joins a Singapore range built since 1994, and the brands on the shelf, and the pharmacists behind them, stay the same.</p>
+      <ul class="kowa-facts">{facts}</ul>
+      <a class="btn btn-stamp" href="{root}about/">Read our story {IC['arrow']}</a>
+    </div>
+  </div>
+</section>"""
+
+
+# ---------------------------------------------------------------- ABOUT (live hstmedical.com/about/ content + images)
+def page_ctx(root):
+    """Helpers handed to the page modules (_src/page_*.py), which own their markup."""
+    return {"root": root, "esc": esc, "IC": IC, "money": money, "map_embed": map_embed, "live_manifest": live_manifest,
+            "AWARD_TEXT": AWARD_TEXT, "TIMELINE": TIMELINE, "PRODUCTS": PRODUCTS, "CATS": CATS, "BY_SLUG": BY_SLUG,
+            "cat_products": cat_products, "product_label": product_label, "add_btn": add_btn, "RETAILERS_TBC": RETAILERS_TBC, "story_journey": story_journey,
+            "OUT": OUT, "V": V}
+
+
+def build_where():
+    root = "../"
+    crumb, crumb_ld = crumbs(root, [("Where to buy", None)])
+    page("where-to-buy/index.html", "Where to Buy HST Medical Products in Singapore — Guardian, Watsons, NHGP and Online",
+         "Find Rheuma-Salve®, Heritage® and Zoo-Vite® at Guardian, Watsons and NHGP pharmacies, or order online with island-wide delivery.",
+         page_where.render(page_ctx(root), crumb), active="where",
+         extra_head=crumb_ld + '<link rel="stylesheet" href="../assets/css/where.css?v=%s">\n' % V, body_class="pg-where")
+    add_sitemap(BASE + "where-to-buy/")
+
+
+def build_about():
+    root = "../"
+    crumb, crumb_ld = crumbs(root, [("About HST Medical", None)])
+    page("about/index.html", "About HST Medical — Higher, Stronger, Together | Since 1930 in Singapore",
+         "HST Medical (博诚药业): Singapore's home of Rheuma-Salve® pain relief and Zoo-Vite® kids' vitamins, from the Heng Say Tong medical hall (1930), incorporated 1994, part of Kowa Pharmaceutical Asia since 29 May 2026.",
+         page_about.render(page_ctx(root), crumb), active="about",
+         extra_head=crumb_ld + '<link rel="stylesheet" href="../assets/css/about.css?v=%s">\n' % V, body_class="pg-about")
+    add_sitemap(BASE + "about/")
+
+
 # ---------------------------------------------------------------- HOME HERO: the Rheuma-Salve format stage
 # Five formats on one stage. Phrases and "For:" lines are the catalogue's own benefit statements; chips are the
 # catalogue's active-ingredient lists (percentages only where the label prints them). Cut-outs: hero_cutouts.py.
 HERO = [
-    {"slug": "rheuma-salve-balm", "img": "balm", "fmt": "Balm", "word": "BALM", "size": "50g jar", "s": 1.04, "tone": "#bfe5d0",
+    {"t1": "Deep relief for", "t2": "aching joints", "slug": "rheuma-salve-balm", "img": "balm", "fmt": "Balm", "word": "BALM", "size": "50g jar", "s": 1.04, "tone": "#ffd9e6",
      "phrase": "aching joints", "origin": "Made in Singapore",
      "chips": [("Menthol", "", "menthol"), ("Camphor", "", "camphor"), ("Wintergreen", "", "wintergreen"), ("Peppermint oil", "", "peppermint"), ("Eucalyptus oil", "", "eucalyptus")]},
-    {"slug": "rheuma-salve-creme", "img": "creme", "fmt": "Crème", "word": "CRÈME", "size": "50g tube", "s": .96, "tone": "#d3eee0",
+    {"t1": "Rapid relief for", "t2": "sore muscles", "slug": "rheuma-salve-creme", "img": "creme", "fmt": "Crème", "word": "CRÈME", "size": "50g tube", "s": .96, "tone": "#c6ead7",
      "phrase": "sore muscles", "origin": "Made in Singapore",
      "chips": [("Menthol", "13.8%", "menthol"), ("Wintergreen", "12%", "wintergreen"), ("Peppermint oil", "9.2%", "peppermint"), ("Eucalyptus oil", "2%", "eucalyptus"), ("Capsaicin", "0.4%", "capsaicin")]},
-    {"slug": "rheuma-salve-liniment", "img": "liniment", "fmt": "Liniment", "word": "ROLL-ON", "size": "10ml roll-on", "s": 1.02, "tone": "#c2e6d6",
+    {"t1": "Roll-on relief", "t2": "for headaches", "slug": "rheuma-salve-liniment", "img": "liniment", "fmt": "Liniment", "word": "ROLL-ON", "size": "10ml roll-on", "s": .98, "tone": "#ffdbe7",
      "phrase": "sudden headaches", "origin": "Made in Singapore",
      "chips": [("Menthol", "", "menthol"), ("Peppermint", "", "peppermint"), ("Wintergreen", "", "wintergreen"), ("Eucalyptus oil", "", "eucalyptus")]},
-    {"slug": "rheuma-salve-pain-relief-patch-cool", "img": "patch", "fmt": "Patch", "word": "PATCH", "size": "8 cooling patches", "s": 1.0, "tone": "#c8ddf6",
+    {"t1": "Cooling relief for", "t2": "a stiff back", "slug": "rheuma-salve-pain-relief-patch-cool", "img": "patch", "fmt": "Patch", "word": "PATCH", "size": "8 cooling patches", "s": .9, "tone": "#cfe0f7",
      "phrase": "a stiff back", "origin": "Made in Taiwan for HST Medical",
      "chips": [("Peppermint oil", "6%", "peppermint"), ("Menthol", "5.8%", "menthol"), ("Centella asiatica", "3%", "centella"), ("Hops oil", "1.5%", "hops"), ("Frankincense", "0.5%", "frankincense"), ("Myrrh", "0.5%", "myrrh")]},
-    {"slug": "rheuma-salve-medi-stick", "img": "stick", "fmt": "Medi-Stick", "word": "STICK", "size": "15g stick", "s": .94, "tone": "#efe4c2",
+    {"t1": "No-mess relief for", "t2": "tired muscles", "slug": "rheuma-salve-medi-stick", "img": "stick", "fmt": "Medi-Stick", "word": "STICK", "size": "15g stick", "s": .96, "tone": "#f4e3b6",
      "phrase": "tired muscles", "origin": "Made in Singapore",
      "chips": [("Wintergreen oil", "18%", "wintergreen"), ("Menthol", "10%", "menthol"), ("Eucalyptus", "8%", "eucalyptus"), ("Peppermint", "5%", "peppermint"), ("Capsicum", "1%", "capsaicin")]},
 ]
-HERO_DIMS = {"balm": (459, 324), "creme": (496, 590), "liniment": (581, 492), "patch": (671, 760), "stick": (276, 582)}
+HERO_DIMS = {"balm": (459, 324), "creme": (496, 590), "liniment": (370, 758), "patch": (414, 502), "stick": (516, 554)}
 CHIP_DEPTH = [18, 30, 22, 26, 14, 34]  # parallax px per chip slot
 
 
@@ -272,84 +433,152 @@ def hero_chips(chips):
         n, k, CHIP_DEPTH[n], n * .7, esc(name), ' <small>%s</small>' % pct if pct else "") for n, (name, pct, k) in enumerate(chips))
 
 
+def _rand(seed):
+    x = seed
+    while True:
+        x = (x * 1103515245 + 12345) % 2147483648
+        yield x / 2147483648.0
+
+
+def hero_fx(n=18):
+    r = _rand(65499)
+    return "".join('<i style="--x:%.1f%%;--d:%.1fs;--t:%.1fs;--z:%.1fpx"></i>' % (next(r) * 100, next(r) * -16, 11 + next(r) * 9, 3 + next(r) * 5) for _ in range(n))
+
+
+LEAF = '<svg class="hs-leaf %s" viewBox="0 0 120 120" aria-hidden="true"><path d="M62 8C30 28 16 62 28 104c36-6 62-36 60-76-6-8-14-14-26-20z"/><path d="M28 104C42 76 56 50 78 22M44 76l-12-8M52 62l-14-6M62 48l-12-4M54 70l14 2M64 54l14 0"/></svg>'
+
+
 def build_hero(root=""):
-    data, packs, tabs = [], [], []
+    """Hero v6: one product in the spotlight. Each format is a slide (headline, name, use, price, Add to bag) stacked
+    in one grid cell so the copy never changes height; the pack hands off on a tinted halo; tabs carry transparent
+    thumbnails and a sliding indicator that also shows the 3 s autoplay progress."""
+    slides, packs, tabs, chips_data = [], [], [], []
     for n, h in enumerate(HERO):
         p = BY_SLUG[h["slug"]]
         v = p["variants"][0]
         w, ht = HERO_DIMS[h["img"]]
+        nv = len(p["variants"])
+        packs_txt = "%d pack sizes" % nv if nv > 1 else "Single pack"
+        on = n == 0
+        words = lambda t, o=0: " ".join('<span class="w" style="--wi:%d"><span>%s</span></span>' % (o + k, esc(x)) for k, x in enumerate(t.split()))
+        slides.append(f"""<article class="hs-slide{' is-on' if on else ''}" data-i="{n}" aria-hidden="{'false' if on else 'true'}">
+          <h2 class="hs-title"><span class="ln">{words(h['t1'])}</span><span class="ln em">{words(h['t2'], len(h['t1'].split()))}</span></h2>
+          <p class="hs-name"><a href="products/{p['slug']}/"{'' if on else ' tabindex="-1"'}>{esc(p['name'])}</a><span>{esc(h['size'])} · {packs_txt}</span></p>
+          <p class="hs-desc">For: {esc(p['for'])}</p>
+          <p class="hs-origin">{IC['tick']}<span>{esc(h['origin'])}</span></p>
+          <div class="hs-buy"><span class="hs-price"><b>{esc(money(v['price']))}</b><small>incl. GST</small></span>{add_btn(p, root, cls='btn btn-light').replace('<button ', '<button tabindex="-1" ' if not on else '<button ', 1)}<a class="hs-more" href="products/{p['slug']}/"{'' if on else ' tabindex="-1"'}>View product {IC['arrow']}</a></div>
+        </article>""")
         src = "assets/img/hero/rs-%s.webp" % h["img"]
         alt = "%s, %s" % (p["name"].replace("®", ""), h["size"])
-        nv = len(p["variants"])
-        data.append({"fmt": h["fmt"], "word": h["word"], "phrase": h["phrase"], "tone": h["tone"], "name": p["name"].replace("Medi-Stick", "Medi\u2011Stick"), "size": h["size"],
-                     "origin": h["origin"], "for": p["for"], "price": v["price"], "packs": "%d pack sizes" % nv if nv > 1 else "Single pack",
-                     "url": "products/%s/" % p["slug"], "chips": h["chips"],
-                     "add": {"id": p["slug"], "name": p["name"], "price": v["price"], "variant": v["label"], "code": v["code"],
-                             "img": "assets/img/products/%s-thumb.webp" % p["image"], "url": "products/%s/" % p["slug"]}})
-        img = ('<img src="%s" alt="%s" width="%d" height="%d" fetchpriority="high" decoding="async">' % (src, esc(alt), w, ht) if n == 0 else
-               '<img data-src="%s" alt="" width="%d" height="%d" decoding="async">' % (src, w, ht))
-        packs.append('<span class="hs-pack%s" data-i="%d" style="--s:%s">%s<i class="hs-sheen" aria-hidden="true"></i></span>' % (" is-on" if n == 0 else "", n, h["s"], img))
+        packs.append('<span class="hs-pack%s" data-i="%d" style="--s:%s"><span class="hs-bob"><span class="hs-tl"><img src="%s" alt="%s" width="%d" height="%d" decoding="async"%s><i class="hs-sheen" aria-hidden="true"></i></span></span></span>'
+                     % (" is-on" if on else "", n, h["s"], src, esc(alt) if on else "", w, ht, ' fetchpriority="high"' if on else ' fetchpriority="low"'))
         tw, th = (120, round(120 * ht / w)) if w >= ht else (round(120 * w / ht), 120)
-        tabs.append('<a class="fmt" href="products/%s/" data-i="%d"%s><span class="th"><img src="assets/img/hero/rs-%s-thumb.webp" alt="" width="%d" height="%d" decoding="async"></span><span class="t">%s</span><span class="bar" aria-hidden="true"><i></i></span></a>'
-                    % (p["slug"], n, ' aria-current="true"' if n == 0 else "", h["img"], tw, th, esc(h["fmt"])))
-    h0, p0, d0 = HERO[0], BY_SLUG[HERO[0]["slug"]], data[0]
+        tabs.append('<a class="fmt" href="products/%s/" data-i="%d"%s><span class="th"><img src="assets/img/hero/rs-%s-thumb.webp" alt="" width="%d" height="%d" decoding="async"></span><span class="t">%s</span></a>'
+                    % (p["slug"], n, ' aria-current="true"' if on else "", h["img"], tw, th, esc(h["fmt"])))
+        chips_data.append({"tone": h["tone"], "name": p["name"].replace("®", ""), "size": h["size"], "price": v["price"], "chips": h["chips"][:3]})
+    h0 = HERO[0]
     return f"""<section class="hero hs" aria-labelledby="h1" data-hero style="--tone:{h0['tone']}">
   <div class="hero-block">
-    <div class="hs-aurora" aria-hidden="true"></div>
+    <div class="hs-bg" aria-hidden="true"><i class="hs-blob b1"></i><i class="hs-blob b2"></i>{LEAF % 'l1'}{LEAF % 'l3'}<span class="hs-fx">{hero_fx(12)}</span></div>
     <div class="hero-body">
       <div class="hs-copy">
-        <h1 id="h1"><span class="sr-only">Rheuma-Salve® pain relief in five formats: balm, crème, roll-on liniment, cooling patch and Medi-Stick</span><span class="hs-l1" aria-hidden="true"><span>Pain relief for</span></span><span class="hs-l2" aria-hidden="true">{''.join('<span class="hs-phrase%s"><u>%s</u></span>' % (" is-on" if n == 0 else "", esc(h["phrase"])) for n, h in enumerate(HERO))}</span></h1>
-        <p class="dose">Rheuma-Salve® has been on Singapore's pharmacy shelves since 1994. Five formats, each made for a different kind of ache. Pick the one that fits your day.</p>
-        <div class="hero-ctas"><a class="btn btn-light" href="shop/pain-relief/">Shop pain relief {IC['arrow']}</a><a class="btn btn-ghost" href="shop/cough-cold-flu/">Cough and cold</a></div>
-        <ul class="checks">
-          <li>{IC['tick']}<span>Formulated by pharmacists and TCM physicians</span></li>
-          <li>{IC['tick']}<span>On the shelf at Guardian, Watsons and NHGP</span></li>
-        </ul>
+        <h1 id="h1" class="sr-only">Rheuma-Salve® pain relief in five formats: balm, crème, roll-on liniment, cooling patch and Medi-Stick</h1>
+        <div class="hs-slides">{''.join(slides)}</div>
+        <div class="hero-ctas"><a class="hs-link" href="shop/pain-relief/">Shop all pain relief {IC['arrow']}</a><a class="hs-link" href="shop/cough-cold-flu/">Cough and cold {IC['arrow']}</a></div>
       </div>
       <div class="hs-show">
         <div class="hs-stage" id="hs-stage">
-          <div class="hs-word" aria-hidden="true">{''.join('<span%s>%s</span>' % (' class="is-on"' if n == 0 else "", esc(h["word"])) for n, h in enumerate(HERO))}</div>
-          <svg class="hs-orbit" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="98"/><circle cx="100" cy="100" r="88"/><circle class="dot" cx="100" cy="2" r="2.2"/></svg>
-          <div class="hs-disk" aria-hidden="true"></div>
+          <div class="hs-halo" aria-hidden="true"></div>
+          <svg class="hs-rings" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="97"/><circle cx="100" cy="100" r="84"/><circle class="dot" cx="100" cy="3" r="2.4"/></svg>
           <div class="hs-floor" aria-hidden="true"></div>
-          <div class="hs-float"><div class="hs-tilt">{''.join(packs)}</div></div>
-          <ul class="hs-chips" aria-label="Active ingredients">{hero_chips(h0['chips'])}</ul>
+          {''.join(packs)}
+          <ul class="hs-chips" aria-label="Key ingredients">{hero_chips(h0['chips'][:3])}</ul>
         </div>
-        <article class="hs-card" aria-label="Featured format">
-          <div class="hs-print">
-            <p class="hs-meta"><span data-f="fmt">{esc(h0['fmt'])}</span><span data-f="size">{esc(h0['size'])}</span><span data-f="packs">{esc(d0['packs'])}</span></p>
-            <p class="hs-name"><a data-f="url" href="{d0['url']}">{esc(p0['name'])}</a></p>
-            <p class="hs-for">For: <span data-f="for">{esc(p0['for'])}</span></p>
-            <p class="hs-origin">{IC['tick']}<span data-f="origin">{esc(h0['origin'])}</span></p>
-          </div>
-          <div class="hs-buy"><span class="hs-price"><b data-f="price">{esc(money(d0['price']))}</b><small>incl. GST</small></span>{add_btn(p0, root, cls="btn btn-sm btn-stamp")}<a class="hs-go" data-f="url" href="{d0['url']}" aria-label="View product">{IC['arrow']}</a></div>
-        </article>
         <div class="hs-ctrl">
-          <div class="hs-tabs" aria-label="Rheuma-Salve formats">{''.join(tabs)}</div>
+          <div class="hs-tabs" aria-label="Rheuma-Salve formats"><span class="hs-ind" aria-hidden="true"><i></i></span>{''.join(tabs)}</div>
           <button class="hs-pause" type="button" aria-pressed="false" hidden><svg class="ic i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg><svg class="ic i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"/></svg><span class="sr-only">Pause the format showcase</span></button>
         </div>
       </div>
     </div>
+    <svg class="hs-wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 90V46C180 10 420 0 720 30s560 52 720 8v52z"/></svg>
   </div>
   {{{{FOOT}}}}
-  <script type="application/json" id="hero-data">{json.dumps(data, ensure_ascii=False).replace('</', '<\\/')}</script>
+  <script type="application/json" id="hero-data">{json.dumps(chips_data, ensure_ascii=False).replace('</', '<\\/')}</script>
 </section>"""
+
+
+# ---------------------------------------------------------------- matcher (replaces the compare tables)
+NEEDS = {
+    "rheuma-salve-balm": "Deep joint pain", "rheuma-salve-creme": "Everyday aches", "rheuma-salve-liniment": "Headache, giddiness",
+    "rheuma-salve-pain-relief-patch-cool": "Back and shoulders", "rheuma-salve-medi-stick": "Aches on the go",
+    "alievaid-herbal-drops": "Sore throat", "cough-alievaid-herbal-lintus": "Cough with phlegm", "flu-gard": "Fever and body aches",
+    "ivy-leaf-cough-syrup": "Dry or chesty cough", "ivy-leaf-drops": "Cough on the go", "sinus-clear-2-in-1": "Blocked nose",
+}
+
+
+# hand-drawn need pictograms (24px grid, 1.6 stroke) for the matcher chips and card tags
+NEED_IC = {
+    "joint": '<path d="M9 3v6.5a3 3 0 0 0 1 2.2l.5.5a3 3 0 0 1 0 4.2L9 18v3"/><path d="M15 3v6.5a3 3 0 0 1-1 2.2l-.5.5a3 3 0 0 0 0 4.2L15 18v3"/><path d="M5 12.5c1.2-.8 2.4-.8 3.5 0M15.5 12.5c1.1-.8 2.3-.8 3.5 0"/>',
+    "muscle": '<path d="M4 15c1-5 4-8 7-8 1.5 0 2 1 2 2s-1 1.5-2 1.5"/><path d="M11 10.5c3 0 6 1 7.5 4 .8 1.6-.3 3.5-2.2 3.5H6.5C5 18 4 16.8 4 15"/><path d="M9 13.5c1.5.6 3.2.6 4.8 0"/>',
+    "head": '<path d="M7 19v-2.5A6.5 6.5 0 1 1 17.5 11l1.5 3h-2v3a2 2 0 0 1-2 2h-2"/><path d="M10 6.5l1.2 2.5 1.6-2 .9 2.6"/>',
+    "back": '<path d="M12 3v18"/><path d="M9.5 6h5M9 10h6M9 14h6M9.5 18h5"/><path d="M5 8c-1 2-1 6 0 8M19 8c1 2 1 6 0 8"/>',
+    "walk": '<circle cx="13" cy="4.5" r="1.8"/><path d="M11 9.5l-2 4.5 2.5 2 1 5M11 9.5l3.5-.5 2 3M11.5 16l-3 5M8.5 11l-2.5 1"/>',
+    "throat": '<path d="M8 3c0 4 1 5 4 5s4-1 4-5"/><path d="M10 8v4c0 3-3 4-3 9M14 8v4c0 3 3 4 3 9"/><path d="M12 13.5v2.5"/>',
+    "cough": '<path d="M6 15a4 4 0 0 1 1-7.9A5 5 0 0 1 16.5 8 3.5 3.5 0 0 1 17 15z"/><path d="M8 18.5h.01M12 19.5h.01M16 18.5h.01"/>',
+    "fever": '<path d="M12 4a2 2 0 0 1 2 2v8.3a3.5 3.5 0 1 1-4 0V6a2 2 0 0 1 2-2z"/><path d="M12 10v6"/><path d="M17 6h2M17 9h2"/>',
+    "lungs": '<path d="M12 4v7"/><path d="M12 11c-1 0-2 .5-2.5 1.5M12 11c1 0 2 .5 2.5 1.5"/><path d="M9.5 7C6 8 4 12 4 16.5c0 2 1.5 3.5 3.5 3.5 1.5 0 2.5-1 2.5-2.5V9"/><path d="M14.5 7C18 8 20 12 20 16.5c0 2-1.5 3.5-3.5 3.5-1.5 0-2.5-1-2.5-2.5V9"/>',
+    "lozenge": '<rect x="4" y="8" width="16" height="9" rx="4.5"/><path d="M9 8v9M15 8v9"/><path d="M7 5l1 2M17 5l-1 2"/>',
+    "nose": '<path d="M12 4c-1 4-4 7-4 10.5A2.5 2.5 0 0 0 10.5 17h3a2.5 2.5 0 0 0 2.5-2.5C16 11 13 8 12 4z"/><path d="M9.5 17c0 1.5-1 2.5-2.5 3M14.5 17c0 1.5 1 2.5 2.5 3"/>',
+}
+NEED_ICON_FOR = {"rheuma-salve-balm": "joint", "rheuma-salve-creme": "muscle", "rheuma-salve-liniment": "head", "rheuma-salve-pain-relief-patch-cool": "back",
+                 "rheuma-salve-medi-stick": "walk", "alievaid-herbal-drops": "throat", "cough-alievaid-herbal-lintus": "cough", "flu-gard": "fever",
+                 "ivy-leaf-cough-syrup": "lungs", "ivy-leaf-drops": "lozenge", "sinus-clear-2-in-1": "nose"}
+
+
+def need_ic(slug, cls="nic"):
+    k = NEED_ICON_FOR.get(slug)
+    return '<svg class="%s" viewBox="0 0 24 24" aria-hidden="true">%s</svg>' % (cls, NEED_IC[k]) if k else ""
+
+
+def matcher(cid, root, title):
+    items = cat_products(cid)
+    chips, cards = "", ""
+    for p in items:
+        need = NEEDS.get(p["slug"], CATS[cid]["name"])
+        usage = (p["usage"][0] if p["usage"] else "Use as directed on the label").split(". ")[0].rstrip(".")
+        usage = re.sub(r"^(How To Use|Caution|Storage):\s*", "", usage)
+        chips += '<button type="button" class="need" aria-pressed="false" data-need="%s">%s<span>%s</span></button>' % (p["slug"], need_ic(p["slug"]), esc(need))
+        cards += f"""<article class="mcard" data-card="{p['slug']}">
+  <a class="mimg" href="{root}products/{p['slug']}/" tabindex="-1" aria-hidden="true"><img src="{root}assets/img/products/{p['image']}-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"></a>
+  <div class="mbody"><span class="mneed">{need_ic(p['slug'], 'nic nic-sm')}{esc(need)}</span>
+  <h3><a href="{root}products/{p['slug']}/">{esc(p['name'])}</a></h3><p class="msize">{esc(p['size'])}</p>
+  <p class="mfor">{esc(p['for'])}</p>
+  <p class="muse"><b>How to use</b> {esc(usage)}</p></div>
+  <div class="mfoot"><span class="price">{esc(money(p['price']))}<small>incl. GST</small></span>{add_btn(p, root, cls="btn btn-sm btn-card")}</div>
+</article>"""
+    return f"""<div class="matcher" data-matcher><div class="needs" role="group" aria-label="{esc(title)}"><span class="needs-l">What's bothering you?</span>{chips}<button type="button" class="need need-all" data-need="" hidden>Show all</button></div><div class="mcards">{cards}</div></div>"""
 
 
 # ---------------------------------------------------------------- HOME
 def build_home():
     root = ""
     counters = "".join(f"""<a href="shop/{cid + '/' if cid else ''}"><span class="tile"><img src="assets/img/products/{img}-thumb.webp" alt="" width="200" height="200" loading="lazy" decoding="async"></span><span>{esc(name)}</span><small>{esc(sub)}</small>{'<span class="stamp">Start here</span>' if i == 0 else ''}</a>""" for i, (cid, name, sub, img) in enumerate(COUNTERS))
-    strip = "".join(f"<li>{IC['tick']}<span>{esc(b)}</span></li>" for b in BENEFITS)
+    assure = "".join(f"""<li><span class="ai">{AIC[k]}</span><span><b>{esc(t)}</b><small>{esc(x)}</small></span></li>""" for k, t, x in ASSURE)
     best = [BY_SLUG[s] for s in ["rheuma-salve-balm", "alievaid-herbal-drops", "deep-sea-squalene", "pearl-powder", "crocodile-pure-skin-oil", "zoo-vite-multivitamin-gummies", "flu-gard", "melatonin-5mg"]]
     best_cards = "\n".join(product_label(p, root) for p in best)
     brands_row = "".join(f"<li>{b}</li>" for b in ["Rheuma-Salve®", "Heritage®", "HST Medical®", "Zoo-Vite®", "Kowa"])
-    shelf = "".join(f"""<a href="shop/{cid}/"{' class="pain"' if cid == 'pain-relief' else ''}><b>{esc(CATS[cid]['name'])}</b><span>{esc(CATS[cid]['blurb'])}</span><small>{len(cat_products(cid))} products</small></a>""" for cid in CAT_ORDER)
+    bento = "".join(f"""<a class="b-{i}" href="shop/{cid}/"><span class="bt"><b>{esc(CATS[cid]['name'])}</b>{'<span class="bb">%s</span>' % esc(CATS[cid]['blurb']) if i == 0 else ''}<small>{len(cat_products(cid))} products</small></span><span class="bimg"><img src="assets/img/products/{BENTO_IMG.get(cid, cat_products(cid)[0]['image'])}-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"></span><span class="bgo">{IC['arrow']}</span></a>""" for i, cid in enumerate(CAT_ORDER))
+    bento += f"""<a class="b-all" href="shop/"><span class="bt"><b>All 51 products</b><small>Every shelf, one store</small></span><span class="bgo">{IC['arrow']}</span></a>"""
+    timeline = "".join(f"""<li><b>{y}</b><span>{esc(t)}</span></li>""" for y, t in TIMELINE)
+    ctx = {"root": root, "PRODUCTS": PRODUCTS, "CATS": CATS, "BY_SLUG": BY_SLUG, "POSTS": POSTS, "IC": IC, "esc": esc, "money": money,
+           "cat_products": cat_products, "brand_label": brand_label}
+    journey = story_journey(root)
+    proofs = "".join(f"""<li>{AIC[k]}<span>{esc(t)}</span></li>""" for k, t in [("flask", "Formulated by pharmacists and TCM physicians"), ("shield", "Made under GMP, ingredients tested for authenticity"), ("leaf", "Halal-certified and vegan options across the range")])
     notes = "".join(f"""<a href="blog/{s}/"><time datetime="{d}">{d}</time><span><b>{esc(t)}</b>{esc(x)}</span></a>""" for s, t, d, x, _ in POSTS)
     body = f"""
 <main id="main">
 {build_hero(root).replace("{{FOOT}}", '<div class="hero-foot"><nav class="counters" aria-label="Shop by need">' + counters + '</nav></div>')}
-<div class="strip" aria-label="Why shop with HST Medical"><ul>{strip}</ul></div>
+<section class="assure" aria-label="Why shop with HST Medical"><ul class="counter">{assure}</ul></section>
 
 <section class="band" aria-labelledby="h-best">
   <div class="counter">
@@ -358,53 +587,63 @@ def build_home():
   </div>
 </section>
 
-<section class="band paper" aria-labelledby="h-pain">
+<section class="band match-band" aria-labelledby="h-pain">
   <div class="counter">
-    <div class="band-head"><div><h2 id="h-pain">Which pain relief do I need?</h2><p>{esc(GUIDES['pain-relief']['intro'])}</p></div><a class="btn btn-quiet" href="shop/pain-relief/">The pain relief counter {IC['arrow']}</a></div>
-    <div class="label heritage"><div class="label-body">{compare_table('pain-relief', root)}</div></div>
+    <div class="band-head"><div><h2 id="h-pain">Which pain relief do I need?</h2><p>{esc(GUIDES['pain-relief']['intro'])}</p></div><a class="btn btn-quiet" href="shop/pain-relief/">All pain relief {IC['arrow']}</a></div>
+    {matcher('pain-relief', root, 'Match the pain')}
   </div>
 </section>
 
-<section class="band" aria-labelledby="h-cough">
+<section class="band match-band" aria-labelledby="h-cough">
   <div class="counter">
-    <div class="band-head"><div><h2 id="h-cough">Cough, cold or flu: match the symptom</h2><p>{esc(GUIDES['cough-cold-flu']['intro'])}</p></div><a class="btn btn-quiet" href="shop/cough-cold-flu/">The cough and cold counter {IC['arrow']}</a></div>
-    <div class="label"><div class="label-body">{compare_table('cough-cold-flu', root)}</div></div>
+    <div class="band-head"><div><h2 id="h-cough">Cough, cold or flu: match the symptom</h2><p>{esc(GUIDES['cough-cold-flu']['intro'])}</p></div><a class="btn btn-quiet" href="shop/cough-cold-flu/">All cough and cold {IC['arrow']}</a></div>
+    {matcher('cough-cold-flu', root, 'Match the symptom')}
   </div>
 </section>
 
 <section class="band" aria-labelledby="h-shelf">
   <div class="counter">
-    <div class="band-head"><div><h2 id="h-shelf">Eleven shelves, one standard</h2><p>Every product is developed by HST Medical's own pharmacists and TCM physicians from ethically sourced ingredients, then tested for authenticity and safety before it reaches the counter.</p></div><a class="btn btn-quiet" href="shop/">All 51 products {IC['arrow']}</a></div>
-    <nav class="shelf" aria-label="Ranges">{shelf}</nav>
+    <div class="band-head"><div><h2 id="h-shelf">Shop by range</h2><p>Eleven ranges, one standard: developed by HST Medical's own pharmacists and TCM physicians, then tested for authenticity and safety before they reach the counter.</p></div></div>
+    <nav class="bento" aria-label="Ranges">{bento}</nav>
   </div>
 </section>
 
-<section class="band brand" aria-labelledby="h-trust">
+{home_sections.marquee(ctx)}
+
+{catalogue_section(root)}
+
+<section class="band story" aria-labelledby="h-trust">
   <div class="counter">
-    <div class="band-head"><div><h2 id="h-trust">Dispensed by pharmacists since 1994</h2><p>Four facts behind every pack on the shelf.</p></div><a class="btn btn-light" href="about/">Our story {IC['arrow']}</a></div>
-    <div class="facts">
-      <div><b>1994</b><p>Founded in Singapore as a manufacturer and supplier to the major pharmacy chains.</p></div>
-      <div><b>GMP</b><p>Made under Good Manufacturing Practice, with Halal-certified and vegan options across the range.</p></div>
-      <div><b>Two lines</b><p>HST Medical® for contemporary formulas; Heritage® for traditional Asian remedies prepared to modern standards.</p></div>
-      <div><b>Kowa</b><p>Part of Kowa Pharmaceutical Asia since 29 May 2026, within the Japanese Kowa group behind Vantelin.</p></div>
+    <div class="story-head">
+      <h2 id="h-trust">Dispensed by pharmacists since 1994</h2>
+      <p class="lead">From a Singapore medical hall to a Kowa company: nearly a century of formulating remedies people keep in the cabinet.</p>
     </div>
-    <div class="grid12" style="margin-top:var(--gutter);align-items:center">
-      <div style="grid-column:1 / span 6"><h3>Where to buy</h3><p style="margin:.5rem 0 .25rem">On the shelf at:</p><ul class="where">{''.join('<li>%s</li>' % esc(r) for r in RETAILERS_CONFIRMED)}</ul><p class="small" style="margin-top:.75rem">Other stockists are being confirmed with HST Medical. <a href="where-to-buy/" style="color:#fff">Stockist list and delivery details</a>.</p></div>
-      <div style="grid-column:7 / span 6" class="label"><div class="label-body trade"><div><h3>Pharmacies, clinics and distributors</h3><p class="small" style="margin-top:.25rem">Open a trade account, download the product sheets and order through your HST Medical territory manager.</p></div><a class="btn btn-dark" href="resellers/">Trade enquiries</a></div></div>
+    <ol class="journey">{journey}</ol>
+    <div class="story-foot">
+      <ul class="proofs">{proofs}</ul>
+      <div class="story-ctas"><a class="btn btn-stamp" href="about/">Our story {IC['arrow']}</a><a class="btn btn-quiet" href="where-to-buy/">Where to buy {IC['arrow']}</a></div>
     </div>
   </div>
 </section>
 
-<section class="band" aria-labelledby="h-brands" style="padding-bottom:0">
-  <div class="counter"><div class="band-head" style="margin-bottom:1rem"><h2 id="h-brands" style="font-size:1.3rem">Our brands</h2><a class="btn btn-quiet btn-sm" href="brands/">About the brands {IC['arrow']}</a></div><ul class="brands-row">{brands_row}</ul></div>
-</section>
+{kowa_band(root)}
 
-<section class="band" aria-labelledby="h-notes">
-  <div class="counter">
-    <div class="band-head"><div><h2 id="h-notes">Health notes</h2><p>Short, practical reading written with HST Medical's pharmacists.</p></div><a class="btn btn-quiet" href="blog/">All notes {IC['arrow']}</a></div>
-    <div class="label"><nav class="notes" aria-label="Latest health notes">{notes}</nav></div>
+<section class="band visit" aria-labelledby="h-visit">
+  <div class="counter visit-grid">
+    <div class="visit-copy">
+      <h2 id="h-visit">Where to buy</h2>
+      <p>On the shelf at Singapore's pharmacy chains, or delivered from this store: free above S$30.</p>
+      <ul class="where">{''.join('<li>%s</li>' % esc(r) for r in RETAILERS_CONFIRMED)}</ul>
+      <div class="trade-card"><div><h3>Pharmacies, clinics and distributors</h3><p>Open a trade account, download the product sheets and order through your HST Medical territory manager.</p></div><a class="btn btn-quiet" href="resellers/">Trade enquiries {IC['arrow']}</a></div>
+      <address class="hq"><b>HST Medical Pte Ltd</b>152 Paya Lebar Road #02-06, Citipoint Industrial Complex, Singapore 409020<a href="tel:+6565365108">+65 6536 5108 ext 816</a></address>
+    </div>
+    {map_embed('HST Medical head office, 152 Paya Lebar Road, Singapore')}
   </div>
 </section>
+
+{home_sections.brands(ctx)}
+
+{home_sections.notes(ctx)}
 </main>"""
     ld = jsonld({"@context": "https://schema.org", "@graph": [ORG, {"@type": "WebSite", "url": BASE, "name": "HST Medical", "publisher": {"@id": BASE + "#org"},
                  "potentialAction": {"@type": "SearchAction", "target": BASE + "shop/?q={search_term_string}", "query-input": "required name=search_term_string"}}]})
@@ -415,11 +654,18 @@ def build_home():
 
 # ---------------------------------------------------------------- SHOP + CATEGORIES
 def filters_html(root, active=None):
-    groups = ""
-    for gname, cids in FILTER_GROUPS:
-        tabs = "".join(f'<a class="tab" role="button" aria-pressed="{"true" if cid == active else "false"}" href="{root}shop/{cid}/" data-cat="{cid}">{esc(CATS[cid]["name"])}</a>' for cid in cids)
-        groups += f'<div class="group"><span>{gname}</span><div class="tabs">{tabs}</div></div>'
-    return f"""<div class="filters"><div class="group"><span>Show</span><div class="tabs"><a class="tab" role="button" aria-pressed="{"true" if active is None else "false"}" href="{root}shop/" data-cat="all">All products</a></div></div>{groups}</div>"""
+    """Range filter: one grid of tiles (transparent packshot, name, count); a swipeable rail on phones.
+    Each tile is a real link to the range page; on /shop/ site.js turns them into in-page filters."""
+    def tile(cid, name, count, img_html):
+        on = (cid == active) or (cid == "all" and active is None)
+        href = "%sshop/%s" % (root, "" if cid == "all" else cid + "/")
+        return f'<a class="cat" role="button" aria-pressed="{"true" if on else "false"}" href="{href}" data-cat="{cid}"><span class="ct">{img_html}</span><span class="cn">{esc(name)}</span><span class="cc">{count}</span></a>'
+    stack = "".join('<img src="%sassets/img/products/%s-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async">' % (root, i) for i in ("p27", "p03", "p23"))
+    tiles = tile("all", "All products", len(PRODUCTS), '<span class="stack">%s</span>' % stack)
+    for cid in CAT_ORDER:
+        im = BENTO_IMG.get(cid, cat_products(cid)[0]["image"])
+        tiles += tile(cid, CATS[cid]["name"], len(cat_products(cid)), '<img src="%sassets/img/products/%s-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async">' % (root, im))
+    return '<nav class="filters" aria-label="Filter by range">%s</nav>' % tiles
 
 def build_shop():
     root = "../"
@@ -446,9 +692,18 @@ def build_shop():
         guide = faq = ""
         if cid in GUIDES:
             g = GUIDES[cid]
-            guide = f"""<section aria-labelledby="h-guide" style="margin-bottom:2.5rem"><h2 id="h-guide" style="margin-bottom:.5rem">Which one do I need?</h2><p style="margin-bottom:1rem">{esc(g['intro'])}</p><div class="label {'heritage' if cid == 'pain-relief' else ''}"><div class="label-body">{compare_table(cid, root)}</div></div></section>"""
+            guide = f"""<section aria-labelledby="h-guide" style="margin-bottom:2.5rem"><h2 id="h-guide" style="margin-bottom:.5rem">Which one do I need?</h2><p style="margin-bottom:1rem">{esc(g['intro'])}</p>{matcher(cid, root, 'Match the need')}</section>"""
             faqs = "".join(f"<details class='acc'><summary>{esc(q)}{IC['plus']}</summary><div class='body'><p>{esc(a)}</p></div></details>" for q, a in g["faq"])
-            faq = f"""<section class="band paper" aria-labelledby="h-faq"><div class="counter grid12"><div style="grid-column:1 / span 5"><h2 id="h-faq">Ask the pharmacist</h2><p style="margin-top:.5rem">Common questions at the {esc(c['name'].lower())} counter.</p><p class="caution">This information is general guidance. Always read the label and follow directions for use. See a pharmacist or doctor if symptoms persist.</p></div><div style="grid-column:6 / span 7">{faqs}</div></div></section>"""
+            faq = f"""<section class="band faq" aria-labelledby="h-faq"><div class="counter faq-grid">
+  <div class="faq-intro">
+    <svg class="faq-art" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 14h36a6 6 0 0 1 6 6v18a6 6 0 0 1-6 6H28l-10 8v-8h-8a6 6 0 0 1-6-6V20a6 6 0 0 1 6-6z"/><path d="M28 22v14M21 29h14"/></svg>
+    <h2 id="h-faq">Ask the pharmacist</h2>
+    <p class="lead">Common questions at the {esc(c['name'].lower())} counter.</p>
+    <p class="caution"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/></svg><span>General guidance only. Always read the label and follow directions for use. See a pharmacist or doctor if symptoms persist.</span></p>
+    <a class="btn btn-quiet" href="{root}contact/">Ask us a question {IC['arrow']}</a>
+  </div>
+  <div class="faq-list">{faqs}</div>
+</div></section>"""
             extra += jsonld({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in g["faq"]]})
         body = f"""
 <main id="main"><div class="counter">{crumb}
@@ -539,26 +794,7 @@ def field(name, label, typ="text", req=False, err=None, **attrs):
     return f"""<label><span class="{'req' if req else ''}">{label}</span><input type="{typ}" name="{name}"{' required' if req else ''} {a}><span class="err">{err or (label + ' is needed.')}</span></label>"""
 
 def build_static():
-    simple("about/index.html", "About HST Medical — Singapore's Pharmacy-Shelf Remedies Since 1994",
-           "Established in 1994 and part of Kowa Pharmaceutical Asia since 2026, HST Medical formulates and supplies health supplements and pain relief remedies to Singapore's major pharmacies.",
-           "About HST Medical", "Established in 1994, HST Medical is a manufacturer and supplier of health supplements and pain relief remedies to major pharmacies and online marketplaces.",
-           f"""
-<div class="grid12" style="align-items:start">
-  <div class="article" style="grid-column:1 / span 7">
-    <h2>Contemporary pharmaceuticals, traditional benefits</h2>
-    <p>HST Medical products pair contemporary pharmaceuticals with the long-term benefits of natural nutrients. The pharmacists and TCM physicians behind the range develop formulas for modern needs from ethically sourced ingredients around the world.</p>
-    <h2>Quality and safety first</h2>
-    <p>From research and development to packaging and manufacturing, HST Medical follows authority guidelines, approved procedures and inspected premises. Ingredients are tested for authenticity, finished products are verified for safety, and third-party manufacturing is audited.</p>
-    <h2>A heritage that began in 1930</h2>
-    <p>The name is a tribute to Heng Say Tong, the medical hall established by the family of the company's co-founders. HST Medical Pte Ltd was incorporated in 1994 and draws on nearly a century of heritage in healthcare.</p>
-    <h2>Part of Kowa Pharmaceutical Asia</h2>
-    <p>On 29 May 2026 HST Medical became a wholly-owned subsidiary of Kowa Pharmaceutical Asia Pte. Ltd., part of Japan's Kowa group, whose consumer brands include Vantelin and Three Dimension Mask. Kowa's research depth joins HST Medical's range, while the HST Medical name and the brands on the shelf stay the same.</p>
-  </div>
-  <div style="grid-column:8 / span 5" class="stack">
-    <div class="label"><div class="facts" style="grid-template-columns:1fr"><div><b>1994</b><p>Founded in Singapore. Thirty years supplying Guardian, Watsons, NHGP and online marketplaces.</p></div><div><b>Three brands</b><p>HST Medical®, Heritage® and Zoo-Vite®, plus Rheuma-Salve®, the flagship pain-relief line.</p></div><div><b>GMP</b><p>Manufactured under Good Manufacturing Practice with Halal-certified and vegan options.</p></div></div></div>
-    <div class="label"><div class="label-body"><h3>Recognition</h3><ul class="checks" style="margin-top:.5rem"><li>{IC['tick']}<span>2024 Beauty Insider Awards, hair and wellness supplements</span></li><li>{IC['tick']}<span>Guardian retailer award</span></li><li>{IC['tick']}<span>5.0 Google rating (Trustindex)</span></li></ul><p class="small" style="margin-top:.75rem">As listed on the current hstmedical.com; to be confirmed with the client.</p></div></div>
-  </div>
-</div>""", active="about")
+    build_about()
 
     brand_rows = ""
     for name, cls, blurb, cids in [
@@ -575,24 +811,7 @@ def build_static():
            f"""<div class="labels" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))">{brand_rows}</div>
 <div class="label" style="margin-top:var(--gutter)"><div class="label-body trade"><div><h2 style="font-size:1.4rem">Kowa: Japanese pharmaceutical heritage</h2><p style="margin-top:.5rem">Kowa Company, Ltd. (Nagoya, est. 1894) owns consumer brands such as Vantelin topical pain relief and Three Dimension Mask. HST Medical became part of Kowa Pharmaceutical Asia, the group's Singapore-based pharmaceutical arm, on 29 May 2026. Whether Kowa's Singapore range is listed here is still to be decided with the client.</p></div><a class="btn btn-quiet" href="../about/">Our story</a></div></div>""", active="about")
 
-    simple("where-to-buy/index.html", "Where to Buy HST Medical Products in Singapore — Guardian, Watsons, NHGP and Online",
-           "Find Rheuma-Salve®, Heritage® and Zoo-Vite® at Guardian, Watsons and NHGP pharmacies, or order online with island-wide delivery.",
-           "Where to buy", "On the shelf at Singapore's pharmacy chains, and online with island-wide delivery.",
-           f"""
-<div class="grid12" style="align-items:start">
-  <div style="grid-column:1 / span 7" class="label"><div class="facts" style="grid-template-columns:1fr">
-    {''.join(f"<div><b>{esc(r)}</b><p>{t}</p></div>" for r, t in [
-        ("Guardian", "Rheuma-Salve®, Heritage® tonics and selected HST Medical® supplements in most outlets island-wide."),
-        ("Watsons", "Pain relief, cough and cold and kids' ranges. Check in-store availability for tonics."),
-        ("NHGP pharmacies", "National Healthcare Group polyclinic pharmacies carry the core pain-relief and cough range."),
-        ("Online", "This store delivers in Singapore (free above S$30; S$1.99 for orders of S$30 and below) and ships overseas at checkout: express to most countries in 3 to 7 working days, standard to selected countries including Malaysia, the Philippines and Vietnam."),
-    ])}
-  </div></div>
-  <div style="grid-column:8 / span 5" class="stack">
-    <div class="label"><div class="label-body"><h2 style="font-size:1.3rem">To be confirmed</h2><p class="small" style="margin:.5rem 0">Stockists reported but not yet verified with HST Medical:</p><ul class="where">{''.join('<li>%s</li>' % esc(r) for r in RETAILERS_TBC)}</ul><p class="small" style="margin-top:.75rem">A postcode store locator is planned for the production build.</p></div></div>
-    <div class="label"><div class="label-body trade"><div><h2 style="font-size:1.3rem">Stock us</h2><p class="small" style="margin-top:.25rem">Retailers, clinics and distributors order direct.</p></div><a class="btn" href="../resellers/">Trade enquiries</a></div></div>
-  </div>
-</div>""", active="where")
+    build_where()
 
     simple("resellers/index.html", "Trade and Resellers — Pharmacies, Clinics and Distributors | HST Medical",
            "Open a trade account with HST Medical Singapore. Pharmacies, clinics, TCM halls and distributors order through a territory manager with product sheets and pack configurations.",
@@ -636,19 +855,28 @@ def build_static():
     <button class="btn btn-stamp" type="submit">Send {IC['arrow']}</button>
     <p class="ok">Thanks. We have your message and will reply within two working days.</p>
   </form>
-</div>""")
+</div>
+<section class="visit-map" aria-label="Map">{map_embed("HST Medical Pte Ltd, 152 Paya Lebar Road, Singapore")}</section>""")
 
+    trust = "".join('<li>%s<span>%s</span></li>' % (AIC[k], esc(t)) for k, t in [("shield", "Secure checkout, 100% genuine stock"), ("truck", "Free Singapore delivery above S$30"), ("store", "Also on the shelf at Guardian, Watsons and NHGP")])
+    also = "\n".join(product_label(BY_SLUG[x], "../") for x in ["rheuma-salve-pain-relief-patch-cool", "alievaid-herbal-drops", "zoo-vite-multivitamin-gummies", "melatonin-5mg"])
     simple("cart/index.html", "Your bag — HST Medical", "Review your HST Medical order before checkout.", "Your bag", "",
            f"""
 <div class="bag-grid">
-  <div class="label"><div class="lines" id="bag-lines" data-root="../"><div class="empty"><b>Your bag is empty.</b>Start at the counter: <a href="../shop/pain-relief/">pain relief</a>, <a href="../shop/cough-cold-flu/">cough and cold</a>, or <a href="../shop/">all products</a>.</div></div></div>
-  <aside class="label summary" aria-labelledby="h-sum"><div class="label-body"><h2 id="h-sum" style="font-size:1.3rem;margin-bottom:.75rem">Summary</h2>
-    <dl class="fields"><div class="field"><dt>Subtotal</dt><dd data-sub>S$0.00</dd></div><div class="field"><dt>Delivery</dt><dd data-ship>—</dd></div><div class="field total"><dt>Total</dt><dd data-total>S$0.00</dd></div></dl>
+  <section class="bag-list" aria-label="Items in your bag"><div class="lines" id="bag-lines" data-root="../"><div class="empty bag-empty"><svg class="ic bag-empty-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 8.5h13l-1 11.5h-11z"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/></svg><b>Your bag is empty.</b><span>Start with what you need today.</span><span class="bag-empty-ctas"><a class="btn btn-stamp" href="../shop/pain-relief/">Pain relief</a><a class="btn btn-quiet" href="../shop/cough-cold-flu/">Cough and cold</a><a class="btn btn-quiet" href="../shop/">All products</a></span></div></div></section>
+  <aside class="summary" aria-labelledby="h-sum">
+    <h2 id="h-sum">Order summary</h2>
+    <dl class="fields"><div class="field"><dt>Subtotal</dt><dd data-sub>S$0.00</dd></div><div class="field"><dt>Delivery</dt><dd data-ship>—</dd></div><div class="field total"><dt>Total <small>incl. GST</small></dt><dd data-total>S$0.00</dd></div></dl>
     <div class="meter" aria-hidden="true"><i></i></div><p class="small" data-free>Free Singapore delivery above S$30; S$1.99 for orders of S$30 and below.</p>
-    <div class="stack" style="margin-top:1rem"><a class="btn btn-stamp btn-block" href="../checkout/" data-needs-items aria-disabled="true">Checkout {IC['arrow']}</a><a class="btn btn-quiet btn-block" href="../shop/">Keep shopping</a></div>
-    <p class="note small" style="margin-top:1rem">Prototype bag stored in your browser only. Production uses WP EasyCart's cart with this layout applied through CSS overrides.</p>
-  </div></aside>
-</div>""", active="shop")
+    <div class="sum-ctas"><a class="btn btn-stamp btn-block" href="../checkout/" data-needs-items aria-disabled="true">Checkout {IC['arrow']}</a><a class="btn btn-quiet btn-block" href="../shop/">Keep shopping</a></div>
+    <ul class="sum-trust">{trust}</ul>
+    <p class="note small">Prototype bag stored in your browser only. Production uses WP EasyCart's cart with this layout applied through CSS overrides.</p>
+  </aside>
+</div>
+<section class="band bag-also" aria-labelledby="h-also">
+  <div class="band-head"><div><h2 id="h-also">You might also need</h2><p>Popular with people who buy pain relief.</p></div><a class="btn btn-quiet" href="../shop/">All 51 products {IC['arrow']}</a></div>
+  <div class="labels">{also}</div>
+</section>""", active="")
 
     simple("checkout/index.html", "Checkout — HST Medical", "Secure checkout for HST Medical orders.", "Checkout", "",
            f"""

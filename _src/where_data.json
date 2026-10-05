@@ -1,0 +1,230 @@
+{
+ "_source": "Stockists, delivery and awards from hstmedical.com (site.json of the WordPress build, read 3 October 2026); 'Beware of fakes' line and Essentials Pharmacy hours from https://hstmedical.com/availability/ (read 5 October 2026); 'stocked' notes from the prototype's previous Where to buy page; 'hq' is the head-office address and phone used in the site footer. Regenerate with qa-where/make_where_data.py.",
+ "delivery": {
+  "free_above": 30.0,
+  "fee": 1.99,
+  "short": "Free Singapore delivery above S$30",
+  "detail": "S$1.99 for orders of S$30 and below",
+  "overseas": "Express shipping to most countries (3 to 7 working days); standard shipping to selected countries including Malaysia, the Philippines and Vietnam (up to 21 working days)."
+ },
+ "fakes": "Beware of fakes! Please check the e-shop URL to make sure you buy from the right shop!",
+ "fakes_more": "Buy only from hstmedical.com or the stores below, and check the web address before you pay. Everything sold here is 100% genuine HST Medical product, sent direct from us.",
+ "award": {
+  "title": "Winner",
+  "award": "Guardian Awards 2024",
+  "event": "Guardian Awards 2024",
+  "product": "rheuma-salve-balm",
+  "product_name": "Rheuma-Salve® Pain Relief Balm",
+  "image": "award-guardian-2024.webp"
+ },
+ "hq": {
+  "name": "HST Medical Pte Ltd",
+  "address": "152 Paya Lebar Road #02-06, Citipoint Industrial Complex, Singapore 409020",
+  "tel": "+65 6536 5108",
+  "ext": "816"
+ },
+ "chains": [
+  {
+   "id": "guardian",
+   "chain": "Guardian",
+   "name": "Guardian",
+   "logo": "guardian.webp",
+   "logo_alt": "Guardian",
+   "note": "Rheuma-Salve®, Heritage® tonics and selected HST Medical® supplements in most outlets island-wide.",
+   "online": "https://www.guardian.com.sg",
+   "stores": [
+    {
+     "name": "Changi Airport T1 (Departure Lounge East)",
+     "address": "80 Airport Boulevard #02-69, Changi Airport Terminal 1, Singapore 819642",
+     "tel": "+65 6449 8049"
+    },
+    {
+     "name": "Changi Airport T2 (Departure Lounge South)",
+     "address": "60 Airport Boulevard #026-115-01, Changi Airport Terminal 2, Singapore 819643",
+     "tel": "+65 6243 1050"
+    },
+    {
+     "name": "Changi Airport T2 (Departure Lounge North)",
+     "address": "60 Airport Boulevard #026-095A, Changi Airport Terminal 2, Singapore 819643",
+     "tel": "+65 6546 1787"
+    },
+    {
+     "name": "Changi Airport T2 (Check-in Hall North)",
+     "address": "60 Airport Boulevard #026-012, Changi Airport Terminal 2, Singapore 819643",
+     "tel": "+65 6214 9231"
+    },
+    {
+     "name": "Jewel Changi Airport",
+     "address": "78 Airport Boulevard #B1-291, Jewel, Singapore 819666",
+     "tel": "+65 6290 6417"
+    },
+    {
+     "name": "Causeway Point",
+     "address": "1 Woodlands Square #B1-28/29/30, Causeway Point, Singapore 738099",
+     "tel": "+65 6894 3014"
+    },
+    {
+     "name": "IMM",
+     "address": "2 Jurong East Street 21 #01-57, IMM Building, Singapore 609601",
+     "tel": "+65 6566 7660"
+    },
+    {
+     "name": "ION Orchard",
+     "address": "2 Orchard Turn #B4-02, ION Orchard, Singapore 238801",
+     "tel": "+65 6884 5956"
+    },
+    {
+     "name": "Jurong Point",
+     "address": "63 Jurong West Central 3 #B1-27/28, Jurong Point Shopping Centre, Singapore 648331",
+     "tel": "+65 6794 0501"
+    },
+    {
+     "name": "Marina Bay Sands",
+     "address": "2 Bayfront Avenue #B2-49, The Shoppes at Marina Bay Sands, Singapore 018972",
+     "tel": "+65 6834 3598"
+    },
+    {
+     "name": "Takashimaya Shopping Centre",
+     "address": "391 Orchard Road #B2-15/23, Takashimaya Shopping Centre, Singapore 238872",
+     "tel": "+65 6836 9382"
+    },
+    {
+     "name": "Northpoint",
+     "address": "930 Yishun Avenue 2 #B1-01/02, Northpoint Shopping Centre, Singapore 769098",
+     "tel": "+65 6754 6574"
+    },
+    {
+     "name": "Paragon",
+     "address": "290 Orchard Road #B1-20/24, Paragon, Singapore 238859",
+     "tel": "+65 6737 6282 / +65 6732 6762"
+    },
+    {
+     "name": "Parkway Parade",
+     "address": "80 Marine Parade Road #B1-147/149, Parkway Parade, Singapore 449269",
+     "tel": "+65 6344 2102"
+    },
+    {
+     "name": "NEX",
+     "address": "23 Serangoon Central #B1-62/63, NEX, Singapore 556083",
+     "tel": "+65 6634 2715"
+    },
+    {
+     "name": "VivoCity",
+     "address": "1 HarbourFront Walk #01-23, VivoCity, Singapore 098585",
+     "tel": "+65 6376 9947"
+    }
+   ]
+  },
+  {
+   "id": "watsons",
+   "chain": "Watsons",
+   "name": "Watsons",
+   "logo": "watsons.webp",
+   "logo_alt": "Watsons",
+   "note": "Pain relief, cough and cold and kids' ranges. Check in-store availability for tonics.",
+   "online": "https://www.watsons.com.sg",
+   "stores": [
+    {
+     "name": "Changi Airport T3 (Departure Lounge North)",
+     "address": "65 Airport Boulevard #02-66, Changi Airport Terminal 3, Singapore 819633",
+     "tel": "+65 6546 5347"
+    },
+    {
+     "name": "Changi Airport T3 (Departure Lounge East)",
+     "address": "65 Airport Boulevard #B2-24, Changi Airport Terminal 3, Singapore 819663",
+     "tel": "+65 6582 1512"
+    },
+    {
+     "name": "Jewel Changi Airport",
+     "address": "78 Airport Boulevard #B1-291, Jewel, Singapore 819666",
+     "tel": "+65 6290 6417"
+    },
+    {
+     "name": "Raffles City",
+     "address": "252 North Bridge Road #B1-42, Singapore 179103",
+     "tel": "+65 6994 2834"
+    },
+    {
+     "name": "Ngee Ann City",
+     "address": "391 Orchard Road #B2-06/09, Ngee Ann City, Singapore 238872",
+     "tel": "+65 6735 4936"
+    },
+    {
+     "name": "VivoCity",
+     "address": "1 HarbourFront Walk #B2-15/16/17, VivoCity, Singapore 098585",
+     "tel": "+65 6994 2834"
+    }
+   ]
+  },
+  {
+   "id": "nhgp",
+   "chain": "NHGP pharmacies",
+   "name": "NHGP pharmacies",
+   "logo": "nhg-polyclinics.webp",
+   "logo_alt": "NHG Polyclinics",
+   "note": "National Healthcare Group polyclinic pharmacies carry the core pain-relief and cough range.",
+   "online": "https://www.pharmacy.nhg.com.sg/",
+   "stores": [
+    {
+     "name": "Ang Mo Kio Polyclinic",
+     "address": "21 Ang Mo Kio Central 2, Singapore 569666"
+    },
+    {
+     "name": "Hougang Polyclinic",
+     "address": "89 Hougang Avenue 4, Singapore 538829"
+    },
+    {
+     "name": "Kallang Polyclinic",
+     "address": "701 Serangoon Road, Singapore 328263"
+    },
+    {
+     "name": "Sembawang Polyclinic",
+     "address": "21 Canberra Link #01-03, Singapore 756973"
+    },
+    {
+     "name": "Toa Payoh Polyclinic",
+     "address": "2003 Lorong 8 Toa Payoh, Singapore 319260"
+    },
+    {
+     "name": "Woodlands Polyclinic",
+     "address": "10 Woodlands Street 31, Singapore 738579"
+    },
+    {
+     "name": "Yishun Polyclinic",
+     "address": "2 Yishun Avenue 9, Singapore 768898"
+    }
+   ],
+   "hotline": "+65 6340 2300",
+   "hotline_hours": "Monday to Friday, 8.30 am to 5.30 pm"
+  },
+  {
+   "id": "essentials",
+   "chain": "Essentials Pharmacy 益生药房",
+   "name": "Essentials Pharmacy",
+   "logo": "essentials-pharmacy.webp",
+   "logo_alt": "Essentials Pharmacy",
+   "note": "",
+   "online": "https://shopee.sg/essentialspharmacy",
+   "stores": [
+    {
+     "name": "People's Park Centre",
+     "address": "101 Upper Cross Street #01-23, People's Park Centre, Singapore 058357",
+     "tel": "+65 6538 3801 / +65 6532 5175",
+     "hours": "Mon to Sat 10 am to 8.30 pm · Sun and public holidays 11 am to 5 pm"
+    }
+   ],
+   "name_zh": "益生药房",
+   "hours": "Mon to Sat 10 am to 8.30 pm; Sun and public holidays 11 am to 5 pm"
+  },
+  {
+   "id": "fairprice",
+   "chain": "FairPrice Online",
+   "name": "FairPrice Online",
+   "logo": "fairprice.webp",
+   "logo_alt": "FairPrice",
+   "note": "",
+   "online": "https://www.fairprice.com.sg",
+   "stores": []
+  }
+ ]
+}

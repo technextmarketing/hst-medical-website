@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" class="">
+<html lang="en" class="pg-about">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>About HST Medical — Singapore&#x27;s Pharmacy-Shelf Remedies Since 1994</title>
-<meta name="description" content="Established in 1994 and part of Kowa Pharmaceutical Asia since 2026, HST Medical formulates and supplies health supplements and pain relief remedies to Singapore&#x27;s major pharmacies.">
+<title>About HST Medical — Higher, Stronger, Together | Since 1930 in Singapore</title>
+<meta name="description" content="HST Medical (博诚药业): Singapore&#x27;s home of Rheuma-Salve® pain relief and Zoo-Vite® kids&#x27; vitamins, from the Heng Say Tong medical hall (1930), incorporated 1994, part of Kowa Pharmaceutical Asia since 29 May 2026.">
 <meta name="robots" content="noindex,nofollow">
 <link rel="canonical" href="https://technextmarketing.github.io/hst-medical-website/about/">
-<meta property="og:title" content="About HST Medical — Singapore&#x27;s Pharmacy-Shelf Remedies Since 1994">
-<meta property="og:description" content="Established in 1994 and part of Kowa Pharmaceutical Asia since 2026, HST Medical formulates and supplies health supplements and pain relief remedies to Singapore&#x27;s major pharmacies.">
+<meta property="og:title" content="About HST Medical — Higher, Stronger, Together | Since 1930 in Singapore">
+<meta property="og:description" content="HST Medical (博诚药业): Singapore&#x27;s home of Rheuma-Salve® pain relief and Zoo-Vite® kids&#x27; vitamins, from the Heng Say Tong medical hall (1930), incorporated 1994, part of Kowa Pharmaceutical Asia since 29 May 2026.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://technextmarketing.github.io/hst-medical-website/about/">
 <meta property="og:site_name" content="HST Medical">
@@ -18,18 +18,38 @@
 <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/style.css?v=20261005d">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css?v=20261006r">
+<link rel="stylesheet" href="../assets/css/header.css?v=20261006r">
+<link rel="stylesheet" href="../assets/css/footer.css?v=20261006r">
+<link rel="stylesheet" href="../assets/css/sections.css?v=20261006r">
 <script>document.documentElement.classList.add('js');</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://technextmarketing.github.io/hst-medical-website/"}, {"@type": "ListItem", "position": 2, "name": "About HST Medical"}]}</script>
+<link rel="stylesheet" href="../assets/css/about.css?v=20261006r">
 </head>
 <body>
+<script>/* entry: the HST Medical logo builds itself from its parts, then flies into the header. Once per visit; click, key, scroll or Skip ends it; never under reduced motion. Parts: assets/img/intro (cut by _src/logo_cutout.py intro_slices). */
+(function(){var d=document,r=d.documentElement;try{if(sessionStorage.getItem('hst-intro')||matchMedia('(prefers-reduced-motion: reduce)').matches)return;sessionStorage.setItem('hst-intro','1');}catch(e){return;}
+r.classList.add('intro');var P='../assets/img/intro/ix-',im=function(n){return '<img class="ix-part ix-'+n+'" src="'+P+n+'.webp" alt="" decoding="sync">';};
+d.body.insertAdjacentHTML('afterbegin','<div class="intro-splash" aria-hidden="true"><div class="ix-bg"><i class="ix-bloom"></i><i class="ix-ring r1"></i><i class="ix-ring r2"></i><i class="ix-ring r3"></i></div><div class="ix-stage"><div class="ix-logo">'+im('mark')+im('hst')+im('med')+im('kowa')+'<span class="ix-sheen"></span></div><p class="ix-tag"><span>Higher</span><i></i><span>Stronger</span><i></i><span>Together</span></p></div><button class="ix-skip" type="button" tabindex="-1">Skip</button><i class="ix-bar"></i></div>');
+var s=d.body.firstElementChild,lg=s.querySelector('.ix-logo'),gone=false,t1=0,started=false;
+var finish=function(){if(gone)return;gone=true;clearTimeout(t1);r.classList.remove('intro');s.classList.add('ix-exit');
+ var tg=d.querySelector('.site-header .brand');
+ if(tg&&lg.animate){var a=lg.getBoundingClientRect(),b=tg.getBoundingClientRect(),sc=b.height/a.height;
+  lg.style.transition='none';
+  lg.animate([{transform:getComputedStyle(lg).transform,opacity:1},{transform:'translate('+(b.left-a.left)+'px,'+(b.top-a.top)+'px) scale('+sc+')',opacity:.9,offset:.82},{transform:'translate('+(b.left-a.left)+'px,'+(b.top-a.top)+'px) scale('+sc+')',opacity:0}],{duration:900,easing:'cubic-bezier(.7,0,.2,1)',fill:'forwards'});}
+ setTimeout(function(){if(s.parentNode)s.parentNode.removeChild(s);},980);};
+var start=function(){if(started)return;started=true;s.classList.add('ix-go');t1=setTimeout(finish,3600);};
+var imgs=[].slice.call(s.querySelectorAll('img')),left=imgs.length;imgs.forEach(function(i){if(i.complete)left--;else i.addEventListener('load',function(){if(--left<=0)start();});i.addEventListener('error',function(){if(--left<=0)start();});});
+if(left<=0)start();setTimeout(start,900);setTimeout(function(){if(!gone)finish();},6000);
+s.addEventListener('pointermove',function(e){s.style.setProperty('--ix',(e.clientX/innerWidth-.5).toFixed(3));s.style.setProperty('--iy',(e.clientY/innerHeight-.5).toFixed(3));});
+s.addEventListener('click',finish);addEventListener('keydown',finish,{once:true});addEventListener('wheel',finish,{once:true,passive:true});addEventListener('touchmove',finish,{once:true,passive:true});})();</script>
 <a class="sr-only" href="#main">Skip to content</a>
 <div class="live" id="live" aria-live="polite" aria-atomic="true"></div>
-<p class="proto">Design prototype for the HST Medical website RFP. Demo store: nothing is sold or indexed. <a href="../">Home</a></p>
 <header class="site-header">
   <div class="counter header-inner">
-    <a class="brand" href="../" aria-label="HST Medical, a Kowa subsidiary. Home"><img src="../assets/img/logo-hst-kowa-360.png" alt="HST Medical, Kowa subsidiary" width="74" height="40" decoding="async"></a>
+    <a class="brand" href="../" aria-label="HST Medical, a Kowa subsidiary. Home"><img class="logo-std" src="../assets/img/logo-hst.webp" alt="HST Medical, Kowa subsidiary" width="121" height="60" fetchpriority="high"><img class="logo-rev" src="../assets/img/logo-hst-rev.webp" alt="" width="121" height="60" decoding="async"></a>
+    <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><svg class="ic i-menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ic i-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     <nav class="nav" id="site-nav" aria-label="Main">
       <a href="../shop/pain-relief/">Pain relief</a>
       <a href="../shop/cough-cold-flu/">Cough &amp; cold</a>
@@ -39,66 +59,386 @@
       <a href="../about/" class="active">About</a>
       <a href="../blog/">Health notes</a>
     </nav>
-    <form class="hsearch" role="search" action="../shop/" method="get"><label class="sr-only" for="hq">Search products</label><input id="hq" type="search" name="q" placeholder="Search medicines, supplements" autocomplete="off"><button type="submit" aria-label="Search"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button></form>
-    <a class="bag" href="../cart/" aria-label="Bag"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l1 12H5z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Bag</span><span class="count" hidden>0</span></a>
-    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <div class="hs-slot">
+      <form class="hsearch" role="search" action="../shop/" method="get"><label class="hs-ic" for="hq"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4-4"/></svg><span class="sr-only">Search products</span></label><input id="hq" type="search" name="q" placeholder="Search medicines, supplements" autocomplete="off" enterkeyhint="search"><button type="submit" aria-label="Search"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 7l5 5-5 5"/></svg></button></form>
+    </div>
+    <a class="bag" href="../cart/" aria-label="Bag"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 8.5h13l-1 11.5h-11z"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/></svg><span class="bag-t">Bag</span><span class="count" hidden>0</span></a>
   </div>
 </header>
 
-<main id="main"><div class="counter"><ol class="crumbs" aria-label="Breadcrumb"><li><a href="../">Home</a></li><li aria-current="page">About HST Medical</li></ol>
-<header class="page-head"><h1>About HST Medical</h1><p class="lead">Established in 1994, HST Medical is a manufacturer and supplier of health supplements and pain relief remedies to major pharmacies and online marketplaces.</p></header>
-
-<div class="grid12" style="align-items:start">
-  <div class="article" style="grid-column:1 / span 7">
-    <h2>Contemporary pharmaceuticals, traditional benefits</h2>
-    <p>HST Medical products pair contemporary pharmaceuticals with the long-term benefits of natural nutrients. The pharmacists and TCM physicians behind the range develop formulas for modern needs from ethically sourced ingredients around the world.</p>
-    <h2>Quality and safety first</h2>
-    <p>From research and development to packaging and manufacturing, HST Medical follows authority guidelines, approved procedures and inspected premises. Ingredients are tested for authenticity, finished products are verified for safety, and third-party manufacturing is audited.</p>
-    <h2>A heritage that began in 1930</h2>
-    <p>The name is a tribute to Heng Say Tong, the medical hall established by the family of the company's co-founders. HST Medical Pte Ltd was incorporated in 1994 and draws on nearly a century of heritage in healthcare.</p>
-    <h2>Part of Kowa Pharmaceutical Asia</h2>
-    <p>On 29 May 2026 HST Medical became a wholly-owned subsidiary of Kowa Pharmaceutical Asia Pte. Ltd., part of Japan's Kowa group, whose consumer brands include Vantelin and Three Dimension Mask. Kowa's research depth joins HST Medical's range, while the HST Medical name and the brands on the shelf stay the same.</p>
-  </div>
-  <div style="grid-column:8 / span 5" class="stack">
-    <div class="label"><div class="facts" style="grid-template-columns:1fr"><div><b>1994</b><p>Founded in Singapore. Thirty years supplying Guardian, Watsons, NHGP and online marketplaces.</p></div><div><b>Three brands</b><p>HST Medical®, Heritage® and Zoo-Vite®, plus Rheuma-Salve®, the flagship pain-relief line.</p></div><div><b>GMP</b><p>Manufactured under Good Manufacturing Practice with Halal-certified and vegan options.</p></div></div></div>
-    <div class="label"><div class="label-body"><h3>Recognition</h3><ul class="checks" style="margin-top:.5rem"><li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>2024 Beauty Insider Awards, hair and wellness supplements</span></li><li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Guardian retailer award</span></li><li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>5.0 Google rating (Trustindex)</span></li></ul><p class="small" style="margin-top:.75rem">As listed on the current hstmedical.com; to be confirmed with the client.</p></div></div>
-  </div>
-</div>
-</div></main>
-<footer class="site-footer">
-  <div class="counter">
-    <div class="footer-grid">
-      <div>
-        <img src="../assets/img/logo-hst-kowa-360.png" alt="HST Medical, Kowa subsidiary" width="110" height="59" loading="lazy" decoding="async">
-        <p style="margin-top:.8rem;max-width:40ch">Health supplements and pain-relief remedies formulated by pharmacists and TCM physicians. A Singapore company since 1994, now part of Kowa Pharmaceutical Asia.</p>
-        <p class="small" style="margin-top:.6rem">Always read the label and follow directions for use.</p>
-      </div>
-      <div><p class="ft-h">Shop</p><ul>
-        <li><a href="../shop/pain-relief/">Pain relief</a></li>
-        <li><a href="../shop/cough-cold-flu/">Cough, cold &amp; flu</a></li>
-        <li><a href="../shop/kids/">Kids</a></li>
-        <li><a href="../shop/stress-sleep/">Sleep</a></li>
-        <li><a href="../shop/immunity-energy/">Tonics</a></li>
-        <li><a href="../shop/">All 51 products</a></li>
-      </ul></div>
-      <div><p class="ft-h">HST Medical</p><ul>
-        <li><a href="../about/">About us</a></li>
-        <li><a href="../brands/">Our brands</a></li>
-        <li><a href="../where-to-buy/">Where to buy</a></li>
-        <li><a href="../resellers/">Trade and resellers</a></li>
-        <li><a href="../blog/">Health notes</a></li>
-      </ul></div>
-      <div><p class="ft-h">Help</p><ul>
-        <li><a href="../contact/">Contact us</a></li>
-        <li><a href="../cart/">Your bag</a></li>
-        <li><a href="../privacy/">Privacy</a></li>
-        <li><a href="mailto:resellercontact@hstmedical.com">resellercontact@hstmedical.com</a></li>
-      </ul></div>
+<main id="main" class="ab-page"><script>(function(m){try{if(m&&'IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches)m.classList.add('ab-js')}catch(e){}})(document.currentScript&&document.currentScript.parentNode)</script>
+<div class="counter"><ol class="crumbs" aria-label="Breadcrumb"><li><a href="../">Home</a></li><li aria-current="page">About HST Medical</li></ol></div>
+<section class="ab-hero" aria-labelledby="h-about">
+  <div class="counter ab-hero-grid">
+    <div class="ab-hero-copy">
+      <h1 id="h-about">About <span class="ab-grad">HST Medical</span></h1>
+      <p class="lead">HST Medical (博诚药业) is a Singapore health supplements and pain-relief company, home of the Rheuma-Salve® Pain Relief Balm and the Zoo-Vite® kids' vitamins, and part of Kowa Pharmaceutical Asia since 29 May 2026.</p>
+      <div class="ab-ctas"><a class="btn btn-stamp" href="../shop/">Shop all 51 products <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn btn-quiet" href="../where-to-buy/">Where to buy</a></div>
     </div>
-    <div class="legal"><span>© 2026 HST Medical Pte Ltd, Singapore.</span><span>Prototype by TechNext for the hstmedical.com redesign RFP.</span></div>
+    <div class="ab-hero-visual">
+      <svg class="ab-seal" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="ab-seal-c" d="M60,60 m-45,0 a45,45 0 1,1 90,0 a45,45 0 1,1 -90,0"/></defs><circle cx="60" cy="60" r="58" class="ab-seal-bg"/><circle cx="60" cy="60" r="33" class="ab-seal-in"/><g class="ab-seal-ring"><text><textPath href="#ab-seal-c" textLength="280" lengthAdjust="spacing">HENG SAY TONG · SINCE 1930 · HIGHER · STRONGER · TOGETHER ·</textPath></text></g><text x="60" y="58" text-anchor="middle" class="ab-seal-s">SINCE</text><text x="60" y="76" text-anchor="middle" class="ab-seal-y">1930</text></svg>
+      <figure class="ab-hero-photo"><img src="../assets/img/live/kowa-joined-signing.webp" alt="Vice-Chairman of Kowa Board of Directors, Mr. Shigeru Kimura, shakes hands with HST Medical co-founder Ms Simone Tan at the acquisition signing ceremony." width="1400" height="933" fetchpriority="high" decoding="async"></figure>
+      <p class="ab-hero-cap"><b>We have joined Kowa Pharmaceutical Asia</b>Mr. Shigeru Kimura, Vice-Chairman of Kowa's Board of Directors, with HST Medical co-founder Simone Tan at the signing ceremony.</p>
+    </div>
+  </div>
+</section>
+
+<section class="ab-facts" aria-label="HST Medical in numbers">
+  <dl class="counter"><div class="ab-fact" data-rv style="--d:0ms"><dt>Heng Say Tong medical hall founded</dt><dd><span class="ab-num" aria-hidden="true" data-to="1930" data-from="1900" style="--w:4">1930</span><span class="sr-only">1930</span></dd></div><div class="ab-fact" data-rv style="--d:90ms"><dt>HST Medical Pte Ltd incorporated</dt><dd><span class="ab-num" aria-hidden="true" data-to="1994" data-from="1960" style="--w:4">1994</span><span class="sr-only">1994</span></dd></div><div class="ab-fact" data-rv style="--d:180ms"><dt>products</dt><dd><span class="ab-num" aria-hidden="true" data-to="51" data-from="0" style="--w:2">51</span><span class="sr-only">51</span></dd></div><div class="ab-fact" data-rv style="--d:270ms"><dt>health ranges</dt><dd><span class="ab-num" aria-hidden="true" data-to="11" data-from="0" style="--w:2">11</span><span class="sr-only">11</span></dd></div><div class="ab-fact" data-rv style="--d:360ms"><dt>pharmacy chains: Guardian, Watsons and NHGP</dt><dd><span class="ab-num" aria-hidden="true" data-to="3" data-from="0" style="--w:1">3</span><span class="sr-only">3</span></dd></div></dl>
+</section>
+
+<section class="ab-hstwrap" aria-labelledby="h-hst">
+  <div class="ab-hst" style="background-image:linear-gradient(160deg,rgba(221,24,96,.88),rgba(179,18,76,.9)),url('../assets/img/live/about-og-summit-sunrise.webp')">
+    <div class="counter">
+      <h2 id="h-hst"><span class="ab-w">HST =</span> <span class="ab-w"><b>H</b>igher,</span> <span class="ab-w"><b>S</b>tronger,</span> <span class="ab-w"><b>T</b>ogether</span></h2>
+      <p>HST Medical's philosophy has evolved through the years. Today it stands for Higher, Stronger, Together: everyone's aspiration to go higher, be stronger and get together to do great things for the world.</p>
+    </div>
+  </div>
+  <div class="counter ab-values"><article class="ab-value ab-lift" data-rv data-tilt style="--d:0ms"><span class="ab-letter" aria-hidden="true">H</span><svg class="ic ab-draw" viewBox="0 0 24 24" aria-hidden="true"><path pathLength="1" d="M2.5 20 9 9.5l3.2 5.2L15 10.5 21.5 20z"/><path pathLength="1" d="M15 8V3.5M12.8 5.6 15 3.5l2.2 2.1"/></svg><h3>Higher</h3><p>Everyone&#x27;s aspiration to go higher, and it all starts with one&#x27;s holistic health.</p></article><article class="ab-value ab-lift" data-rv data-tilt style="--d:110ms"><span class="ab-letter" aria-hidden="true">S</span><svg class="ic ab-draw" viewBox="0 0 24 24" aria-hidden="true"><path pathLength="1" d="M12 20.5s-7.5-4.6-7.5-10.4A4.3 4.3 0 0 1 12 7.3a4.3 4.3 0 0 1 7.5 2.8c0 5.8-7.5 10.4-7.5 10.4z"/><path pathLength="1" d="M7.6 12.3h2.6l1.3-2.4 2 4.6 1.3-2.2h1.6"/></svg><h3>Stronger</h3><p>The best of East and West in integrative supplements, to help everyone be stronger on their journey of health.</p></article><article class="ab-value ab-lift" data-rv data-tilt style="--d:220ms"><span class="ab-letter" aria-hidden="true">T</span><svg class="ic ab-draw" viewBox="0 0 24 24" aria-hidden="true"><circle pathLength="1" cx="12" cy="7.5" r="2.8"/><path pathLength="1" d="M6.5 19.5c.6-3.4 2.7-5.2 5.5-5.2s4.9 1.8 5.5 5.2"/><circle pathLength="1" cx="5" cy="10.2" r="2"/><path pathLength="1" d="M1.8 18c.4-2.3 1.6-3.5 3.4-3.6"/><circle pathLength="1" cx="19" cy="10.2" r="2"/><path pathLength="1" d="M22.2 18c-.4-2.3-1.6-3.5-3.4-3.6"/></svg><h3>Together</h3><p>Professionals from Traditional Chinese Medicine and Western pharmacology, working together to do great things for the world.</p></article></div>
+</section>
+
+<section class="band ab-pursuit" aria-labelledby="h-pursuit">
+  <div class="counter ab-split">
+    <div class="ab-text" data-rv>
+      <h2 id="h-pursuit">The pursuit of health</h2>
+      <p>Health is a universal pursuit, and HST Medical grew from the aspiration to provide the best of East and West in integrative supplements for everyone's journey of health.</p>
+      <div class="ab-duo">
+        <span class="ab-duo-i"><svg class="ic ab-draw" viewBox="0 0 24 24" aria-hidden="true"><path pathLength="1" d="M5 19C5 10 10 5 20 4c0 10-5 15-14 15z"/><path pathLength="1" d="M5 19c3-4 6-7 10-9"/></svg><b>Traditional Chinese Medicine</b></span>
+        <span class="ab-duo-plus" aria-hidden="true">+</span>
+        <span class="ab-duo-i"><svg class="ic ab-draw" viewBox="0 0 24 24" aria-hidden="true"><path pathLength="1" d="M9 3h6M10 3v6L5 18a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 18l-5-9V3"/><path pathLength="1" d="M7.5 14h9"/></svg><b>Western pharmacology</b></span>
+      </div>
+      <p>The company brings these professionals together to formulate health products that are easy and affordable to reach, anywhere in the world: pain relief balm, kids' vitamins, immunity support for colds and flu, joint support, beauty support and much more.</p>
+      <ul class="ab-points">
+        <li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Ingredients tested for authenticity, finished products verified for safety</span></li>
+        <li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Made under GMP, with Halal-certified and vegan options</span></li>
+        <li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>On the shelf at Guardian, Watsons and NHGP pharmacies</span></li>
+      </ul>
+    </div>
+    <figure class="ab-collage" data-rv style="--d:120ms"><img src="../assets/img/live/about-what-is-hst-products.webp" alt="HST Medical Singapore - home of pain relief, beauty and other supplements" width="1400" height="788" loading="lazy" decoding="async"></figure>
+  </div>
+</section>
+
+<section class="band ab-make" aria-labelledby="h-make">
+  <div class="counter">
+    <div class="ab-head"><h2 id="h-make">What we make</h2><p>Four brands, 51 products across 11 ranges, formulated by pharmacists and TCM physicians and made under GMP.</p></div>
+    <div class="ab-brands"><article class="ab-brand ab-lift ab-b-rs" data-rv data-tilt style="--d:0ms">
+  <div class="ab-stage" aria-hidden="true"><img class="c1" src="../assets/img/products/p06-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"><img class="c2" src="../assets/img/products/p03-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"><img class="c3" src="../assets/img/products/p07-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"></div>
+  <div class="ab-brand-body">
+    <h3>Rheuma-Salve®</h3>
+    <p>Balm, crème, liniment, cooling patch and Medi-Stick for joint and muscle pain, with travel packs too.</p>
+    <p class="ab-bcount"><b>5</b> products in <b>1</b> range</p>
+    <ul class="ab-ranges" aria-label="Rheuma-Salve® ranges"><li><a href="../shop/pain-relief/" title="Premium Pain Relief">Pain relief</a></li></ul>
+    <a class="btn btn-quiet btn-sm" href="../shop/pain-relief/">Shop Rheuma-Salve® <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</article><article class="ab-brand ab-lift ab-b-her" data-rv data-tilt style="--d:100ms">
+  <div class="ab-stage" aria-hidden="true"><img class="c1" src="../assets/img/products/p14-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"><img class="c2" src="../assets/img/products/p11-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"><img class="c3" src="../assets/img/products/p18-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"></div>
+  <div class="ab-brand-body">
+    <h3>Heritage®</h3>
+    <p>Ginseng, cordyceps and lingzhi tonics, pearl powder and squalene, and traditional medicated oils.</p>
+    <p class="ab-bcount"><b>12</b> products in <b>3</b> ranges</p>
+    <ul class="ab-ranges" aria-label="Heritage® ranges"><li><a href="../shop/immunity-energy/" title="Immunity &amp; Energy">Tonics</a></li><li><a href="../shop/beauty-wellness/" title="Beauty &amp; Wellness">Beauty</a></li><li><a href="../shop/traditional-pain-relief/" title="Traditional Pain Relief">Traditional oils</a></li></ul>
+    <a class="btn btn-quiet btn-sm" href="../shop/?q=heritage">Shop Heritage® <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</article><article class="ab-brand ab-lift ab-b-hst" data-rv data-tilt style="--d:200ms">
+  <div class="ab-stage" aria-hidden="true"><img class="c1" src="../assets/img/products/p15-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"><img class="c2" src="../assets/img/products/p46-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"><img class="c3" src="../assets/img/products/p44-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"></div>
+  <div class="ab-brand-body">
+    <h3>HST Medical®</h3>
+    <p>Cough and cold remedies, with support for joints, sleep, immunity, eyes, memory, heart and liver.</p>
+    <p class="ab-bcount"><b>29</b> products in <b>7</b> ranges</p>
+    <ul class="ab-ranges" aria-label="HST Medical® ranges"><li><a href="../shop/cough-cold-flu/" title="Cough, Cold &amp; Flu">Cough and cold</a></li><li><a href="../shop/alertness-memory-vision/" title="Alertness, Memory &amp; Vision">Memory and vision</a></li><li><a href="../shop/bones-joints/" title="Bones &amp; Joints">Bones and joints</a></li><li><a href="../shop/?q=hst+medical">+4 more</a></li></ul>
+    <a class="btn btn-quiet btn-sm" href="../shop/?q=hst+medical">Shop HST Medical® <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</article><article class="ab-brand ab-lift ab-b-zoo" data-rv data-tilt style="--d:300ms">
+  <div class="ab-stage" aria-hidden="true"><img class="c1" src="../assets/img/products/p24-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"><img class="c2" src="../assets/img/products/p23-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"><img class="c3" src="../assets/img/products/p25-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"></div>
+  <div class="ab-brand-body">
+    <h3>Zoo-Vite®</h3>
+    <p>Kids&#x27; gummies and jelly sticks for immunity, eyes and brain (DHA).</p>
+    <p class="ab-bcount"><b>5</b> products in <b>1</b> range</p>
+    <ul class="ab-ranges" aria-label="Zoo-Vite® ranges"><li><a href="../shop/kids/" title="Kids Supplements">Kids</a></li></ul>
+    <a class="btn btn-quiet btn-sm" href="../shop/kids/">Shop Zoo-Vite® <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</article></div>
+  </div>
+</section>
+
+<section class="band ab-heritage2" aria-labelledby="h-heritage">
+  <div class="counter">
+    <div class="ab-her-head">
+      <h2 id="h-heritage">A heritage that began in 1930</h2>
+      <p>The name is a tribute to Heng Say Tong, the medical hall established by the family of the company's co-founders. HST Medical Pte Ltd was incorporated in 1994 and draws on nearly a century of heritage in healthcare.</p>
+    </div>
+    <ol class="journey ab-journey"><li class="ms" style="--k:0"><span class="ms-dot" aria-hidden="true"></span><span class="ms-art ms-art-ic"><svg class="ms-ic" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 30h44c0 12-9 22-22 22S10 42 10 30z"/><path d="M22 52l-2 6h24l-2-6"/><path d="M40 30 52 8"/><circle cx="53" cy="7" r="3"/><path d="M18 36c3 6 8 9 14 9"/></svg></span><b class="ms-year">1930</b><h3>The medical hall</h3><p>Heng Say Tong opens: the family medical hall that gives HST its name.</p></li><li class="ms" style="--k:1"><span class="ms-dot" aria-hidden="true"></span><span class="ms-art ms-art-logo"><img src="../assets/img/logo-hst.webp" alt="" width="484" height="240" loading="lazy" decoding="async"></span><b class="ms-year">1994</b><h3>HST Medical is incorporated</h3><p>Pharmacists and TCM physicians start formulating for Singapore&#x27;s pharmacy chains.</p></li><li class="ms" style="--k:2"><span class="ms-dot" aria-hidden="true"></span><span class="ms-art ms-art-awards"><img src="../assets/img/live/award-beauty-insider-2024-shou-wu.webp" alt="" width="200" height="200" loading="lazy" decoding="async"><img src="../assets/img/live/award-beauty-insider-2024-sleep-aid.webp" alt="" width="200" height="200" loading="lazy" decoding="async"><img src="../assets/img/live/award-guardian-2024.webp" alt="" width="200" height="200" loading="lazy" decoding="async"></span><b class="ms-year">2024</b><h3>Award-winning</h3><p>Beauty Insider Health &amp; Wellness Awards and The Guardian Awards.</p></li><li class="ms" style="--k:3"><span class="ms-dot" aria-hidden="true"></span><span class="ms-art ms-art-photo"><img class="ms-photo" src="../assets/img/live/kowa-joined-signing.webp" alt="" width="1400" height="933" loading="lazy" decoding="async"></span><b class="ms-year">2026</b><h3>Part of Kowa</h3><p>Joins Kowa Pharmaceutical Asia on 29 May, within the Japanese Kowa group.</p></li></ol>
+  </div>
+</section>
+
+<section class="band ab-kowa" aria-labelledby="h-kowa">
+  <div class="counter ab-kowa-grid">
+    <figure class="ab-kowa-photo" data-rv>
+      <div class="ab-kowa-frame"><img src="../assets/img/live/kowa-joined-banner.webp" alt="Management and staff from Kowa and HST Medical commemorate the acquisition signing ceremony" width="1400" height="933" loading="lazy" decoding="async"></div>
+      <figcaption>Management and staff from Kowa and HST Medical commemorate the acquisition signing ceremony.</figcaption>
+    </figure>
+    <div class="ab-kowa-copy" data-rv style="--d:140ms">
+      <h2 id="h-kowa">Part of Kowa Pharmaceutical Asia</h2>
+      <p>Since 29 May 2026 HST Medical has been part of Kowa Pharmaceutical Asia Pte. Ltd., within the Japanese Kowa group, whose consumer brands include Vantelin and Three Dimension Mask.</p>
+      <ol class="ab-tree" aria-label="Group structure">
+        <li><b>Kowa group</b><span>Japan</span></li>
+        <li><b>Kowa Pharmaceutical Asia Pte. Ltd.</b><span>Parent company since 29 May 2026</span></li>
+        <li><b>HST Medical Pte Ltd</b><span>Incorporated 1994, heritage since 1930</span></li>
+      </ol>
+      <a class="btn btn-quiet" href="https://hstmedical.com/hst-medical-joins-kowa-pharmaceutical-asia/" target="_blank" rel="noopener">Read the announcement <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<section class="band ab-homeband" aria-labelledby="h-home">
+  <div class="counter">
+    <div class="ab-head"><h2 id="h-home">Home of <span class="ab-nw">Rheuma-Salve®</span> and <span class="ab-nw">Zoo-Vite®</span></h2></div>
+    <div class="ab-spots">
+      <article class="ab-spot ab-spot-rs ab-lift" data-rv>
+        <ul class="ab-formats" aria-label="Rheuma-Salve formats"><li><a href="../products/rheuma-salve-balm/" style="--k:0"><img src="../assets/img/products/p03-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"><span>Balm</span></a></li><li><a href="../products/rheuma-salve-creme/" style="--k:1"><img src="../assets/img/products/p04-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"><span>Crème</span></a></li><li><a href="../products/rheuma-salve-liniment/" style="--k:2"><img src="../assets/img/products/p05-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"><span>Liniment</span></a></li><li><a href="../products/rheuma-salve-pain-relief-patch-cool/" style="--k:3"><img src="../assets/img/products/p06-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"><span>Cooling patch</span></a></li><li><a href="../products/rheuma-salve-medi-stick/" style="--k:4"><img src="../assets/img/products/p07-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"><span>Medi-Stick</span></a></li></ul>
+        <h3>Rheuma-Salve®: a format for each pain</h3>
+        <p>Backache, sprains and strains, arthritis, rheumatism or other joint pain: the Rheuma-Salve® range has a format for each, from the balm, liniment and crème to the cooling patch, with travel packs too.</p>
+        <a class="btn btn-quiet" href="../shop/pain-relief/">Rheuma-Salve® range <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+      <article class="ab-spot ab-spot-zoo ab-lift" data-rv style="--d:120ms">
+        <div class="ab-zoo-vis">
+          <a class="ab-sassy" href="https://www.sassymamasg.com/health-picky-eaters-multivitamins-zoo-vite/" target="_blank" rel="noopener" aria-label="Read the Sassy Mama feature (opens in a new tab)"><img src="../assets/img/live/about-sassy-mama-badge-2020.webp" alt="Zoo-Vite Kids Vitamins featured on Sassy Mama 2020" width="417" height="417" loading="lazy" decoding="async"></a>
+          <span class="ab-zoo-packs" aria-hidden="true"><img class="z1" src="../assets/img/products/p22-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"><img class="z2" src="../assets/img/products/p21-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"></span>
+        </div>
+        <h3>Zoo-Vite®: featured by Sassy Mama</h3>
+        <p>Zoo-Vite® kids' vitamins were featured by Sassy Mama in 2020: <a href="https://www.sassymamasg.com/health-picky-eaters-multivitamins-zoo-vite/" target="_blank" rel="noopener">Picky eaters? Why multivitamins can help fill your kid's nutrient gap</a>.</p>
+        <a class="btn btn-quiet" href="../shop/kids/">Zoo-Vite® for kids <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="band ab-awardsx-band" aria-labelledby="h-awards">
+  <div class="counter">
+    <div class="ab-head"><h2 id="h-awards">Award-winning</h2><p>Recognised by Beauty Insider readers and by Guardian in 2024.</p></div>
+    <div class="ab-awardsx"><article class="ab-aw ab-lift" data-rv data-tilt style="--d:0ms">
+  <div class="ab-aw-art"><img src="../assets/img/live/award-beauty-insider-2024-shou-wu.webp" alt="Beauty Insider Health &amp; Wellness Awards 2024: HST Medical Shou Wu Hair Plus, Best Hair Supplements (Beauty Insiders&#x27; Choice)" width="1400" height="1400" loading="lazy" decoding="async"></div>
+  <div class="ab-aw-body">
+    <h3><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle pathLength="1" cx="12" cy="9" r="5.5"/><path pathLength="1" d="m8.6 13.3-1.6 7.2 5-2.6 5 2.6-1.6-7.2"/><path pathLength="1" d="m9.8 9 1.5 1.5 2.9-2.9"/></svg><span>Beauty Insider Health &amp; Wellness Awards 2024</span></h3>
+    <p>Best Hair Supplements (Beauty Insiders&#x27; Choice): HST Medical Shou Wu Hair Plus</p>
+    <a class="btn btn-quiet btn-sm" href="../products/shou-wu-hair-plus/">View Shou Wu Hair Plus <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</article><article class="ab-aw ab-lift" data-rv data-tilt style="--d:110ms">
+  <div class="ab-aw-art"><img src="../assets/img/live/award-beauty-insider-2024-sleep-aid.webp" alt="Beauty Insider Health &amp; Wellness Awards 2024: HST Medical Sleep Aid, Best Wellness Supplement (Readers&#x27; Choice)" width="1400" height="1400" loading="lazy" decoding="async"></div>
+  <div class="ab-aw-body">
+    <h3><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle pathLength="1" cx="12" cy="9" r="5.5"/><path pathLength="1" d="m8.6 13.3-1.6 7.2 5-2.6 5 2.6-1.6-7.2"/><path pathLength="1" d="m9.8 9 1.5 1.5 2.9-2.9"/></svg><span>Beauty Insider Health &amp; Wellness Awards 2024</span></h3>
+    <p>Best Wellness Supplement (Readers&#x27; Choice): HST Medical Sleep Aid</p>
+    <a class="btn btn-quiet btn-sm" href="../products/sleep-aid-melatonin-10mg/">View Sleep Aid <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</article><article class="ab-aw ab-lift" data-rv data-tilt style="--d:220ms">
+  <div class="ab-aw-art"><img src="../assets/img/live/award-guardian-2024.webp" alt="The Guardian Awards 2024: winner" width="1024" height="1024" loading="lazy" decoding="async"></div>
+  <div class="ab-aw-body">
+    <h3><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle pathLength="1" cx="12" cy="9" r="5.5"/><path pathLength="1" d="m8.6 13.3-1.6 7.2 5-2.6 5 2.6-1.6-7.2"/><path pathLength="1" d="m9.8 9 1.5 1.5 2.9-2.9"/></svg><span>The Guardian Awards 2024</span></h3>
+    <p>Winner</p>
+    <a class="btn btn-quiet btn-sm" href="../products/rheuma-salve-balm/">View Rheuma-Salve® Balm <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</article></div>
+    <p class="small ab-note">Award artwork as published on hstmedical.com.</p>
+  </div>
+</section>
+
+<section class="band ab-resell" aria-labelledby="h-resell">
+  <div class="counter">
+    <div class="ab-cta-card" data-rv>
+      <div class="ab-cta-copy">
+        <h2 id="h-resell">Be an entrepreneur. Join us as a reseller.</h2>
+        <p>Sell HST Medical products and buy from us in bulk: pharmacies, clinics, TCM halls and online sellers are welcome.</p>
+        <div class="ab-ctas"><a class="btn btn-light" href="../resellers/">Become a reseller <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      </div>
+      <div class="ab-cta-packs" aria-hidden="true"><img class="k1" src="../assets/img/products/p03-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"><img class="k2" src="../assets/img/products/p46-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"><img class="k3" src="../assets/img/products/p23-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"></div>
+    </div>
+  </div>
+</section>
+
+<section class="band ab-visit" aria-labelledby="h-find">
+  <div class="counter ab-visit-grid">
+    <div class="ab-visit-copy" data-rv>
+      <h2 id="h-find">Find us</h2>
+      <address class="ab-contact">
+        <span class="ab-ci"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path pathLength="1" d="M12 21s-6.5-6.2-6.5-11.2a6.5 6.5 0 0 1 13 0C18.5 14.8 12 21 12 21z"/><circle pathLength="1" cx="12" cy="9.8" r="2.4"/></svg><span><b>HST Medical Pte Ltd</b>152 Paya Lebar Road #02-06, Citipoint Industrial Complex, Singapore 409020</span></span>
+        <span class="ab-ci"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path pathLength="1" d="M5.2 3.5h3l1.6 4.1-2.1 1.4a11.5 11.5 0 0 0 5.3 5.3l1.4-2.1 4.1 1.6v3a2.3 2.3 0 0 1-2.5 2.3C9.4 18.6 5.4 14.6 4.9 6a2.3 2.3 0 0 1 .3-2.5z"/></svg><a href="tel:+6565365108">+65 6536 5108 ext 816</a></span>
+        <span class="ab-ci"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect pathLength="1" x="3" y="5.5" width="18" height="13" rx="2"/><path pathLength="1" d="m3.5 7 8.5 6 8.5-6"/></svg><a href="mailto:contact@hstmedical.com">contact@hstmedical.com</a></span>
+      </address>
+      <div class="ab-ctas"><a class="btn btn-stamp" href="https://www.google.com/maps/dir/?api=1&amp;destination=HST+Medical+Pte+Ltd,+152+Paya+Lebar+Road,+Singapore+409020" target="_blank" rel="noopener">Get directions <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn btn-quiet" href="tel:+6565365108">Call us</a></div>
+    </div>
+    <figure class="map"><iframe title="HST Medical Pte Ltd, 152 Paya Lebar Road, Singapore" src="https://maps.google.com/maps?q=HST+Medical+Pte+Ltd,+152+Paya+Lebar+Road,+Citipoint+Industrial+Complex,+Singapore+409020&amp;z=16&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe><figcaption><a href="https://www.google.com/maps/search/?api=1&amp;query=HST+Medical+Pte+Ltd,+152+Paya+Lebar+Road,+Citipoint+Industrial+Complex,+Singapore+409020" target="_blank" rel="noopener">Open in Google Maps</a></figcaption></figure>
+  </div>
+</section>
+<script>
+(function(){
+  var m=document.getElementById('main');
+  if(!m||!m.classList.contains('ab-js'))return;
+  function count(el){
+    var to=+el.getAttribute('data-to'),from=+(el.getAttribute('data-from')||0),t0=0,dur=1500;
+    function step(t){if(!t0)t0=t;var k=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-k,4);el.textContent=Math.round(from+(to-from)*e);if(k<1)requestAnimationFrame(step);}
+    requestAnimationFrame(step);
+  }
+  m.querySelectorAll('[data-to]').forEach(function(el){el.textContent=el.getAttribute('data-from')||'0';});
+  var ob=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(!e.isIntersecting)return;var el=e.target;ob.unobserve(el);el.classList.add('is-in');
+    el.querySelectorAll('[data-to]').forEach(count);
+  });},{rootMargin:'0px 0px -8% 0px',threshold:0.12});
+  m.querySelectorAll('[data-rv]').forEach(function(el){ob.observe(el);});
+
+  var tl=m.querySelector('[data-tl]');
+  if(tl){
+    var track=tl.querySelector('.ab-tl-track'),dots=[].slice.call(tl.querySelectorAll('.ab-tl-dot')),stops=[].slice.call(tl.querySelectorAll('.ab-tl-stop')),fr=[],vert=false,a0=0,len=1,busy=false,best=0;
+    var update=function(){
+      busy=false;var r=tl.getBoundingClientRect(),vh=innerHeight,p;
+      p=vert?(vh*0.7-(r.top+a0))/len:(vh*0.92-r.top)/(vh*0.45);
+      p=Math.max(best,Math.min(1,p));best=p;
+      tl.style.setProperty('--p',p.toFixed(4));
+      stops.forEach(function(s,i){s.classList.toggle('on',p>0.001&&p>=fr[i]-0.002);});
+    };
+    var layout=function(){
+      if(!dots.length)return;
+      var r=tl.getBoundingClientRect(),a=dots[0].getBoundingClientRect(),b=dots[dots.length-1].getBoundingClientRect();
+      var ax=a.left+a.width/2-r.left,ay=a.top+a.height/2-r.top,bx=b.left+b.width/2-r.left,by=b.top+b.height/2-r.top;
+      vert=Math.abs(bx-ax)<4;
+      if(vert){a0=ay;len=Math.max(1,by-ay);track.style.cssText='left:'+(ax-1.5)+'px;top:'+ay+'px;width:3px;height:'+len+'px;right:auto;bottom:auto';}
+      else{len=Math.max(1,bx-ax);track.style.cssText='left:'+ax+'px;top:'+(ay-1.5)+'px;width:'+len+'px;height:3px;right:auto;bottom:auto';}
+      fr=dots.map(function(d){var q=d.getBoundingClientRect();return vert?(q.top+q.height/2-r.top-ay)/len:(q.left+q.width/2-r.left-ax)/len;});
+      update();
+    };
+    addEventListener('scroll',function(){if(!busy){busy=true;requestAnimationFrame(update);}},{passive:true});
+    addEventListener('resize',layout);addEventListener('load',layout);
+    if(document.fonts&&document.fonts.ready)document.fonts.ready.then(layout);
+    layout();
+  }
+
+  if(matchMedia('(hover: hover) and (pointer: fine)').matches){
+    m.querySelectorAll('[data-tilt]').forEach(function(el){
+      var raf=0,x=0,y=0;
+      el.addEventListener('pointermove',function(e){var r=el.getBoundingClientRect();x=(e.clientX-r.left)/r.width-0.5;y=(e.clientY-r.top)/r.height-0.5;
+        if(!raf)raf=requestAnimationFrame(function(){raf=0;el.style.setProperty('--rx',(x*7).toFixed(2)+'deg');el.style.setProperty('--ry',(-y*7).toFixed(2)+'deg');});});
+      el.addEventListener('pointerleave',function(){el.style.removeProperty('--rx');el.style.removeProperty('--ry');});
+    });
+  }
+})();
+</script>
+</main><footer class="site-footer">
+  <div class="counter">
+
+    <section class="ft-help" aria-labelledby="ft-help-title">
+      <div class="ft-help-head">
+        <div>
+          <h2 class="ft-help-title" id="ft-help-title">Talk to the HST Medical team</h2>
+        </div>
+        <p class="ft-help-sub">Questions about a remedy, an order or stocking our brands? Reach the right desk directly.</p>
+      </div>
+      <ul class="ft-cards">
+        <li class="ft-card">
+          <span class="ft-card-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><path d="M4 14a2 2 0 0 1 2-2h1v6H6a2 2 0 0 1-2-2z"/><path d="M20 14a2 2 0 0 0-2-2h-1v6h1a2 2 0 0 0 2-2z"/><path d="M17 18v.5a2.5 2.5 0 0 1-2.5 2.5H12"/></svg></span>
+          <div class="ft-card-body">
+            <h3 class="ft-card-h">Customer service</h3>
+            <p class="ft-card-meta">Product questions</p>
+            <a class="ft-card-link" href="tel:+6565365108"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h3.5l2 5-2.5 1.5a11 11 0 0 0 5.5 5.5l1.5-2.5 5 2V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg><span>+65 6536 5108 <span class="ft-ext">ext 816</span></span></a>
+            <a class="ft-card-link" href="mailto:contact@hstmedical.com"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg><span>contact<wbr>@hstmedical.com</span></a>
+          </div>
+        </li>
+        <li class="ft-card">
+          <span class="ft-card-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5"/><path d="M12 13v8"/><path d="m7.5 5.5 9 5"/></svg></span>
+          <div class="ft-card-body">
+            <h3 class="ft-card-h">Orders</h3>
+            <p class="ft-card-meta">Online orders and delivery</p>
+            <a class="ft-card-link" href="mailto:order@hstmedical.com"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg><span>order<wbr>@hstmedical.com</span></a>
+          </div>
+        </li>
+        <li class="ft-card">
+          <span class="ft-card-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 10.5V20h15v-9.5"/><path d="M3 10 5 4h14l2 6"/><path d="M3 10a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M10 20v-5h4v5"/></svg></span>
+          <div class="ft-card-body">
+            <h3 class="ft-card-h">Trade and resellers</h3>
+            <p class="ft-card-meta">Pharmacies, clinics and retailers</p>
+            <a class="ft-card-link" href="mailto:resellercontact@hstmedical.com"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg><span>resellercontact<wbr>@hstmedical.com</span></a>
+            <a class="ft-card-link ft-go" href="../resellers/"><span>Become a reseller</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+          </div>
+        </li>
+        <li class="ft-card">
+          <span class="ft-card-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3 3 10.5l6.5 2.5L12 20z"/><path d="M21 3 9.5 13"/></svg></span>
+          <div class="ft-card-body">
+            <h3 class="ft-card-h">Telegram</h3>
+            <p class="ft-card-meta">Promotions and new products</p>
+            <a class="ft-card-link ft-go" href="https://t.me/hstmedical" target="_blank" rel="noopener"><span>Get offers on Telegram</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+            <p class="ft-card-note">t.me/hstmedical</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <div class="ft-main">
+      <div class="ft-brand">
+        <div class="ft-brand-id">
+          <a class="ft-logo" href="../" aria-label="HST Medical, a Kowa subsidiary. Home"><img src="../assets/img/logo-hst.webp" alt="HST Medical, Kowa subsidiary" width="484" height="240" loading="lazy" decoding="async"></a>
+          <p class="ft-blurb">Health supplements and pain-relief remedies formulated by pharmacists and TCM physicians. A Singapore company since 1994, now part of Kowa Pharmaceutical Asia.</p>
+        </div>
+        <address class="ft-addr">
+          <span class="ft-addr-ic"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
+          <span class="ft-addr-txt"><strong>HST MEDICAL PTE LTD</strong><br>152 Paya Lebar Road #02-06<br>Citipoint Industrial Complex<br>Singapore 409020</span>
+          <a class="ft-go ft-dir" href="https://www.google.com/maps/search/?api=1&amp;query=152+Paya+Lebar+Road+Citipoint+Industrial+Complex+Singapore+409020" target="_blank" rel="noopener"><span>Get directions</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg><span class="sr-only"> (opens Google Maps in a new tab)</span></a>
+        </address>
+      </div>
+
+      <nav class="ft-nav" aria-label="Footer">
+        <div class="ft-col">
+          <h2 class="ft-h">Shop</h2>
+          <ul>
+            <li><a href="../shop/pain-relief/"><span>Pain relief</span></a></li>
+            <li><a href="../shop/cough-cold-flu/"><span>Cough, cold &amp; flu</span></a></li>
+            <li><a href="../shop/kids/"><span>Kids</span></a></li>
+            <li><a href="../shop/stress-sleep/"><span>Sleep</span></a></li>
+            <li><a href="../shop/immunity-energy/"><span>Tonics</span></a></li>
+            <li><a href="../shop/"><span>All 51 products</span></a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h2 class="ft-h">HST Medical</h2>
+          <ul>
+            <li><a href="../about/"><span>About us</span></a></li>
+            <li><a href="../brands/"><span>Our brands</span></a></li>
+            <li><a href="../where-to-buy/"><span>Where to buy</span></a></li>
+            <li><a href="../resellers/"><span>Trade and resellers</span></a></li>
+            <li><a href="../blog/"><span>Health notes</span></a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h2 class="ft-h">Help</h2>
+          <ul>
+            <li><a href="../contact/"><span>Contact us</span></a></li>
+            <li><a href="../cart/"><span>Your bag</span></a></li>
+            <li><a href="../where-to-buy/"><span>Delivery: free above S$30</span></a></li>
+            <li><a href="../privacy/"><span>Privacy</span></a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div class="ft-shelf">
+      <p class="ft-shelf-h">On the shelf at</p>
+      <ul class="ft-chips">
+        <li>Guardian</li>
+        <li>Watsons</li>
+        <li>NHGP pharmacies</li>
+      </ul>
+      <a class="ft-go ft-shelf-link" href="../where-to-buy/"><span>See where to buy</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+    </div>
+
+    <div class="ft-legal">
+      <div class="ft-legal-txt">
+        <p>&copy; 2026 HST Medical Pte Ltd <span aria-hidden="true">&middot;</span> UEN 199405743E</p>
+        <p>Always read the label and follow directions for use.</p>
+        <p>Prototype by TechNext for the hstmedical.com redesign RFP.</p>
+      </div>
+      <a class="ft-top" href="#main"><span>Back to top</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5"/><path d="m6 11 6-6 6 6"/></svg></a>
+    </div>
+
   </div>
 </footer>
 <div class="toast" id="toast" hidden role="status"><span></span><button type="button">Undo</button></div>
-<script src="../assets/js/site.js?v=20261005d" defer></script>
+<script src="../assets/js/site.js?v=20261006r" defer></script>
 </body>
 </html>
