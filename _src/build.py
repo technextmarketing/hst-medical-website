@@ -14,7 +14,7 @@ import home_sections, page_where, page_about
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.dirname(HERE)
 BASE = "https://technextmarketing.github.io/hst-medical-website/"
-V = "20261006t"
+V = "20261007a"
 PROTOTYPE = True
 TODAY = datetime.date.today().isoformat()
 
@@ -675,7 +675,7 @@ def build_shop():
     body = f"""
 <main id="main"><div class="counter">{crumb}
 <header class="page-head"><h1>All products</h1><p class="lead">{len(PRODUCTS)} products across {len(CAT_ORDER)} shelves. Prices in Singapore dollars including GST. Free Singapore delivery on orders above S$30; S$1.99 for orders of S$30 and below.</p></header>
-<form class="search" role="search" action="" onsubmit="return false"><label class="sr-only" for="q">Search products</label><input id="q" type="search" name="q" placeholder="Search: balm, melatonin, ginseng, kids…" autocomplete="off"><button class="btn" type="submit" aria-label="Search">{IC['search']}</button></form>
+<form class="search" role="search" action="" onsubmit="return false"><label class="sr-only" for="q">Search products</label><input id="q" type="search" name="q" placeholder="Search products: balm, ginseng…" autocomplete="off"><button class="btn" type="submit" aria-label="Search">{IC['search']}</button></form>
 {filters_html(root)}
 <h2 class="result" id="result">Showing {len(PRODUCTS)} of {len(PRODUCTS)} products</h2>
 <div class="empty" id="shop-empty" hidden><b>No match.</b>Try a shorter word, or start from a shelf: <a href="pain-relief/">pain relief</a>, <a href="cough-cold-flu/">cough and cold</a>, <a href="kids/">kids</a>, <a href="stress-sleep/">sleep</a>.</div>
@@ -736,33 +736,47 @@ def build_products():
         related = [x for x in cat_products(p["category"]) if x["slug"] != p["slug"]][:4]
         rel = "\n".join(product_label(x, root) for x in related)
         halal = " · Halal (Malaysia)" if p["slug"] == "alievaid-herbal-drops" else ""
+        steps = "".join("<li><span>%d</span><p>%s</p></li>" % (k + 1, esc(u)) for k, u in enumerate(p["usage"])) or "<li><span>1</span><p>Use as directed on the label.</p></li>"
+        ingr_items = "".join("<li>%s</li>" % esc(u) for u in p["ingredients"]) or "<li>See pack for the full ingredient list.</li>"
+        use1 = (p["usage"][0] if p["usage"] else "As directed on the label").split(". ")[0].rstrip(".")
+        facts = "".join(f"""<li>{ic}<span><b>{esc(k)}</b>{esc(v)}</span></li>""" for ic, k, v in [
+            (need_ic(p["slug"], "ic") or AIC["leaf"], "For", p["for"]), (AIC["flask"], "How to use", use1), (AIC["store"], "Origin", (p["country"] or "See pack") + halal)])
+        caution = 'External use only. Not for broken skin; ask a pharmacist before use in pregnancy or for young children.' if p['category'] in ('pain-relief', 'traditional-pain-relief') else 'A health supplement or herbal remedy, not a substitute for medical care. Ask a pharmacist if symptoms persist.'
+        partners = "".join('<li><img src="%sassets/img/partners/%s.webp" alt="%s" width="%d" height="%d" loading="lazy" decoding="async"></li>' % (root, f, n, w_, h_) for f, n, w_, h_ in (("guardian", "Guardian", 875, 226), ("nhg-polyclinics", "NHG Polyclinics", 834, 240))) + "".join("<li class=\"pt\">%s</li>" % n for n in ("Watsons", "Essentials Pharmacy"))
         body = f"""
 <main id="main"><div class="counter">{crumb}
-<article class="label {brand_class(p['brand'])}" data-pdp style="margin-top:1rem">
-  {label_head('<b>%s</b> <span>%s</span> <span class="print" data-code-out>Item %s</span>' % (esc(brand_label(p['brand'])), esc(c['name']), v0['code'] or '—'), esc(p['country'] or 'See pack') + halal)}
-  <div class="pdp">
-    <figure class="pdp-pack"><span class="zoomer"><img src="{root}assets/img/products/{p['image']}.webp" alt="{esc(p['name'])}, {esc(p['size'])}" width="900" height="900" fetchpriority="high" decoding="async"><span class="zoom-hint" aria-hidden="true"><span class="h-hover">Hover to zoom</span><span class="h-tap">Tap to zoom</span></span></span></figure>
-    <div class="pdp-main">
-      <h1>{esc(p['name'])}</h1>
-      <p class="dose">{esc(p['tagline'])}</p>
-      <dl class="fields"><div class="field"><dt>For</dt><dd>{esc(p['for'])}</dd></div><div class="field"><dt>Use</dt><dd>{esc(p['usage'][0] if p['usage'] else 'As directed on the label.')}</dd></div><div class="field"><dt>Pack</dt><dd class="print" data-size-out>{esc(v0['label'])}</dd></div></dl>
-      <div class="price-line print"><span class="price" data-price-out>{esc(money(v0['price']))}</span><span class="meta">SGD, incl. GST · free Singapore delivery above S$30</span></div>
-      <fieldset><legend>Pack size</legend><div class="packs">{packs}</div>{other}</fieldset>
-      <div class="buy">
-        <div class="qty" aria-label="Quantity"><button type="button" data-step="-1" aria-label="Decrease quantity">−</button><input id="qty" type="number" min="1" max="99" value="1" inputmode="numeric" aria-label="Quantity"><button type="button" data-step="1" aria-label="Increase quantity">+</button></div>
-        {add_btn(p, root, cls='btn btn-stamp', from_pdp=True)}
-        <a class="btn btn-quiet" href="{root}where-to-buy/" data-enquire{' hidden' if v0['price'] else ''}>Ask in store</a>
-      </div>
-      <ul class="checks" style="margin-bottom:1.25rem">{benefits}</ul>
-      <details class="acc" open><summary>What it is {IC['plus']}</summary><div class="body"><p>{esc(p['description'])}</p></div></details>
-      <details class="acc"><summary>How to use {IC['plus']}</summary><div class="body"><ul>{usage}</ul></div></details>
-      <details class="acc"><summary>Active ingredients {IC['plus']}</summary><div class="body"><ul>{ingr}</ul></div></details>
-      <details class="acc"><summary>Where else to buy {IC['plus']}</summary><div class="body"><ul class="where">{''.join('<li>%s</li>' % esc(r) for r in RETAILERS_CONFIRMED)}</ul><p class="small" style="margin-top:.75rem">Also on the current store at hstmedical.com{(' (<a href="%s" rel="noopener">listing</a>)' % esc(v0['url'])) if v0.get('url') else ''}.</p></div></details>
-      <p class="caution">Always read the label and follow directions for use. {'External use only. Not for broken skin; ask a pharmacist before use in pregnancy or for young children.' if p['category'] in ('pain-relief', 'traditional-pain-relief') else 'A health supplement or herbal remedy, not a substitute for medical care. Ask a pharmacist if symptoms persist.'}</p>
+<article class="pdp2 {brand_class(p['brand'])}" data-pdp>
+  <div class="pdp2-media">
+    <figure class="pdp-pack"><span class="pdp-halo" aria-hidden="true"></span><span class="zoomer"><img src="{root}assets/img/products/{p['image']}.webp" alt="{esc(p['name'])}, {esc(p['size'])}" width="900" height="900" fetchpriority="high" decoding="async"><span class="zoom-hint" aria-hidden="true"><span class="h-hover">Hover to zoom</span><span class="h-tap">Tap to zoom</span></span></span></figure>
+  </div>
+  <div class="pdp2-main">
+    <p class="pdp-meta"><span class="pdp-brand">{esc(brand_label(p['brand']))}</span><a href="{root}shop/{p['category']}/">{esc(c['name'])}</a><span class="print" data-code-out>Item {v0['code'] or '—'}</span></p>
+    <h1>{esc(p['name'])}</h1>
+    <p class="pdp-tag">{esc(p['tagline'])}</p>
+    <ul class="pdp-facts">{facts}</ul>
+    <div class="price-line print"><span class="price" data-price-out>{esc(money(v0['price']))}</span><span class="meta">{AIC['truck']}incl. GST · free Singapore delivery above S$30</span></div>
+    <fieldset class="pdp-packs"><legend>Pack size <span class="print" data-size-out>{esc(v0['label'])}</span></legend><div class="packs">{packs}</div>{other}</fieldset>
+    <div class="buy">
+      <div class="qty" aria-label="Quantity"><button type="button" data-step="-1" aria-label="Decrease quantity">−</button><input id="qty" type="number" min="1" max="99" value="1" inputmode="numeric" aria-label="Quantity"><button type="button" data-step="1" aria-label="Increase quantity">+</button></div>
+      {add_btn(p, root, cls='btn btn-stamp pdp-add', from_pdp=True)}
+      <a class="btn btn-quiet" href="{root}where-to-buy/" data-enquire{' hidden' if v0['price'] else ''}>Ask in store</a>
     </div>
+    <ul class="pdp-benefits">{benefits}</ul>
   </div>
 </article>
 </div>
+<div class="buybar" data-buybar hidden><img src="{root}assets/img/products/{p['image']}-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async"><span class="bb-t"><b>{esc(p['name'])}</b><small data-price-out>{esc(money(v0['price']))}</small></span><button class="btn btn-stamp" type="button" data-buybar-add{' hidden' if not v0['price'] else ''}>{IC['bag']} Add</button></div>
+<section class="band pdp-info" aria-label="Product information">
+  <div class="counter">
+    <div class="pdp-cards">
+      <article class="pdp-card"><svg class="pc-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg><h2>What it is</h2><p>{esc(p['description'])}</p></article>
+      <article class="pdp-card"><svg class="pc-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6l-1 4h-4z"/><path d="M8 8h8l1 12H7z"/><path d="M10 13h4"/></svg><h2>How to use</h2><ol class="pdp-steps">{steps}</ol></article>
+      <article class="pdp-card"><svg class="pc-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19C5 10 10 5 20 4c0 10-5 15-14 15z"/><path d="M5 19c3-4 6-7 10-9"/></svg><h2>Active ingredients</h2><ul class="pdp-ingr">{ingr_items}</ul></article>
+    </div>
+    <p class="caution pdp-caution"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/></svg><span>Always read the label and follow directions for use. {caution}</span></p>
+    <div class="pdp-where"><div><h2>Also on the shelf at</h2><p>Singapore's pharmacy chains carry the core HST Medical® range.</p></div><ul>{partners}</ul><a class="btn btn-quiet" href="{root}where-to-buy/">Find a store {IC['arrow']}</a></div>
+  </div>
+</section>
 <section class="band" aria-labelledby="h-rel"><div class="counter"><div class="band-head"><h2 id="h-rel">Also at the {esc(c['name'].lower())} counter</h2><a class="btn btn-quiet" href="{root}shop/{p['category']}/">The whole shelf {IC['arrow']}</a></div><div class="labels">{rel}</div></div></section>
 </main>"""
         offers = [{"@type": "Offer", "name": v["label"], "priceCurrency": "SGD", "price": "%.2f" % v["price"], "availability": "https://schema.org/InStock", "sku": v["code"] or None, "url": BASE + "products/%s/" % p["slug"]} for v in p["variants"] if v["price"]]

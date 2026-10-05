@@ -193,6 +193,12 @@
     hero.addEventListener('pointerleave', function () { tx = ty = 0; if (!raf) raf = requestAnimationFrame(tick); });
   }
 
+  /* the entry intro covers the page: hold autoplay until it lifts, so visitors start on the first format */
+  if (d.documentElement.classList.contains('intro')) {
+    hold('intro', true);
+    var mo = new MutationObserver(function () { if (!d.documentElement.classList.contains('intro')) { mo.disconnect(); hold('intro', false); moveInd(cur); } });
+    mo.observe(d.documentElement, { attributes: true, attributeFilter: ['class'] });
+  }
   slides.forEach(function (sl, k) { focusables(sl, k === 0); });
   var start = function () { moveInd(0, true); };
   if (d.fonts && d.fonts.ready) d.fonts.ready.then(start); else start();

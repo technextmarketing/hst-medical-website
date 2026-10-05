@@ -19,10 +19,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/style.css?v=20261006t">
-<link rel="stylesheet" href="../assets/css/header.css?v=20261006t">
-<link rel="stylesheet" href="../assets/css/footer.css?v=20261006t">
-<link rel="stylesheet" href="../assets/css/sections.css?v=20261006t">
+<link rel="stylesheet" href="../assets/css/style.css?v=20261007a">
+<link rel="stylesheet" href="../assets/css/header.css?v=20261007a">
+<link rel="stylesheet" href="../assets/css/footer.css?v=20261007a">
+<link rel="stylesheet" href="../assets/css/sections.css?v=20261007a">
 <script>document.documentElement.classList.add('js');</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://technextmarketing.github.io/hst-medical-website/"}, {"@type": "ListItem", "position": 2, "name": "Contact us"}]}</script>
 </head>
@@ -34,7 +34,7 @@ try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(!force&&
 r.classList.add('intro');var P='../assets/img/intro/ix-',im=function(n,k){return '<img class="ix-part ix-'+n+'" src="'+P+n+'.webp" alt="" style="--k:'+(k||0)+'">';};
 var parts=im('mark')+im('h0',0)+im('h1',1)+im('h2',2);for(var i=0;i<7;i++)parts+=im('m'+i,i);parts+=im('kowa');
 var leaves='';for(var j=0;j<6;j++)leaves+='<i class="ix-leaf" style="--j:'+j+'"><svg viewBox=\'0 0 24 24\'><path d=\'M12 21C6 17 5 9 12 3c7 6 6 14 0 18z\'/><path d=\'M12 21V9\'/></svg></i>';
-d.body.insertAdjacentHTML('afterbegin','<div class="intro-splash" aria-hidden="true"><div class="ix-curtain"><div class="ix-light"></div><i class="ix-ring r1"></i><i class="ix-ring r2"></i><p class="ix-tag"><span>Higher</span><i></i><span>Stronger</span><i></i><span>Together</span></p><button class="ix-skip" type="button" tabindex="-1">Skip</button><i class="ix-bar"></i></div><div class="ix-stage"><div class="ix-logo"><span class="ix-ripple"></span><span class="ix-aroma">'+leaves+'</span>'+parts+'<span class="ix-sheen"></span></div></div></div>');
+d.body.insertAdjacentHTML('afterbegin','<div class="intro-splash" aria-hidden="true"><div class="ix-curtain"><div class="ix-light"></div><i class="ix-ring r1"></i><i class="ix-ring r2"></i><button class="ix-skip" type="button" tabindex="-1">Skip</button><i class="ix-bar"></i></div><div class="ix-stage"><div class="ix-logo"><span class="ix-ripple"></span><span class="ix-aroma">'+leaves+'</span>'+parts+'<span class="ix-sheen"></span></div><p class="ix-tag"><span>Higher</span><i></i><span>Stronger</span><i></i><span>Together</span></p></div></div>');
 var s=d.body.firstElementChild,lg=s.querySelector('.ix-logo'),mk=s.querySelector('.ix-mark'),gone=false,t1=0,started=false;
 var finish=function(){if(gone)return;gone=true;clearTimeout(t1);r.classList.remove('intro');s.classList.add('ix-exit');
  var tg=d.querySelector('.site-header .brand');
@@ -65,7 +65,7 @@ s.addEventListener('click',finish);addEventListener('keydown',finish,{once:true}
       <a href="../blog/">Health notes</a>
     </nav>
     <div class="hs-slot">
-      <form class="hsearch" role="search" action="../shop/" method="get"><label class="hs-ic" for="hq"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4-4"/></svg><span class="sr-only">Search products</span></label><input id="hq" type="search" name="q" placeholder="Search medicines, supplements" autocomplete="off" enterkeyhint="search"><button type="submit" aria-label="Search"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 7l5 5-5 5"/></svg></button></form>
+      <form class="hsearch" role="search" action="../shop/" method="get"><label class="hs-ic" for="hq"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4-4"/></svg><span class="sr-only">Search products</span></label><input id="hq" type="search" name="q" placeholder="Search products" autocomplete="off" enterkeyhint="search"><button type="submit" aria-label="Search"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 7l5 5-5 5"/></svg></button></form>
     </div>
     <a class="bag" href="../cart/" aria-label="Bag"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 8.5h13l-1 11.5h-11z"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/></svg><span class="bag-t">Bag</span><span class="count" hidden>0</span></a>
   </div>
@@ -207,7 +207,14 @@ s.addEventListener('click',finish);addEventListener('keydown',finish,{once:true}
 
   </div>
 </footer>
+<nav class="mbar" aria-label="Quick links">
+  <a href="../" data-mb="home"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11 12 4l8 7"/><path d="M6 10v10h12V10"/><path d="M10 20v-5h4v5"/></svg><span>Home</span></a>
+  <a href="../shop/" data-mb="shop"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg><span>Shop</span></a>
+  <a href="../shop/?focus=search" data-mb="search"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4-4"/></svg><span>Search</span></a>
+  <a href="../where-to-buy/" data-mb="where"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg><span>Stores</span></a>
+  <a class="mbar-bag" href="../cart/" data-mb="bag" aria-label="Bag"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 8.5h13l-1 11.5h-11z"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/></svg><span>Bag</span><span class="count" hidden>0</span></a>
+</nav>
 <div class="toast" id="toast" hidden role="status"><span></span><button type="button">Undo</button></div>
-<script src="../assets/js/site.js?v=20261006t" defer></script>
+<script src="../assets/js/site.js?v=20261007a" defer></script>
 </body>
 </html>

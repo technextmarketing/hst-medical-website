@@ -97,7 +97,7 @@
 
 /* Kowa: typographic panel (no packs in this store) */
 .bp-chain{position:relative;z-index:1;display:flex;align-items:center;min-height:200px}
-.bp-word{position:absolute;right:-.06em;bottom:-.3em;z-index:-1;font:800 clamp(6rem,4rem + 6vw,10.5rem)/1 var(--font-display);letter-spacing:-.05em;color:rgba(221,24,96,.065);pointer-events:none;user-select:none;transition:transform .9s var(--ease-out)}
+.bp-word{position:absolute;right:-.14em;bottom:-.42em;z-index:-1;font:800 clamp(6rem,4rem + 6vw,10.5rem)/1 var(--font-display);letter-spacing:-.05em;color:rgba(221,24,96,.045);pointer-events:none;user-select:none;transition:transform .9s var(--ease-out)}
 .bp-kowa:hover .bp-word{transform:translateX(-4%)}
 .bp-chain ol{position:relative;display:grid;gap:1.05rem;margin:0;padding:0 0 0 1.6rem;list-style:none}
 .bp-chain ol::before{content:"";position:absolute;left:5px;top:.55rem;bottom:1.6rem;width:1.5px;background:linear-gradient(180deg,rgba(221,24,96,.25),var(--brand))}

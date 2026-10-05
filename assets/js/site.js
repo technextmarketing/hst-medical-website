@@ -25,7 +25,7 @@
   function save(c) { try { localStorage.setItem(KEY, JSON.stringify(c)); } catch (e) { say('Your browser blocks storage, so the bag cannot be kept between pages.'); } paint(); }
   function paint() {
     var n = load().reduce(function (s, i) { return s + i.qty; }, 0);
-    d.querySelectorAll('.bag .count').forEach(function (el) { el.textContent = n; el.hidden = !n; });
+    d.querySelectorAll('.bag .count, .mbar-bag .count').forEach(function (el) { el.textContent = n; el.hidden = !n; });
     d.querySelectorAll('.bag').forEach(function (el) { el.setAttribute('aria-label', 'Bag, ' + n + ' item' + (n === 1 ? '' : 's')); });
   }
   paint();
@@ -38,7 +38,7 @@
     function reprint(r) {
       var p = parseFloat(r.getAttribute('data-price')), has = !isNaN(p) && p > 0;
       pdp.classList.remove('printing'); void pdp.offsetWidth; if (!reduce) pdp.classList.add('printing');
-      if (price) price.textContent = has ? money(p) : 'Price on request';
+      d.querySelectorAll('[data-price-out]').forEach(function (el) { el.textContent = has ? money(p) : 'Price on request'; });
       if (code) code.textContent = 'Item ' + r.getAttribute('data-code');
       if (size) size.textContent = r.getAttribute('data-size');
       if (add) {
@@ -253,6 +253,22 @@
       pickNeed(b.getAttribute('aria-pressed') === 'true' ? '' : slug);
     });
   });
+
+  /* phones: bottom tab bar marks the current section; the product page buy bar appears once the real button scrolls away */
+  var here = location.pathname.replace(/index\.html$/, '');
+  d.querySelectorAll('.mbar a').forEach(function (a) {
+    var k = a.getAttribute('data-mb'), p = a.pathname.replace(/index\.html$/, '');
+    var on = k === 'search' ? false : (k === 'home' ? here === p : here.indexOf(p) === 0 && p !== '/' && !(k === 'shop' && /\/cart\//.test(here)));
+    if (k === 'home' && here === p) on = true;
+    if (on) a.setAttribute('aria-current', 'page');
+  });
+  if (/[?&]focus=search\b/.test(location.search)) { var qf = d.getElementById('q'); if (qf) setTimeout(function () { qf.focus(); }, 300); }
+  var bb = d.querySelector('[data-buybar]'), mainBuy = d.querySelector('.pdp2 .buy');
+  if (bb && mainBuy && 'IntersectionObserver' in window) {
+    bb.hidden = false;
+    new IntersectionObserver(function (es) { var out = !es[0].isIntersecting && es[0].boundingClientRect.top < 0; bb.classList.toggle('show', out); }, { threshold: 0 }).observe(mainBuy);
+    var bba = bb.querySelector('[data-buybar-add]'); if (bba) bba.addEventListener('click', function () { var real = d.querySelector('.pdp-add'); if (real) real.click(); });
+  }
 
   var pk = d.querySelector('.pdp-pack'), zm = pk && pk.querySelector('.zoomer');
   if (zm) {

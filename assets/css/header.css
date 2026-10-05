@@ -147,13 +147,14 @@ html.home{--top-h:85px}
 .home:not(.scrolled) .site-header{background:transparent;border-bottom-color:transparent;box-shadow:none}
 .home:not(.scrolled) .brand .logo-std{opacity:0}
 .home:not(.scrolled) .brand .logo-rev{opacity:1}
-.home:not(.scrolled) .nav a:not(.active){color:rgba(255,255,255,.9)}
+.home:not(.scrolled) .nav a:not(.active){color:#fff}
+@media (min-width:961px){.home:not(.scrolled) .nav a{text-shadow:0 1px 12px rgba(80,0,30,.45)}}
 .home:not(.scrolled) .nav a:hover{color:#fff}
 @media (min-width:961px){.home:not(.scrolled) .nav a::after{background:#fff}}
-.home:not(.scrolled) .hsearch{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.22);color:#fff}
-.home:not(.scrolled) .hsearch input{color:#fff}
-.home:not(.scrolled) .hsearch input::placeholder{color:rgba(255,255,255,.75)}
-.home:not(.scrolled) .hsearch .ic,.home:not(.scrolled) .hsearch button{color:#fff}
+@media (min-width:961px){.home:not(.scrolled) .hsearch{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.22);color:#fff}}
+@media (min-width:961px){.home:not(.scrolled) .hsearch input{color:#fff}}
+@media (min-width:961px){.home:not(.scrolled) .hsearch input::placeholder{color:rgba(255,255,255,.75)}}
+@media (min-width:961px){.home:not(.scrolled) .hsearch .ic,.home:not(.scrolled) .hsearch button{color:#fff}}
 .home:not(.scrolled) .bag{background:#fff;color:var(--brand-ink);box-shadow:0 10px 24px -14px rgba(40,0,14,.6)}
 .home:not(.scrolled) .bag .count{background:var(--brand);color:#fff}
 .home:not(.scrolled) .nav-toggle{color:#fff;border-color:rgba(255,255,255,.4);background:transparent}
@@ -175,7 +176,7 @@ html.home{--top-h:85px}
   transform:translate(calc(var(--ix)*8vw),calc(var(--iy)*8vh));transition:transform 1.2s cubic-bezier(.16,1,.3,1);will-change:transform;animation:ix-light 1.8s cubic-bezier(.16,1,.3,1) both}
 .ix-ring{position:absolute;left:50%;top:46%;width:44vmin;aspect-ratio:1;margin:-22vmin 0 0 -22vmin;border-radius:50%;border:1.5px solid rgba(255,255,255,.3);opacity:0;will-change:transform,opacity;animation:ix-ring 3s cubic-bezier(.16,1,.3,1) .3s both}
 .ix-ring.r2{animation-delay:1.2s;border-style:dashed}
-.ix-stage{position:relative;z-index:1;transform:translateY(-4%)}
+.ix-stage{position:relative;z-index:1;display:grid;justify-items:center;gap:clamp(1.25rem,3vw,2rem);transform:translateY(-3%)}
 .ix-logo{position:relative;width:min(600px,84vw);aspect-ratio:1019/505;will-change:transform;transform-origin:50% 50%;
   transform:perspective(1100px) rotateY(calc(var(--ix)*10deg)) rotateX(calc(var(--iy)*-8deg));transition:transform .9s cubic-bezier(.16,1,.3,1)}
 .ix-part{position:absolute;display:block;max-width:none;height:auto;user-select:none;-webkit-user-drag:none;will-change:transform,opacity}
@@ -204,7 +205,7 @@ html.home{--top-h:85px}
 .ix-leaf svg{display:block;width:100%;height:auto;fill:rgba(255,255,255,.18);stroke:#fff;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
 .ix-leaf:nth-child(odd){--sx:-1}.ix-leaf:nth-child(even){--sx:1}
 .ix-puff .ix-leaf{animation:ix-leaf 2s cubic-bezier(.2,.7,.3,1) calc(var(--j)*.1s) both}
-.ix-tag{position:absolute;left:0;right:0;top:calc(46% + min(300px,42vw)*.62);display:flex;justify-content:center;align-items:center;gap:1rem;margin:0;max-width:none;color:#fff;
+.ix-tag{position:relative;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:1rem;margin:0;max-width:none;color:#fff;
   font:700 clamp(.95rem,.75rem + .8vw,1.3rem) var(--font-display);letter-spacing:.16em;text-transform:uppercase;text-shadow:0 2px 14px rgba(60,0,22,.35)}
 .ix-tag span{animation:ix-up .75s cubic-bezier(.16,1,.3,1) both}
 .ix-tag span:nth-of-type(1){animation-delay:2.7s}.ix-tag span:nth-of-type(2){animation-delay:2.9s}.ix-tag span:nth-of-type(3){animation-delay:3.1s}
@@ -213,7 +214,8 @@ html.home{--top-h:85px}
 .ix-skip{position:absolute;right:clamp(16px,3vw,32px);bottom:clamp(16px,3vw,28px);padding:.6rem 1.1rem;border:1.5px solid rgba(255,255,255,.5);border-radius:12px;background:transparent;color:#fff;font:600 .88rem var(--font);cursor:pointer;animation:ix-up .5s 1s both;transition:background .2s,border-color .2s}
 .ix-skip:hover{background:rgba(255,255,255,.14);border-color:#fff}
 .ix-bar{position:absolute;left:0;bottom:0;height:3px;width:100%;background:rgba(255,255,255,.85);transform-origin:0 50%;animation:ix-bar 4.1s linear both}
-.ix-exit .ix-tag,.ix-exit .ix-skip,.ix-exit .ix-bar,.ix-exit .ix-ring,.ix-exit .ix-aroma{opacity:0;transition:opacity .3s}
+.ix-exit .ix-skip,.ix-exit .ix-bar,.ix-exit .ix-ring,.ix-exit .ix-aroma{opacity:0;transition:opacity .3s}
+.ix-exit .ix-tag{opacity:0;transition:opacity .25s}
 @keyframes ix-light{from{opacity:0;scale:.4}}
 @keyframes ix-ring{0%{opacity:0;transform:scale(.6)}30%{opacity:.85}100%{opacity:0;transform:scale(2.6)}}
 @keyframes ix-drop{0%{opacity:0;transform:translateY(-120%) rotate(-28deg)}55%{opacity:1;transform:translateY(0) rotate(4deg) scale(1.06,.9)}72%{transform:translateY(-6%) rotate(-2deg) scale(.97,1.04)}100%{transform:none}}
@@ -231,3 +233,10 @@ html.intro{overflow:hidden}
 html.intro .hs,html.intro .hs *{animation-play-state:paused!important}
 
 @media (max-width:960px){.nav a::after{opacity:1}}
+
+/* menu open over the home hero: the header goes solid so the panel and search read normally */
+.home:not(.scrolled) .site-header:has(.nav.open){background:#fff;box-shadow:0 12px 28px -18px rgba(31,41,51,.35)}
+.home:not(.scrolled) .site-header:has(.nav.open) .brand .logo-std{opacity:1}
+.home:not(.scrolled) .site-header:has(.nav.open) .brand .logo-rev{opacity:0}
+.home:not(.scrolled) .site-header:has(.nav.open) .nav-toggle{color:var(--ink);border-color:var(--line-2)}
+.ix-skip{min-height:44px;min-width:64px}
