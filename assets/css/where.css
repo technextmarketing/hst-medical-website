@@ -8,7 +8,7 @@
   --wtb-sh-hi:0 2px 4px rgba(31,41,51,.04),0 18px 34px -18px rgba(179,18,76,.3),0 32px 52px -38px rgba(31,41,51,.32);
   overflow-x:clip;font-variant-numeric:normal}  /* body's tabular-nums widens Inter's hyphens ("B1 - 291") */
 @media (max-width:960px){.wtb{--wtb-top:73px}}
-@media (max-width:640px){.wtb{--wtb-top:65px;--wtb-gap:16px}}
+@media (max-width:640px){.wtb{--wtb-top:65px;--wtb-gap:16px;--wtb-sec:2.25rem}}
 .wtb [hidden]{display:none!important}
 .wtb .ic{flex:none}
 .wtb li{max-width:none}
@@ -231,30 +231,87 @@ html:not(.js) .wtb-panel+.wtb-panel{margin-top:56px}
   .wtb-fakes{padding:24px;gap:16px}
 }
 @media (max-width:640px){
-  .wtb-logos{grid-template-columns:repeat(2,minmax(0,1fr))}
+  /* phones: intros are sub-text (--sub / --meta come from style.css), sections and cards are compact */
+  .wtb-hero-copy{padding-top:1.1rem}
+  .wtb-hero h1{margin-bottom:.5rem;font-size:clamp(1.9rem,1.3rem + 2.6vw,2.2rem)}
+  .wtb-hero .lead{font-size:var(--sub,.875rem);line-height:var(--sub-lh,1.45)}
+  .wtb-hero-acts{gap:8px;margin-top:1.1rem}
+  .wtb-logos{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:1.6rem}
   .wtb-logos>li,.wtb-logos>li:nth-child(n+4){grid-column:auto}
   .wtb-logos>li:last-child:nth-child(odd){grid-column:1 / -1}
-  .wtb-tile{min-height:124px;padding:20px 14px 18px;gap:10px}
-  .wtb-tile-logo{height:48px}
-  .wtb-tile-logo img{max-width:min(128px,100%);max-height:40px}
-  .wtb-tile .wtb-l-nhgp img{max-width:min(136px,100%);max-height:44px}
-  .wtb-tab{min-height:100px;padding:16px 12px}
-  .wtb-stores{grid-template-columns:1fr}
-  .wtb-store{padding:20px}
+  .wtb-tile{min-height:92px;padding:12px 10px 10px;gap:6px;border-radius:16px;font-size:.85rem}
+  .wtb-tile-logo{height:38px}
+  .wtb-tile-logo img{max-width:min(112px,100%);max-height:32px}
+  .wtb-tile .wtb-l-nhgp img{max-width:min(122px,100%);max-height:38px}
+  .wtb-tile-n b{font-size:1rem}
+  .wtb-finder h2,.wtb-online h2{font-size:clamp(1.4rem,1.1rem + 1.2vw,1.6rem)}
+  .wtb-finder-head{gap:14px 24px}
+  .wtb-finder-copy p{margin-top:.4rem;font-size:var(--sub,.875rem);line-height:var(--sub-lh,1.45)}
+  .wtb-search input{min-height:52px}
+  .wtb-tabs{gap:10px;margin-top:20px}
+  .wtb-tab{min-height:80px;padding:12px 10px;gap:4px;border-radius:16px}
+  .wtb-tab-logo{height:36px}
+  .wtb-tab-logo img{max-height:30px}
+  .wtb-tab .wtb-l-nhgp img{max-height:34px}
+  .wtb-tab-n b{font-size:.95rem}
+  .wtb-panels{margin-top:24px}
+  .wtb-panel-head{gap:12px;margin-bottom:14px}
+  .wtb-panel h3,.wtb-group-head h3{font-size:1.2rem}
+  .wtb-stocked{margin-top:.35rem;font-size:var(--sub,.875rem);line-height:var(--sub-lh,1.45)}
+  .wtb-facts-row{gap:4px 20px;margin-top:.5rem}
+  .wtb-fact{font-size:var(--sub,.875rem);line-height:1.4}
+  .wtb-stores{grid-template-columns:1fr;gap:10px}
+  .wtb-store{padding:14px 16px 8px;border-radius:16px}
+  .wtb-store h4{font-size:1rem}
+  .wtb-addr{margin-top:.25rem;font-size:var(--sub,.875rem);line-height:1.45}
+  .wtb-acts{padding-top:6px}
   .wtb-shop{width:100%}
-  .wtb-online{border-radius:24px}
-  .wtb-packs{min-height:168px;margin:-1rem 0 0}
-  .wtb-pack{width:40%}
+  .wtb-online{padding:1.4rem 1.2rem;border-radius:22px}
+  .wtb-online-lead{margin-top:.5rem;font-size:var(--sub,.875rem);line-height:var(--sub-lh,1.45)}
+  .wtb-perks{gap:14px;margin-top:1.1rem}
+  .wtb-perks .ic{width:24px;height:24px}
+  .wtb-perks b{font-size:.98rem}
+  .wtb-perks span{font-size:var(--sub,.875rem);line-height:1.4}
+  .wtb-online-cta{margin-top:1.25rem}
+  .wtb-packs{min-height:150px;margin:-1rem 0 0}
+  .wtb-pack{width:36%}
+  .wtb-elsewhere{gap:10px 16px;margin-top:20px}
   .wtb-elsewhere li{flex:1 1 40%}
-  .wtb-mini{min-width:0;width:100%}
-  .wtb-elsewhere ul{width:100%;gap:12px}
-  .wtb-empty{flex-direction:column;padding:24px}
+  .wtb-mini{min-width:0;width:100%;min-height:52px;padding:8px 14px;border-radius:14px}
+  .wtb-elsewhere ul{width:100%;gap:10px}
+  .wtb-fakes{margin-top:28px;padding:16px 18px;gap:12px;border-radius:16px}
+  .wtb-fakes>.ic{width:26px;height:26px}
+  .wtb-fakes h2{font-size:1.05rem}
+  .wtb-fakes p{margin-top:.25rem;font-size:var(--sub,.875rem);line-height:1.45}
+  .wtb-visit,.wtb-trade{padding:1.25rem;border-radius:20px}
+  .wtb-visit>.ic,.wtb-trade>.ic{width:30px;height:30px;margin-bottom:10px}
+  .wtb-visit h2,.wtb-trade h2{font-size:1.3rem}
+  .wtb-visit address{font-size:var(--sub,.875rem);line-height:1.5}
+  .wtb-trade>p{margin:.5rem 0 1.1rem;font-size:var(--sub,.875rem);line-height:var(--sub-lh,1.45)}
+  .wtb-tbc{padding-top:22px}
+  .wtb-tbc p{font-size:var(--meta,.8125rem)}
+  .wtb-tbc li{padding:6px 12px;font-size:.84rem}
+  .wtb-visit .map{min-height:220px;margin-top:14px}
+  .wtb-empty{flex-direction:column;padding:20px}
+  .wtb-empty h3{font-size:1.1rem}
+  .wtb-empty p{font-size:var(--sub,.875rem)}
 }
 @media (max-width:420px){
   .wtb-hero-acts .btn{flex:1 1 auto}
   .wtb-online-cta,.wtb-trade .btn{width:100%}
-  .wtb-store{padding:20px 18px}
+  .wtb-store{padding:14px 16px 8px}
   .wtb-dir{padding:0 14px}
+}
+
+/* landscape phones (844x390): the hero heading and intros stop filling the screen */
+@media (orientation:landscape) and (max-height:520px) and (min-width:761px) and (max-width:1100px){
+  .wtb{--wtb-sec:2.5rem}
+  .wtb-hero-copy{padding-top:1.25rem}
+  .wtb-hero h1{margin-bottom:.5rem;font-size:clamp(2rem,1.2rem + 2vw,2.6rem)}
+  .wtb-hero .lead,.wtb-finder-copy p,.wtb-online-lead{font-size:var(--sub,.875rem);line-height:var(--sub-lh,1.45)}
+  .wtb-hero-acts{margin-top:1.1rem}
+  .wtb-logos{margin-top:1.75rem}
+  .wtb-finder h2,.wtb-online h2{font-size:clamp(1.5rem,1.2rem + 1vw,1.8rem)}
 }
 
 /* ================================================================ reduced motion */

@@ -20,33 +20,45 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ROOT}}assets/css/style.css?v={{V}}">
 <link rel="stylesheet" href="{{ROOT}}assets/css/header.css?v={{V}}">
+<link rel="stylesheet" href="{{ROOT}}assets/css/intro.css?v={{V}}">
 <link rel="stylesheet" href="{{ROOT}}assets/css/footer.css?v={{V}}">
 <link rel="stylesheet" href="{{ROOT}}assets/css/sections.css?v={{V}}">
+<link rel="stylesheet" href="{{ROOT}}assets/css/components.css?v={{V}}">
+<link rel="stylesheet" href="{{ROOT}}assets/css/chat.css?v={{V}}">
 <script>document.documentElement.classList.add('js');</script>
+<script src="{{ROOT}}assets/js/chat.js?v={{V}}" defer></script>
+<script src="{{ROOT}}assets/js/glint.js?v={{V}}" defer></script>
 {{EXTRA}}</head>
 <body>
 <script>/* entry: the HST Medical logo performs itself, then flies into the header. Once per visit (add ?intro to replay);
-   click, key, scroll or Skip ends it; never under reduced motion. Parts in assets/img/intro (cut by _src/logo_cutout.py). */
+   click, key, scroll, swipe or Skip ends it; never under reduced motion. Parts in assets/img/intro (cut by _src/logo_cutout.py). */
 (function(){var d=document,r=d.documentElement,force=/[?&]intro\b/.test(location.search);
 try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(!force&&sessionStorage.getItem('hst-intro'))return;sessionStorage.setItem('hst-intro','1');}catch(e){if(!force)return;}
-r.classList.add('intro');var P='{{ROOT}}assets/img/intro/ix-',im=function(n,k){return '<img class="ix-part ix-'+n+'" src="'+P+n+'.webp" alt="" style="--k:'+(k||0)+'">';};
+r.classList.add('intro');var R='{{ROOT}}assets/img/',P=R+'intro/ix-',im=function(n,k){return '<img class="ix-part ix-'+n+'" src="'+P+n+'.webp" alt="" draggable="false" style="--k:'+(k||0)+'">';};
 var parts=im('mark')+im('h0',0)+im('h1',1)+im('h2',2);for(var i=0;i<7;i++)parts+=im('m'+i,i);parts+=im('kowa');
 var leaves='';for(var j=0;j<6;j++)leaves+='<i class="ix-leaf" style="--j:'+j+'"><svg viewBox=\'0 0 24 24\'><path d=\'M12 21C6 17 5 9 12 3c7 6 6 14 0 18z\'/><path d=\'M12 21V9\'/></svg></i>';
-d.body.insertAdjacentHTML('afterbegin','<div class="intro-splash" aria-hidden="true"><div class="ix-curtain"><div class="ix-light"></div><i class="ix-ring r1"></i><i class="ix-ring r2"></i><button class="ix-skip" type="button" tabindex="-1">Skip</button><i class="ix-bar"></i></div><div class="ix-stage"><div class="ix-logo"><span class="ix-ripple"></span><span class="ix-aroma">'+leaves+'</span>'+parts+'<span class="ix-sheen"></span></div><p class="ix-tag"><span>Higher</span><i></i><span>Stronger</span><i></i><span>Together</span></p></div></div>');
-var s=d.body.firstElementChild,lg=s.querySelector('.ix-logo'),mk=s.querySelector('.ix-mark'),gone=false,t1=0,started=false;
-var finish=function(){if(gone)return;gone=true;clearTimeout(t1);r.classList.remove('intro');s.classList.add('ix-exit');
- var tg=d.querySelector('.site-header .brand');
- if(tg&&lg.animate){var a=lg.getBoundingClientRect(),b=tg.getBoundingClientRect(),sc=b.height/a.height,dx=b.left-a.left,dy=b.top-a.top;
-  lg.style.transition='none';
-  lg.animate([{transform:getComputedStyle(lg).transform,opacity:1},{transform:'translate('+dx*.45+'px,'+(dy*.45-40)+'px) scale('+(1-(1-sc)*.5)+')',opacity:1,offset:.45},{transform:'translate('+dx+'px,'+dy+'px) scale('+sc+')',opacity:.95,offset:.88},{transform:'translate('+dx+'px,'+dy+'px) scale('+sc+')',opacity:0}],{duration:1000,easing:'cubic-bezier(.65,0,.25,1)',fill:'forwards'});}
- setTimeout(function(){if(s.parentNode)s.parentNode.removeChild(s);},1050);};
+d.body.insertAdjacentHTML('afterbegin','<div class="intro-splash" aria-hidden="true"><div class="ix-curtain"><div class="ix-light"></div><button class="ix-skip" type="button" tabindex="-1">Skip</button><i class="ix-bar"></i></div><div class="ix-stage"><div class="ix-logo"><i class="ix-ring r1"></i><i class="ix-ring r2"></i><span class="ix-ripple"></span><span class="ix-aroma">'+leaves+'</span><div class="ix-white">'+parts+'<span class="ix-sheen"></span></div><img class="ix-col" src="'+R+'logo-hst.webp" alt="" draggable="false"></div><p class="ix-tag"><span>Higher</span><i></i><span>Stronger</span><i></i><span>Together</span></p></div></div>');
+var s=d.querySelector('.intro-splash'),lg=s.querySelector('.ix-logo'),wh=s.querySelector('.ix-white'),col=s.querySelector('.ix-col'),mk=s.querySelector('.ix-mark'),gone=false,t1=0,started=false;
+var finish=function(){if(gone)return;gone=true;clearTimeout(t1);removeEventListener('keydown',finish);removeEventListener('wheel',finish);removeEventListener('touchmove',finish);
+ var tg=d.querySelector('.site-header .brand'),cur=getComputedStyle(lg).transform;
+ r.classList.remove('intro');lg.style.transition='none';lg.style.transform='none';   /* measure in the layout the page will have, lock-up untilted */
+ var a=lg.getBoundingClientRect(),b=tg&&tg.getBoundingClientRect();lg.style.transform='';
+ s.classList.add('ix-exit');r.classList.add('ix-out');
+ if(b&&b.width&&a.width&&lg.animate){var sc=b.width/a.width,dx=b.left+b.width/2-a.left-a.width/2,dy=b.top+b.height/2-a.top-a.height/2,end='translate('+dx+'px,'+dy+'px) scale('+sc+')';   /* centre to centre: the transform origin is the middle of the logo */
+  lg.animate([{transform:cur},{transform:'translate('+dx*.45+'px,'+(dy*.45-40*a.width/600)+'px) scale('+(1-(1-sc)*.5)+')',offset:.45},{transform:end,offset:.88},{transform:end}],{duration:1000,easing:'cubic-bezier(.65,0,.25,1)',fill:'forwards'});
+  lg.animate([{opacity:1},{opacity:1,offset:.92},{opacity:0}],{duration:1050,easing:'linear',fill:'forwards'});   /* it stays until the curtain's edge has cleared the header (about .97s), then hands over to the real logo underneath */
+  var rv=tg.querySelector('.logo-rev');
+  if(!(rv&&parseFloat(getComputedStyle(rv).opacity)>.5)&&wh.animate){   /* white header: as the curtain's edge passes the landed logo, the white lock-up turns into the coloured one, so the hand-off is seamless */
+   var xf=function(el,on){el.animate([{opacity:on?0:1},{opacity:on?0:1,offset:.8},{opacity:on?1:0,offset:.94},{opacity:on?1:0}],{duration:1000,easing:'linear',fill:'forwards'});};xf(wh,0);xf(col,1);}}
+ else if(lg.animate)lg.animate([{opacity:1},{opacity:0}],{duration:500,fill:'forwards'});
+ setTimeout(function(){if(s.parentNode)s.parentNode.removeChild(s);},1050);setTimeout(function(){r.classList.remove('ix-out');},1400);};
 var start=function(){if(started)return;started=true;s.classList.add('ix-go');t1=setTimeout(finish,4100);};
-var imgs=[].slice.call(s.querySelectorAll('img')),left=imgs.length,one=function(){if(--left<=0)start();};
-imgs.forEach(function(i){if(i.complete)left--;else{i.addEventListener('load',one);i.addEventListener('error',one);}});
+var imgs=[].slice.call(s.querySelectorAll('.ix-part')),left=imgs.length,one=function(){if(--left<=0)start();};
+imgs.forEach(function(i){var go=function(){i.decode?i.decode().then(one,one):one();};if(i.complete&&i.naturalWidth)go();else{i.addEventListener('load',go,{once:true});i.addEventListener('error',one,{once:true});}});   /* start once every part is decoded, so no decode work lands inside the animation */
 if(left<=0)start();setTimeout(start,1200);setTimeout(function(){if(!gone)finish();},7000);
-var raf=0,px=0,py=0;s.addEventListener('pointermove',function(e){px=e.clientX/innerWidth-.5;py=e.clientY/innerHeight-.5;if(!raf)raf=requestAnimationFrame(function(){raf=0;s.style.setProperty('--ix',px.toFixed(3));s.style.setProperty('--iy',py.toFixed(3));});});
-mk.addEventListener('pointerenter',function(){s.classList.remove('ix-puff');void s.offsetWidth;s.classList.add('ix-puff');});
-s.addEventListener('click',finish);addEventListener('keydown',finish,{once:true});addEventListener('wheel',finish,{once:true,passive:true});addEventListener('touchmove',finish,{once:true,passive:true});})();</script>
+var raf=0,px=0,py=0;s.addEventListener('pointermove',function(e){if(e.pointerType&&e.pointerType!=='mouse')return;px=e.clientX/innerWidth-.5;py=e.clientY/innerHeight-.5;if(!raf)raf=requestAnimationFrame(function(){raf=0;s.style.setProperty('--ix',px.toFixed(3));s.style.setProperty('--iy',py.toFixed(3));});});
+mk.addEventListener('pointerenter',function(e){if(e.pointerType&&e.pointerType!=='mouse')return;s.classList.remove('ix-puff');void s.offsetWidth;s.classList.add('ix-puff');});
+s.addEventListener('click',finish);addEventListener('keydown',finish);addEventListener('wheel',finish,{passive:true});addEventListener('touchmove',finish,{passive:true});})();</script>
 <a class="sr-only" href="#main">Skip to content</a>
 <div class="live" id="live" aria-live="polite" aria-atomic="true"></div>
 <header class="site-header">

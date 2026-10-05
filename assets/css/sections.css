@@ -165,20 +165,33 @@
   .rg-name{font-size:.82rem}
   .rg-price{font-size:.8rem}
   .rg-acts{width:100%}
-  .bp-grid{grid-template-columns:1fr;gap:.9rem}
-  .bp,.bp-rs{grid-column:auto;grid-template-columns:1fr;grid-template-rows:auto 168px;border-radius:22px}
-  .bp-rs{grid-template-rows:auto 210px}
-  .bp-rs .bp-fan{min-height:0;--w:58%;--h:auto}
-  .bp-fan{min-height:0;--w:56%;--h:auto}
-  .bp-chain{min-height:0;padding:.25rem 0 .5rem}
-  .bp-word{font-size:6.5rem}
-  .hn-card{grid-template-columns:104px minmax(0,1fr);gap:.9rem}
-  .hn-art{border-radius:18px}
-  .hn-art svg{width:62%;stroke-width:2.6}
-  .hn-body{gap:.4rem}
-  .hn-body>p:not(.hn-foot){font-size:.92rem}
+  .rg-row{padding-block:12px 4px}
+  /* brands: compact tiles, text on the left and the pack fan on the right (Rheuma-Salve and Kowa keep a stacked layout) */
+  .bp-grid{grid-template-columns:1fr;gap:.7rem}
+  .bp{grid-column:auto;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);grid-template-rows:auto;gap:.4rem;align-items:center;padding:1rem 0 1rem 1.1rem;border-radius:20px}
+  .bp-copy{gap:.4rem}
+  .bp h3{font-size:1.2rem}
+  .bp-copy>p{max-width:none;font-size:var(--sub,.875rem);line-height:1.4}
+  .bp-cta{padding-top:.1rem;font-size:.9rem}
+  .bp-fan{min-height:130px;--w:56%;--h:auto}
+  .bp-rs .bp-copy>p{max-width:none;font-size:var(--sub,.875rem)}
+  .bp-rs,.bp-kowa{grid-template-columns:1fr;align-items:stretch;padding:1.1rem;gap:.6rem}
+  .bp-rs{grid-template-rows:auto 172px}
+  .bp-rs .bp-fan{min-height:0;--w:44%;--h:auto}
+  .bp-kowa{grid-template-rows:auto auto}
+  .bp-chain{min-height:0;padding:.25rem 0 .25rem}
+  .bp-chain ol{gap:.8rem}
+  .bp-word{font-size:5rem}
+  /* health notes: small art, 2-line teaser */
+  .hn-grid{gap:.9rem}
+  .hn-card{grid-template-columns:88px minmax(0,1fr);gap:.8rem}
+  .hn-art{border-radius:16px}
+  .hn-art svg{width:60%;stroke-width:2.6}
+  .hn-body{gap:.3rem}
+  .hn-card h3{font-size:1rem;line-height:1.28}
+  .hn-body>p:not(.hn-foot){font-size:var(--sub,.875rem);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .hn-body>p.hn-foot{padding-top:.1rem;font-size:var(--meta,.8125rem)}
   .hn-rt{display:none}
-  .hn-card h3{font-size:1.04rem}
 }
 
 /* ================================================================ reduced motion */

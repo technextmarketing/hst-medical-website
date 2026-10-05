@@ -176,3 +176,20 @@ def intro_letters():
         css.append(".ix-%s{left:%.3f%%;top:%.3f%%;width:%.3f%%}" % (name, x0p / w * 100, y0p / h * 100, (x1p - x0p) / w * 100))
     print(" ".join(sorted(boxes)))
     return "\n".join(css)
+
+
+def roundel_anchor():
+    """Where the magenta roundel sits inside the lock-up, in % of the lock-up box. The entry intro's ripple, rings (phones) and aroma
+    leaves are anchored to it (assets/css/intro.css: .ix-ripple, .ix-aroma, the phone .ix-ring). Measured on logo-hst.png:
+    centre x 21.49%, centre y 44.36% (not 50%: the Kowa line hangs below the roundel), diameter 41.8% of the width.
+    Re-check after re-cutting the logo:  python -c "import sys; sys.path.insert(0,'_src'); import logo_cutout; logo_cutout.roundel_anchor()" """
+    src = Image.open(os.path.join(IMG, "logo-hst.png")).convert("RGBA")
+    a = np.asarray(src).astype(float)
+    h, w, _ = a.shape
+    mag = (a[..., 0] > 150) & (a[..., 1] < 120) & (a[..., 2] < 170) & (a[..., 3] > 200)
+    ys, xs = np.nonzero(mag[:, : int(w * 0.45)])
+    r = (xs.max() - xs.min()) / 2.0
+    cx, cy = (xs.max() + xs.min()) / 2.0, ys.max() - r
+    out = {"cx": round(float(cx / w * 100), 2), "cy": round(float(cy / h * 100), 2), "diameter": round(float(2 * r / w * 100), 1)}
+    print("roundel anchor, % of the lock-up:", out)
+    return out

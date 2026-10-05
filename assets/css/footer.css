@@ -1,6 +1,7 @@
 /* HST Medical: site footer (owned separately from style.css).
    Simplified light footer: logo + one line, one row of links, three contact links, legal line.
-   No cards, no columns, no icon boxes. The full address and every desk live on /contact/. */
+   No cards, no columns, no icon boxes. The full address and every desk live on /contact/.
+   Phones (<=760px): the same content in about half the height (see the last block). Desktop is unchanged. */
 
 .site-footer{
   --ft-line:#f1dbe4;
@@ -33,6 +34,7 @@
 .ft-contact .ic{color:var(--brand);transition:transform .35s cubic-bezier(.34,1.6,.64,1)}
 .ft-contact a:hover{color:var(--brand-ink)}
 .ft-contact a:hover .ic{transform:translateY(-2px) rotate(-8deg)}
+.ft-sh{display:none}                 /* short contact labels (Call / Email / Telegram) are phone-only */
 
 .ft-legal{display:flex;flex-wrap:wrap;align-items:center;gap:.25rem 1.5rem;margin-top:.9rem;padding-block:1rem 1.4rem;border-top:1px solid var(--ft-line);font-size:.84rem;color:var(--muted,#6b7280)}
 .ft-legal p{margin:0}
@@ -43,12 +45,30 @@
 .ft-top .ic{transition:transform .35s cubic-bezier(.34,1.6,.64,1)}
 .ft-top:hover .ic{transform:translateY(-3px)}
 
+/* ---- phones: logo + one short line, links in a 3-up grid, contact as one row, legal in three tight rows (about 325px) ---- */
 @media (max-width:760px){
-  .ft-top-row{display:grid;gap:.9rem}
-  .ft-logo img{height:50px}
-  .ft-nav ul{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}
-  .ft-contact{display:grid;gap:0}
-  .ft-legal{display:grid;gap:.35rem;padding-bottom:1rem}
-  .ft-top{margin-left:0}
+  .site-footer{margin-top:1.75rem;padding-top:1.1rem;padding-bottom:.25rem;line-height:1.45}
+  .ft-top-row{display:grid;gap:.1rem}
+  .ft-brand{gap:.8rem}
+  .ft-logo{padding-block:3px}                                  /* 38px logo + 6px = a 44px tap target */
+  .ft-logo img{height:38px}
+  .site-footer .ft-blurb{font-size:var(--meta,.8125rem);line-height:1.4;max-width:none;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}   /* 2 lines from 375px up; 3 on 360px so "Singapore since 1994" is never cut */
+
+  .ft-nav ul{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 .5rem}
+  .ft-nav a{min-width:44px;font-size:.9375rem}
+
+  .ft-contact{flex-wrap:nowrap;justify-content:space-between;gap:.25rem;margin-top:.15rem!important;padding-top:.1rem!important}
+  .ft-contact a{gap:.4rem;min-width:44px;font-size:.9rem}
+  .ft-lg{display:none}
+  .ft-sh{display:inline}
+
+  .ft-legal{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"id id" "priv top" "note note";gap:0;margin-top:.15rem;padding-block:.55rem .6rem;font-size:.75rem;line-height:1.45}
+  .ft-copy{display:contents}                                   /* its parts become grid items so Privacy and Top share a row */
+  .ft-id{grid-area:id}
+  .ft-dot{display:none}
+  .ft-priv{grid-area:priv;justify-self:start;display:inline-flex;align-items:center;min-height:44px;font-size:.8125rem}
+  .ft-top{grid-area:top;justify-self:end;margin-left:0;min-width:44px;justify-content:flex-end;font-size:.8125rem}
+  .ft-legal .ft-note{grid-area:note;margin-top:-.2rem}
 }
+@media (pointer:coarse){.ft-nav a{min-width:44px}}   /* touch screens wider than a phone (landscape, tablets): link boxes stay 44px wide; a mouse sees the footer as before */
 @media (prefers-reduced-motion:reduce){.site-footer *{transition:none!important}}

@@ -287,7 +287,7 @@ def render(ctx, crumb):
       <h2 id="h-heritage">A heritage that began in 1930</h2>
       <p>The name is a tribute to Heng Say Tong, the medical hall established by the family of the company's co-founders. HST Medical Pte Ltd was incorporated in 1994 and draws on nearly a century of heritage in healthcare.</p>
     </div>
-    <ol class="journey ab-journey">{ctx['story_journey'](root)}</ol>
+    <ol class="tline ab-journey">{ctx['story_journey'](root)}</ol>
   </div>
 </section>
 

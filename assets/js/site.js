@@ -19,6 +19,11 @@
   if (tg && nav) tg.addEventListener('click', function () {
     var open = nav.classList.toggle('open'); tg.setAttribute('aria-expanded', open);
   });
+  /* the page behind an open menu is dimmed: a tap there closes the menu instead of following whatever link lies underneath */
+  if (tg && nav) d.addEventListener('click', function (e) {
+    if (!nav.classList.contains('open') || e.target.closest('.site-header, .mbar')) return;
+    nav.classList.remove('open'); tg.setAttribute('aria-expanded', 'false'); e.preventDefault(); e.stopPropagation();
+  }, true);
 
   /* bag storage */
   function load() { try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { return []; } }
@@ -29,6 +34,7 @@
     d.querySelectorAll('.bag').forEach(function (el) { el.setAttribute('aria-label', 'Bag, ' + n + ' item' + (n === 1 ? '' : 's')); });
   }
   paint();
+  window.HSTBag = { load: load, save: save, paint: paint, say: say };
 
   /* pack size → reprint the label */
   var pdp = d.querySelector('[data-pdp]');
@@ -209,7 +215,7 @@
   }
 
   if (!reduce && 'IntersectionObserver' in window) {
-    var vh = innerHeight, targets = d.querySelectorAll('.labels > .plabel, .compare tbody tr, .counters > a, .shelf > a, .notes > a, #bag-lines > .line, .mcard, .bento > a, .assure li, .timeline, .award, .kowa-card, .kowa-media, .kowa-copy, .map, .journey, .journey .ms, .filters .cat, .cat-stage');
+    var vh = innerHeight, targets = d.querySelectorAll('.labels > .plabel, .compare tbody tr, .counters > a, .shelf > a, .notes > a, #bag-lines > .line, .mcard, .bento > a, .assure li, .award, .kowa-card, .kowa-media, .kowa-copy, .map, .filters .cat, .cat-stage');
     var io = new IntersectionObserver(function (es) {
       var k = 0;
       es.forEach(function (e) {
@@ -221,7 +227,9 @@
       });
     }, { rootMargin: '0px 0px -6% 0px', threshold: 0.1 });
     targets.forEach(function (el) {
-      if (el.getBoundingClientRect().top > vh * 0.94 && !el.closest('[hidden]')) { el.classList.add('rv'); io.observe(el); }
+      var r = el.getBoundingClientRect();
+      /* items parked off-screen to the right (filter rail, matcher cards, swipe rows) are never hidden: nothing would reveal them until the swipe, and the rail would look like it had two items */
+      if (r.top > vh * 0.94 && r.left < innerWidth - 4 && r.right > 4 && !el.closest('[hidden]')) { el.classList.add('rv'); io.observe(el); }
     });
   }
 
@@ -266,7 +274,16 @@
   var bb = d.querySelector('[data-buybar]'), mainBuy = d.querySelector('.pdp2 .buy');
   if (bb && mainBuy && 'IntersectionObserver' in window) {
     bb.hidden = false;
-    new IntersectionObserver(function (es) { var out = !es[0].isIntersecting && es[0].boundingClientRect.top < 0; bb.classList.toggle('show', out); }, { threshold: 0 }).observe(mainBuy);
+    /* shown once the real buy row has scrolled off the top, hidden again at the top of the page (a jump such as the footer's "Top" link
+       never crossed the row, so the old observer left the bar up) and once the footer reaches it, so it never sits on the legal rows */
+    var foot = d.querySelector('.site-footer'), bbRaf = 0;
+    var bbUpdate = function () {
+      bbRaf = 0;
+      var past = mainBuy.getBoundingClientRect().bottom < 0, atFoot = foot && foot.getBoundingClientRect().top < innerHeight - 130;
+      bb.classList.toggle('show', past && !atFoot);
+    };
+    addEventListener('scroll', function () { if (!bbRaf) bbRaf = requestAnimationFrame(bbUpdate); }, { passive: true });
+    addEventListener('resize', bbUpdate); bbUpdate();
     var bba = bb.querySelector('[data-buybar-add]'); if (bba) bba.addEventListener('click', function () { var real = d.querySelector('.pdp-add'); if (real) real.click(); });
   }
 
@@ -278,9 +295,17 @@
       pk.style.setProperty('--oy', Math.max(0, Math.min(100, (e.clientY - r.top) / r.height * 100)).toFixed(1) + '%');
     };
     if (fine) {
-      zm.addEventListener('pointerenter', function (e) { at(e); pk.classList.add('zoom'); });
-      zm.addEventListener('pointermove', at);
-      zm.addEventListener('pointerleave', function () { pk.classList.remove('zoom'); });
+      /* not zoomed: the pack tilts toward the pointer (components.css reads --tx/--ty); click zooms and the lens
+         follows the pointer; click again or leave to go back to the tilt */
+      var tilt = function (e) {
+        var r = zm.getBoundingClientRect();
+        pk.style.setProperty('--tx', Math.max(-1, Math.min(1, (e.clientX - r.left) / r.width * 2 - 1)).toFixed(3));
+        pk.style.setProperty('--ty', Math.max(-1, Math.min(1, (e.clientY - r.top) / r.height * 2 - 1)).toFixed(3));
+      };
+      zm.addEventListener('pointerenter', function (e) { if (!reduce) { tilt(e); pk.classList.add('tilt'); } });
+      zm.addEventListener('pointermove', function (e) { if (pk.classList.contains('zoom')) at(e); else if (!reduce) tilt(e); });
+      zm.addEventListener('pointerleave', function () { pk.classList.remove('zoom', 'tilt'); pk.style.removeProperty('--tx'); pk.style.removeProperty('--ty'); });
+      zm.addEventListener('click', function (e) { at(e); pk.classList.toggle('zoom'); });
     } else {
       zm.addEventListener('click', function (e) { at(e); pk.classList.toggle('zoom'); });
     }

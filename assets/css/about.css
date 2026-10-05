@@ -12,7 +12,7 @@
 .ab-page h2{font-size:clamp(1.75rem,1.2rem + 1.7vw,2.6rem);font-weight:800;letter-spacing:-.032em}
 .ab-head{max-width:760px;margin-bottom:clamp(1.75rem,3vw,2.75rem)}
 .ab-head p{color:var(--ink-2);margin-top:.7rem;font-size:1.06rem}
-.ab-grad{background:var(--ab-grad);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.ab-grad{color:var(--brand)}   /* solid brand colour: emphasis comes from colour and weight, not a gradient fill */
 .ab-ctas{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.6rem}
 .ab-page .btn-sm{min-height:44px}
 .ab-nw,.ab-w{white-space:nowrap}
@@ -62,7 +62,7 @@
 .ab-fact:first-child{padding-left:0}
 .ab-fact dt{color:var(--ink-2);font-size:.92rem;line-height:1.4;max-width:22ch}
 .ab-fact dd{margin:0}
-.ab-num{display:inline-block;min-width:calc(var(--w,2) * .62em);font:800 clamp(2.3rem,1.5rem + 2.6vw,3.6rem)/1 var(--font-display);letter-spacing:-.045em;font-variant-numeric:tabular-nums lining-nums;background:var(--ab-grad);-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:.06em}
+.ab-num{display:inline-block;min-width:calc(var(--w,2) * .62em);font:800 clamp(2.3rem,1.5rem + 2.6vw,3.6rem)/1 var(--font-display);letter-spacing:-.045em;font-variant-numeric:tabular-nums lining-nums;color:var(--brand);padding-bottom:.06em}
 
 /* ---- HST band + value cards ---- */
 .ab-hstwrap{position:relative}
@@ -134,7 +134,7 @@
 .ab-tl-body{display:grid;gap:.35rem;justify-items:center}
 .ab-tl-year{font:800 clamp(2rem,1.4rem + 1.6vw,2.8rem)/1 var(--font-display);letter-spacing:-.04em;font-variant-numeric:tabular-nums lining-nums;color:var(--line-2);transition:color .5s}
 .ab-tl-stop.on .ab-tl-year{color:var(--brand-ink)}
-.ab-tl-stop:last-child.on .ab-tl-year{background:var(--ab-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ab-tl-stop:last-child.on .ab-tl-year{color:var(--brand)}
 .ab-tl-body b{font-family:var(--font-display);font-size:1.02rem;line-height:1.35;color:var(--ink);max-width:22ch}
 .ab-tl-sub{font-size:.88rem;line-height:1.45;color:var(--muted);max-width:26ch}
 .ab-js .ab-tl-stop:not(.on) .ab-tl-icon .ic{opacity:.35;transform:scale(.9)}
@@ -304,6 +304,105 @@
   .ab-formats a{font-size:.74rem}
   .ab-ranges a{min-height:44px}
   .ab-ctas .btn{flex:1 1 auto}
+}
+
+/* ---- phones (<=760px): intros are sub-text (--sub / --meta come from style.css), sections and cards are compact ---- */
+@media (max-width:760px){
+  .ab-page h2{font-size:clamp(1.4rem,1.1rem + 1.3vw,1.65rem)}
+  .ab-head{margin-bottom:1rem}
+  .ab-head p{margin-top:.35rem;font-size:var(--sub,.875rem);line-height:var(--sub-lh,1.45)}
+  .ab-text p{margin-bottom:.7rem;font-size:var(--sub,.875rem);line-height:var(--sub-lh,1.45)}
+  .ab-points{gap:.5rem;margin-top:1rem}
+  .ab-points li{font-size:var(--sub,.875rem);line-height:1.4}
+  .ab-ctas{gap:.6rem;margin-top:1.1rem}
+
+  /* hero + numbers */
+  .ab-hero{padding:.5rem 0 1.5rem}
+  .ab-hero-grid{gap:1.1rem}
+  .ab-hero-copy h1{margin-bottom:.6rem;font-size:clamp(1.9rem,1.3rem + 2.6vw,2.2rem)}
+  .ab-hero-copy .lead{font-size:var(--sub,.875rem);line-height:var(--sub-lh,1.45)}
+  .ab-hero-visual{margin:1rem .25rem .5rem .5rem}
+  .ab-hero-cap{padding:.8rem 1rem;font-size:var(--meta,.8125rem)}
+  .ab-facts{padding-bottom:1.25rem}
+  .ab-facts dl{row-gap:1rem}
+  .ab-num{font-size:clamp(1.9rem,1.5rem + 1.8vw,2.3rem)}
+  .ab-fact dt{font-size:var(--sub,.875rem);line-height:1.35}
+  .ab-fact:last-child{padding-top:.8rem}
+
+  /* HST band + the three value cards that overlap it */
+  .ab-hst{padding:2.25rem var(--gutter) 6.75rem}
+  .ab-hst h2{margin-bottom:.6rem;font-size:clamp(1.6rem,1.2rem + 2vw,2rem)}
+  .ab-hst p{font-size:var(--sub,.875rem);line-height:1.5}
+  .ab-values{gap:.7rem;margin-top:-4.75rem}
+  .ab-value{column-gap:.85rem;padding:1.1rem 1.15rem;border-radius:20px}
+  .ab-value .ic{width:34px;height:34px}
+  .ab-value h3{margin:0 0 .2rem;font-size:1.2rem}
+  .ab-value p{font-size:var(--sub,.875rem);line-height:1.45}
+  .ab-letter{top:.7rem;right:.9rem;font-size:3.6rem}
+
+  /* pursuit, brands, heritage head */
+  .ab-pursuit{padding-top:2rem}
+  .ab-duo{margin:1rem 0}
+  .ab-duo-i b{font-size:.92rem}
+  .ab-brands{gap:.8rem}
+  .ab-brand{padding:.55rem .55rem 1.1rem;border-radius:22px}
+  .ab-stage{height:128px;margin-bottom:.7rem}
+  .ab-stage img{width:34%}
+  .ab-brand-body{padding:0 .6rem}
+  .ab-brand h3{font-size:1.15rem}
+  .ab-brand-body>p{margin-top:.3rem;font-size:var(--sub,.875rem);line-height:1.45}
+  .ab-brand-body>p.ab-bcount{margin-top:.6rem;font-size:var(--meta,.8125rem)}
+  .ab-bcount b{font-size:1.25rem}
+  .ab-ranges{gap:.35rem;margin:.5rem 0 .8rem}
+  .ab-ranges a{font-size:.82rem}
+  .ab-her-head{gap:.4rem;margin-bottom:1rem}
+  .ab-her-head p{font-size:var(--sub,.875rem);line-height:var(--sub-lh,1.45)}
+
+  /* Kowa, the two brand spots */
+  .ab-kowa-grid{gap:1.5rem}
+  .ab-kowa-copy>p{margin-top:.6rem;font-size:var(--sub,.875rem);line-height:var(--sub-lh,1.45)}
+  .ab-tree{gap:.8rem;margin:1.1rem 0 1.25rem}
+  .ab-tree b{font-size:.98rem}
+  .ab-tree span,.ab-kowa-photo figcaption{font-size:var(--meta,.8125rem)}
+  .ab-spots{gap:.8rem}
+  .ab-spot{padding:1.1rem 1.15rem 1.2rem;border-radius:22px}
+  .ab-spot h3{font-size:1.2rem}
+  .ab-spot>p{margin:.4rem 0 1rem;font-size:var(--sub,.875rem);line-height:1.45}
+  .ab-formats{margin-bottom:1rem}
+  .ab-formats a{font-size:.78rem}
+  .ab-zoo-vis{min-height:120px;margin-bottom:1rem}
+  .ab-zoo-packs{height:120px}
+
+  /* awards: one swipe row (the cards were 640px tall each when stacked); the next card peeks in */
+  .ab-awardsx{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:78%;gap:.75rem;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gutter);scrollbar-width:none;margin-inline:calc(-1 * var(--gutter));padding:.25rem var(--gutter) .75rem}
+  .ab-awardsx::-webkit-scrollbar{display:none}
+  .ab-js .ab-awardsx .ab-aw[data-rv]{opacity:1;translate:none}      /* off-screen cards would stay invisible until swiped: no entrance fade inside a swipe row */
+  .ab-aw{scroll-snap-align:start;padding:.6rem;border-radius:22px}
+  .ab-aw-body{padding:.8rem .5rem .4rem}
+  .ab-aw h3{font-size:1rem}
+  .ab-aw-body>p{margin-bottom:.6rem;font-size:var(--sub,.875rem)}
+  .ab-note{margin-top:.5rem}
+
+  /* reseller card, find us */
+  .ab-cta-card{gap:.8rem;padding:1.4rem 1.2rem;border-radius:24px}
+  .ab-cta-card h2{font-size:1.45rem}
+  .ab-cta-copy p{margin-top:.5rem;font-size:var(--sub,.875rem);line-height:1.45}
+  .ab-cta-packs{height:140px}
+  .ab-visit-copy h2{margin-bottom:.8rem}
+  .ab-contact{gap:.55rem}
+  .ab-ci{font-size:var(--sub,.875rem);line-height:1.4}
+  .ab-ci b{font-size:1rem}
+  .ab-visit .map{min-height:230px;border-radius:20px}
+}
+
+/* landscape phones (844x390): headings and intros stop filling the screen */
+@media (orientation:landscape) and (max-height:520px) and (min-width:761px) and (max-width:1100px){
+  .ab-page h2{font-size:clamp(1.5rem,1.2rem + 1.2vw,1.9rem)}
+  .ab-hero-copy h1{font-size:clamp(2rem,1.2rem + 2.2vw,2.6rem)}
+  .ab-hero-copy .lead,.ab-head p,.ab-text p,.ab-her-head p,.ab-kowa-copy>p{font-size:var(--sub,.875rem);line-height:var(--sub-lh,1.45)}
+  .ab-hst{padding-top:3rem}
+  .ab-hst h2{font-size:clamp(1.8rem,1.2rem + 2vw,2.4rem)}
+  .ab-hst p{font-size:var(--sub,.875rem)}
 }
 
 @media (prefers-reduced-motion:reduce){

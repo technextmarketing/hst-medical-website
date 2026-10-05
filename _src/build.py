@@ -10,11 +10,12 @@ WP-MAPPING.md. PROTOTYPE = True adds noindex to every page and a robots Disallow
 import json, os, re, html, datetime, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import home_sections, page_where, page_about
+import chat_kb
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.dirname(HERE)
 BASE = "https://technextmarketing.github.io/hst-medical-website/"
-V = "20261007c"
+V = "20261007d"
 PROTOTYPE = True
 TODAY = datetime.date.today().isoformat()
 
@@ -298,52 +299,54 @@ def story_awards(root):
     return '<div class="awards" aria-label="Awards">%s</div><p class="small award-note">Award artwork as published on hstmedical.com.</p>' % cards
 
 
-MORTAR = '<svg class="ms-ic" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 30h44c0 12-9 22-22 22S10 42 10 30z"/><path d="M22 52l-2 6h24l-2-6"/><path d="M40 30 52 8"/><circle cx="53" cy="7" r="3"/><path d="M18 36c3 6 8 9 14 9"/></svg>'
 
 
 def story_journey(root):
-    L = {m["file"]: m for m in live_manifest()}
-    awards = "".join('<img src="%sassets/img/live/%s" alt="" width="200" height="200" loading="lazy" decoding="async">' % (root, f) for f in AWARD_TEXT if f in L)
-    kowa = '<img class="ms-photo" src="%sassets/img/live/kowa-joined-signing.webp" alt="" width="1400" height="933" loading="lazy" decoding="async">' % root if "kowa-joined-signing.webp" in L else ""
+    """Milestones (home story + about heritage): items for an <ol class="tline">. Text only, styled in components.css."""
     steps = [
-        ("1930", "The medical hall", "Heng Say Tong opens: the family medical hall that gives HST its name.", '<span class="ms-art ms-art-ic">%s</span>' % MORTAR),
-        ("1994", "HST Medical is incorporated", "Pharmacists and TCM physicians start formulating for Singapore's pharmacy chains.", '<span class="ms-art ms-art-logo"><img src="%sassets/img/logo-hst.webp" alt="" width="484" height="240" loading="lazy" decoding="async"></span>' % root),
-        ("2024", "Award-winning", "Beauty Insider Health & Wellness Awards and The Guardian Awards.", '<span class="ms-art ms-art-awards">%s</span>' % awards),
-        ("2026", "Part of Kowa", "Joins Kowa Pharmaceutical Asia on 29 May, within the Japanese Kowa group.", '<span class="ms-art ms-art-photo">%s</span>' % kowa),
+        ("1930", "The medical hall", "Heng Say Tong, the family medical hall behind the HST name, opens."),
+        ("1994", "HST Medical is incorporated", "Pharmacists and TCM physicians begin formulating for Singapore's pharmacies."),
+        ("2024", "Award-winning", "Beauty Insider Health & Wellness Awards and The Guardian Awards."),
+        ("2026", "Part of Kowa", "Joins Kowa Pharmaceutical Asia on 29 May, within the Japanese Kowa group."),
     ]
-    return "".join(f"""<li class="ms" style="--k:{n}"><span class="ms-dot" aria-hidden="true"></span>{art}<b class="ms-year">{y}</b><h3>{esc(t)}</h3><p>{esc(x)}</p></li>""" for n, (y, t, x, art) in enumerate(steps))
+    return "".join(f"""<li class="tl"><span class="tl-dot" aria-hidden="true"></span><b class="tl-year"><time datetime="{y}">{y}</time></b><h3>{esc(t)}</h3><p>{esc(x)}</p></li>""" for y, t, x in steps)
 
 
 FLIPBOOK = "https://technextmarketing.github.io/hst-medical-catalogue/#p=1"
 
 
+FLIPBOOK_BASE = FLIPBOOK.split("#")[0]
+
+
 def catalogue_section(root):
-    """Home: the product-sheet flipbook. A designed book cover links straight to the flipbook (separate unlisted
-    site), opening in a new tab so the store stays open."""
-    packs = "".join('<img src="%sassets/img/products/%s-thumb.webp" alt="" width="360" height="360" loading="lazy" decoding="async">' % (root, i) for i in ("p03", "p27", "p23"))
-    pts = "".join('<li>%s<span>%s</span></li>' % (IC["tick"], esc(t)) for t in ("51 product sheets, one per product", "Ingredients, how to use and cautions", "Pack sizes and item codes for ordering"))
-    return f"""<section class="band catalogue" aria-labelledby="h-cat">
-  <div class="counter cat-grid">
-    <div class="cat-copy">
-      <h2 id="h-cat">Browse the product catalogue</h2>
-      <p class="lead">Every HST Medical®, Heritage®, Rheuma-Salve® and Zoo-Vite® product sheet in one flip-through book.</p>
-      <ul class="cat-points">{pts}</ul>
-      <div class="cat-ctas"><a class="btn btn-stamp" href="{FLIPBOOK}" target="_blank" rel="noopener">Open the catalogue {IC['arrow']}<span class="sr-only"> (opens in a new tab)</span></a></div>
-    </div>
-    <div class="cat-stage">
-      <a class="book" href="{FLIPBOOK}" target="_blank" rel="noopener" aria-label="Open the HST Medical product catalogue (opens in a new tab)">
-        <span class="book-pages" aria-hidden="true"></span>
-        <span class="book-cover">
-          <img class="book-logo" src="{root}assets/img/logo-hst-rev.webp" alt="" width="484" height="240" loading="lazy" decoding="async">
-          <span class="book-title">Product Sheets</span>
-          <span class="book-sub">Health · Wellness · Beauty</span>
-          <span class="book-packs" aria-hidden="true">{packs}</span>
-          <span class="book-open">Open {IC['arrow']}</span>
-        </span>
-      </a>
-    </div>
-  </div>
-</section>"""
+    """Home, closing block of "Shop by range": the product catalogue as the store's table of contents. The book wears
+    thumb-index tabs for its 11 real chapters; each tab runs into a contents row (chapter, dotted leader, page). Hover or
+    focus turns the book to that chapter's first sheet (hero.js); every row opens the flipbook at that page in a new tab.
+    Page images: assets/img/catalogue/pNNN(-640).webp, copied from the flipbook repo; chapters from _src/catalogue_index.json."""
+    idx = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "catalogue_index.json"), encoding="utf-8"))
+    img = lambda n, big=True: "%sassets/img/catalogue/p%03d%s.webp" % (root, n, "-640" if big else "")
+    rows = "".join(
+        f"""<li><a href="{FLIPBOOK_BASE}#p={c['page']}" target="_blank" rel="noopener" data-page="{c['page']}" data-img="{img(c['page'])}" style="--i:{n}"><span class="cbk-tab" aria-hidden="true">{c['no']}</span><span class="cbk-name">{esc(c['title'])}</span><span class="cbk-dots" aria-hidden="true"></span><span class="cbk-pg"><span class="sr-only">page </span>{c['page']}</span><span class="sr-only"> (opens the catalogue in a new tab)</span></a></li>"""
+        for n, c in enumerate(idx["chapters"]))
+    strip = "".join(
+        f"""<li><a href="{FLIPBOOK_BASE}#p={c['page']}" target="_blank" rel="noopener"><img src="{img(c['page'], False)}" alt="" width="339" height="480" loading="lazy" decoding="async"><span><b>{esc(c['title'])}</b><small>Page {c['page']}</small></span></a></li>"""
+        for c in idx["chapters"])
+    return f"""<div class="cbk" data-cbk aria-labelledby="h-cat">
+      <div class="cbk-copy">
+        <h3 id="h-cat">Every range, page by page</h3>
+        <p>The product catalogue has a sheet for each of the 51 products: what it is for, how to use it, ingredients, cautions and item codes. Every sheet links back to its page in this store.</p>
+        <p class="cbk-meta"><span>{idx['pageCount']} pages</span><span>{len(idx['chapters'])} chapters</span><span>51 product sheets</span></p>
+        <a class="btn btn-stamp" href="{FLIPBOOK}" target="_blank" rel="noopener">Open the catalogue {IC['arrow']}<span class="sr-only"> (opens in a new tab)</span></a>
+      </div>
+      <div class="cbk-index">
+        <a class="cbk-vol" href="{FLIPBOOK}" target="_blank" rel="noopener" aria-label="Open the HST Medical product catalogue (opens in a new tab)">
+          <span class="cbk-edge" aria-hidden="true"></span>
+          <img class="cbk-page" src="{img(1)}" alt="" width="640" height="905" loading="lazy" decoding="async">
+        </a>
+        <ol class="cbk-toc" aria-label="Catalogue chapters">{rows}</ol>
+      </div>
+      <ul class="cbk-strip" aria-label="Catalogue chapters">{strip}</ul>
+    </div>"""
 
 
 def kowa_band(root):
@@ -404,106 +407,115 @@ def build_about():
     add_sitemap(BASE + "about/")
 
 
-# ---------------------------------------------------------------- HOME HERO: the Rheuma-Salve format stage
-# Five formats on one stage. Phrases and "For:" lines are the catalogue's own benefit statements; chips are the
-# catalogue's active-ingredient lists (percentages only where the label prints them). Cut-outs: hero_cutouts.py.
-HERO = [
-    {"t1": "Deep relief for", "t2": "aching joints", "slug": "rheuma-salve-balm", "img": "balm", "fmt": "Balm", "word": "BALM", "size": "50g jar", "s": 1.04, "tone": "#ffd9e6",
-     "phrase": "aching joints", "origin": "Made in Singapore",
-     "chips": [("Menthol", "", "menthol"), ("Camphor", "", "camphor"), ("Wintergreen", "", "wintergreen"), ("Peppermint oil", "", "peppermint"), ("Eucalyptus oil", "", "eucalyptus")]},
-    {"t1": "Rapid relief for", "t2": "sore muscles", "slug": "rheuma-salve-creme", "img": "creme", "fmt": "Crème", "word": "CRÈME", "size": "50g tube", "s": .96, "tone": "#c6ead7",
-     "phrase": "sore muscles", "origin": "Made in Singapore",
-     "chips": [("Menthol", "13.8%", "menthol"), ("Wintergreen", "12%", "wintergreen"), ("Peppermint oil", "9.2%", "peppermint"), ("Eucalyptus oil", "2%", "eucalyptus"), ("Capsaicin", "0.4%", "capsaicin")]},
-    {"t1": "Roll-on relief", "t2": "for headaches", "slug": "rheuma-salve-liniment", "img": "liniment", "fmt": "Liniment", "word": "ROLL-ON", "size": "10ml roll-on", "s": .98, "tone": "#ffdbe7",
-     "phrase": "sudden headaches", "origin": "Made in Singapore",
-     "chips": [("Menthol", "", "menthol"), ("Peppermint", "", "peppermint"), ("Wintergreen", "", "wintergreen"), ("Eucalyptus oil", "", "eucalyptus")]},
-    {"t1": "Cooling relief for", "t2": "a stiff back", "slug": "rheuma-salve-pain-relief-patch-cool", "img": "patch", "fmt": "Patch", "word": "PATCH", "size": "8 cooling patches", "s": .9, "tone": "#cfe0f7",
-     "phrase": "a stiff back", "origin": "Made in Taiwan for HST Medical",
-     "chips": [("Peppermint oil", "6%", "peppermint"), ("Menthol", "5.8%", "menthol"), ("Centella asiatica", "3%", "centella"), ("Hops oil", "1.5%", "hops"), ("Frankincense", "0.5%", "frankincense"), ("Myrrh", "0.5%", "myrrh")]},
-    {"t1": "No-mess relief for", "t2": "tired muscles", "slug": "rheuma-salve-medi-stick", "img": "stick", "fmt": "Medi-Stick", "word": "STICK", "size": "15g stick", "s": .96, "tone": "#f4e3b6",
-     "phrase": "tired muscles", "origin": "Made in Singapore",
-     "chips": [("Wintergreen oil", "18%", "wintergreen"), ("Menthol", "10%", "menthol"), ("Eucalyptus", "8%", "eucalyptus"), ("Peppermint", "5%", "peppermint"), ("Capsicum", "1%", "capsaicin")]},
-]
+# hero cut-out sizes (assets/img/hero/rs-*.webp, made by _src/hero_cutouts.py + hero_compose.py)
 HERO_DIMS = {"balm": (459, 324), "creme": (496, 590), "liniment": (370, 758), "patch": (414, 502), "stick": (516, 554)}
-CHIP_DEPTH = [18, 30, 22, 26, 14, 34]  # parallax px per chip slot
 
 
-def hero_chips(chips):
-    return "".join('<li class="chip c%d" data-k="%s" style="--d:%d;--fd:%.1fs"><i></i>%s%s</li>' % (
-        n, k, CHIP_DEPTH[n], n * .7, esc(name), ' <small>%s</small>' % pct if pct else "") for n, (name, pct, k) in enumerate(chips))
+# ---------------------------------------------------------------- HOME HERO v7: three cinematic scenes
+# Product (the Rheuma-Salve line-up), Company (the 51-remedy "medicine cabinet") and People (formulators, pharmacists,
+# Kowa). Scenes share one grid cell; hero.js runs the chapters (autoplay, holds, swipe, parallax, light sweep) and
+# home.css owns the look. Every fact is already on the site (guides, story, about, where-to-buy data).
+HX_PACKS = [  # turntable order (front first): slug, cut-out, label, display height (% of the stage at the front)
+    ("rheuma-salve-balm", "balm", "Balm", 50), ("rheuma-salve-creme", "creme", "Crème", 64), ("rheuma-salve-liniment", "liniment", "Liniment", 70),
+    ("rheuma-salve-pain-relief-patch-cool", "patch", "Patch", 62), ("rheuma-salve-medi-stick", "stick", "Medi-Stick", 60)]
+HX_CHIPS = {  # the catalogue's active-ingredient lists (percentages only where the label prints them)
+    "rheuma-salve-balm": [("Menthol", ""), ("Camphor", ""), ("Wintergreen", "")],
+    "rheuma-salve-creme": [("Menthol", "13.8%"), ("Wintergreen", "12%"), ("Peppermint oil", "9.2%")],
+    "rheuma-salve-liniment": [("Menthol", ""), ("Peppermint", ""), ("Wintergreen", "")],
+    "rheuma-salve-pain-relief-patch-cool": [("Peppermint oil", "6%"), ("Menthol", "5.8%"), ("Centella asiatica", "3%")],
+    "rheuma-salve-medi-stick": [("Wintergreen oil", "18%"), ("Menthol", "10%"), ("Eucalyptus", "8%")]}
+CHEV_L = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6-6 6 6 6"/></svg>'
+CHEV_R = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"/></svg>'
 
 
-def _rand(seed):
-    x = seed
-    while True:
-        x = (x * 1103515245 + 12345) % 2147483648
-        yield x / 2147483648.0
+HX_LEAF = '<svg class="hx-leaf hx-leaf-%s hx-par" style="--d:%dpx" viewBox="0 0 120 120" aria-hidden="true"><path d="M62 8C30 28 16 62 28 104c36-6 62-36 60-76-6-8-14-14-26-20z"/><path d="M28 104C42 76 56 50 78 22M44 76l-12-8M52 62l-14-6M62 48l-12-4M54 70l14 2M64 54l14 0"/></svg>'
 
 
-def hero_fx(n=18):
-    r = _rand(65499)
-    return "".join('<i style="--x:%.1f%%;--d:%.1fs;--t:%.1fs;--z:%.1fpx"></i>' % (next(r) * 100, next(r) * -16, 11 + next(r) * 9, 3 + next(r) * 5) for _ in range(n))
-
-
-LEAF = '<svg class="hs-leaf %s" viewBox="0 0 120 120" aria-hidden="true"><path d="M62 8C30 28 16 62 28 104c36-6 62-36 60-76-6-8-14-14-26-20z"/><path d="M28 104C42 76 56 50 78 22M44 76l-12-8M52 62l-14-6M62 48l-12-4M54 70l14 2M64 54l14 0"/></svg>'
-
-
-def build_hero(root=""):
-    """Hero v6: one product in the spotlight. Each format is a slide (headline, name, use, price, Add to bag) stacked
-    in one grid cell so the copy never changes height; the pack hands off on a tinted halo; tabs carry transparent
-    thumbnails and a sliding indicator that also shows the 3 s autoplay progress."""
-    slides, packs, tabs, chips_data = [], [], [], []
-    for n, h in enumerate(HERO):
-        p = BY_SLUG[h["slug"]]
+def build_hero_cinema(root=""):
+    words = lambda t, o=0, em=False: " ".join('<span class="w%s" style="--wi:%d"><span>%s</span></span>' % (" em" if em else "", o + k, esc(x)) for k, x in enumerate(t.split()))
+    def title(l1, l2):
+        n = len(l1.split())
+        return '<span class="ln">%s</span><span class="ln">%s</span>' % (words(l1), words(l2, n, True))
+    # scene 1: the Rheuma-Salve turntable (hero.js orbit engine; data in #hx-orbit-data)
+    packs, odata = "", []
+    for k, (slug, img, lab, hpct) in enumerate(HX_PACKS):
+        p = BY_SLUG[slug]
         v = p["variants"][0]
-        w, ht = HERO_DIMS[h["img"]]
-        nv = len(p["variants"])
-        packs_txt = "%d pack sizes" % nv if nv > 1 else "Single pack"
+        w, h = HERO_DIMS[img]
+        size = p["size"].split(" (")[0]
+        packs += (f'<a class="hx-pk{" is-front" if k == 0 else ""}" href="{root}products/{slug}/" data-k="{k}" style="--h:{hpct};--k:{k}" aria-label="{esc(p["name"])}, {esc(size)}, {esc(money(v["price"]))}">'
+                  f'<span class="bob"><span class="tilt"><img src="{root}assets/img/hero/rs-{img}.webp" alt="" width="{w}" height="{h}" decoding="async"{" fetchpriority=\"high\"" if k == 0 else ""}>'
+                  f'<i class="hx-sheen" aria-hidden="true" style="-webkit-mask-image:url({root}assets/img/hero/rs-{img}.webp);mask-image:url({root}assets/img/hero/rs-{img}.webp)"></i></span></span>'
+                  f'<span class="hx-tag" aria-hidden="true"><b>{esc(lab)}</b><small>{esc(size)} · {esc(money(v["price"]))}</small></span></a>')
+        odata.append({"label": lab, "name": p["name"], "meta": "%s · %s" % (size, money(v["price"])), "chips": ["%s%s" % (n, " " + q if q else "") for n, q in HX_CHIPS[slug]],
+                      "add": {"id": slug, "name": p["name"], "price": v["price"], "variant": v["label"], "code": v["code"], "img": "assets/img/products/%s-thumb.webp" % p["image"], "url": "products/%s/" % slug}})
+    p0 = BY_SLUG[HX_PACKS[0][0]]
+    now = (f'<div class="hx-now"><button class="hx-spin" type="button" data-spin="-1" aria-label="Previous format">{CHEV_L}</button>'
+           f'<span class="hx-now-t"><b data-now="label">{esc(HX_PACKS[0][2])}</b><small data-now="meta">{esc(odata[0]["meta"])}</small></span>'
+           + add_btn(p0, root, cls="btn btn-sm hx-now-add", label="Add") +
+           f'<button class="hx-spin" type="button" data-spin="1" aria-label="Next format">{CHEV_R}</button></div>')
+    ingr = '<ul class="hx-ingr" aria-label="Key ingredients">%s</ul>' % "".join('<li style="--n:%d">%s</li>' % (n, esc(c)) for n, c in enumerate(odata[0]["chips"]))
+    aroma = '<span class="hx-aroma" aria-hidden="true">%s</span>' % "".join('<i style="--n:%d"></i>' % n for n in range(7))
+    orbit_json = json.dumps(odata, ensure_ascii=False).replace("</", "<\\/")
+    # scene 2: the medicine cabinet (three rows of real packshots, each row doubled for a seamless pan)
+    others = [p for p in PRODUCTS if not p["slug"].startswith("rheuma-salve")][:27]
+    rows = ""
+    for r in range(3):
+        cells = "".join('<span class="hx-cell"><img data-src="%sassets/img/products/%s-thumb.webp" alt="" width="360" height="360" decoding="async"></span>' % (root, p["image"]) for p in others[r * 9:(r + 1) * 9])
+        rows += '<div class="hx-row r%d"><div class="hx-track">%s%s</div></div>' % (r, cells, cells)
+    L = {m["file"] for m in live_manifest()}
+    medals = "".join('<img class="hx-medal m%d hx-par" style="--d:%dpx" data-src="%sassets/img/live/%s" alt="" width="200" height="200" decoding="async">' % (k, 18 + k * 8, root, f)
+                     for k, f in enumerate(f for f in AWARD_TEXT if f in L))
+    wd = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "where_data.json"), encoding="utf-8"))
+    n_stores = sum(len(c.get("stores", [])) for c in wd["chains"])
+    # scene 3: the people
+    photo = "kowa-joined-signing.webp" if "kowa-joined-signing.webp" in L else ""
+    roles = [("flask", "Pharmacists and TCM physicians formulate"), ("store", "Pharmacists dispense, at %d stores" % n_stores), ("kowa", "Part of the Kowa group since 2026")]
+    role_html = "".join('<li class="hx-role r%d hx-par" style="--d:%dpx">%s<span>%s</span></li>' % (k, 14 + k * 10, AIC[i], esc(t)) for k, (i, t) in enumerate(roles))
+    scenes = [
+        ("Product", title("Deep relief,", "five ways."),
+         "Rheuma-Salve® balm, crème, roll-on, patch and Medi-Stick: one formula, Singapore's pharmacy-shelf pain relief since 1994.",
+         f'<a class="btn btn-light" href="{root}shop/pain-relief/">Shop Rheuma-Salve {IC["arrow"]}</a><a class="hx-link" href="#h-pain">Find my format {IC["arrow"]}</a>',
+         f'<div class="hx-media m-product" data-orbit role="group" aria-roledescription="product turntable" aria-label="The five Rheuma-Salve formats. Drag, or use the arrows, to turn.">'
+         f'<span class="hx-halo hx-par" style="--d:10px" aria-hidden="true"></span>{HX_LEAF % ("a", 14)}{HX_LEAF % ("b", 30)}<span class="hx-spot" aria-hidden="true"></span>'
+         f'<span class="hx-floor" aria-hidden="true"></span>{aroma}<div class="hx-orbit">{packs}</div>{ingr}{now}'
+         f'<script type="application/json" id="hx-orbit-data">{orbit_json}</script></div>'),
+        ("Company", title("Singapore's medicine", "cabinet since 1994."),
+         "51 remedies across %d ranges, from a 1930 medical hall to Guardian, Watsons and NHGP shelves today." % len(CAT_ORDER),
+         f'<a class="btn btn-light" href="{root}shop/">Browse all 51 {IC["arrow"]}</a><a class="hx-link" href="{root}where-to-buy/">Where to buy {IC["arrow"]}</a>',
+         f'<div class="hx-media m-company"><div class="hx-wall" aria-hidden="true">{rows}</div>'
+         f'<p class="hx-stat hx-par" style="--d:22px"><b data-count="51">51</b><span>pharmacist-formulated remedies</span></p>'
+         f'<ul class="hx-facts" aria-label="HST Medical in numbers"><li class="hx-par" style="--d:16px"><b>{len(CAT_ORDER)}</b> ranges</li><li class="hx-par" style="--d:28px"><b>{n_stores}</b> pharmacy stores</li><li class="hx-par" style="--d:20px"><b>1930</b> medical hall</li></ul>{medals}</div>'),
+        ("People", title("The people behind", "every pack."),
+         "Pharmacists and TCM physicians formulate every remedy. Since 29 May 2026, HST Medical is part of Kowa Pharmaceutical Asia.",
+         f'<a class="btn btn-light" href="{root}about/">Our story {IC["arrow"]}</a><a class="hx-link" href="{root}contact/">Talk to our team {IC["arrow"]}</a>',
+         f'<div class="hx-media m-people"><figure class="hx-photo hx-par" style="--d:12px">'
+         + (f'<img data-src="{root}assets/img/live/{photo}" alt="HST Medical co-founder Simone Tan and Kowa\'s Shigeru Kimura shake hands at the signing ceremony" width="1400" height="933" decoding="async">' if photo else "")
+         + f'<figcaption>Joining Kowa Pharmaceutical Asia, 29 May 2026</figcaption></figure><ul class="hx-roles">{role_html}</ul></div>'),
+    ]
+    out, chaps = [], []
+    for n, (name, ttl, sub, ctas, media) in enumerate(scenes):
         on = n == 0
-        words = lambda t, o=0: " ".join('<span class="w" style="--wi:%d"><span>%s</span></span>' % (o + k, esc(x)) for k, x in enumerate(t.split()))
-        slides.append(f"""<article class="hs-slide{' is-on' if on else ''}" data-i="{n}" aria-hidden="{'false' if on else 'true'}">
-          <h2 class="hs-title"><span class="ln">{words(h['t1'])}</span><span class="ln em">{words(h['t2'], len(h['t1'].split()))}</span></h2>
-          <p class="hs-name"><a href="products/{p['slug']}/"{'' if on else ' tabindex="-1"'}>{esc(p['name'])}</a><span>{esc(h['size'])} · {packs_txt}</span></p>
-          <p class="hs-desc">For: {esc(p['for'])}</p>
-          <p class="hs-origin">{IC['tick']}<span>{esc(h['origin'])}</span></p>
-          <div class="hs-buy"><span class="hs-price"><b>{esc(money(v['price']))}</b><small>incl. GST</small></span>{add_btn(p, root, cls='btn btn-light').replace('<button ', '<button tabindex="-1" ' if not on else '<button ', 1)}<a class="hs-more" href="products/{p['slug']}/"{'' if on else ' tabindex="-1"'}>View product {IC['arrow']}</a></div>
-        </article>""")
-        src = "assets/img/hero/rs-%s.webp" % h["img"]
-        alt = "%s, %s" % (p["name"].replace("®", ""), h["size"])
-        packs.append('<span class="hs-pack%s" data-i="%d" style="--s:%s"><span class="hs-bob"><span class="hs-tl"><img src="%s" alt="%s" width="%d" height="%d" decoding="async"%s><i class="hs-sheen" aria-hidden="true"></i></span></span></span>'
-                     % (" is-on" if on else "", n, h["s"], src, esc(alt) if on else "", w, ht, ' fetchpriority="high"' if on else ' fetchpriority="low"'))
-        tw, th = (120, round(120 * ht / w)) if w >= ht else (round(120 * w / ht), 120)
-        tabs.append('<a class="fmt" href="products/%s/" data-i="%d"%s><span class="th"><img src="assets/img/hero/rs-%s-thumb.webp" alt="" width="%d" height="%d" decoding="async"></span><span class="t">%s</span></a>'
-                    % (p["slug"], n, ' aria-current="true"' if on else "", h["img"], tw, th, esc(h["fmt"])))
-        chips_data.append({"tone": h["tone"], "name": p["name"].replace("®", ""), "size": h["size"], "price": v["price"], "chips": h["chips"][:3]})
-    h0 = HERO[0]
-    return f"""<section class="hero hs" aria-labelledby="h1" data-hero style="--tone:{h0['tone']}">
-  <div class="hero-block">
-    <div class="hs-bg" aria-hidden="true"><i class="hs-blob b1"></i><i class="hs-blob b2"></i>{LEAF % 'l1'}{LEAF % 'l3'}<span class="hs-fx">{hero_fx(12)}</span></div>
-    <div class="hero-body">
-      <div class="hs-copy">
-        <h1 id="h1" class="sr-only">Rheuma-Salve® pain relief in five formats: balm, crème, roll-on liniment, cooling patch and Medi-Stick</h1>
-        <div class="hs-slides">{''.join(slides)}</div>
-        <div class="hero-ctas"><a class="hs-link" href="shop/pain-relief/">Shop all pain relief {IC['arrow']}</a><a class="hs-link" href="shop/cough-cold-flu/">Cough and cold {IC['arrow']}</a></div>
-      </div>
-      <div class="hs-show">
-        <div class="hs-stage" id="hs-stage">
-          <div class="hs-halo" aria-hidden="true"></div>
-          <svg class="hs-rings" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="97"/><circle cx="100" cy="100" r="84"/><circle class="dot" cx="100" cy="3" r="2.4"/></svg>
-          <div class="hs-floor" aria-hidden="true"></div>
-          {''.join(packs)}
-          <ul class="hs-chips" aria-label="Key ingredients">{hero_chips(h0['chips'][:3])}</ul>
+        out.append(f"""<article class="hx-scene s{n}{' is-on' if on else ''}" id="hx-s{n}" data-i="{n}" role="tabpanel" aria-roledescription="slide" aria-label="{n + 1} of 3: {name}"{'' if on else ' aria-hidden="true" inert'}>
+        <div class="hx-copy">
+          <h2 class="hx-title">{ttl}</h2>
+          <p class="hx-sub">{esc(sub)}</p>
+          <div class="hx-ctas">{ctas}</div>
         </div>
-        <div class="hs-ctrl">
-          <div class="hs-tabs" aria-label="Rheuma-Salve formats"><span class="hs-ind" aria-hidden="true"><i></i></span>{''.join(tabs)}</div>
-          <button class="hs-pause" type="button" aria-pressed="false" hidden><svg class="ic i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg><svg class="ic i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"/></svg><span class="sr-only">Pause the format showcase</span></button>
-        </div>
-      </div>
-    </div>
-    <svg class="hs-wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 90V46C180 10 420 0 720 30s560 52 720 8v52z"/></svg>
+        {media}
+      </article>""")
+        chaps.append(f'<button class="hx-ch{" on" if on else ""}" type="button" role="tab" aria-controls="hx-s{n}" aria-selected="{"true" if on else "false"}"{"" if on else " tabindex=\"-1\""} data-go="{n}"{" style=\"--dur:11s\"" if n == 0 else ""}><span class="hx-p" aria-hidden="true"></span><span class="hx-n">0{n + 1}</span><span class="hx-t">{name}</span></button>')
+    grain = "<i class=\"hx-grain\" aria-hidden=\"true\"></i>"
+    return f"""<section class="hero hx" data-hero data-scene="0" style="--dur:6.5s" aria-roledescription="carousel" aria-label="HST Medical highlights">
+  <div class="hx-stage">
+    <div class="hx-skies" aria-hidden="true"><i class="hx-sky k0"></i><i class="hx-sky k1"></i><i class="hx-sky k2"></i><i class="hx-rays"></i></div>
+    <h1 id="h1" class="sr-only">HST Medical Singapore: Rheuma-Salve® pain relief and 51 pharmacist-formulated remedies since 1994</h1>
+    <div class="hx-scenes">{''.join(out)}</div>
+    <div class="hx-bar"><div class="hx-chapters" role="tablist" aria-label="Highlights">{''.join(chaps)}</div><button class="hx-pause" type="button" aria-pressed="false"><svg class="ic i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg><svg class="ic i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"/></svg><span class="sr-only">Pause the highlights</span></button></div>
+    <i class="hx-wipe" aria-hidden="true"></i>{grain}
+    <svg class="hx-wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 90V52C220 16 470 4 760 30s540 48 680 10v50z"/></svg>
   </div>
   {{{{FOOT}}}}
-  <script type="application/json" id="hero-data">{json.dumps(chips_data, ensure_ascii=False).replace('</', '<\\/')}</script>
 </section>"""
 
 
@@ -578,7 +590,7 @@ def build_home():
     notes = "".join(f"""<a href="blog/{s}/"><time datetime="{d}">{d}</time><span><b>{esc(t)}</b>{esc(x)}</span></a>""" for s, t, d, x, _ in POSTS)
     body = f"""
 <main id="main">
-{build_hero(root).replace("{{FOOT}}", '<div class="hero-foot"><nav class="counters" aria-label="Shop by need">' + counters + '</nav></div>')}
+{build_hero_cinema(root).replace("{{FOOT}}", '<div class="hero-foot"><nav class="counters" aria-label="Shop by need">' + counters + '</nav></div>')}
 <section class="assure" aria-label="Why shop with HST Medical"><ul class="counter">{assure}</ul></section>
 
 <section class="band" aria-labelledby="h-best">
@@ -606,12 +618,11 @@ def build_home():
   <div class="counter">
     <div class="band-head"><div><h2 id="h-shelf">Shop by range</h2><p>Eleven ranges, one standard: developed by HST Medical's own pharmacists and TCM physicians, then tested for authenticity and safety before they reach the counter.</p></div></div>
     <nav class="bento" aria-label="Ranges">{bento}</nav>
+    {catalogue_section(root)}
   </div>
 </section>
 
 {home_sections.marquee(ctx)}
-
-{catalogue_section(root)}
 
 <section class="band story" aria-labelledby="h-trust">
   <div class="counter">
@@ -619,7 +630,7 @@ def build_home():
       <h2 id="h-trust">Dispensed by pharmacists since 1994</h2>
       <p class="lead">From a Singapore medical hall to a Kowa company: nearly a century of formulating remedies people keep in the cabinet.</p>
     </div>
-    <ol class="journey">{journey}</ol>
+    <ol class="tline">{journey}</ol>
     <div class="story-foot">
       <ul class="proofs">{proofs}</ul>
       <div class="story-ctas"><a class="btn btn-stamp" href="about/">Our story {IC['arrow']}</a><a class="btn btn-quiet" href="where-to-buy/">Where to buy {IC['arrow']}</a></div>
@@ -650,7 +661,7 @@ def build_home():
                  "potentialAction": {"@type": "SearchAction", "target": BASE + "shop/?q={search_term_string}", "query-input": "required name=search_term_string"}}]})
     page("index.html", "HST Medical Singapore — Rheuma-Salve® Pain Relief, Cough & Cold Remedies, Heritage® Tonics",
          "Pain, cough or cold? Start at the HST Medical counter: Rheuma-Salve®, Alievaid, Flu Gard and 51 pharmacist-formulated products from a Singapore company founded in 1994, now part of Kowa Pharmaceutical Asia. GMP, Halal options.",
-         body, extra_head=ld + '<link rel="preload" as="image" href="assets/img/hero/rs-balm.webp" fetchpriority="high">\n<script src="assets/js/hero.js?v=%s" defer></script>\n' % V, body_class="home")
+         body, extra_head=ld + '<link rel="preload" as="image" href="assets/img/hero/rs-balm.webp" fetchpriority="high">\n<link rel="stylesheet" href="assets/css/home.css?v=%s">\n<script src="assets/js/hero.js?v=%s" defer></script>\n' % (V, V), body_class="home")
     add_sitemap(BASE, "1.0")
 
 # ---------------------------------------------------------------- SHOP + CATEGORIES
@@ -747,7 +758,7 @@ def build_products():
 <main id="main"><div class="counter">{crumb}
 <article class="pdp2 {brand_class(p['brand'])}" data-pdp>
   <div class="pdp2-media">
-    <figure class="pdp-pack"><span class="pdp-halo" aria-hidden="true"></span><span class="zoomer"><img src="{root}assets/img/products/{p['image']}.webp" alt="{esc(p['name'])}, {esc(p['size'])}" width="900" height="900" fetchpriority="high" decoding="async"><span class="zoom-hint" aria-hidden="true"><span class="h-hover">Hover to zoom</span><span class="h-tap">Tap to zoom</span></span></span></figure>
+    <figure class="pdp-pack"><span class="pdp-halo" aria-hidden="true"></span><span class="zoomer"><img src="{root}assets/img/products/{p['image']}.webp" alt="{esc(p['name'])}, {esc(p['size'])}" width="900" height="900" fetchpriority="high" decoding="async"><span class="zoom-hint" aria-hidden="true"><span class="h-hover">Click to zoom</span><span class="h-tap">Tap to zoom</span></span></span></figure>
   </div>
   <div class="pdp2-main">
     <p class="pdp-meta"><span class="pdp-brand">{esc(brand_label(p['brand']))}</span><a href="{root}shop/{p['category']}/">{esc(c['name'])}</a><span class="print" data-code-out>Item {v0['code'] or '—'}</span></p>
@@ -1006,6 +1017,7 @@ def build_misc():
 
 if __name__ == "__main__":
     build_home(); build_shop(); build_products(); build_static(); build_blog(); build_misc()
+    chat_kb.build(OUT, BASE, FLIPBOOK, PRODUCTS, CATS, CAT_ORDER, GUIDES, NEEDS, NEED_ICON_FOR, POSTS, ASSURE, ORG, TIMELINE, AWARD_TEXT, brand_label, money)  # Ask HST knowledge base -> assets/data/chat-kb.json
     print("built %d sitemap URLs, %d products, prototype=%s" % (len(SITEMAP), len(PRODUCTS), PROTOTYPE))
     for s in ("rheuma-salve-balm", "rheuma-salve-creme", "alievaid-herbal-drops", "cordyceps-cs-4", "maxi-cal"):
         print(s, [(v["label"], v["price"], v["code"]) for v in BY_SLUG[s]["variants"]])
