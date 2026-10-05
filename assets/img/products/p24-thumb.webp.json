@@ -1,4 +1,4 @@
 {
-  "prompt": "Origin: product packshot extracted from the client-supplied HST Medical product-sheet catalogue PDF (Heyzine flipbook 1cbc07dcc6), page 24; alpha composited on white, resized to 360px max, WebP q82. Not AI-generated.",
-  "createdAt": "2026-10-02T09:13:15.596Z"
+  "prompt": "Origin: product packshot extracted from the client-supplied HST Medical product-sheet catalogue PDF (Heyzine flipbook 1cbc07dcc6), page 24; transparent background from the border flood-fill matte with a gradient barrier, centred on a square transparent canvas (5% margin), 360 px max, WebP q82. Not AI-generated.",
+  "createdAt": "2026-10-05T09:33:44.334738+00:00"
 }

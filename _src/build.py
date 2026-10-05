@@ -12,7 +12,7 @@ import json, os, re, html, datetime
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.dirname(HERE)
 BASE = "https://technextmarketing.github.io/hst-medical-website/"
-V = "20261002h"
+V = "20261005d"
 PROTOTYPE = True
 TODAY = datetime.date.today().isoformat()
 
@@ -29,7 +29,7 @@ FILTER_GROUPS = [("Relief", ["pain-relief", "traditional-pain-relief", "cough-co
 COUNTERS = [("pain-relief", "Pain relief", "Balm, crème, patch, stick", "p03"), ("cough-cold-flu", "Cough and cold", "Lozenges, syrups, inhaler", "p27"),
             ("kids", "Kids", "Gummies and jelly sticks", "p23"), ("stress-sleep", "Sleep", "Melatonin and magnesium", "p43"),
             ("immunity-energy", "Tonics", "Ginseng, cordyceps, lingzhi", "p09"), ("", "All products", "51 products, 11 shelves", "p13")]
-BENEFITS = ["Free island-wide delivery over S$60", "Made under GMP in Singapore", "Halal-certified options", "Formulated by pharmacists and TCM physicians", "On the shelf at Guardian, Watsons and NHGP", "A Kowa company since 2024"]
+BENEFITS = ["Free Singapore delivery above S$30", "Made under GMP", "Halal-certified options", "Formulated by pharmacists and TCM physicians", "On the shelf at Guardian, Watsons and NHGP", "Part of Kowa Pharmaceutical Asia since 2026"]
 RETAILERS_CONFIRMED = ["Guardian", "Watsons", "NHGP pharmacies"]
 RETAILERS_TBC = ["Unity (to confirm)", "GP clinics and TCM halls (to confirm)", "Online marketplaces (to confirm)"]
 
@@ -49,7 +49,7 @@ for p in PRODUCTS:
 FOR = {
     "rheuma-salve-balm": "Deep joint and muscle pain, stiffness, chest congestion",
     "rheuma-salve-creme": "Everyday aches; absorbs fast, will not stain clothes",
-    "rheuma-salve-liniment": "Sprains and sports strains; fast penetrating oil",
+    "rheuma-salve-liniment": "Sudden headache, giddiness or motion sickness; blocked nose",
     "rheuma-salve-pain-relief-patch-cool": "Hands-free relief for up to 6 hours: back, neck, shoulders, sore muscles",
     "rheuma-salve-medi-stick": "Pocket relief at the desk, gym or on the road; no mess",
     "alievaid-herbal-drops": "Sore throat and irritating cough; freshens breath",
@@ -159,7 +159,7 @@ IC = {
 }
 
 ORG = {"@type": "Organization", "@id": BASE + "#org", "name": "HST Medical Pte Ltd", "url": BASE,
-       "logo": BASE + "assets/img/logo-hst-kowa.png", "parentOrganization": {"@type": "Organization", "name": "Kowa Company, Ltd."},
+       "logo": BASE + "assets/img/logo-hst-kowa.png", "parentOrganization": {"@type": "Organization", "name": "Kowa Pharmaceutical Asia Pte. Ltd.", "parentOrganization": {"@type": "Organization", "name": "Kowa Company, Ltd."}},
        "foundingDate": "1994", "address": {"@type": "PostalAddress", "addressCountry": "SG"}, "sameAs": ["https://hstmedical.com"]}
 
 SITEMAP = []
@@ -243,6 +243,99 @@ GUIDES = {
     },
 }
 
+# ---------------------------------------------------------------- HOME HERO: the Rheuma-Salve format stage
+# Five formats on one stage. Phrases and "For:" lines are the catalogue's own benefit statements; chips are the
+# catalogue's active-ingredient lists (percentages only where the label prints them). Cut-outs: hero_cutouts.py.
+HERO = [
+    {"slug": "rheuma-salve-balm", "img": "balm", "fmt": "Balm", "word": "BALM", "size": "50g jar", "s": 1.04, "tone": "#bfe5d0",
+     "phrase": "aching joints", "origin": "Made in Singapore",
+     "chips": [("Menthol", "", "menthol"), ("Camphor", "", "camphor"), ("Wintergreen", "", "wintergreen"), ("Peppermint oil", "", "peppermint"), ("Eucalyptus oil", "", "eucalyptus")]},
+    {"slug": "rheuma-salve-creme", "img": "creme", "fmt": "Crème", "word": "CRÈME", "size": "50g tube", "s": .96, "tone": "#d3eee0",
+     "phrase": "sore muscles", "origin": "Made in Singapore",
+     "chips": [("Menthol", "13.8%", "menthol"), ("Wintergreen", "12%", "wintergreen"), ("Peppermint oil", "9.2%", "peppermint"), ("Eucalyptus oil", "2%", "eucalyptus"), ("Capsaicin", "0.4%", "capsaicin")]},
+    {"slug": "rheuma-salve-liniment", "img": "liniment", "fmt": "Liniment", "word": "ROLL-ON", "size": "10ml roll-on", "s": 1.02, "tone": "#c2e6d6",
+     "phrase": "sudden headaches", "origin": "Made in Singapore",
+     "chips": [("Menthol", "", "menthol"), ("Peppermint", "", "peppermint"), ("Wintergreen", "", "wintergreen"), ("Eucalyptus oil", "", "eucalyptus")]},
+    {"slug": "rheuma-salve-pain-relief-patch-cool", "img": "patch", "fmt": "Patch", "word": "PATCH", "size": "8 cooling patches", "s": 1.0, "tone": "#c8ddf6",
+     "phrase": "a stiff back", "origin": "Made in Taiwan for HST Medical",
+     "chips": [("Peppermint oil", "6%", "peppermint"), ("Menthol", "5.8%", "menthol"), ("Centella asiatica", "3%", "centella"), ("Hops oil", "1.5%", "hops"), ("Frankincense", "0.5%", "frankincense"), ("Myrrh", "0.5%", "myrrh")]},
+    {"slug": "rheuma-salve-medi-stick", "img": "stick", "fmt": "Medi-Stick", "word": "STICK", "size": "15g stick", "s": .94, "tone": "#efe4c2",
+     "phrase": "tired muscles", "origin": "Made in Singapore",
+     "chips": [("Wintergreen oil", "18%", "wintergreen"), ("Menthol", "10%", "menthol"), ("Eucalyptus", "8%", "eucalyptus"), ("Peppermint", "5%", "peppermint"), ("Capsicum", "1%", "capsaicin")]},
+]
+HERO_DIMS = {"balm": (459, 324), "creme": (496, 590), "liniment": (581, 492), "patch": (671, 760), "stick": (276, 582)}
+CHIP_DEPTH = [18, 30, 22, 26, 14, 34]  # parallax px per chip slot
+
+
+def hero_chips(chips):
+    return "".join('<li class="chip c%d" data-k="%s" style="--d:%d;--fd:%.1fs"><i></i>%s%s</li>' % (
+        n, k, CHIP_DEPTH[n], n * .7, esc(name), ' <small>%s</small>' % pct if pct else "") for n, (name, pct, k) in enumerate(chips))
+
+
+def build_hero(root=""):
+    data, packs, tabs = [], [], []
+    for n, h in enumerate(HERO):
+        p = BY_SLUG[h["slug"]]
+        v = p["variants"][0]
+        w, ht = HERO_DIMS[h["img"]]
+        src = "assets/img/hero/rs-%s.webp" % h["img"]
+        alt = "%s, %s" % (p["name"].replace("®", ""), h["size"])
+        nv = len(p["variants"])
+        data.append({"fmt": h["fmt"], "word": h["word"], "phrase": h["phrase"], "tone": h["tone"], "name": p["name"].replace("Medi-Stick", "Medi\u2011Stick"), "size": h["size"],
+                     "origin": h["origin"], "for": p["for"], "price": v["price"], "packs": "%d pack sizes" % nv if nv > 1 else "Single pack",
+                     "url": "products/%s/" % p["slug"], "chips": h["chips"],
+                     "add": {"id": p["slug"], "name": p["name"], "price": v["price"], "variant": v["label"], "code": v["code"],
+                             "img": "assets/img/products/%s-thumb.webp" % p["image"], "url": "products/%s/" % p["slug"]}})
+        img = ('<img src="%s" alt="%s" width="%d" height="%d" fetchpriority="high" decoding="async">' % (src, esc(alt), w, ht) if n == 0 else
+               '<img data-src="%s" alt="" width="%d" height="%d" decoding="async">' % (src, w, ht))
+        packs.append('<span class="hs-pack%s" data-i="%d" style="--s:%s">%s<i class="hs-sheen" aria-hidden="true"></i></span>' % (" is-on" if n == 0 else "", n, h["s"], img))
+        tw, th = (120, round(120 * ht / w)) if w >= ht else (round(120 * w / ht), 120)
+        tabs.append('<a class="fmt" href="products/%s/" data-i="%d"%s><span class="th"><img src="assets/img/hero/rs-%s-thumb.webp" alt="" width="%d" height="%d" decoding="async"></span><span class="t">%s</span><span class="bar" aria-hidden="true"><i></i></span></a>'
+                    % (p["slug"], n, ' aria-current="true"' if n == 0 else "", h["img"], tw, th, esc(h["fmt"])))
+    h0, p0, d0 = HERO[0], BY_SLUG[HERO[0]["slug"]], data[0]
+    return f"""<section class="hero hs" aria-labelledby="h1" data-hero style="--tone:{h0['tone']}">
+  <div class="hero-block">
+    <div class="hs-aurora" aria-hidden="true"></div>
+    <div class="hero-body">
+      <div class="hs-copy">
+        <h1 id="h1"><span class="sr-only">Rheuma-Salve® pain relief in five formats: balm, crème, roll-on liniment, cooling patch and Medi-Stick</span><span class="hs-l1" aria-hidden="true"><span>Pain relief for</span></span><span class="hs-l2" aria-hidden="true">{''.join('<span class="hs-phrase%s"><u>%s</u></span>' % (" is-on" if n == 0 else "", esc(h["phrase"])) for n, h in enumerate(HERO))}</span></h1>
+        <p class="dose">Rheuma-Salve® has been on Singapore's pharmacy shelves since 1994. Five formats, each made for a different kind of ache. Pick the one that fits your day.</p>
+        <div class="hero-ctas"><a class="btn btn-light" href="shop/pain-relief/">Shop pain relief {IC['arrow']}</a><a class="btn btn-ghost" href="shop/cough-cold-flu/">Cough and cold</a></div>
+        <ul class="checks">
+          <li>{IC['tick']}<span>Formulated by pharmacists and TCM physicians</span></li>
+          <li>{IC['tick']}<span>On the shelf at Guardian, Watsons and NHGP</span></li>
+        </ul>
+      </div>
+      <div class="hs-show">
+        <div class="hs-stage" id="hs-stage">
+          <div class="hs-word" aria-hidden="true">{''.join('<span%s>%s</span>' % (' class="is-on"' if n == 0 else "", esc(h["word"])) for n, h in enumerate(HERO))}</div>
+          <svg class="hs-orbit" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="98"/><circle cx="100" cy="100" r="88"/><circle class="dot" cx="100" cy="2" r="2.2"/></svg>
+          <div class="hs-disk" aria-hidden="true"></div>
+          <div class="hs-floor" aria-hidden="true"></div>
+          <div class="hs-float"><div class="hs-tilt">{''.join(packs)}</div></div>
+          <ul class="hs-chips" aria-label="Active ingredients">{hero_chips(h0['chips'])}</ul>
+        </div>
+        <article class="hs-card" aria-label="Featured format">
+          <div class="hs-print">
+            <p class="hs-meta"><span data-f="fmt">{esc(h0['fmt'])}</span><span data-f="size">{esc(h0['size'])}</span><span data-f="packs">{esc(d0['packs'])}</span></p>
+            <p class="hs-name"><a data-f="url" href="{d0['url']}">{esc(p0['name'])}</a></p>
+            <p class="hs-for">For: <span data-f="for">{esc(p0['for'])}</span></p>
+            <p class="hs-origin">{IC['tick']}<span data-f="origin">{esc(h0['origin'])}</span></p>
+          </div>
+          <div class="hs-buy"><span class="hs-price"><b data-f="price">{esc(money(d0['price']))}</b><small>incl. GST</small></span>{add_btn(p0, root, cls="btn btn-sm btn-stamp")}<a class="hs-go" data-f="url" href="{d0['url']}" aria-label="View product">{IC['arrow']}</a></div>
+        </article>
+        <div class="hs-ctrl">
+          <div class="hs-tabs" aria-label="Rheuma-Salve formats">{''.join(tabs)}</div>
+          <button class="hs-pause" type="button" aria-pressed="false" hidden><svg class="ic i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg><svg class="ic i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"/></svg><span class="sr-only">Pause the format showcase</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{{{FOOT}}}}
+  <script type="application/json" id="hero-data">{json.dumps(data, ensure_ascii=False).replace('</', '<\\/')}</script>
+</section>"""
+
+
 # ---------------------------------------------------------------- HOME
 def build_home():
     root = ""
@@ -255,29 +348,7 @@ def build_home():
     notes = "".join(f"""<a href="blog/{s}/"><time datetime="{d}">{d}</time><span><b>{esc(t)}</b>{esc(x)}</span></a>""" for s, t, d, x, _ in POSTS)
     body = f"""
 <main id="main">
-<section class="hero" aria-labelledby="h1">
-  <div class="label">
-    <div class="hero-block">
-      <div class="hero-body">
-        <div>
-          <h1 id="h1">Pain, cough or cold? Start here.</h1>
-          <p class="dose">Singapore-made remedies you already know from the Guardian, Watsons and NHGP shelf. Pick the format that fits, see the real price for the real pack, and we deliver island-wide.</p>
-          <div class="hero-ctas"><a class="btn btn-light" href="shop/pain-relief/">Shop pain relief {IC['arrow']}</a><a class="btn btn-ghost" href="shop/cough-cold-flu/">Cough and cold</a></div>
-          <ul class="checks">
-            <li>{IC['tick']}<span>Formulated by pharmacists and TCM physicians, made under GMP</span></li>
-            <li>{IC['tick']}<span>Thirty years on Singapore's pharmacy shelves; a Kowa company since 2024</span></li>
-          </ul>
-        </div>
-        <figure class="hero-pack">
-          <img src="assets/img/products/p03.webp" alt="Heritage Rheuma-Salve Balm 50g jar and box" width="536" height="536" fetchpriority="high" decoding="async">
-          <a class="float" href="products/rheuma-salve-balm/"><img src="assets/img/products/p03-thumb.webp" alt="" width="56" height="56"><span><b>Rheuma-Salve® Balm 50g</b><small>Best seller · {esc(money(BY_SLUG['rheuma-salve-balm']['price']))}</small></span><span class="go">{IC['arrow']}</span></a>
-        </figure>
-      </div>
-      <div class="watermark" aria-hidden="true">RELIEF</div>
-    </div>
-    <div class="hero-foot"><nav class="counters" aria-label="Shop by need">{counters}</nav></div>
-  </div>
-</section>
+{build_hero(root).replace("{{FOOT}}", '<div class="hero-foot"><nav class="counters" aria-label="Shop by need">' + counters + '</nav></div>')}
 <div class="strip" aria-label="Why shop with HST Medical"><ul>{strip}</ul></div>
 
 <section class="band" aria-labelledby="h-best">
@@ -315,7 +386,7 @@ def build_home():
       <div><b>1994</b><p>Founded in Singapore as a manufacturer and supplier to the major pharmacy chains.</p></div>
       <div><b>GMP</b><p>Made under Good Manufacturing Practice, with Halal-certified and vegan options across the range.</p></div>
       <div><b>Two lines</b><p>HST Medical® for contemporary formulas; Heritage® for traditional Asian remedies prepared to modern standards.</p></div>
-      <div><b>Kowa</b><p>A subsidiary of Kowa Company, Ltd. since 2024, the Japanese group behind Vantelin.</p></div>
+      <div><b>Kowa</b><p>Part of Kowa Pharmaceutical Asia since 29 May 2026, within the Japanese Kowa group behind Vantelin.</p></div>
     </div>
     <div class="grid12" style="margin-top:var(--gutter);align-items:center">
       <div style="grid-column:1 / span 6"><h3>Where to buy</h3><p style="margin:.5rem 0 .25rem">On the shelf at:</p><ul class="where">{''.join('<li>%s</li>' % esc(r) for r in RETAILERS_CONFIRMED)}</ul><p class="small" style="margin-top:.75rem">Other stockists are being confirmed with HST Medical. <a href="where-to-buy/" style="color:#fff">Stockist list and delivery details</a>.</p></div>
@@ -338,8 +409,8 @@ def build_home():
     ld = jsonld({"@context": "https://schema.org", "@graph": [ORG, {"@type": "WebSite", "url": BASE, "name": "HST Medical", "publisher": {"@id": BASE + "#org"},
                  "potentialAction": {"@type": "SearchAction", "target": BASE + "shop/?q={search_term_string}", "query-input": "required name=search_term_string"}}]})
     page("index.html", "HST Medical Singapore — Rheuma-Salve® Pain Relief, Cough & Cold Remedies, Heritage® Tonics",
-         "Pain, cough or cold? Start at the HST Medical counter: Rheuma-Salve®, Alievaid, Flu Gard and 51 pharmacist-formulated products made in Singapore since 1994. A Kowa subsidiary. GMP, Halal options.",
-         body, extra_head=ld, body_class="home")
+         "Pain, cough or cold? Start at the HST Medical counter: Rheuma-Salve®, Alievaid, Flu Gard and 51 pharmacist-formulated products from a Singapore company founded in 1994, now part of Kowa Pharmaceutical Asia. GMP, Halal options.",
+         body, extra_head=ld + '<link rel="preload" as="image" href="assets/img/hero/rs-balm.webp" fetchpriority="high">\n<script src="assets/js/hero.js?v=%s" defer></script>\n' % V, body_class="home")
     add_sitemap(BASE, "1.0")
 
 # ---------------------------------------------------------------- SHOP + CATEGORIES
@@ -356,7 +427,7 @@ def build_shop():
     cards = "\n".join(product_label(p, root) for cid in CAT_ORDER for p in cat_products(cid))
     body = f"""
 <main id="main"><div class="counter">{crumb}
-<header class="page-head"><h1>All products</h1><p class="lead">{len(PRODUCTS)} products across {len(CAT_ORDER)} shelves. Prices in Singapore dollars including GST. Free island-wide delivery on orders over S$60.</p></header>
+<header class="page-head"><h1>All products</h1><p class="lead">{len(PRODUCTS)} products across {len(CAT_ORDER)} shelves. Prices in Singapore dollars including GST. Free Singapore delivery on orders above S$30; S$1.99 for orders of S$30 and below.</p></header>
 <form class="search" role="search" action="" onsubmit="return false"><label class="sr-only" for="q">Search products</label><input id="q" type="search" name="q" placeholder="Search: balm, melatonin, ginseng, kids…" autocomplete="off"><button class="btn" type="submit" aria-label="Search">{IC['search']}</button></form>
 {filters_html(root)}
 <h2 class="result" id="result">Showing {len(PRODUCTS)} of {len(PRODUCTS)} products</h2>
@@ -414,12 +485,12 @@ def build_products():
 <article class="label {brand_class(p['brand'])}" data-pdp style="margin-top:1rem">
   {label_head('<b>%s</b> <span>%s</span> <span class="print" data-code-out>Item %s</span>' % (esc(brand_label(p['brand'])), esc(c['name']), v0['code'] or '—'), esc(p['country'] or 'See pack') + halal)}
   <div class="pdp">
-    <figure class="pdp-pack"><img src="{root}assets/img/products/{p['image']}.webp" alt="{esc(p['name'])}, {esc(p['size'])}" width="900" height="900" fetchpriority="high" decoding="async"></figure>
+    <figure class="pdp-pack"><span class="zoomer"><img src="{root}assets/img/products/{p['image']}.webp" alt="{esc(p['name'])}, {esc(p['size'])}" width="900" height="900" fetchpriority="high" decoding="async"><span class="zoom-hint" aria-hidden="true"><span class="h-hover">Hover to zoom</span><span class="h-tap">Tap to zoom</span></span></span></figure>
     <div class="pdp-main">
       <h1>{esc(p['name'])}</h1>
       <p class="dose">{esc(p['tagline'])}</p>
       <dl class="fields"><div class="field"><dt>For</dt><dd>{esc(p['for'])}</dd></div><div class="field"><dt>Use</dt><dd>{esc(p['usage'][0] if p['usage'] else 'As directed on the label.')}</dd></div><div class="field"><dt>Pack</dt><dd class="print" data-size-out>{esc(v0['label'])}</dd></div></dl>
-      <div class="price-line print"><span class="price" data-price-out>{esc(money(v0['price']))}</span><span class="meta">SGD, incl. GST · free delivery over S$60</span></div>
+      <div class="price-line print"><span class="price" data-price-out>{esc(money(v0['price']))}</span><span class="meta">SGD, incl. GST · free Singapore delivery above S$30</span></div>
       <fieldset><legend>Pack size</legend><div class="packs">{packs}</div>{other}</fieldset>
       <div class="buy">
         <div class="qty" aria-label="Quantity"><button type="button" data-step="-1" aria-label="Decrease quantity">−</button><input id="qty" type="number" min="1" max="99" value="1" inputmode="numeric" aria-label="Quantity"><button type="button" data-step="1" aria-label="Increase quantity">+</button></div>
@@ -442,13 +513,13 @@ def build_products():
         for o in offers:
             if o["sku"] is None: del o["sku"]
         ld = {"@context": "https://schema.org", "@type": "Product", "name": p["name"], "brand": {"@type": "Brand", "name": brand_label(p["brand"]).replace("®", "")},
-              "image": BASE + "assets/img/products/%s.webp" % p["image"], "description": p["description"][:300], "category": c["name"],
+              "image": BASE + "assets/img/products/%s-white.webp" % p["image"], "description": p["description"][:300], "category": c["name"],
               "manufacturer": {"@id": BASE + "#org"}, "url": BASE + "products/%s/" % p["slug"]}
         if offers:
             ld["offers"] = offers if len(offers) > 1 else offers[0]
         page("products/%s/index.html" % p["slug"], "%s (%s) — %s | HST Medical" % (p["name"], p["size"], brand_label(p["brand"])),
              ("%s. For %s. %s" % (p["tagline"], p["for"], p["description"]))[:158], body, active={"pain-relief": "pain", "cough-cold-flu": "cough"}.get(p["category"], "shop"),
-             extra_head=crumb_ld + jsonld(ld), og_image=BASE + "assets/img/products/%s.webp" % p["image"])
+             extra_head=crumb_ld + jsonld(ld), og_image=BASE + "assets/img/products/%s-white.webp" % p["image"])
         add_sitemap(BASE + "products/%s/" % p["slug"], "0.8" if p["focus"] else "0.6")
 
 # ---------------------------------------------------------------- STATIC PAGES
@@ -469,7 +540,7 @@ def field(name, label, typ="text", req=False, err=None, **attrs):
 
 def build_static():
     simple("about/index.html", "About HST Medical — Singapore's Pharmacy-Shelf Remedies Since 1994",
-           "Established in 1994 and part of Kowa since 2024, HST Medical formulates and supplies health supplements and pain relief remedies to Singapore's major pharmacies.",
+           "Established in 1994 and part of Kowa Pharmaceutical Asia since 2026, HST Medical formulates and supplies health supplements and pain relief remedies to Singapore's major pharmacies.",
            "About HST Medical", "Established in 1994, HST Medical is a manufacturer and supplier of health supplements and pain relief remedies to major pharmacies and online marketplaces.",
            f"""
 <div class="grid12" style="align-items:start">
@@ -478,8 +549,10 @@ def build_static():
     <p>HST Medical products pair contemporary pharmaceuticals with the long-term benefits of natural nutrients. The pharmacists and TCM physicians behind the range develop formulas for modern needs from ethically sourced ingredients around the world.</p>
     <h2>Quality and safety first</h2>
     <p>From research and development to packaging and manufacturing, HST Medical follows authority guidelines, approved procedures and inspected premises. Ingredients are tested for authenticity, finished products are verified for safety, and third-party manufacturing is audited.</p>
-    <h2>Part of Kowa</h2>
-    <p>In 2024 HST Medical became a subsidiary of Kowa Company, Ltd., the Japanese pharmaceutical and trading group whose consumer brands include Vantelin and Three Dimension Mask. Kowa's research depth joins HST Medical's Singapore-made range while the brands on the shelf stay the same.</p>
+    <h2>A heritage that began in 1930</h2>
+    <p>The name is a tribute to Heng Say Tong, the medical hall established by the family of the company's co-founders. HST Medical Pte Ltd was incorporated in 1994 and draws on nearly a century of heritage in healthcare.</p>
+    <h2>Part of Kowa Pharmaceutical Asia</h2>
+    <p>On 29 May 2026 HST Medical became a wholly-owned subsidiary of Kowa Pharmaceutical Asia Pte. Ltd., part of Japan's Kowa group, whose consumer brands include Vantelin and Three Dimension Mask. Kowa's research depth joins HST Medical's range, while the HST Medical name and the brands on the shelf stay the same.</p>
   </div>
   <div style="grid-column:8 / span 5" class="stack">
     <div class="label"><div class="facts" style="grid-template-columns:1fr"><div><b>1994</b><p>Founded in Singapore. Thirty years supplying Guardian, Watsons, NHGP and online marketplaces.</p></div><div><b>Three brands</b><p>HST Medical®, Heritage® and Zoo-Vite®, plus Rheuma-Salve®, the flagship pain-relief line.</p></div><div><b>GMP</b><p>Manufactured under Good Manufacturing Practice with Halal-certified and vegan options.</p></div></div></div>
@@ -497,10 +570,10 @@ def build_static():
         links = "".join(f"<a class='tab' href='../shop/{c}/'>{esc(CATS[c]['name'])}</a>" for c in cids)
         brand_rows += f"<div class='label {cls}'><div class='label-body'><h2>{esc(name)}</h2><p style='margin:.5rem 0 1rem'>{esc(blurb)}</p><div class='tabs'>{links}</div></div></div>"
     simple("brands/index.html", "Our Brands — Rheuma-Salve®, Heritage®, HST Medical®, Zoo-Vite® and Kowa",
-           "Four brands under one quality standard, part of the Kowa group alongside Vantelin and Three Dimension Mask.",
+           "Four brands under one quality standard, part of Kowa Pharmaceutical Asia and the Japanese Kowa group behind Vantelin and Three Dimension Mask.",
            "Our brands", "Four brands, one standard, one parent: Kowa.",
            f"""<div class="labels" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))">{brand_rows}</div>
-<div class="label" style="margin-top:var(--gutter)"><div class="label-body trade"><div><h2 style="font-size:1.4rem">Kowa: Japanese pharmaceutical heritage</h2><p style="margin-top:.5rem">Kowa Company, Ltd. (Nagoya, est. 1894) owns consumer brands such as Vantelin topical pain relief and Three Dimension Mask. HST Medical joined the group in 2024. Whether Kowa's Singapore range is listed here is still to be decided with the client.</p></div><a class="btn btn-quiet" href="../about/">Our story</a></div></div>""", active="about")
+<div class="label" style="margin-top:var(--gutter)"><div class="label-body trade"><div><h2 style="font-size:1.4rem">Kowa: Japanese pharmaceutical heritage</h2><p style="margin-top:.5rem">Kowa Company, Ltd. (Nagoya, est. 1894) owns consumer brands such as Vantelin topical pain relief and Three Dimension Mask. HST Medical became part of Kowa Pharmaceutical Asia, the group's Singapore-based pharmaceutical arm, on 29 May 2026. Whether Kowa's Singapore range is listed here is still to be decided with the client.</p></div><a class="btn btn-quiet" href="../about/">Our story</a></div></div>""", active="about")
 
     simple("where-to-buy/index.html", "Where to Buy HST Medical Products in Singapore — Guardian, Watsons, NHGP and Online",
            "Find Rheuma-Salve®, Heritage® and Zoo-Vite® at Guardian, Watsons and NHGP pharmacies, or order online with island-wide delivery.",
@@ -512,7 +585,7 @@ def build_static():
         ("Guardian", "Rheuma-Salve®, Heritage® tonics and selected HST Medical® supplements in most outlets island-wide."),
         ("Watsons", "Pain relief, cough and cold and kids' ranges. Check in-store availability for tonics."),
         ("NHGP pharmacies", "National Healthcare Group polyclinic pharmacies carry the core pain-relief and cough range."),
-        ("Online", "This store ships island-wide (free over S$60) and internationally at checkout."),
+        ("Online", "This store delivers in Singapore (free above S$30; S$1.99 for orders of S$30 and below) and ships overseas at checkout: express to most countries in 3 to 7 working days, standard to selected countries including Malaysia, the Philippines and Vietnam."),
     ])}
   </div></div>
   <div style="grid-column:8 / span 5" class="stack">
@@ -551,9 +624,9 @@ def build_static():
            f"""
 <div class="grid12" style="align-items:start">
   <div style="grid-column:1 / span 5" class="label"><div class="facts" style="grid-template-columns:1fr">
-    <div><b>Customer service</b><p>Orders, delivery and product questions.<br><a href="mailto:hello@hstmedical.com">hello@hstmedical.com</a><br><span class="small">Placeholder address; to confirm with the client.</span></p></div>
+    <div><b>Customer service</b><p>Delivery, product and general questions.<br><a href="mailto:contact@hstmedical.com">contact@hstmedical.com</a><br>Orders: <a href="mailto:order@hstmedical.com">order@hstmedical.com</a></p></div>
     <div><b>Trade</b><p><a href="mailto:resellercontact@hstmedical.com">resellercontact@hstmedical.com</a><br>or your HST Medical territory manager.</p></div>
-    <div><b>HST Medical Pte Ltd</b><p>Singapore<br><span class="small">Registered address, phone and opening hours to be supplied by the client.</span></p></div>
+    <div><b>HST MEDICAL PTE LTD</b><p>Part of Kowa Pharmaceutical Asia · UEN 199405743E<br>152 Paya Lebar Road, #02-06 Citipoint Industrial Complex, Singapore 409020<br>Telephone <a href="tel:+6565365108">+65 6536 5108</a> ext. 816</p></div>
   </div></div>
   <form class="label form" style="grid-column:6 / span 7;padding:1.5rem" data-demo novalidate>
     <h2 style="font-size:1.3rem">Send a message</h2>
@@ -571,7 +644,7 @@ def build_static():
   <div class="label"><div class="lines" id="bag-lines" data-root="../"><div class="empty"><b>Your bag is empty.</b>Start at the counter: <a href="../shop/pain-relief/">pain relief</a>, <a href="../shop/cough-cold-flu/">cough and cold</a>, or <a href="../shop/">all products</a>.</div></div></div>
   <aside class="label summary" aria-labelledby="h-sum"><div class="label-body"><h2 id="h-sum" style="font-size:1.3rem;margin-bottom:.75rem">Summary</h2>
     <dl class="fields"><div class="field"><dt>Subtotal</dt><dd data-sub>S$0.00</dd></div><div class="field"><dt>Delivery</dt><dd data-ship>—</dd></div><div class="field total"><dt>Total</dt><dd data-total>S$0.00</dd></div></dl>
-    <div class="meter" aria-hidden="true"><i></i></div><p class="small" data-free>Free delivery on orders over S$60.</p>
+    <div class="meter" aria-hidden="true"><i></i></div><p class="small" data-free>Free Singapore delivery above S$30; S$1.99 for orders of S$30 and below.</p>
     <div class="stack" style="margin-top:1rem"><a class="btn btn-stamp btn-block" href="../checkout/" data-needs-items aria-disabled="true">Checkout {IC['arrow']}</a><a class="btn btn-quiet btn-block" href="../shop/">Keep shopping</a></div>
     <p class="note small" style="margin-top:1rem">Prototype bag stored in your browser only. Production uses WP EasyCart's cart with this layout applied through CSS overrides.</p>
   </div></aside>
@@ -590,7 +663,7 @@ def build_static():
       <div class="row">{field('first', 'First name', req=True, autocomplete='given-name')}{field('last', 'Last name', req=True, autocomplete='family-name')}</div>
       {field('address', 'Address', req=True, autocomplete='street-address')}
       <div class="row">{field('unit', 'Unit', autocomplete='address-line2')}{field('postal', 'Postal code', req=True, err='Enter the 6-digit postal code.', inputmode='numeric', autocomplete='postal-code', pattern='[0-9]{6}')}<label><span>Country</span><select name="country" autocomplete="country-name"><option>Singapore</option><option>Malaysia</option><option>Other</option></select></label></div>
-      <div class="lbl"><span>Delivery method</span><label class="check"><input type="radio" name="ship" checked><span>Courier, 2 to 3 working days (free over S$60, otherwise S$4.50)</span></label><label class="check"><input type="radio" name="ship"><span>Self-collection, by appointment</span></label></div>
+      <div class="lbl"><span>Delivery method</span><label class="check"><input type="radio" name="ship" checked><span>Courier, 2 to 3 working days (free above S$30, otherwise S$1.99)</span></label><label class="check"><input type="radio" name="ship"><span>Self-collection, by appointment</span></label></div>
       <div class="step-nav"><button class="btn btn-quiet" type="button" data-prev>Back</button><button class="btn btn-stamp" type="button" data-next>Continue to payment {IC['arrow']}</button></div></section>
     <section class="step" hidden><h2>How would you like to pay?</h2>
       <div class="lbl"><span>Payment</span><label class="check"><input type="radio" name="pay" checked><span>Card (Visa, Mastercard, Amex)</span></label><label class="check"><input type="radio" name="pay"><span>PayNow</span></label><label class="check"><input type="radio" name="pay"><span>GrabPay, Apple Pay, Google Pay</span></label></div>
@@ -604,7 +677,7 @@ def build_static():
   <aside class="label summary" aria-labelledby="h-sum"><div class="label-body"><h2 id="h-sum" style="font-size:1.3rem;margin-bottom:.75rem">Your bag</h2>
     <div id="bag-lines" data-root="../"></div>
     <dl class="fields" style="margin-top:.5rem"><div class="field"><dt>Subtotal</dt><dd data-sub>S$0.00</dd></div><div class="field"><dt>Delivery</dt><dd data-ship>—</dd></div><div class="field total"><dt>Total</dt><dd data-total>S$0.00</dd></div></dl>
-    <p class="small" data-free>Free delivery on orders over S$60.</p>
+    <p class="small" data-free>Free Singapore delivery above S$30; S$1.99 for orders of S$30 and below.</p>
   </div></aside>
 </div>""", active="shop")
 
@@ -672,7 +745,7 @@ def build_misc():
     for u, pr in SITEMAP:
         sm += "  <url><loc>%s</loc><lastmod>%s</lastmod><priority>%s</priority></url>\n" % (u, TODAY, pr)
     write("sitemap.xml", sm + "</urlset>\n")
-    L = ["# HST Medical", "", "> HST Medical Pte Ltd (Singapore, est. 1994; a Kowa subsidiary since 2024) formulates and supplies health supplements and pain-relief remedies under the HST Medical®, Heritage®, Rheuma-Salve® and Zoo-Vite® brands. Products are GMP-manufactured, some Halal-certified, sold at Guardian, Watsons and NHGP pharmacies and shipped from this store in SGD.", "", "## Ranges"]
+    L = ["# HST Medical", "", "> HST Medical Pte Ltd (Singapore, incorporated 1994, rooted in the Heng Say Tong medical hall founded 1930; part of Kowa Pharmaceutical Asia since 29 May 2026) formulates and supplies health supplements and pain-relief remedies under the HST Medical®, Heritage®, Rheuma-Salve® and Zoo-Vite® brands. Products are GMP-manufactured, some Halal-certified, sold at Guardian, Watsons and NHGP pharmacies and shipped from this store in SGD.", "", "## Ranges"]
     for cid in CAT_ORDER:
         L.append("- [%s](%sshop/%s/): %s" % (CATS[cid]["name"], BASE, cid, CATS[cid]["blurb"]))
     L += ["", "## Featured products (Premium Pain Relief; Cough, Cold & Flu)"]

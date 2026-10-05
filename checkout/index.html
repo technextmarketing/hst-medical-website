@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/style.css?v=20261002h">
+<link rel="stylesheet" href="../assets/css/style.css?v=20261005d">
 <script>document.documentElement.classList.add('js');</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://technextmarketing.github.io/hst-medical-website/"}, {"@type": "ListItem", "position": 2, "name": "Checkout"}]}</script>
 </head>
@@ -59,7 +59,7 @@
       <div class="row"><label><span class="req">First name</span><input type="text" name="first" required autocomplete="given-name"><span class="err">First name is needed.</span></label><label><span class="req">Last name</span><input type="text" name="last" required autocomplete="family-name"><span class="err">Last name is needed.</span></label></div>
       <label><span class="req">Address</span><input type="text" name="address" required autocomplete="street-address"><span class="err">Address is needed.</span></label>
       <div class="row"><label><span class="">Unit</span><input type="text" name="unit" autocomplete="address-line2"><span class="err">Unit is needed.</span></label><label><span class="req">Postal code</span><input type="text" name="postal" required inputmode="numeric" autocomplete="postal-code" pattern="[0-9]{6}"><span class="err">Enter the 6-digit postal code.</span></label><label><span>Country</span><select name="country" autocomplete="country-name"><option>Singapore</option><option>Malaysia</option><option>Other</option></select></label></div>
-      <div class="lbl"><span>Delivery method</span><label class="check"><input type="radio" name="ship" checked><span>Courier, 2 to 3 working days (free over S$60, otherwise S$4.50)</span></label><label class="check"><input type="radio" name="ship"><span>Self-collection, by appointment</span></label></div>
+      <div class="lbl"><span>Delivery method</span><label class="check"><input type="radio" name="ship" checked><span>Courier, 2 to 3 working days (free above S$30, otherwise S$1.99)</span></label><label class="check"><input type="radio" name="ship"><span>Self-collection, by appointment</span></label></div>
       <div class="step-nav"><button class="btn btn-quiet" type="button" data-prev>Back</button><button class="btn btn-stamp" type="button" data-next>Continue to payment <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div></section>
     <section class="step" hidden><h2>How would you like to pay?</h2>
       <div class="lbl"><span>Payment</span><label class="check"><input type="radio" name="pay" checked><span>Card (Visa, Mastercard, Amex)</span></label><label class="check"><input type="radio" name="pay"><span>PayNow</span></label><label class="check"><input type="radio" name="pay"><span>GrabPay, Apple Pay, Google Pay</span></label></div>
@@ -73,7 +73,7 @@
   <aside class="label summary" aria-labelledby="h-sum"><div class="label-body"><h2 id="h-sum" style="font-size:1.3rem;margin-bottom:.75rem">Your bag</h2>
     <div id="bag-lines" data-root="../"></div>
     <dl class="fields" style="margin-top:.5rem"><div class="field"><dt>Subtotal</dt><dd data-sub>S$0.00</dd></div><div class="field"><dt>Delivery</dt><dd data-ship>—</dd></div><div class="field total"><dt>Total</dt><dd data-total>S$0.00</dd></div></dl>
-    <p class="small" data-free>Free delivery on orders over S$60.</p>
+    <p class="small" data-free>Free Singapore delivery above S$30; S$1.99 for orders of S$30 and below.</p>
   </div></aside>
 </div>
 </div></main>
@@ -82,7 +82,7 @@
     <div class="footer-grid">
       <div>
         <img src="../assets/img/logo-hst-kowa-360.png" alt="HST Medical, Kowa subsidiary" width="110" height="59" loading="lazy" decoding="async">
-        <p style="margin-top:.8rem;max-width:40ch">Health supplements and pain-relief remedies formulated by pharmacists and TCM physicians, made in Singapore since 1994. A subsidiary of Kowa Company, Ltd.</p>
+        <p style="margin-top:.8rem;max-width:40ch">Health supplements and pain-relief remedies formulated by pharmacists and TCM physicians. A Singapore company since 1994, now part of Kowa Pharmaceutical Asia.</p>
         <p class="small" style="margin-top:.6rem">Always read the label and follow directions for use.</p>
       </div>
       <div><p class="ft-h">Shop</p><ul>
@@ -111,6 +111,6 @@
   </div>
 </footer>
 <div class="toast" id="toast" hidden role="status"><span></span><button type="button">Undo</button></div>
-<script src="../assets/js/site.js?v=20261002h" defer></script>
+<script src="../assets/js/site.js?v=20261005d" defer></script>
 </body>
 </html>

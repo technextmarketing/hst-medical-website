@@ -70,7 +70,7 @@
     var variant = b.getAttribute('data-variant') || '', id = b.getAttribute('data-id') + (variant ? '|' + variant : ''), c = load();
     var hit = c.filter(function (i) { return i.id === id; })[0];
     if (hit) hit.qty += q; else c.push({ id: id, name: b.getAttribute('data-name'), variant: variant, code: b.getAttribute('data-code') || '', price: p, img: b.getAttribute('data-img'), url: b.getAttribute('data-url'), qty: q });
-    save(c);
+    save(c); fly(b);
     var t = b.innerHTML; b.classList.add('is-added'); b.innerHTML = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> In your bag';
     setTimeout(function () { b.classList.remove('is-added'); b.innerHTML = t; }, 1600);
     var n = c.reduce(function (s, i) { return s + i.qty; }, 0);
@@ -82,7 +82,7 @@
   var undo = null;
   function renderBag() {
     if (!lines) return;
-    var c = load(), sub = 0, FREE = 60, SHIP = 4.5;
+    var c = load(), sub = 0, FREE = 30, SHIP = 1.99; /* live store: free above S$30, S$1.99 at S$30 and below */
     if (!c.length) {
       lines.innerHTML = '<div class="empty"><b>Your bag is empty.</b>Start at the counter: <a href="' + root + 'shop/pain-relief/">pain relief</a>, <a href="' + root + 'shop/cough-cold-flu/">cough and cold</a>, or <a href="' + root + 'shop/">all products</a>.</div>';
     } else {
@@ -92,11 +92,11 @@
           '<div class="qty" aria-label="Quantity for ' + i.name + '"><button type="button" data-step="-1" aria-label="Decrease">−</button><input type="number" min="1" max="99" value="' + i.qty + '" data-line="' + i.id + '" aria-label="Quantity"><button type="button" data-step="1" aria-label="Increase">+</button></div><span class="sum">' + money(i.price * i.qty) + '</span></div>';
       }).join('');
     }
-    var ship = sub && sub < FREE ? SHIP : 0;
+    var ship = sub && sub <= FREE ? SHIP : 0;
     d.querySelectorAll('[data-sub]').forEach(function (e) { e.textContent = money(sub); });
     d.querySelectorAll('[data-ship]').forEach(function (e) { e.textContent = sub ? (ship ? money(ship) : 'Free') : '—'; });
     d.querySelectorAll('[data-total]').forEach(function (e) { e.textContent = money(sub + ship); });
-    d.querySelectorAll('[data-free]').forEach(function (e) { e.textContent = !sub ? 'Free delivery on orders over ' + money(FREE) + '.' : (sub >= FREE ? 'You have free island-wide delivery.' : 'Add ' + money(FREE - sub) + ' more for free delivery.'); });
+    d.querySelectorAll('[data-free]').forEach(function (e) { e.textContent = !sub ? 'Free delivery on orders above ' + money(FREE) + '.' : (sub > FREE ? 'You have free island-wide delivery.' : 'Add ' + money(Math.max(0.01, FREE - sub + 0.01)) + ' more for free delivery.'); });
     d.querySelectorAll('.meter i').forEach(function (e) { e.style.transform = 'scaleX(' + Math.min(1, sub / FREE) + ')'; });
     d.querySelectorAll('[data-needs-items]').forEach(function (e) { e.toggleAttribute('disabled', !c.length); e.setAttribute('aria-disabled', !c.length); });
   }
@@ -171,5 +171,79 @@
       if (p) { show([].indexOf.call(steps, p.closest('.step')) - 1); }
     });
     show(0);
+  }
+
+  /* ---- image motion layer ----
+     fly(): the pack you added flies to the Bag on an arc and the count pops (reduced motion: count pop only).
+     Reveal: product lists below the fold rise in and their packshots develop from a blur, staggered per batch.
+     Tilt: packshots in cards and shop-by-need tiles turn toward the pointer. Zoom: product page lens. */
+  var fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  function fly(b) {
+    var bag = d.querySelector('.bag'); if (!bag) return;
+    bag.classList.remove('bump'); void bag.offsetWidth; bag.classList.add('bump');
+    var host = b.closest('.hs-card, .plabel, tr, .pdp, .line'), src = null;
+    if (host && host.classList.contains('hs-card')) src = d.querySelector('.hs-pack.is-on img');
+    else if (host) src = host.querySelector('.img img, .thumb, .pdp-pack img, img');
+    if (reduce || !src || !src.animate) return;
+    var r = src.getBoundingClientRect(), t = bag.getBoundingClientRect();
+    if (!r.width || r.bottom < 0 || r.top > innerHeight) return;
+    var s = Math.min(120, Math.max(r.width, r.height)), im = d.createElement('img');
+    im.src = src.currentSrc || src.src; im.alt = ''; im.className = 'fly';
+    im.style.width = im.style.height = s + 'px';
+    d.body.appendChild(im);
+    var x0 = r.left + r.width / 2 - s / 2, y0 = r.top + r.height / 2 - s / 2, x1 = t.left + t.width / 2 - s / 2, y1 = t.top + t.height / 2 - s / 2;
+    var lift = Math.min(160, Math.abs(y0 - y1) * 0.35 + 60);
+    im.animate([
+      { transform: 'translate(' + x0 + 'px,' + y0 + 'px) scale(1) rotate(0deg)', opacity: 1 },
+      { transform: 'translate(' + (x0 + (x1 - x0) * 0.45) + 'px,' + (Math.min(y0, y1) - lift) + 'px) scale(.7) rotate(-14deg)', opacity: 1, offset: 0.45 },
+      { transform: 'translate(' + x1 + 'px,' + y1 + 'px) scale(.12) rotate(8deg)', opacity: 0.2 }
+    ], { duration: 820, easing: 'cubic-bezier(.45,0,.2,1)' }).finished.then(function () {
+      im.remove();
+      bag.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.12)' }, { transform: 'scale(1)' }], { duration: 380, easing: 'cubic-bezier(.16,1,.3,1)' });
+    }, function () { im.remove(); });
+  }
+
+  if (!reduce && 'IntersectionObserver' in window) {
+    var vh = innerHeight, targets = d.querySelectorAll('.labels > .plabel, .compare tbody tr, .counters > a, .shelf > a, .notes > a, #bag-lines > .line');
+    var io = new IntersectionObserver(function (es) {
+      var k = 0;
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var el = e.target; io.unobserve(el);
+        el.style.setProperty('--rv', Math.min(k++ * 70, 420) + 'ms');
+        el.classList.add('in');
+        setTimeout(function () { el.classList.remove('rv', 'in'); el.style.removeProperty('--rv'); }, 1700);
+      });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.1 });
+    targets.forEach(function (el) {
+      if (el.getBoundingClientRect().top > vh * 0.94 && !el.closest('[hidden]')) { el.classList.add('rv'); io.observe(el); }
+    });
+  }
+
+  if (fine && !reduce) {
+    d.querySelectorAll('.plabel .img, .counters .tile').forEach(function (el) {
+      var raf = 0, ex = 0, ey = 0;
+      el.addEventListener('pointermove', function (e) {
+        var r = el.getBoundingClientRect(); ex = (e.clientX - r.left) / r.width * 2 - 1; ey = (e.clientY - r.top) / r.height * 2 - 1;
+        if (!raf) raf = requestAnimationFrame(function () { raf = 0; el.style.setProperty('--tx', ex.toFixed(3)); el.style.setProperty('--ty', ey.toFixed(3)); });
+      });
+      el.addEventListener('pointerleave', function () { el.style.removeProperty('--tx'); el.style.removeProperty('--ty'); });
+    });
+  }
+
+  var pk = d.querySelector('.pdp-pack'), zm = pk && pk.querySelector('.zoomer');
+  if (zm) {
+    var at = function (e) {
+      var r = zm.getBoundingClientRect();
+      pk.style.setProperty('--ox', Math.max(0, Math.min(100, (e.clientX - r.left) / r.width * 100)).toFixed(1) + '%');
+      pk.style.setProperty('--oy', Math.max(0, Math.min(100, (e.clientY - r.top) / r.height * 100)).toFixed(1) + '%');
+    };
+    if (fine) {
+      zm.addEventListener('pointerenter', function (e) { at(e); pk.classList.add('zoom'); });
+      zm.addEventListener('pointermove', at);
+      zm.addEventListener('pointerleave', function () { pk.classList.remove('zoom'); });
+    } else {
+      zm.addEventListener('click', function (e) { at(e); pk.classList.toggle('zoom'); });
+    }
   }
 })();
